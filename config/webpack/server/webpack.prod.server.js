@@ -3,12 +3,12 @@ const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-const alias = require('./../alias');
+const alias = require('../alias');
 const rules = require('./rules');
 
 const nodeConf = {
   target: 'node',
-  entry: './server.js',
+  entry: './config/server.js',
   externals: [nodeExternals(), 'react-helmet'],
   output: {
     path: path.resolve('build'),

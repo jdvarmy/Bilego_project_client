@@ -9,4 +9,4 @@ const sitemap = sm.createSitemap({
   urls: config.siteMapUrls.map(url => ({ url, changefreq: 'monthly', priority: 0.8 })),
 });
 
-fs.writeFileSync('app/static/sitemap.xml', sitemap.toString());
+fs.writeFileSync('public/static/sitemap.xml', sitemap.toString());

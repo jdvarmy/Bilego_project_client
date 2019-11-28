@@ -23,7 +23,7 @@ module.exports = require('./webpack.base.babel')({
     }),
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
-      template: 'app/static/index.html',
+      template: 'public/static/index.html',
       filename: 'main.html',
       minify: {
         removeComments: true,
