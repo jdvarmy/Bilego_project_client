@@ -21,8 +21,8 @@ module.exports = {
   "rules": {
     "import/no-extraneous-dependencies": ["error", {
       "devDependencies": [
-        "./src/sitemap**",
-        "./src/webpack**",
+        "./config/sitemap**",
+        "./config/webpack**",
       ],
     }],
     "import/no-dynamic-require": 0,
@@ -43,7 +43,7 @@ module.exports = {
   "settings": {
     "import/resolver": {
       "webpack": {
-        "config": "./src/webpack/client/webpack.prod.babel.js"
+        "config": "./config/webpack/client/webpack.prod.babel.js"
       }
     }
   }

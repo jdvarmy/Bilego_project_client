@@ -3,12 +3,12 @@ const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const alias = require('./../alias');
+const alias = require('../alias');
 const rules = require('./rules');
 
 const nodeConf = {
   target: 'node',
-  entry: './server.js',
+  entry: './config/server.js',
   externals: [nodeExternals(), 'react-helmet'],
   output: {
     path: path.resolve('build'),
@@ -22,8 +22,8 @@ const nodeConf = {
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: 'app/images', to: 'images' },
-      { from: 'app/static/**', to: '.' },
+      { from: 'public/images', to: 'images' },
+      { from: 'public/static/**', to: '.' },
     ]),
     new webpack.ProvidePlugin({
       window: path.resolve(path.join(__dirname, './../window.mock')),

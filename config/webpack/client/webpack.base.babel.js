@@ -8,8 +8,8 @@ const alias = require('./../alias');
 const plugins = [
   new ProgressBarPlugin(),
   new CopyWebpackPlugin([
-    { from: 'app/images', to: 'images' },
-    { from: 'app/static/**', to: '.' },
+    { from: 'public/images', to: 'images' },
+    { from: 'public/static/**', to: '.' },
   ]),
   new webpack.ProvidePlugin({
     // make fetch available

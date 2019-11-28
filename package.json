@@ -7,12 +7,13 @@
     "node": ">=5"
   },
   "scripts": {
-    "lint:eslint": "eslint --ignore-path .gitignore --ignore-path .eslintignore --ignore-pattern src/sitemap",
+    "lint:eslint": "eslint --ignore-path .gitignore --ignore-path .eslintignore --ignore-pattern config/sitemap",
     "lint:staged": "lint-staged",
-    "generate:sitemap": "node ./src/sitemap/sitemap.js",
+    "generate:sitemap": "node config/sitemap/sitemap.js",
     "build:clean": "rimraf ./build",
-    "dev:start": "npm run build:clean && cross-env NODE_ENV=development webpack -w --config src/webpack/server/webpack.dev.server.js",
-    "prod:build": "npm run generate:sitemap && cross-env NODE_ENV=production webpack --config src/webpack/server/webpack.prod.server.js",
+
+    "prod:build": "npm run generate:sitemap && cross-env NODE_ENV=production webpack --config config/webpack/server/webpack.prod.server.js",
+    "dev:start": "npm run build:clean && cross-env NODE_ENV=development webpack -w --config config/webpack/server/webpack.dev.server.js",
     "server:start": "nodemon ./build/server.js"
   },
   "lint-staged": {
@@ -43,9 +44,10 @@
     "lodash": "^4.17.15",
     "mini-create-react-context": "^0.3.2",
     "nodemon": "^1.19.1",
+    "progress-bar-webpack-plugin": "^1.11.0",
     "prop-types": "15.5.10",
-    "react": "16.6",
-    "react-dom": "16.6",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "react-helmet": "^5.2.0",
     "react-immutable-proptypes": "^2.1.0",
     "react-loadable": "^5.5.0",
@@ -59,8 +61,7 @@
     "webpack-dev-middleware": "1.11.0",
     "webpack-hot-middleware": "2.18.0",
     "webpack-node-externals": "^1.7.2",
-    "whatwg-fetch": "2.0.3",
-    "progress-bar-webpack-plugin": "^1.11.0"
+    "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
     "babel-cli": "6.24.1",

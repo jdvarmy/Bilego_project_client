@@ -7,7 +7,7 @@ const plugins = [
   new webpack.NoEmitOnErrorsPlugin(),
   new HtmlWebpackPlugin({
     inject: true,
-    template: 'app/static/index.html',
+    template: 'public/static/index.html',
     filename: 'main.html',
   }),
   new CircularDependencyPlugin({
