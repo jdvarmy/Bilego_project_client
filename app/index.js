@@ -2,7 +2,7 @@
 import 'babel-core/register';
 import 'babel-polyfill';
 
-import React from 'react';
+import React, { Fragment } from 'react';
 import { hydrate } from 'react-dom';
 import { Provider as MobxProvider } from 'mobx-react';
 import { createBrowserHistory, createMemoryHistory } from 'history';
@@ -15,6 +15,8 @@ import { Switch, Route, Router } from 'react-router-dom';
 import routes from './routes';
 import * as stores from './stores';
 import ConfigureStartStore from './ConfigureStartStore';
+
+import { Header } from './components';
 
 export const ClientBilegoGateUi = () => {
   const insertCss = (...styles) => {
@@ -29,7 +31,7 @@ export const ClientBilegoGateUi = () => {
     })
     : createBrowserHistory();
 
-  // eslint-disable-next-line no-unused-vars,no-underscore-dangle
+  // eslint-disable-next-line no-underscore-dangle
   const initialState = !process.env.IS_SERVER ? window.__INITIAL_DATA__ : {};
 
   const store = new ConfigureStartStore(initialState, history);
@@ -43,6 +45,7 @@ export const ClientBilegoGateUi = () => {
     <StyleContext.Provider value={{ insertCss }}>
       <MobxProvider {...stores} globalStore={store}>
         <Router history={history} path={window.location.pathname}>
+          <Header />
           <Switch>
             {route.map(props => (
               <Route {...props} />
@@ -56,5 +59,8 @@ export const ClientBilegoGateUi = () => {
 };
 
 export const ServerBilegoGateUi = () => (
-  renderRoutes(routes)
+  <Fragment>
+    <Header />
+    {renderRoutes(routes)}
+  </Fragment>
 );

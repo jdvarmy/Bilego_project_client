@@ -2,3 +2,5 @@ src/sitemap
 node_modules/
 build
 server.js
+app/theme/bilegoIcons.js
+app/
