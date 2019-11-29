@@ -1,5 +1,7 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
+import 'babel-core/register';
 import 'babel-polyfill';
 
-import { BilegoGateUi } from '../app';
+import { ClientBilegoGateUi } from '../app';
 
-BilegoGateUi();
+ClientBilegoGateUi();
