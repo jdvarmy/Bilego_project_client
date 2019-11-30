@@ -4,3 +4,4 @@ build
 server.js
 app/theme/bilegoIcons.js
 app/
+config/

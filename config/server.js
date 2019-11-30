@@ -15,6 +15,8 @@ import {Provider as MobxProvider} from 'mobx-react';
 import ConfigureStartStore from '../app/ConfigureStartStore';
 import { parse as parseUrl } from 'url';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
+import { ServerStyleSheets, ThemeProvider } from '@material-ui/core/styles';
+import { theme } from '../app/theme';
 
 import * as stores from '../app/stores';
 import { ServerBilegoGateUi } from '../app';
@@ -43,18 +45,24 @@ app.get('*', async (req, res) => {
 
   const css = new Set(); // CSS for all rendered React components
   const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
+  const sheets = new ServerStyleSheets();
 
   const appContent = ReactDOMServer.renderToString(
-    <StyleContext.Provider value={{ insertCss }}>
-      <MobxProvider {...stores} globalStore={store}>
-        <StaticRouter location={location} context={context}>
-          <ServerBilegoGateUi />
-        </StaticRouter>
-      </MobxProvider>
-    </StyleContext.Provider>
+    sheets.collect(
+      <ThemeProvider theme={theme}>
+        <StyleContext.Provider value={{ insertCss }}>
+          <MobxProvider {...stores} globalStore={store}>
+            <StaticRouter location={location} context={context}>
+              <ServerBilegoGateUi />
+            </StaticRouter>
+          </MobxProvider>
+        </StyleContext.Provider>
+      </ThemeProvider>
+    )
   );
 
   const helmet = Helmet.renderStatic();
+  const muicss = sheets.toString();
 
   fs.readFile(indexFile, 'utf8', (err, data) => {
     if (err) {
@@ -62,6 +70,7 @@ app.get('*', async (req, res) => {
       return res.status(500).send('Oops, better luck next time!');
     }
     data = data.replace('__STYLES__', [...css].join(''));
+    data = data.replace('__MUISTYLES__', muicss);
     data = data.replace('__LOADER__', '');
     data = data.replace('<div id=app></div>', `<div id=app>${appContent}</div>`);
     data = data.replace('<div id="app"></div>', `<div id="app">${appContent}</div>`);

@@ -6,6 +6,7 @@ const alias = {
   services: path.resolve('./app/services'),
   stores: path.resolve('./app/stores'),
   theme: path.resolve('./app/theme'),
+  '@material-ui/core': '@material-ui/core/es',
 };
 
 module.exports = alias;
