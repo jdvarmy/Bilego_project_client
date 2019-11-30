@@ -14,8 +14,10 @@ import {Provider as MobxProvider} from 'mobx-react';
 
 import ConfigureStartStore from '../app/ConfigureStartStore';
 import { parse as parseUrl } from 'url';
-import StyleContext from 'isomorphic-style-loader/StyleContext';
-import { ServerStyleSheets, ThemeProvider } from '@material-ui/core/styles';
+
+// import StyleContext from 'isomorphic-style-loader/StyleContext';
+import { JssProvider, SheetsRegistry } from 'react-jss';
+import { ServerStyleSheets, MuiThemeProvider, createGenerateClassName } from '@material-ui/core/styles';
 import { theme } from '../app/theme';
 
 import * as stores from '../app/stores';
@@ -43,33 +45,38 @@ app.get('*', async (req, res) => {
     return res.send(302)
   }
 
-  const css = new Set(); // CSS for all rendered React components
-  const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
-  const sheets = new ServerStyleSheets();
+  // const css = new Set(); // CSS for all rendered React components
+  // const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
+  // const sheets = new ServerStyleSheets();
+  const sheetsRegistry = new SheetsRegistry();
+  const generateClassName = createGenerateClassName();
+  const sheetsManager = new Map();
 
   const appContent = ReactDOMServer.renderToString(
-    sheets.collect(
-      <ThemeProvider theme={theme}>
-        <StyleContext.Provider value={{ insertCss }}>
-          <MobxProvider {...stores} globalStore={store}>
-            <StaticRouter location={location} context={context}>
-              <ServerBilegoGateUi />
-            </StaticRouter>
-          </MobxProvider>
-        </StyleContext.Provider>
-      </ThemeProvider>
-    )
+    // sheets.collect(
+      <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
+        <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+          {/*<StyleContext.Provider value={{ insertCss }}>*/}
+            <MobxProvider {...stores} globalStore={store}>
+              <StaticRouter location={location} context={context}>
+                <ServerBilegoGateUi />
+              </StaticRouter>
+            </MobxProvider>
+          {/*</StyleContext.Provider>*/}
+        </MuiThemeProvider>
+      </JssProvider>
+    // )
   );
 
   const helmet = Helmet.renderStatic();
-  const muicss = sheets.toString();
+  const muicss = sheetsRegistry.toString();
 
   fs.readFile(indexFile, 'utf8', (err, data) => {
     if (err) {
       console.log('Something went wrong:', err);
       return res.status(500).send('Oops, better luck next time!');
     }
-    data = data.replace('__STYLES__', [...css].join(''));
+    // data = data.replace('__STYLES__', [...css].join(''));
     data = data.replace('__MUISTYLES__', muicss);
     data = data.replace('__LOADER__', '');
     data = data.replace('<div id=app></div>', `<div id=app>${appContent}</div>`);

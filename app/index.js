@@ -8,8 +8,10 @@ import { createBrowserHistory, createMemoryHistory } from 'history';
 // import { Helmet } from 'react-helmet';
 import { renderRoutes } from 'react-router-config';
 
-import StyleContext from 'isomorphic-style-loader/StyleContext';
-import { ThemeProvider } from '@material-ui/core/styles';
+// import StyleContext from 'isomorphic-style-loader/StyleContext';
+import { MuiThemeProvider, createGenerateClassName } from '@material-ui/core/styles';
+import { JssProvider } from 'react-jss';
+
 import { Switch, Route, Router } from 'react-router-dom';
 import routes from './routes';
 import * as stores from './stores';
@@ -19,17 +21,11 @@ import { theme } from './theme';
 import { Header } from './components';
 
 export const ClientBilegoGateUi = () => {
-  // React.useEffect(() => {
-  //   const jssStyles = document.querySelector('#jss-server-side');
-  //   if (jssStyles)
-  //     jssStyles.parentElement.removeChild(jssStyles);
-  // }, []);
-
-  const insertCss = (...styles) => {
-    // eslint-disable-next-line no-underscore-dangle
-    const removeCss = styles.map(style => style._insertCss());
-    return () => removeCss.forEach(dispose => dispose());
-  };
+  // const insertCss = (...styles) => {
+  //   // eslint-disable-next-line no-underscore-dangle
+  //   const removeCss = styles.map(style => style._insertCss());
+  //   return () => removeCss.forEach(dispose => dispose());
+  // };
 
   const history = process.env.IS_SERVER
     ? createMemoryHistory({
@@ -47,22 +43,29 @@ export const ClientBilegoGateUi = () => {
 
   const route = [...routes];
 
+  const generateClassName = createGenerateClassName();
+
   hydrate(
-    <ThemeProvider theme={theme}>
-      <StyleContext.Provider value={{ insertCss }}>
-        <MobxProvider {...stores} globalStore={store}>
-          <Router history={history} path={window.location.pathname}>
-            <Header />
-            <Switch>
-              {route.map(props => (
-                <Route {...props} />
-              ))}
-            </Switch>
-          </Router>
-        </MobxProvider>
-      </StyleContext.Provider>
-    </ThemeProvider>,
+    <JssProvider generateClassName={generateClassName}>
+      <MuiThemeProvider theme={theme}>
+        {/*<StyleContext.Provider value={{ insertCss }}>*/}
+          <MobxProvider {...stores} globalStore={store}>
+            <Router history={history} path={window.location.pathname}>
+              <Header />
+              <Switch>
+                {route.map(props => (
+                  <Route {...props} />
+                ))}
+              </Switch>
+            </Router>
+          </MobxProvider>
+        {/*</StyleContext.Provider>*/}
+      </MuiThemeProvider>
+    </JssProvider>,
     document.getElementById('app'),
+    () => {
+      document.getElementById("jss-server").parentNode.removeChild()
+    }
   );
 };
 
