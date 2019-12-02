@@ -9,7 +9,15 @@ const rules = require('./rules');
 const nodeConf = {
   target: 'node',
   entry: './config/server.js',
-  externals: [nodeExternals(), 'react-helmet'],
+  externals: [
+    nodeExternals(),
+    'react-helmet',
+    nodeExternals({
+      whitelist: [
+        /@material-ui\/core\/*./
+      ]
+    })
+  ],
   output: {
     path: path.resolve('build'),
     filename: 'server.js',

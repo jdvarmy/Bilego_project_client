@@ -64,7 +64,7 @@ export const ClientBilegoGateUi = () => {
     </JssProvider>,
     document.getElementById('app'),
     () => {
-      document.getElementById("jss-server").parentNode.removeChild()
+      document.getElementById("jss-server").remove()
     }
   );
 };
