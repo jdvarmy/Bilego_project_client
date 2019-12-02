@@ -5,10 +5,10 @@ export { default as style } from './style';
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#556cd6',
+      main: '#ffffff',
     },
     secondary: {
-      main: '#19857b',
+      main: '#202124',
     },
     background: {
       default: '#fff',

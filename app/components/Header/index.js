@@ -1,16 +1,13 @@
 import React, { Fragment } from 'react';
-// import styled from 'styled-components';
-import { style } from '../../theme';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import NoSsr from '@material-ui/core/NoSsr';
+import { style } from '../../theme';
 
-// import TopMenu from './TopMenu';
+import TopMenu from './TopMenu';
 // import BottomMenu from './BottomMenu';
 // import ScrollMenu from './ScrollMenu';
 // import SearchDrawer from '../Search/SearchDrawer';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   wrapper: {
     maxWidth: '1250px',
     margin: 'auto'
@@ -21,20 +18,14 @@ const useStyles = makeStyles(() => ({
 }));
 
 export default function Header() {
+  const classes = useStyles();
+
   return (
     <Fragment>
-      <div className={useStyles.wrapper}>
-      {/*  <TopMenu />*/}
-        <Box p={2} bgcolor="primary.main" color="primary.contrastText">
-          Server and Client
-        </Box>
-        <NoSsr>
-          <Box p={2} bgcolor="secondary.main" color="primary.contrastText">
-            Client only
-          </Box>
-        </NoSsr>
+      <div className={classes.wrapper}>
+        <TopMenu />
       </div>
-      <div className={useStyles.line} />
+      <div className={classes.line} />
       {/* <Wrapper>*/}
       {/*   <BottomMenu />*/}
       {/*   <ScrollMenu />*/}

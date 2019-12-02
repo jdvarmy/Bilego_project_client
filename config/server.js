@@ -83,7 +83,8 @@ app.get('*', async (req, res) => {
     data = data.replace('<div id="app"></div>', `<div id="app">${appContent}</div>`);
     data = data.replace('<title></title>', helmet.title.toString());
     data = data.replace('<meta name="description" content=""/>', helmet.meta.toString());
-    data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${JSON.stringify(store.toJson())};</script>`);
+    data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${JSON.stringify(store.toJson())};</script>`
+    );
 
     return res.send(data);
   });

@@ -10,7 +10,6 @@ const nodeConf = {
   target: 'node',
   entry: './config/server.js',
   externals: [
-    nodeExternals(),
     'react-helmet',
     nodeExternals({
       whitelist: [

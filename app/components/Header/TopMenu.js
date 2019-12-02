@@ -1,42 +1,50 @@
 import React from 'react';
-import { Col, Row } from 'antd';
-import styled from 'styled-components';
+import { makeStyles } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 
+import { style } from '../../theme';
 // import Social from './Social';
 // import Logo from './Logo';
 // import Cities from './Cities';
-import { style } from '../../theme';
 
-const Wrapper = styled(Row)`
-  height: ${style.$heightMenu}px;
-`;
-const StyledCol = styled(Col)`
-  height: 100%;
-`;
-const LeftCol = styled(StyledCol)`
-  background-color: ${style.$first};
-  padding-left: 30px;
-`;
-const CenterCol = styled(StyledCol)`
-  background-color: ${style.$first};
-`;
-const RightCol = styled(StyledCol)`
-  background-color: ${style.$first};
-  padding-right: 30px;
-`;
+const useStyles = makeStyles(theme => ({
+  wrapper: {
+    maxWidth: '1250px',
+    margin: 'auto'
+  },
+  leftCol: {
+    height: '100%',
+    backgroundColor: style.$first,
+    paddingLeft: '30px',
+  },
+  centerCol: {
+    height: '100%',
+    backgroundColor: style.$first,
+  },
+  rightCol: {
+    height: '100%',
+    backgroundColor: style.$first,
+    paddingRight: '30px'
+  },
+}));
 
 export default function TopMenu() {
+  const classes = useStyles();
+
   return (
-    <Wrapper align="middle" justify="center" type="flex">
-      <LeftCol span={6}>
+    <Grid container className={classes.wrapper} alignItems="center" justify="center">
+      <Grid item className={classes.leftCol} span={6}>
+        1
         {/* <Social />*/}
-      </LeftCol>
-      <CenterCol span={12}>
+      </Grid>
+      <Grid item className={classes.centerCol} span={12}>
+        2
         {/* <Logo />*/}
-      </CenterCol>
-      <RightCol span={6}>
+      </Grid>
+      <Grid item className={classes.rightCol} span={6}>
+        3
         {/* <Cities />*/}
-      </RightCol>
-    </Wrapper>
+      </Grid>
+    </Grid>
   );
 }
