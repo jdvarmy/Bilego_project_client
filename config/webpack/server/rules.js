@@ -27,7 +27,7 @@ const rules = [
           plugins: [
             autoprefixer({
               browsers: [
-                'ie >= 9',
+                'ie >= 8',
                 'last 2 version',
                 'iOS >= 8',
               ],

@@ -8,7 +8,6 @@ import { createBrowserHistory, createMemoryHistory } from 'history';
 // import { Helmet } from 'react-helmet';
 import { renderRoutes } from 'react-router-config';
 
-// import StyleContext from 'isomorphic-style-loader/StyleContext';
 import { MuiThemeProvider, createGenerateClassName } from '@material-ui/core/styles';
 import { JssProvider } from 'react-jss';
 
@@ -21,12 +20,6 @@ import { theme } from './theme';
 import { Header } from './components';
 
 export const ClientBilegoGateUi = () => {
-  // const insertCss = (...styles) => {
-  //   // eslint-disable-next-line no-underscore-dangle
-  //   const removeCss = styles.map(style => style._insertCss());
-  //   return () => removeCss.forEach(dispose => dispose());
-  // };
-
   const history = process.env.IS_SERVER
     ? createMemoryHistory({
       initialEntries: ['/'],
@@ -48,18 +41,16 @@ export const ClientBilegoGateUi = () => {
   hydrate(
     <JssProvider generateClassName={generateClassName}>
       <MuiThemeProvider theme={theme}>
-        {/*<StyleContext.Provider value={{ insertCss }}>*/}
-          <MobxProvider {...stores} globalStore={store}>
-            <Router history={history} path={window.location.pathname}>
-              <Header />
-              <Switch>
-                {route.map(props => (
-                  <Route {...props} />
-                ))}
-              </Switch>
-            </Router>
-          </MobxProvider>
-        {/*</StyleContext.Provider>*/}
+        <MobxProvider {...stores} globalStore={store}>
+          <Router history={history} path={window.location.pathname}>
+            <Header />
+            <Switch>
+              {route.map(props => (
+                <Route {...props} />
+              ))}
+            </Switch>
+          </Router>
+        </MobxProvider>
       </MuiThemeProvider>
     </JssProvider>,
     document.getElementById('app'),

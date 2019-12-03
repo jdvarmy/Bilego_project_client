@@ -58,8 +58,8 @@ module.exports = options => ({
               plugins: [
                 autoprefixer({
                   browsers: [
-                    'ie >= 8',
-                    'last 4 version',
+                    'ie >= 9',
+                    'last 2 version',
                     'iOS >= 8',
                   ],
                 }),
