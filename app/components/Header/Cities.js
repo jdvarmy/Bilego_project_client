@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 import {ModalAnimated, Wrapper} from '../../theme/elements';
 import {observer, inject} from 'mobx-react';
 import {action, observable} from 'mobx';
@@ -27,7 +27,7 @@ const SModal = styled.div`
 @withRouter
 @inject('globalStore', 'pageStore', 'sliderStore', 'mapStore', 'rightPanelStore')
 @observer
-class Cities extends Component{
+class Cities extends React.Component{
   @observable open = false;
 
   @action handleOpen = () => {

@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import styled from 'styled-components';
 import { style } from '../../theme';
 
 import TopMenu from './TopMenu';
@@ -7,31 +7,27 @@ import TopMenu from './TopMenu';
 // import ScrollMenu from './ScrollMenu';
 // import SearchDrawer from '../Search/SearchDrawer';
 
-const useStyles = makeStyles(theme => ({
-  wrapper: {
-    maxWidth: '1250px',
-    margin: 'auto'
-  },
-  line: {
-    borderTop: `1px solid ${style.$grey}`
-  }
-}));
+const Wrapper = styled.div`
+  max-width: 1250px;
+  margin: auto;
+`;
+const Line = styled.div`
+  border-top: 1px solid ${style.$grey};
+`;
 
 export default function Header() {
-  const classes = useStyles();
-
   return (
-    <Fragment>
-      <div className={classes.wrapper}>
+    <React.Fragment>
+      <Wrapper>
         <TopMenu />
-      </div>
-      <div className={classes.line} />
+      </Wrapper>
+      <Line />
       {/* <Wrapper>*/}
       {/*   <BottomMenu />*/}
       {/*   <ScrollMenu />*/}
       {/* </Wrapper>*/}
       {/* <SearchDrawer />*/}
-    </Fragment>
+    </React.Fragment>
   );
 }
 

@@ -51,6 +51,7 @@ export const ClientBilegoGateUi = () => {
     document.getElementById('app'),
     () => {
       document.getElementById("jss-server").remove()
+      // document.querySelector("style[data-styled]").remove()
     }
   );
 };
