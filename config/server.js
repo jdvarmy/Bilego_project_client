@@ -15,8 +15,7 @@ import {Provider as MobxProvider} from 'mobx-react';
 import ConfigureStartStore from '../app/ConfigureStartStore';
 import { parse as parseUrl } from 'url';
 
-import { JssProvider, SheetsRegistry } from 'react-jss';
-import { MuiThemeProvider, createGenerateClassName } from '@material-ui/core/styles';
+import { MuiThemeProvider, createGenerateClassName, ServerStyleSheets } from '@material-ui/core/styles';
 import { theme } from '../app/theme';
 
 import * as stores from '../app/stores';
@@ -44,24 +43,22 @@ app.get('*', async (req, res) => {
     return res.send(302)
   }
 
-  const sheetsRegistry = new SheetsRegistry();
-  const generateClassName = createGenerateClassName();
-  const sheetsManager = new Map();
+  const sheets = new ServerStyleSheets();
 
   const appContent = ReactDOMServer.renderToString(
-    <JssProvider registry={sheetsRegistry} generateClassName={generateClassName}>
-      <MuiThemeProvider theme={theme} sheetsManager={sheetsManager}>
+    sheets.collect(
+      <MuiThemeProvider theme={theme}>
         <MobxProvider {...stores} globalStore={store}>
           <StaticRouter location={location} context={context}>
             <ServerBilegoGateUi />
           </StaticRouter>
         </MobxProvider>
       </MuiThemeProvider>
-    </JssProvider>
+    )
   );
 
   const helmet = Helmet.renderStatic();
-  const muicss = sheetsRegistry.toString();
+  const muicss = sheets.toString();
 
   fs.readFile(indexFile, 'utf8', (err, data) => {
     if (err) {

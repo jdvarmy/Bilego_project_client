@@ -9,7 +9,6 @@ import { createBrowserHistory, createMemoryHistory } from 'history';
 import { renderRoutes } from 'react-router-config';
 
 import { MuiThemeProvider, createGenerateClassName } from '@material-ui/core/styles';
-import { JssProvider } from 'react-jss';
 
 import { Switch, Route, Router } from 'react-router-dom';
 import routes from './routes';
@@ -36,10 +35,7 @@ export const ClientBilegoGateUi = () => {
 
   const route = [...routes];
 
-  const generateClassName = createGenerateClassName();
-
   hydrate(
-    <JssProvider generateClassName={generateClassName}>
       <MuiThemeProvider theme={theme}>
         <MobxProvider {...stores} globalStore={store}>
           <Router history={history} path={window.location.pathname}>
@@ -51,8 +47,7 @@ export const ClientBilegoGateUi = () => {
             </Switch>
           </Router>
         </MobxProvider>
-      </MuiThemeProvider>
-    </JssProvider>,
+      </MuiThemeProvider>,
     document.getElementById('app'),
     () => {
       document.getElementById("jss-server").remove()
