@@ -33,7 +33,7 @@ export const ClientBilegoGateUi = () => {
     window.store = store;
   }
 
-  const route = [...routes];
+  const routs = routes(store.baseNameForRouting);
 
   hydrate(
       <MuiThemeProvider theme={theme}>
@@ -41,7 +41,7 @@ export const ClientBilegoGateUi = () => {
           <Router history={history} path={window.location.pathname}>
             <Header />
             <Switch>
-              {route.map(props => (
+              {routs.map(props => (
                 <Route {...props} />
               ))}
             </Switch>
@@ -56,9 +56,13 @@ export const ClientBilegoGateUi = () => {
   );
 };
 
-export const ServerBilegoGateUi = () => (
-  <Fragment>
-    <Header />
-    {renderRoutes(routes)}
-  </Fragment>
-);
+export const ServerBilegoGateUi = (props) => {
+  const routs = routes(props.serverBaseRout);
+
+  return (
+    <Fragment>
+      <Header/>
+      {renderRoutes(routs)}
+    </Fragment>
+  )
+};

@@ -9,8 +9,10 @@ configure({
 export default class ConfigureStartStore {
   @observable CITY = -1; // Москва == 0, Питер == 1
   @action setCity = val => {
-    this.city = val
+    this.CITY = val
   };
+  cities;
+  @observable daData;
   @observable data;
   @observable history;
 
@@ -34,31 +36,31 @@ export default class ConfigureStartStore {
   @computed get categoriesForMenu(){
     if(this.CITY !== -1) return [
       {
-        id: this.citys[this.city].category.concerts,
+        id: this.cities[this.CITY].category.concerts,
         cat: 'Concerts',
         page: 'page',
         name: 'Концерты',
         link: 'events/concerts',
       }, {
-        id: this.citys[this.city].category.festivals,
+        id: this.cities[this.CITY].category.festivals,
         cat: 'Festivals',
         page: 'page',
         name: 'Фестивали',
         link: 'events/festivals',
       }, {
-        id: this.citys[this.city].category.lectures,
+        id: this.cities[this.CITY].category.lectures,
         cat: 'Lectures',
         page: 'category',
         name: 'Лекции',
         link: 'events/lectures',
       }, {
-        id: this.citys[this.city].category.exhibitions,
+        id: this.cities[this.CITY].category.exhibitions,
         cat: 'Exhibitions',
         page: 'category',
         name: 'Выставки',
         link: 'events/exhibitions',
       }, {
-        id: this.citys[this.city].category.children,
+        id: this.cities[this.CITY].category.children,
         cat: 'Children',
         page: 'category',
         name: 'Детям',
@@ -76,7 +78,11 @@ export default class ConfigureStartStore {
     this.cities = cities;
   }
   @action setData = (initialState) => {
-    this.data = initialState;
+    this.CITY = initialState.CITY;
+    this.cities = initialState.cities;
+    this.daData = initialState.daData;
+    this.data = initialState.data;
+
   };
   @action setHistory = (history) => {
     this.history = history;
@@ -89,15 +95,14 @@ export default class ConfigureStartStore {
       } else if (this.history.location.pathname.indexOf('spb') + 1) {
         this.setCity(1);
       } else {
+        const daData = await this.getSypex(props.ip);
+        const city = daData && daData.city ? daData.city.name_ru : false;
+        const region = daData && daData.region ? daData.region.name_ru : false;
 
-        console.log('MEOW', this.history.location.pathname)
-
-        const daData = await this.getDaData(props.ip);
-
-        if(daData && daData.location && daData.location.value){
-          if(daData.location.value.indexOf('Моск')+1){
+        if(daData && city && region){
+          if( (city && city.indexOf('Москв')+1) || (region && region.indexOf('Московск')+1) ){
             this.setCity(0);
-          }else if(daData.location.value.indexOf('Ленинград')+1 || daData.location.value.indexOf('Санкт-Петербург')+1){
+          }else if( (city && city.indexOf('Петербург')+1) || (region && region.indexOf('Ленинград')+1) ){
             this.setCity(1);
           }else{
             this.setCity(0);
@@ -111,11 +116,12 @@ export default class ConfigureStartStore {
     }
   };
 
-  @action getDaData = flow( function* getDaData(props){
+  @action getSypex = flow( function* getSypex(props){
     try{
       const resp = yield globalService.getSypex(props);
-      console.log(resp.city);
       this.daData = resp;
+
+      return resp;
     }catch(e){
       console.log(e);
     }
@@ -123,6 +129,9 @@ export default class ConfigureStartStore {
 
   toJson() {
     return {
+      CITY: this.CITY,
+      cities: this.cities,
+      daData: this.daData,
       data: this.data,
       history: this.history,
     };

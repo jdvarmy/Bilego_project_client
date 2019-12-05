@@ -35,8 +35,14 @@ app.get('*', async (req, res) => {
     initialEntries: [url],
   });
   const initialState = {};
+  const ip = req.ip ||
+    (req.headers['x-forwarded-for'] || '').split(',').pop() ||
+    req.connection.remoteAddress ||
+    req.socket.remoteAddress ||
+    req.connection.socket.remoteAddress;
+
   const store = new ConfigureStartStore(initialState, history);
-  await store.getData({ip: '91.210.4.1'}); // todo: fix ip
+  await store.getData({ip: ip});
   const location = parseUrl(url);
   const indexFile = path.resolve('./build/main.html');
 
@@ -56,7 +62,7 @@ app.get('*', async (req, res) => {
         <MuiThemeProvider theme={theme}>
           <MobxProvider {...stores} globalStore={store}>
             <StaticRouter location={location} context={context}>
-              <ServerBilegoGateUi />
+              <ServerBilegoGateUi serverBaseRout={store.baseNameForRouting} />
             </StaticRouter>
           </MobxProvider>
         </MuiThemeProvider>

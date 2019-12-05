@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { style } from '../../theme';
 import Social from './Social';
 import Logo from './Logo';
-// import Cities from './Cities';
+import Cities from './Cities';
 
 const Wrapper = styled(Grid)`
   height: ${style.$heightMenu}px;
@@ -35,7 +35,7 @@ export default function TopMenu() {
          <Logo />
       </CenterCol>
       <RightCol item span={6}>
-         {/*<Cities />*/}
+         <Cities />
       </RightCol>
     </Wrapper>
   );
