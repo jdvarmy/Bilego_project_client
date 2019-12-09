@@ -16,6 +16,7 @@ import ConfigureStartStore from '../app/ConfigureStartStore';
 import { parse as parseUrl } from 'url';
 
 import { MuiThemeProvider, ServerStyleSheets } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { theme } from '../app/theme';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 
@@ -61,6 +62,7 @@ app.get('*', async (req, res) => {
       <StyleSheetManager sheet={sheetStyled.instance}>
         <MuiThemeProvider theme={theme}>
           <MobxProvider {...stores} globalStore={store}>
+            <CssBaseline />
             <StaticRouter location={location} context={context}>
               <ServerBilegoGateUi serverBaseRout={store.baseNameForRouting} />
             </StaticRouter>

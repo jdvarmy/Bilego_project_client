@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const autoprefixer = require('autoprefixer');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const alias = require('./../alias');
 
 const plugins = [
@@ -11,6 +12,7 @@ const plugins = [
     { from: 'public/images', to: 'images' },
     { from: 'public/static/**', to: '.' },
   ]),
+  new ExtractTextPlugin('style.css'),
   new webpack.ProvidePlugin({
     // make fetch available
     fetch: 'exports-loader?self.fetch!whatwg-fetch',
@@ -43,6 +45,13 @@ module.exports = options => ({
         test: /\.css$/,
         include: /(node_modules|app)/,
         use: ['css-loader?modules=false'],
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
       },
       {
         test: /\.(eot|svg|otf|ttf|woff|woff2)$/,

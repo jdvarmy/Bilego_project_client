@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
@@ -34,6 +35,7 @@ const nodeConf = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       },
     }),
+    new ExtractTextPlugin('style.css'),
     new webpack.ProvidePlugin({
       window: path.resolve(path.join(__dirname, './../window.mock')),
       document: 'global/document',

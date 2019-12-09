@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { style } from '../../theme';
 
 import TopMenu from './TopMenu';
-// import BottomMenu from './BottomMenu';
+import BottomMenu from './BottomMenu';
 // import ScrollMenu from './ScrollMenu';
 // import SearchDrawer from '../Search/SearchDrawer';
 
@@ -22,10 +22,10 @@ export default function Header() {
         <TopMenu />
       </Wrapper>
       <Line />
-      {/* <Wrapper>*/}
-      {/*   <BottomMenu />*/}
+      <Wrapper>
+        <BottomMenu />
       {/*   <ScrollMenu />*/}
-      {/* </Wrapper>*/}
+      </Wrapper>
       {/* <SearchDrawer />*/}
     </React.Fragment>
   );

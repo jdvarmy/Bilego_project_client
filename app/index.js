@@ -8,7 +8,8 @@ import { createBrowserHistory, createMemoryHistory } from 'history';
 // import { Helmet } from 'react-helmet';
 import { renderRoutes } from 'react-router-config';
 
-import { MuiThemeProvider, createGenerateClassName } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 import { Switch, Route, Router } from 'react-router-dom';
 import routes from './routes';
@@ -37,6 +38,7 @@ export const ClientBilegoGateUi = () => {
 
   hydrate(
       <MuiThemeProvider theme={theme}>
+        <CssBaseline />
         <MobxProvider {...stores} globalStore={store}>
           <Router history={history} path={window.location.pathname}>
             <Header />

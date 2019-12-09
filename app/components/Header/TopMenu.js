@@ -27,14 +27,14 @@ const RightCol = styled(Grid)`
 
 export default function TopMenu() {
   return (
-    <Wrapper container alignItems="center" justify="center">
-      <LeftCol item span={6}>
+    <Wrapper container alignItems="center" justify="center" spacing={0}>
+      <LeftCol item xs>
          <Social />
       </LeftCol>
-      <CenterCol item span={12}>
+      <CenterCol item xs={6}>
          <Logo />
       </CenterCol>
-      <RightCol item span={6}>
+      <RightCol item xs>
          <Cities />
       </RightCol>
     </Wrapper>

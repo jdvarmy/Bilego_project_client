@@ -1,4 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
+import './scss/base.scss';
 
 export { default as style } from './style';
 

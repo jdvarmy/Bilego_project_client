@@ -1,10 +1,10 @@
-import React, {Component, Fragment} from 'react';
-import {NavLink} from 'react-router-dom';
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import {Menu as AntMenu} from 'antd';
-import {style} from '../../theme';
-import {inject, observer} from 'mobx-react';
-import Typography from "@material-ui/core/Typography";
+import { Menu as AntMenu } from 'antd';
+import { style } from '../../theme';
+import { inject, observer } from 'mobx-react';
+import Typography from '@material-ui/core/Typography';
 
 const StyledMenu = styled(AntMenu)`
   position: relative;
@@ -37,17 +37,15 @@ class SMenu extends Component{
     const {globalStore:{baseNameForRouting, categoriesForMenu}} = this.props;
 
     return (
-      <Fragment>
-        <StyledMenu onSelect={this.handleClick} mode="horizontal">
-          {categoriesForMenu.map(el=>(
-            <AntMenu.Item key={el.id} cat={el.cat} page={el.page} name={el.name}>
-              <NavLink to={`/${baseNameForRouting}/${el.link}`} exact activeClassName="menu__item-select" className="menu__item">
-                <Typography component="h6" variant="h6" className="menu__item-name">{el.name}</Typography>
-              </NavLink>
-            </AntMenu.Item>
-          ))}
-        </StyledMenu>
-      </Fragment>
+      <StyledMenu onSelect={this.handleClick} mode="horizontal">
+        {categoriesForMenu.map(el=>(
+          <AntMenu.Item key={el.id} cat={el.cat} page={el.page} name={el.name}>
+            <NavLink to={`/${baseNameForRouting}/${el.link}`} exact activeClassName="menu__item-select" className="menu__item">
+              <Typography component="h6" variant="h6" className="menu__item-name">{el.name}</Typography>
+            </NavLink>
+          </AntMenu.Item>
+        ))}
+      </StyledMenu>
     );
   }
 }

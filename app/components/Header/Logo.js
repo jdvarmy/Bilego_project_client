@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import style from '../../theme/style';
+import {inject, observer} from 'mobx-react';
 // import LogoImg from './Bilego-logo-slogan.png'
 
 const Wrapper = styled.div`
@@ -12,10 +13,11 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
+@inject('globalStore')
+@observer
 class Logo extends Component{
   render() {
-    // const { globalStore: { baseNameForRouting } } = this.props;
-    const baseNameForRouting = '';
+    const { globalStore: { baseNameForRouting } } = this.props;
 
     return (
       <Wrapper>

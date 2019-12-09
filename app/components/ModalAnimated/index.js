@@ -1,9 +1,12 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 
+import Fade from '@material-ui/core/Fade';
 import Modal from '@material-ui/core/Modal';
+import IconButton from '@material-ui/core/IconButton';
 import Backdrop from '@material-ui/core/Backdrop/Backdrop';
 import style from '../../theme/style';
+import { BilegoIconClose } from '../../theme/bilegoIcons';
 
 export default function ModalAnimated(props) {
   const Animate = styled.div`
@@ -80,9 +83,7 @@ export default function ModalAnimated(props) {
       onClose={onClose}
       closeAfterTransition
       BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 350,
-      }}
+      BackdropProps={{timeout: 350,}}
       className="bilego-modal-wrapper"
     >
       <Fade in={show} timeout={50} className={`bilego-modal-fade ${ModalClass ? ModalClass : ''}`}>

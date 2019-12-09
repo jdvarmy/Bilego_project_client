@@ -2,6 +2,7 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const alias = require('../alias');
 const rules = require('./rules');
@@ -25,6 +26,7 @@ const nodeConf = {
       { from: 'public/images', to: 'images' },
       { from: 'public/static/**', to: '.' },
     ]),
+    new ExtractTextPlugin('style.css'),
     new webpack.ProvidePlugin({
       window: path.resolve(path.join(__dirname, './../window.mock')),
       document: 'global/document',

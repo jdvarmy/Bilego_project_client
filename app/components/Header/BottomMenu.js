@@ -1,31 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Col, Row} from 'antd';
-import {style} from '../../theme';
+import Grid from '@material-ui/core/Grid';
+import { style } from '../../theme';
 import SMenu from './SMenu';
 import Search from '../Search';
 
-const Wrapper = styled(Row)`
+const Wrapper = styled(Grid)`
   height: ${style.$heightMenu}px;
 `;
-const StyledCol = styled(Col)`
+const LeftCol = styled(Grid)`
   height: 100%;
-`;
-const LeftCol = styled(StyledCol)`
   background-color: ${style.$first};
   padding-left: 30px;
 `;
-const RightCol = styled(StyledCol)`
+const RightCol = styled(Grid)`
+  height: 100%;
   padding-right: 30px;
 `;
 
 export default function BottomMenu() {
   return(
-    <Wrapper align='middle' type='flex' justify='center'>
-      <LeftCol span={16}>
+    <Wrapper container alignItems="center" justify="center" spacing={0}>
+      <LeftCol item xs={8}>
         <SMenu/>
       </LeftCol>
-      <RightCol span={8}>
+      <RightCol item xs={4}>
         <Search/>
       </RightCol>
     </Wrapper>

@@ -1,4 +1,5 @@
 const autoprefixer = require('autoprefixer');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const rules = [
   {
@@ -12,6 +13,13 @@ const rules = [
     test: /\.css$/,
     include: /(node_modules|app)/,
     use: ['css-loader?modules=false'],
+  },
+  {
+    test: /\.scss$/,
+    use: ExtractTextPlugin.extract({
+      fallback: 'style-loader',
+      use: ['css-loader', 'sass-loader']
+    })
   },
   {
     test: /\.(gif)$/,
