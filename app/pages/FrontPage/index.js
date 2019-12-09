@@ -8,7 +8,7 @@ import Concerts from './Concerts';
 import Selections from './Selections';
 import Items from './Items';
 import {inject, observer} from 'mobx-react';
-import {Spinner} from '../../theme/elements';
+import {Spinner} from '../../components/Spinner';
 import {Spin} from 'antd';
 import DatePickerLine from '../../components/DatePickerLine';
 
