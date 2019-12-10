@@ -1,16 +1,20 @@
 import React from 'react';
 import style from '../../theme/style';
-import {Wrapper} from '../../theme/elements';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import Mapbox from '../Map/Mapbox';
 import TimeLine from '../TimeLine';
 import styled from 'styled-components';
-import {Scrollbars} from 'react-custom-scrollbars';
+import { Scrollbars } from 'react-custom-scrollbars';
 import DatePickerLine from '../DatePickerLine';
 
-const SList = styled.div`
+const Wrapper = styled('div')`
+  height: ${style.$heightMenu}px;
+  display: flex;
+  align-items: center;
+`;
+const StyledList = styled.div`
   position: relative;
   width: 100%;
   height: calc(100% - 80px);
@@ -49,13 +53,13 @@ export default function RightPanel() {
       <Wrapper style={{overflow: 'hidden'}}>
         <DatePickerLine flickity/>
       </Wrapper>
-      <SList>
+      <StyledList>
         <Scroll>
           <Divider />
           <Mapbox/>
           <TimeLine/>
         </Scroll>
-      </SList>
+      </StyledList>
     </Drawer>
   );
 }

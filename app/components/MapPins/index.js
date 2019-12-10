@@ -1,0 +1,1 @@
+export { default as MapDefaultPin } from './MapDefaultPin';

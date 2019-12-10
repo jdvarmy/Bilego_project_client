@@ -1,11 +1,13 @@
-import Grid from '@material-ui/core/Grid';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
+
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import {inject, observer} from 'mobx-react';
-import {Event300} from '../../components/Event';
-import {BlockHeaderText, Next} from '../../theme/elements';
-import {BilegoIconRightArrow} from "../../theme/BilegoIcons";
+import { Event300 } from '../../components/Event';
+import BlockHeaderText from '../../components/BlockHeaderText';
+import Next from '../../components/Next';
+import { BilegoIconRightArrow } from '../../theme/BilegoIcons';
 
 const GridWrap = styled(Grid)`
   min-height: 533px;
@@ -23,6 +25,7 @@ const CardWrap = styled(Card)`
 class EventsSoon extends Component{
   render() {
     const {pageStore:{eventsHot}, globalStore:{baseNameForRouting}} = this.props;
+    const events = eventsHot && eventsHot.length>0 ? eventsHot : [{id:0},{id:1},{id:2}];
 
     return (
       <GridWrap container spacing={4}>
@@ -36,7 +39,7 @@ class EventsSoon extends Component{
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>
-            {eventsHot.map(event=>(
+            {events.map(event=>(
               <Grid key={event.id} item xs={4}>
                 <CardWrap>
                   <Event300 {...event} baseNameForRouting={baseNameForRouting}/>

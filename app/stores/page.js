@@ -1,5 +1,5 @@
-import {observable, action, configure, flow} from 'mobx';
-import {pageService} from "../services";
+import { observable, action, configure, flow } from 'mobx';
+import { pageService } from '../services';
 
 configure({
   enforceActions: 'always'

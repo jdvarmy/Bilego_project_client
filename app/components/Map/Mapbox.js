@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {inject, observer} from 'mobx-react';
-import ReactMapGL, {Marker} from 'react-map-gl';
-import {MapDefaultPin} from '../../theme/elements';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
+import ReactMapGL, { Marker } from 'react-map-gl';
+import { MapDefaultPin } from '../../components/MapPins';
 
 @inject('mapStore', 'rightPanelStore', 'globalStore')
 @observer

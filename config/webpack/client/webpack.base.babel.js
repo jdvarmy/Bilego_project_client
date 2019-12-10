@@ -58,12 +58,11 @@ module.exports = options => ({
         use: 'file-loader',
       },
       {
-        test: /\.(mp4|webm|png|gif)$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-          },
+        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+        loader: require.resolve('url-loader'),
+        options: {
+          limit: 10000,
+          name: 'media/[name].[hash:8].[ext]',
         },
       },
     ],

@@ -1,13 +1,15 @@
-import Grid from '@material-ui/core/Grid';
-import React, {Component} from 'react';
-import styled from 'styled-components';
-import Card from '@material-ui/core/Card';
+import React, { Component } from 'react';
 import {inject, observer} from 'mobx-react';
-import {Event300} from '../../components/Event';
-import {BlockHeaderText, Next} from '../../theme/elements'
-import {BilegoIconRightArrow} from '../../theme/BilegoIcons';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
 import style from '../../theme/style';
-import {NavLink} from 'react-router-dom';
+import { Event300 } from '../../components/Event';
+import BlockHeaderText from '../../components/BlockHeaderText';
+import Next from '../../components/Next';
+import { BilegoIconRightArrow } from '../../theme/BilegoIcons';
 
 const GridWrap = styled(Grid)`
   min-height: 533px;
@@ -30,22 +32,23 @@ const CardWrap = styled(Card)`
 class Concerts extends Component{
   render() {
     const {pageStore:{eventsConcerts}, globalStore:{baseNameForRouting}} = this.props;
+    const events = eventsConcerts && eventsConcerts.length>0 ? eventsConcerts : [{id:0},{id:1},{id:2}];
 
     return (
       <GridWrap container spacing={4}>
         <Grid item xs={12}>
           <SBlockHeaderText>
-            <NavLink to={`/${baseNameForRouting}/events/concerts`} exact activeClassName="" className="">
+            <Link to={`/${baseNameForRouting}/events/concerts`}>
               Концерты
               <Next ariaLabel="buy">
                 {BilegoIconRightArrow} Смотреть все
               </Next>
-            </NavLink>
+            </Link>
           </SBlockHeaderText>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>
-            {eventsConcerts.map(event=>(
+            {events.map(event=>(
               <Grid key={event.id} item xs={4}>
                 <CardWrap>
                   <Event300 {...event} baseNameForRouting={baseNameForRouting}/>

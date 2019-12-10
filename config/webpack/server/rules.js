@@ -22,25 +22,20 @@ const rules = [
     })
   },
   {
-    test: /\.(gif)$/,
-    use: 'file-loader',
+    test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+    loader: require.resolve('url-loader'),
+    options: {
+      limit: 10000,
+      name: 'media/[name].[hash:8].[ext]',
+    },
   },
   {
-    test: /\.(jpe?g|png|ttf|eot|otf|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+    test: /\.(ttf|eot|otf|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
     use: 'base64-inline-loader?limit=1000&name=[name].[ext]',
   },
   {
     test: /\.html$/,
     use: 'html-loader',
-  },
-  {
-    test: /\.(mp4|webm|gif)$/,
-    use: {
-      loader: 'url-loader',
-      options: {
-        limit: true,
-      },
-    },
   },
 ];
 

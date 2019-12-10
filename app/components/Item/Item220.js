@@ -1,7 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import {NavLink} from 'react-router-dom';
+
 import style from '../../theme/style';
+
+import I220 from './images/I220.jpg';
 
 const Wrapper = styled.div`
   overflow: hidden;
@@ -66,16 +69,21 @@ export default function Item220(props){
   const {title, address, name, img, baseNameForRouting} = props;
 
   return (
-    <Wrapper image={img}>
+    <Wrapper image={img !== undefined ? img : I220}>
       <Article>
-        <Img image={img}/>
-        <NavLink to={`/${baseNameForRouting}/item/${name}`} exact>
-          <div className="item-220-hover"/>
-        </NavLink>
-        <Content className="content">
-          <div className="title">{title}</div>
-          <div className="address">{address}</div>
-        </Content>
+        <Img image={img !== undefined ? img : I220}/>
+        {name !== undefined
+        &&
+        <React.Fragment>
+          <Link to={`/${baseNameForRouting}/item/${name}`}>
+            <div className="item-220-hover"/>
+          </Link>
+          <Content className="content">
+            <div className="title">{title}</div>
+            <div className="address">{address}</div>
+          </Content>
+        </React.Fragment>
+        }
       </Article>
     </Wrapper>
   )

@@ -1,12 +1,14 @@
-import Grid from '@material-ui/core/Grid';
 import React, {Component} from 'react';
+import { inject, observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Grid from '@material-ui/core/Grid';
+
 import Card from '@material-ui/core/Card';
-import {Event430, Event200} from '../../components/Event';
-import {inject, observer} from 'mobx-react';
-import {BlockHeaderText, Next} from '../../theme/elements';
-import {BilegoIconRightArrow} from '../../theme/BilegoIcons';
-import {NavLink} from 'react-router-dom';
+import { Event430, Event200 } from '../../components/Event';
+import BlockHeaderText from '../../components/BlockHeaderText';
+import Next from '../../components/Next';
+import { BilegoIconRightArrow } from '../../theme/BilegoIcons';
 import style from '../../theme/style';
 
 const GridWrap = styled(Grid)`
@@ -50,12 +52,12 @@ class EventsSoon extends Component{
       <GridWrap container spacing={4}>
         <Grid item xs={12}>
           <SBlockHeaderText>
-            <NavLink to={`/${baseNameForRouting}/events`} exact activeClassName="" className="">
+            <Link to={`/${baseNameForRouting}/events`}>
               Ближайшие события
               <Next ariaLabel="buy">
-                  {BilegoIconRightArrow} Смотреть все
+                {BilegoIconRightArrow} Смотреть все
               </Next>
-            </NavLink>
+            </Link>
           </SBlockHeaderText>
         </Grid>
         <Grid item xs={4}>

@@ -1,10 +1,16 @@
-import Grid from '@material-ui/core/Grid';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
+
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Selection from '../../components/Selection';
-import {BlockHeaderText} from '../../theme/elements';
-import {inject, observer} from 'mobx-react';
+import BlockHeaderText from '../../components/BlockHeaderText';
+
+import imgWeekends from './images/weekends.jpg';
+import imgArt from './images/art.jpg';
+import imgForKids from './images/bilego_for_kids.jpg';
+import imgTheatre from './images/theatre.jpg';
 
 const GridWrap = styled(Grid)`
   padding: 24px;
@@ -25,25 +31,25 @@ class Selections extends Component{
 
     const selections = {
       weekends: {
-        image: 'https://mos.bilego.ru/wp-content/uploads/cache/images/2019/10/jakuznya/jakuznya-1337482152.jpg',
+        image: imgWeekends,
         title: ['Чем', 'заняться в', 'выходные'],
         mask: 'weekends',
         link: `/${baseNameForRouting}/search/?mask=weekends`
       },
       bilego: {
-        image: 'https://mos.bilego.ru/wp-content/uploads/cache/images/2019/10/moscow-raceway/moscow-raceway-1586251346.jpg',
+        image: imgForKids,
         title: ['Bilego', 'для', 'Детей'],
         mask: 'bilego',
         link: `/${baseNameForRouting}/search/?mask=bilego`
       },
       art: {
-        image: 'https://mos.bilego.ru/wp-content/uploads/cache/images/2019/10/resto-podsolnuhi/resto-podsolnuhi-3204549477.jpeg',
+        image: imgArt,
         title: ['Art', 'лекторий', 'в кино'],
         mask: 'art',
         link: `/${baseNameForRouting}/search/?mask=art`
       },
       theatre: {
-        image: 'https://mos.bilego.ru/wp-content/uploads/cache/images/2019/10/rock-house-klub/rock-house-klub-3415468135.jpg',
+        image: imgTheatre,
         title: ['olympic', 'theatre'],
         mask: 'theatre',
         link: `/${baseNameForRouting}/search/?mask=theatre`

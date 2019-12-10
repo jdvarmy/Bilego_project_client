@@ -1,7 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import {NavLink} from 'react-router-dom';
+
 import style from '../../theme/style';
+
+import I140 from './images/I140.jpg';
 
 const Wrapper = styled.div`
   padding: 36px 0 32px;
@@ -68,7 +71,7 @@ export default function Item140(props){
           {categories.map((cat, k)=>(<span id={cat.id} key={k}>{cat.name}</span>))}
         </div>
         <div className="title">
-          <NavLink to={`/${baseNameForRouting}/item/${name}`} exact>{title}</NavLink>
+          <Link to={`/${baseNameForRouting}/item/${name}`}>{title}</Link>
         </div>
         <div className="address">{addr}</div>
         <div className="metro">
@@ -79,9 +82,9 @@ export default function Item140(props){
         </div>
       </Content>
       <div>
-        <NavLink to={`/${baseNameForRouting}/item/${name}`} exact>
-          <Image image={img}/>
-        </NavLink>
+        <Link to={`/${baseNameForRouting}/item/${name}`}>
+          <Image image={img !== undefined ? img : I140}/>
+        </Link>
       </div>
     </Wrapper>
   )

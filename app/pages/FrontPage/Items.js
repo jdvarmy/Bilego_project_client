@@ -1,13 +1,15 @@
-import Grid from '@material-ui/core/Grid';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import {inject, observer} from 'mobx-react';
-import {Item220} from '../../components/Item';
-import {BlockHeaderText, Next} from '../../theme/elements';
-import {BilegoIconRightArrow} from "../../theme/BilegoIcons";
-import {NavLink} from 'react-router-dom';
-import style from "../../theme/style";
+import { Item220 } from '../../components/Item';
+import BlockHeaderText from '../../components/BlockHeaderText';
+import Next from '../../components/Next';
+import { BilegoIconRightArrow } from '../../theme/BilegoIcons';
+import style from '../../theme/style';
 
 const GridWrap = styled(Grid)`
   padding: 24px;
@@ -29,22 +31,23 @@ const SBlockHeaderText = styled(BlockHeaderText)`
 class Items extends Component{
   render() {
     const {pageStore:{itemsFrontPage}, globalStore:{cityLabel, baseNameForRouting}} = this.props;
+    const items = itemsFrontPage && itemsFrontPage.length>0 ? itemsFrontPage : [{id:0},{id:1},{id:2},{id:3}];
 
     return (
       <GridWrap container spacing={4}>
         <Grid item xs={12}>
           <SBlockHeaderText>
-            <NavLink to={baseNameForRouting + '/items'} exact activeClassName="" className="">
+            <Link to={baseNameForRouting + '/items'}>
               Концертные площадки {cityLabel}
               <Next ariaLabel="buy" href="#">
                 {BilegoIconRightArrow} Смотреть все
               </Next>
-            </NavLink>
+            </Link>
           </SBlockHeaderText>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>
-            {itemsFrontPage.map(item=>(
+            {items.map(item=>(
               <Grid key={item.id} item xs={3}>
                 <CardWrap>
                   <Item220 {...item} baseNameForRouting={baseNameForRouting}/>

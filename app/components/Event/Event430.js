@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import {BilegoIconMenuDotted} from '../../theme/BilegoIcons';
+
 import IconButton from '@material-ui/core/IconButton';
 import style from '../../theme/style';
-import {NavLink} from 'react-router-dom';
-import {TicketsModalButton} from '../TicketsModal';
+import { TicketsModalButton } from '../TicketsModal';
+import { BilegoIconMenuDotted } from '../../theme/BilegoIcons';
+
+import E430 from './images/E430.jpg';
 
 const Div = styled.div`
   z-index: 2;
@@ -96,17 +99,21 @@ export default function Event430(props){
           {BilegoIconMenuDotted}
         </SIconButton>
       </Info>
-      <Image className="event-430-hover" img={img}/>
-      <NavLink to={`/${baseNameForRouting}/event/${name}`} exact>
-        <Hover/>
-      </NavLink>
-      <Content>
-        <Title><NavLink to={`/${baseNameForRouting}/event/${name}`} exact>{title}</NavLink></Title>
-        <TicketsModalButton href={ticket_link}/>
-      </Content>
-      <Footer>
-        <NavLink to={`/${baseNameForRouting}/item/${item_name}`} exact>{item_title}</NavLink>
-      </Footer>
+      <Image className="event-430-hover" img={img !== undefined ? img : E430}/>
+      {name !== undefined &&
+        <React.Fragment>
+          <Link to={`/${baseNameForRouting}/event/${name}`}>
+            <Hover/>
+          </Link>
+          <Content>
+            <Title><Link to={`/${baseNameForRouting}/event/${name}`}>{title}</Link></Title>
+            { ticket_link !== undefined && <TicketsModalButton href={ticket_link}/> }
+          </Content>
+          <Footer>
+            <Link to={`/${baseNameForRouting}/item/${item_name}`}>{item_title}</Link>
+          </Footer>
+        </React.Fragment>
+      }
     </Wrapper>
   )
 }

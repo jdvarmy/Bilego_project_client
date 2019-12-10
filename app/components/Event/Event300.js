@@ -1,8 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 import style from '../../theme/style';
-import {NavLink} from 'react-router-dom';
-import {TicketsModalButton} from '../TicketsModal';
+import { TicketsModalButton } from '../TicketsModal';
+
+import E300 from './images/E300.jpg';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -71,16 +74,23 @@ export default function Event300(props){
 
   return (
     <Wrapper>
-      <NavLink to={`/${baseNameForRouting}/event/${name}`} exact>
-        <Image className="event-300-hover" img={img}/>
-      </NavLink>
-        <Content>
-          <SWrap>
-            <TicketsModalButton href={ticket_link}/>
-          </SWrap>
-          <Title><NavLink to={`/${baseNameForRouting}/event/${name}`} exact>{title}</NavLink></Title>
-          <Span>{day} {month} / <NavLink to={`/${baseNameForRouting}/item/${item_name}`} exact>{item_title}</NavLink></Span>
-        </Content>
+      {img !== undefined
+        ?
+        <React.Fragment>
+          <Link to={`/${baseNameForRouting}/event/${name}`}>
+            <Image className="event-300-hover" img={img}/>
+          </Link>
+          <Content>
+            <SWrap>
+              <TicketsModalButton href={ticket_link}/>
+            </SWrap>
+            <Title><Link to={`/${baseNameForRouting}/event/${name}`}>{title}</Link></Title>
+            <Span>{day} {month} / <Link to={`/${baseNameForRouting}/item/${item_name}`}>{item_title}</Link></Span>
+          </Content>
+        </React.Fragment>
+        :
+        <Image className="event-300-hover" img={E300}/>
+      }
     </Wrapper>
   )
 }

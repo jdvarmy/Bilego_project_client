@@ -1,8 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 import style from '../../theme/style';
-import {NavLink} from 'react-router-dom';
-import {TicketsModalButton} from '../TicketsModal';
+import { TicketsModalButton } from '../TicketsModal';
+
+import E200 from './images/E200.jpg';
 
 const Div = styled.div`
   z-index: 2;
@@ -84,19 +87,26 @@ export default function Event200(props){
 
   return (
     <Wrapper>
-      <Info>
-        <div>{day} {month}</div>
-      </Info>
-      <Image className="event-200-hover" img={img}/>
-      <NavLink to={`/${baseNameForRouting}/event/${name}`} exact>
-        <Hover/>
-      </NavLink>
-      <Content>
-        <Title><NavLink to={`/${baseNameForRouting}/event/${name}`} exact>{title}</NavLink></Title>
-      </Content>
-      <Footer>
-        <TicketsModalButton href={ticket_link}/>
-      </Footer>
+      {img !== undefined
+        ?
+        <React.Fragment>
+          <Info>
+            <div>{day} {month}</div>
+          </Info>
+          <Image className="event-200-hover" img={img}/>
+          <Link to={`/${baseNameForRouting}/event/${name}`} exact>
+            <Hover/>
+          </Link>
+          <Content>
+            <Title><Link to={`/${baseNameForRouting}/event/${name}`} exact>{title}</Link></Title>
+          </Content>
+          <Footer>
+            <TicketsModalButton href={ticket_link}/>
+          </Footer>
+        </React.Fragment>
+        :
+        <Image className="event-200-hover" img={E200}/>
+      }
     </Wrapper>
   )
 }
