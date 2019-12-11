@@ -94,11 +94,11 @@ export default function Event200(props){
             <div>{day} {month}</div>
           </Info>
           <Image className="event-200-hover" img={img}/>
-          <Link to={`/${baseNameForRouting}/event/${name}`} exact>
+          <Link to={`/${baseNameForRouting}/event/${name}`}>
             <Hover/>
           </Link>
           <Content>
-            <Title><Link to={`/${baseNameForRouting}/event/${name}`} exact>{title}</Link></Title>
+            <Title><Link to={`/${baseNameForRouting}/event/${name}`}>{title}</Link></Title>
           </Content>
           <Footer>
             <TicketsModalButton href={ticket_link}/>

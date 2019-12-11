@@ -51,11 +51,11 @@ class Page{
   };
 
   @action
-  getEventsSoon = flow( function* getEventsSoon(){
+  getEventsSoon = flow( function* getEventsSoon(apiRoot){
     this.isLoading = true;
     try{
       this.eventsSoon = [];
-      this.eventsSoon = yield pageService.getEventsSoon();
+      this.eventsSoon = yield pageService.getEventsSoon(apiRoot);
     }catch(e){
       console.log(e);
     }finally {
@@ -63,11 +63,11 @@ class Page{
     }
   }).bind(this);
   @action
-  getEventsHot = flow( function* getEventsHot(){
+  getEventsHot = flow( function* getEventsHot(apiRoot){
     this.isLoading = true;
     try{
       this.eventsHot = [];
-      this.eventsHot = yield pageService.getEventsHot();
+      this.eventsHot = yield pageService.getEventsHot(apiRoot);
     }catch(e){
       console.log(e);
     }finally {
@@ -75,7 +75,7 @@ class Page{
     }
   }).bind(this);
   @action
-  getEventsConcerts = flow( function* getEventsConcerts(params){
+  getEventsConcerts = flow( function* getEventsConcerts(apiRoot, params){
     this.isLoading = true;
     try{
       this.eventsConcerts = [];
@@ -84,7 +84,7 @@ class Page{
         page: 1,
         size: 3
       };
-      this.eventsConcerts = yield pageService.getEventsConcerts(args, params);
+      this.eventsConcerts = yield pageService.getEventsConcerts(apiRoot, args, params);
     }catch(e){
       console.log(e);
     }finally {
@@ -92,7 +92,7 @@ class Page{
     }
   }).bind(this);
   @action
-  getItemsFrontPage = flow( function* getItemsFrontPage(params){
+  getItemsFrontPage = flow( function* getItemsFrontPage(apiRoot, params){
     this.isLoading = true;
     try{
       this.itemsFrontPage = [];
@@ -101,7 +101,7 @@ class Page{
         page: 1,
         size: 4
       };
-      this.itemsFrontPage = yield pageService.getItemsFrontPage(args, params);
+      this.itemsFrontPage = yield pageService.getItemsFrontPage(apiRoot, args, params);
     }catch(e){
       console.log(e);
     }finally {
@@ -109,11 +109,11 @@ class Page{
     }
   }).bind(this);
   @action
-  getPopularOnWeek = flow( function* getPopularOnWeek(){
+  getPopularOnWeek = flow( function* getPopularOnWeek(apiRoot){
     this.isLoading = true;
     try{
       this.popularOnWeek = [];
-      this.popularOnWeek = yield pageService.getPopularOnWeek();
+      this.popularOnWeek = yield pageService.getPopularOnWeek(apiRoot);
     }catch(e){
       console.log(e);
     }finally {
@@ -155,7 +155,7 @@ class Page{
         page: this.pagination.current,
         size: this.pagination.pageSize
       };
-      const response = yield pageService.getEvents(args, {...params});
+      const response = yield pageService.getEvents(apiRoot, args, {...params});
       this.pagination.showButton = response.length === this.pagination.pageSize;
       this.events = [
         ...this.events,
@@ -168,7 +168,7 @@ class Page{
     }
   }).bind(this);
   @action
-  getEventsByCategory = flow( function* getEventsByCategory(params){
+  getEventsByCategory = flow( function* getEventsByCategory(apiRoot, params){
     if(this.isLoading) return;
 
     this.isLoading = true;
@@ -177,7 +177,7 @@ class Page{
         page: this.pagination.current,
         size: this.pagination.pageSize
       };
-      const response = yield pageService.getEventsByCategory(args, {categoryId: params.categoryId});
+      const response = yield pageService.getEventsByCategory(apiRoot, args, {categoryId: params.categoryId});
       console.log(response)
       this.pagination.showButton = response.length === this.pagination.pageSize;
       this.eventsByCategory = [
@@ -192,7 +192,7 @@ class Page{
   }).bind(this);
 
   @action
-  getItems = flow( function* getItems(params){
+  getItems = flow( function* getItems(apiRoot, params){
     this.isLoading = true;
     try{
       const args = {
@@ -200,7 +200,7 @@ class Page{
         size: this.pagination.pageSize
       };
 
-      const response = yield pageService.getItems(args, {...this.itemFilters, ...params});
+      const response = yield pageService.getItems(apiRoot, args, {...this.itemFilters, ...params});
       this.pagination.showButton = response.length === this.pagination.pageSize;
       this.items = [
         ...this.items,
@@ -214,7 +214,7 @@ class Page{
   }).bind(this);
 
   @action
-  getItemsSearch = flow( function* getItemsSearch(params){
+  getItemsSearch = flow( function* getItemsSearch(apiRoot, params){
     this.isLoading = true;
     try{
       const key = this.itemFilters.search.toString() + this.itemFilters.category.toString() + this.pagination.current.toString();
@@ -222,7 +222,7 @@ class Page{
       if(this.ItemsSearchCache.exist(key)){
         this.items = this.ItemsSearchCache.get(key);
       }else {
-        this.items = yield pageService.getItems({page: 1, size: this.pagination.pageSize}, {...this.itemFilters, ...params});
+        this.items = yield pageService.getItems(apiRoot, {page: 1, size: this.pagination.pageSize}, {...this.itemFilters, ...params});
         this.pagination.showButton = this.items.length === this.pagination.pageSize;
         this.ItemsSearchCache.set(key, this.items)
       }
@@ -234,9 +234,9 @@ class Page{
   }).bind(this);
 
   @action
-  getItemsCategoryList = flow( function* getItemsCategoryList(){
+  getItemsCategoryList = flow( function* getItemsCategoryList(apiRoot){
     try{
-      this.itemsCategoryList = yield pageService.getItemsCategoryList();
+      this.itemsCategoryList = yield pageService.getItemsCategoryList(apiRoot);
     }catch(e){
       console.log(e);
     }

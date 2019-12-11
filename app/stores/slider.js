@@ -21,10 +21,10 @@ class Slider{
   };
 
   @action
-  getMainSlides = flow( function* getMainSlides(){
+  getMainSlides = flow( function* getMainSlides(apiRoot){
     this.isLoading = true;
     try{
-      this.slides = yield sliderService.getSlides();
+      this.slides = yield sliderService.getSlides(apiRoot);
     }catch(e){
       console.log(e);
     }finally {

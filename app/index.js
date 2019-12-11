@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { hydrate } from 'react-dom';
 import { Provider as MobxProvider } from 'mobx-react';
 import { createBrowserHistory, createMemoryHistory } from 'history';
@@ -10,14 +10,30 @@ import { renderRoutes } from 'react-router-config';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import styled from 'styled-components';
+import { style } from './theme';
 
-import { Switch, Route, Router } from 'react-router-dom';
+import { Switch, Route, Router, useLocation } from 'react-router-dom';
 import routes from './routes';
 import * as stores from './stores';
 import ConfigureStartStore from './ConfigureStartStore';
 
 import { theme } from './theme';
 import { Header } from './components';
+import RightPanel from './components/RightPanel';
+import Footer from './components/Footer';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
+const Root = styled.div`display: flex;`;
+const Main = styled.div`width: ${style.$leftBodyPanel};`;
 
 export const ClientBilegoGateUi = () => {
   const history = process.env.IS_SERVER
@@ -41,12 +57,19 @@ export const ClientBilegoGateUi = () => {
         <CssBaseline />
         <MobxProvider {...stores} globalStore={store}>
           <Router history={history} path={window.location.pathname}>
-            <Header />
-            <Switch>
-              {routs.map(props => (
-                <Route {...props} />
-              ))}
-            </Switch>
+            <ScrollToTop />
+            <Root>
+              <Main>
+                <Header />
+                <Switch>
+                  {routs.map(props => (
+                    <Route {...props} />
+                  ))}
+                </Switch>
+                <RightPanel />
+              </Main>
+            </Root>
+            <Footer />
           </Router>
         </MobxProvider>
       </MuiThemeProvider>,
@@ -63,8 +86,14 @@ export const ServerBilegoGateUi = (props) => {
 
   return (
     <Fragment>
-      <Header/>
-      {renderRoutes(routs)}
+      <Root>
+        <Main>
+          <Header/>
+          {renderRoutes(routs)}
+          <RightPanel />
+        </Main>
+      </Root>
+      <Footer />
     </Fragment>
   )
 };

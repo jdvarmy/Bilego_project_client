@@ -6,7 +6,7 @@ import { Spin } from 'antd';
 import NoSsr from '@material-ui/core/NoSsr';
 
 import style from '../../theme/style';
-// import Slider from '../../components/Slider';
+import Slider from '../../components/Slider';
 import EventsSoon from './EventsSoon';
 import EventsHot from './EventsHot';
 import Concerts from './Concerts';
@@ -27,12 +27,12 @@ const DateContainer = styled.div`
 @observer
 class FrontPage extends Component {
   componentDidMount() {
-    const {pageStore:{getEventsConcerts, getEventsHot, getEventsSoon, getItemsFrontPage}, globalStore:{categoryConcertsForFrontPage}} = this.props;
-    getEventsSoon();
-    getEventsHot();
-    getEventsConcerts({categoryId: categoryConcertsForFrontPage});
-    getItemsFrontPage({orderby: 'rand'});
-    this.props.sliderStore.getMainSlides();
+    const {pageStore:{getEventsConcerts, getEventsHot, getEventsSoon, getItemsFrontPage}, globalStore:{categoryConcertsForFrontPage, apiRoot}} = this.props;
+    getEventsSoon(apiRoot);
+    getEventsHot(apiRoot);
+    getEventsConcerts(apiRoot, {categoryId: categoryConcertsForFrontPage});
+    getItemsFrontPage(apiRoot, {orderby: 'rand'});
+    this.props.sliderStore.getMainSlides(apiRoot);
   }
 
   render() {
@@ -42,7 +42,7 @@ class FrontPage extends Component {
       <Spin spinning={pageStore.isLoading || sliderStore.isLoading} indicator={<Spinner leftPadding={27/2}/>}>
         <div>
           <NoSsr>
-            {/*<Slider type="main"/>*/}
+            <Slider type="main"/>
           </NoSsr>
         </div>
         <DateContainer align='middle' type='flex' justify='center'>

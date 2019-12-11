@@ -1,6 +1,6 @@
-import {observable, action, configure} from 'mobx';
-import {FlyToInterpolator} from 'react-map-gl';
-import {easeCubic} from 'd3-ease';
+import { observable, action, configure } from 'mobx';
+import { FlyToInterpolator } from 'react-map-gl';
+import { easeCubic } from 'd3-ease';
 import WebMercatorViewport from 'viewport-mercator-project';
 
 configure({
@@ -14,7 +14,7 @@ class Map{
 
   @observable viewport = {
     width: '100%',
-    height: 400,
+    height: 378,
     // latitude: this.mapData.latitude,
     // longitude: this.mapData.longitude,
     zoom: 9,

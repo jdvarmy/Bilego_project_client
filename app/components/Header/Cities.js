@@ -86,7 +86,7 @@ class Cities extends React.Component{
   };
 
   handlerClick = id => {
-    if(this.props.globalStore.city !== id)
+    if(this.props.globalStore.CITY !== id)
       this.changeCity(id);
 
     this.handleOpen();

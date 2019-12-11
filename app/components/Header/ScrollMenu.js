@@ -1,14 +1,15 @@
-import React, {Fragment} from 'react';
-import style from '../../theme/style'
-import Menu from './Menu';
+import React from 'react';
+import styled from 'styled-components';
+
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Slide from '@material-ui/core/Slide';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import { Col, Row } from 'antd';
+import style from '../../theme/style'
+import Menu from './Menu';
 import Search from '../Search';
-import {Col, Row} from 'antd';
-import styled from "styled-components";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -72,22 +73,20 @@ export default function ScrollMenuFunction(props){
   const classes = useStyles();
 
   return(
-    <Fragment>
-      <HideOnScroll {...props}>
-        <AppBar className={classes.root}>
-          <Toolbar>
-            <Wrapper align='middle' type='flex' justify='center'>
-              <StyledCol span={16}>
-                <Menu/>
-              </StyledCol>
-              <StyledCol span={8}>
-                <Search/>
-              </StyledCol>
-            </Wrapper>
-          </Toolbar>
-        </AppBar>
-      </HideOnScroll>
-    </Fragment>
+    <HideOnScroll {...props}>
+      <AppBar className={classes.root}>
+        <Toolbar>
+          <Wrapper align='middle' type='flex' justify='center'>
+            <StyledCol span={16}>
+              <Menu/>
+            </StyledCol>
+            <StyledCol span={8}>
+              <Search/>
+            </StyledCol>
+          </Wrapper>
+        </Toolbar>
+      </AppBar>
+    </HideOnScroll>
   );
 }
 

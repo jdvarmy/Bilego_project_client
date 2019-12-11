@@ -9,6 +9,8 @@ const alias = require('./../alias');
 const plugins = [
   new ProgressBarPlugin(),
   new CopyWebpackPlugin([
+    { from: 'public/css', to: 'css' },
+    { from: 'public/scripts', to: 'scripts' },
     { from: 'public/images', to: 'images' },
     { from: 'public/static/**', to: '.' },
   ]),

@@ -39,7 +39,7 @@ class Items extends Component{
           <SBlockHeaderText>
             <Link to={baseNameForRouting + '/items'}>
               Концертные площадки {cityLabel}
-              <Next ariaLabel="buy" href="#">
+              <Next ariaLabel="buy">
                 {BilegoIconRightArrow} Смотреть все
               </Next>
             </Link>

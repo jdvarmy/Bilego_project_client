@@ -1,10 +1,11 @@
-import React, {Component, Fragment} from 'react';
-import {inject, observer} from 'mobx-react';
+import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import {BilegoIconLoading} from '../../theme/BilegoIcons';
+
 import Fab from '@material-ui/core/Fab';
 import style from '../../theme/style';
-import {NavLink} from 'react-router-dom';
+import { BilegoIconLoading } from '../../theme/BilegoIcons';
 
 const Wrapper = styled.div`
   position: relative;
@@ -27,7 +28,6 @@ const SFab = styled(Fab)`
 const LoadMore = styled.div`
   display: flex;
 `;
-
 const LineContainer = styled.div`
   margin-top: 30px;
   margin-left: 30px;
@@ -49,7 +49,7 @@ const Date = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background: ${style.$white}
+  background: ${style.$white};
   & div:first-child{
     font-size: 1.8em;
   }
@@ -129,13 +129,13 @@ const LineEventContent = styled.div`
     font-size: 18px;
     line-height: 24px;
     margin-bottom: 5px;
-    color: ${style.$black}
+    color: ${style.$black};
     &:hover{
-      color: ${style.$red}
+      color: ${style.$red};
     }
   }
   & > div:last-child{
-    color: ${style.$greydark}
+    color: ${style.$greydark};
   }
 `;
 
@@ -158,17 +158,17 @@ const LineEventContent = styled.div`
 @observer
 class TimeLine extends Component {
   componentDidMount() {
-    const {rightPanelStore:{getDataTimeLine, clear}} = this.props;
+    const {rightPanelStore:{getDataTimeLine, clear}, globalStore:{apiRoot}} = this.props;
 
     clear();
-    getDataTimeLine();
+    getDataTimeLine(apiRoot);
   }
 
   loadMore = () => {
-    const {rightPanelStore:{pagination, setPagination, getDataTimeLine}} = this.props;
+    const {rightPanelStore:{pagination, setPagination, getDataTimeLine}, globalStore:{apiRoot}} = this.props;
 
     setPagination(pagination.current + 1);
-    getDataTimeLine();
+    getDataTimeLine(apiRoot);
   };
 
   render() {
@@ -191,15 +191,15 @@ class TimeLine extends Component {
                     <LineEvent className="bilego-line-event" key={e.e_id}>
                       <span className="line-event-dot"/>
                       <LineEventImage img={e.e_img}>
-                        <NavLink to={`/${baseNameForRouting}/event/${e.e_name}`} exact>
+                        <Link to={`/${baseNameForRouting}/event/${e.e_name}`}>
                           <div className="event-image"/>
                           <div className="event-image-overlay"/>
-                        </NavLink>
+                        </Link>
                       </LineEventImage>
                       <LineEventContent>
-                        <NavLink to={`/${baseNameForRouting}/event/${e.e_name}`} exact>
+                        <Link to={`/${baseNameForRouting}/event/${e.e_name}`}>
                           {e.e_title}
-                        </NavLink>
+                        </Link>
                         <div>{e.i_title}</div>
                       </LineEventContent>
                     </LineEvent>

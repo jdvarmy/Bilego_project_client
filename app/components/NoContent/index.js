@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import image from '../../theme/images/screen-2.jpg';
+// import image from '../../theme/images/screen-2.jpg';
 
 const Wrap = styled.div`
   height: 100%;
-  // background-image: url('${image}');
   background-position: center;
   background-repeat: no-repeat;
 `;

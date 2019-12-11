@@ -1,14 +1,17 @@
-import 'date-fns';
-import React, {Component, Fragment} from 'react';
-import Grid from '@material-ui/core/Grid';
+import React, { Component, Fragment } from 'react';
+import { inject, observer } from 'mobx-react';
+import { action, observable } from 'mobx';
+import { withRouter } from 'react-router-dom';
+import Flickity from 'react-flickity-component';
 import DateFnsUtils from '@date-io/date-fns';
 import ruLocale from 'date-fns/locale/ru';
-import {MuiPickersUtilsProvider} from '@material-ui/pickers';
-import {ArrowDown, BilegoIconCalendar} from '../../theme/BilegoIcons';
+import clsx from 'clsx';
+import 'date-fns';
+
+import Grid from '@material-ui/core/Grid';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import Fab from '@material-ui/core/Fab';
 import Popover from '@material-ui/core/Popover';
-import {inject, observer} from 'mobx-react';
-import {action, observable} from 'mobx';
 import { Calendar } from '@material-ui/pickers'
 import Box from '@material-ui/core/Box';
 import styled from 'styled-components'
@@ -17,13 +20,11 @@ import Button from '@material-ui/core/Button';
 import createStyles from '@material-ui/styles/createStyles';
 import IconButton from '@material-ui/core/IconButton';
 import withStyles from '@material-ui/core/styles/withStyles';
-import clsx from 'clsx';
 import format from 'date-fns/format';
 import isBefore from 'date-fns/isBefore';
 import isSameDay from 'date-fns/isSameDay';
 import style from '../../theme/style';
-import {withRouter} from 'react-router-dom';
-import Flickity from 'react-flickity-component';
+import { ArrowDown, BilegoIconCalendar } from '../../theme/BilegoIcons';
 
 const SBox = styled(Box)`
   width: 224px;
@@ -186,7 +187,10 @@ class DatePickerLine extends Component{
     return (
       <Fragment>
         <div style={{paddingLeft: '20px'}} />
-        {this.props.flickity ? <Flickity options={{prevNextButtons: false, pageDots: false, contain: true, freeScroll: true}}>{Buttons}</Flickity> : Buttons}
+        {this.props.flickity
+          ? <Flickity options={{prevNextButtons: false, pageDots: false, contain: true, freeScroll: true}}>{Buttons}</Flickity>
+          : Buttons //todo: Warning: Cannot update during an existing state transition (such as within `render`). Render methods should be a pure function of props and state.
+        }
         <div style={{paddingLeft: '20px'}} />
         <Popover
           id={id}

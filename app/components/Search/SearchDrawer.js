@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
+
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import SearchResult from './SearchResult';
-import {inject, observer} from 'mobx-react';
 import style from '../../theme/style';
 
 const StyledDrawer = styled(SwipeableDrawer)`

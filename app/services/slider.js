@@ -1,5 +1,5 @@
 import requests from './helpers/requests';
 
 export default {
-  getSlides: () => requests.get('/slider/slides'),
+  getSlides: (apiRoot) => requests.get(apiRoot+'/slider/slides'),
 }

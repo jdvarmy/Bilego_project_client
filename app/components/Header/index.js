@@ -4,8 +4,8 @@ import { style } from '../../theme';
 
 import TopMenu from './TopMenu';
 import BottomMenu from './BottomMenu';
-// import ScrollMenu from './ScrollMenu';
-// import SearchDrawer from '../Search/SearchDrawer';
+import ScrollMenu from './ScrollMenu';
+import SearchDrawer from '../Search/SearchDrawer';
 
 const Wrapper = styled.div`
   max-width: 1250px;
@@ -24,9 +24,9 @@ export default function Header() {
       <Line />
       <Wrapper>
         <BottomMenu />
-      {/*   <ScrollMenu />*/}
+        <ScrollMenu />
       </Wrapper>
-      {/* <SearchDrawer />*/}
+       <SearchDrawer />
     </React.Fragment>
   );
 }

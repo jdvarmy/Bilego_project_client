@@ -1,14 +1,16 @@
-import React, {Component, Fragment} from 'react';
-import Grid from '@material-ui/core/Grid';
+import React, { Component, Fragment } from 'react';
+import { inject } from 'mobx-react';
 import styled from 'styled-components';
-import {style} from '../../theme';
-import lama from '../../theme/images/screen-2.jpg';
+
+import Grid from '@material-ui/core/Grid';
+import { style } from '../../theme';
 import Top4 from './Top4';
 import Top8 from './Top8';
 import Bottom4 from './Bottom4';
 import Bottom8 from './Bottom8';
 import ModalFrame from '../TicketsModal/ModalFrame';
-import {inject} from "mobx-react";
+
+import lama from './images/screen-2.jpg';
 
 const Wrapper = styled(Grid)`
   &.MuiGrid-root{
@@ -33,7 +35,7 @@ const Backgr = styled.div`
   height: 100%;
 `;
 const SBackgr = styled(Backgr)`
-  background: ${style.$second}
+  background: ${style.$second};
   opacity: 0.8;
 `;
 const Image = styled(Backgr)`

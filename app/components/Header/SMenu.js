@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
+
+import Typography from '@material-ui/core/Typography';
 import { Menu as AntMenu } from 'antd';
 import { style } from '../../theme';
-import { inject, observer } from 'mobx-react';
-import Typography from '@material-ui/core/Typography';
 
 const StyledMenu = styled(AntMenu)`
   position: relative;
@@ -22,7 +23,7 @@ const StyledMenu = styled(AntMenu)`
 class SMenu extends Component{
   handleClick = e => {
     const {cat, page, name} = e.item.props,
-      {pageStore:{changeCategoryEvent, changePageType, changePageName, clear}} = this.props;
+      {pageStore:{changeCategoryEvent, changePageType, changePageName, clear}, globalStore:{apiRoot}} = this.props;
 
     clear();
     changePageName(name);
@@ -30,7 +31,7 @@ class SMenu extends Component{
     changeCategoryEvent(e.key, cat);
 
     const {pageStore:{categoryEventId, getEventsByCategory}} = this.props;
-    getEventsByCategory({categoryId: categoryEventId});
+    getEventsByCategory(apiRoot, {categoryId: categoryEventId});
   };
 
   render() {

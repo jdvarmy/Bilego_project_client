@@ -7,10 +7,10 @@ import { MapDefaultPin } from '../../components/MapPins';
 @observer
 class Mapbox extends Component {
   componentDidMount() {
-    const {globalStore:{city, citys}, mapStore:{viewport, setViewport}} = this.props;
+    const {globalStore:{CITY, cities}, mapStore:{viewport, setViewport}} = this.props;
     const vp = {
       ...viewport,
-      ...citys[city].mapData
+      ...cities[CITY].mapData
     };
     setViewport(vp);
   }
@@ -30,16 +30,14 @@ class Mapbox extends Component {
         onViewportChange={setViewport}
         onLoad={() => {autoFit(rightPanelStore.markers)}}
       >
-        {
-          rightPanelStore.markers.map(el=>{
-            const coords = el.events[0].i_map;
-            return(
-              <Marker key={el.itemId} latitude={coords.lat*1} longitude={coords.lng*1} offsetLeft={-28} offsetTop={-34}>
-                <MapDefaultPin onClick={this.handlerClick}/>
-              </Marker>
-            )
-          })
-        }
+        {rightPanelStore.markers.map(el=>{
+          const coords = el.events[0].i_map;
+          return(
+            <Marker key={el.itemId} latitude={coords.lat*1} longitude={coords.lng*1} offsetLeft={-28} offsetTop={-34}>
+              <MapDefaultPin onClick={this.handlerClick}/>
+            </Marker>
+          )
+        })}
       </ReactMapGL>
     );
   }

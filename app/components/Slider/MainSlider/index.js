@@ -1,6 +1,5 @@
-import React, {Fragment, useEffect, useRef} from 'react';
-import {Link} from 'react-router-dom';
-import {globalStore} from '../../../stores';
+import React, { Fragment, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 let sliderLayer = 1;
 
@@ -19,7 +18,7 @@ export default function MainSlider (props) {
         <SliderZone id={slide.id} title={slide.image_title} title1={slide.image_title1}
                     title2={slide.image_title2}/>
         <SliderGroup id={slide.id} slidesCnt={slides.length} slideNumber={k + 1}/>
-        <SliderLayer id={slide.id} link={`/${globalStore.baseNameForRouting}/event/${slide.name}`}/>
+        <SliderLayer id={slide.id} link={`/${props.baseNameForRouting}/event/${slide.name}`}/>
       </Slide>
     ))
   };

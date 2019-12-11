@@ -1,5 +1,5 @@
-import {observable, action, configure, flow} from 'mobx';
-import {rightPanelService} from "../services";
+import { observable, action, configure, flow } from 'mobx';
+import { rightPanelService } from '../services';
 
 configure({
   enforceActions: 'always'
@@ -29,10 +29,10 @@ class RightPanel{
   };
 
   @action
-  getDataTimeLine = flow( function* getDataTimeLine(params){
+  getDataTimeLine = flow( function* getDataTimeLine(apiRoot, params){
     this.isLoading = true;
     try{
-      const response = yield rightPanelService.getDataTimeLine({page: this.pagination.current, size: this.pagination.pageSize, ...params});
+      const response = yield rightPanelService.getDataTimeLine(apiRoot, {page: this.pagination.current, size: this.pagination.pageSize, ...params});
       this.pagination.showButton = response.length === this.pagination.pageSize;
 
       this.temporaryResponseEvents = [

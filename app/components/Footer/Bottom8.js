@@ -1,8 +1,9 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
+
 import styled from 'styled-components';
-import {Menu as AntMenu} from 'antd';
-import {style} from '../../theme';
-import {NavLink} from 'react-router-dom';
+import { Menu as AntMenu } from 'antd';
+import { style } from '../../theme';
 
 const StyledMenu = styled(AntMenu)`
   position: relative;
@@ -34,34 +35,34 @@ export default function Bottom8(props){
     <Fragment>
       <StyledMenu mode="horizontal">
         <AntMenu.Item key="Main">
-          <NavLink to={`/${baseNameForRouting}`} exact activeClassName="" className="">
+          <Link to={`/${baseNameForRouting}`}>
             <span className="">Главная</span>
-          </NavLink>
+          </Link>
         </AntMenu.Item>
         <AntMenu.Item key="Advertising">
-          <NavLink to={`/${baseNameForRouting}/advertising`} exact activeClassName="" className="">
+          <Link to={`/${baseNameForRouting}/advertising`}>
             <span className="">Реклама</span>
-          </NavLink>
+          </Link>
         </AntMenu.Item>
         <AntMenu.Item key="Contacts">
-          <NavLink to={`/${baseNameForRouting}/contacts`} exact activeClassName="" className="">
+          <Link to={`/${baseNameForRouting}/contacts`}>
             <span className="">Контакты</span>
-          </NavLink>
+          </Link>
         </AntMenu.Item>
         <AntMenu.Item key="Offer">
-          <NavLink to={`/${baseNameForRouting}/offer`} exact activeClassName="" className="">
+          <Link to={`/${baseNameForRouting}/offer`}>
             <span className="">Оферта</span>
-          </NavLink>
+          </Link>
         </AntMenu.Item>
         <AntMenu.Item key="Events">
-          <NavLink to={`/${baseNameForRouting}/events`} exact activeClassName="" className="">
+          <Link to={`/${baseNameForRouting}/events`}>
             <span className="">События</span>
-          </NavLink>
+          </Link>
         </AntMenu.Item>
         <AntMenu.Item key="Items">
-          <NavLink to={`/${baseNameForRouting}/items`} exact activeClassName="" className="">
+          <Link to={`/${baseNameForRouting}/items`}>
             <span className="">Места</span>
-          </NavLink>
+          </Link>
         </AntMenu.Item>
       </StyledMenu>
     </Fragment>

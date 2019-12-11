@@ -1,14 +1,21 @@
 import React from 'react';
-import style from '../../theme/style';
+import Mapbox from '../Map/Mapbox';
+import styled from 'styled-components';
+import { Scrollbars } from 'react-custom-scrollbars';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
-import Mapbox from '../Map/Mapbox';
+import { NoSsr } from '@material-ui/core';
+import style from '../../theme/style';
 import TimeLine from '../TimeLine';
-import styled from 'styled-components';
-import { Scrollbars } from 'react-custom-scrollbars';
 import DatePickerLine from '../DatePickerLine';
 
+const StyledDrawer = styled(Drawer)`
+  & .MuiPaper-root{
+    overflow: hidden;
+  }
+`;
 const Wrapper = styled('div')`
   height: ${style.$heightMenu}px;
   display: flex;
@@ -17,7 +24,7 @@ const Wrapper = styled('div')`
 const StyledList = styled.div`
   position: relative;
   width: 100%;
-  height: calc(100% - 80px);
+  height: calc(100% - 458px);
 `;
 const Scroll = styled(Scrollbars)`
     height: 100%;
@@ -44,7 +51,7 @@ export default function RightPanel() {
   const classes = useStyles();
 
   return(
-    <Drawer
+    <StyledDrawer
       className={`${classes.drawer} bilego-drawer`}
       variant="permanent"
       anchor="right"
@@ -54,12 +61,14 @@ export default function RightPanel() {
         <DatePickerLine flickity/>
       </Wrapper>
       <StyledList>
-        <Scroll>
-          <Divider />
+        <Divider />
+        <NoSsr>
           <Mapbox/>
-          <TimeLine/>
-        </Scroll>
+          <Scroll>
+            <TimeLine/>
+          </Scroll>
+        </NoSsr>
       </StyledList>
-    </Drawer>
+    </StyledDrawer>
   );
 }

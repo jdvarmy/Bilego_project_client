@@ -9,8 +9,7 @@ const handleErrors = error => {
 };
 
 const handleCatch = (url, err) => {
-  console.log(url)
-  console.log(err)
+  console.log(url, err)
 };
 
 const responseBody = res => res.body || res.text;
@@ -26,7 +25,7 @@ const tokenPlugin = request => {
 export default {
   get: (url, query = {}) =>
     http
-      .get(`${globalStore.apiRoot}${url}`)
+      .get(`${url}`)
       .query(query)
       .use(tokenPlugin)
       .end(handleErrors)
@@ -34,7 +33,7 @@ export default {
       .catch(err => handleCatch(url, err)),
   post: (url, query = {}, body = {}) =>
     http
-      .post(`${globalStore.apiRoot}${url}`, body)
+      .post(`${url}`, body)
       .query(query)
       .use(tokenPlugin)
       .end(handleErrors)
