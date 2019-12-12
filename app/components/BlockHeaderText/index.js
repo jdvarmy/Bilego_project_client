@@ -4,17 +4,18 @@ import makeStyles from '@material-ui/core/styles/makeStyles';
 
 import { style } from '../../theme';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   title: {
     color: style.$black
-  },
+  }
 }));
 
 export default function BlockHeaderText(props) {
   const classes = useStyles();
-  return(
-    <Typography variant="h3" component="h3" className={classes.title}>
+  return (
+    <Typography className={classes.title} component="h3" variant="h3">
+      {/* eslint-disable-next-line react/prop-types */}
       {props.children}
     </Typography>
-  )
-};
+  );
+}
