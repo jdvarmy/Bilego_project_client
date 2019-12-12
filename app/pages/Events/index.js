@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Fab from '@material-ui/core/Fab';
+import NoSsr from '@material-ui/core/NoSsr';
 import { Spin } from 'antd';
 import Spinner from '../../components/Spinner';
 import BlockHeaderText from '../../components/BlockHeaderText';
@@ -71,10 +72,12 @@ class Events extends Component{
               }
             </GridCont>
             <Grid container spacing={4}>
-              {showButton &&
-              <SFab disabled={isLoading} onClick={this.loadMore} variant="extended" aria-label="load" style={{opacity: `${p=>p.loading ? 0 : 1}`}}>
-                {BilegoIconLoading} load more
-              </SFab>}
+              <NoSsr>
+                {showButton &&
+                <SFab disabled={isLoading} onClick={this.loadMore} variant="extended" aria-label="load" style={{opacity: `${p=>p.loading ? 0 : 1}`}}>
+                  {BilegoIconLoading} load more
+                </SFab>}
+              </NoSsr>
             </Grid>
           </Spin>
         </Grid>

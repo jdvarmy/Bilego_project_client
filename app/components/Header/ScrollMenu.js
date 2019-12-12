@@ -1,12 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Slide from '@material-ui/core/Slide';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { makeStyles } from '@material-ui/core/styles';
-import { Col, Row } from 'antd';
+import Grid from '@material-ui/core/Grid';
 import style from '../../theme/style'
 import Menu from './Menu';
 import Search from '../Search';
@@ -61,14 +60,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Wrapper = styled(Row)`
-  height: ${style.$heightMenu}px;
-  width: 100%;
-`;
-const StyledCol = styled(Col)`
-  height: 100%;
-`;
-
 export default function ScrollMenuFunction(props){
   const classes = useStyles();
 
@@ -76,14 +67,14 @@ export default function ScrollMenuFunction(props){
     <HideOnScroll {...props}>
       <AppBar className={classes.root}>
         <Toolbar>
-          <Wrapper align='middle' type='flex' justify='center'>
-            <StyledCol span={16}>
+          <Grid container alignItems="center" justify="center" spacing={0}>
+            <Grid item xs={8}>
               <Menu/>
-            </StyledCol>
-            <StyledCol span={8}>
+            </Grid>
+            <Grid item xs={4}>
               <Search/>
-            </StyledCol>
-          </Wrapper>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
     </HideOnScroll>

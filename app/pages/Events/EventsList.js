@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Fab from '@material-ui/core/Fab';
+import NoSsr from '@material-ui/core/NoSsr';
 import { Spin } from 'antd';
 import { Event300 } from '../../components/Event';
 import Spinner from '../../components/Spinner';
@@ -30,7 +31,7 @@ const SFab = styled(Fab)`
 @observer
 class EventsList extends Component{
   componentDidMount() {
-    const {pageStore:{categoryEventId, getEventsByCategory, clear}} = this.props;
+    const {pageStore:{categoryEventId, getEventsByCategory, clear}, globalStore:{apiRoot}} = this.props;
 
     if(categoryEventId === 0){
       const {pageStore:{changeCategoryEvent, changePageType, changePageName}, globalStore:{categoriesForMenu}} = this.props;
@@ -45,7 +46,7 @@ class EventsList extends Component{
     }
 
     clear();
-    getEventsByCategory({categoryId: this.props.pageStore.categoryEventId});
+    getEventsByCategory(apiRoot, {categoryId: this.props.pageStore.categoryEventId});
   };
 
   loadMore = () => {
@@ -77,10 +78,12 @@ class EventsList extends Component{
           }
         </GridWrap>
         <Grid container spacing={4}>
-          {showButton &&
-          <SFab disabled={isLoading} onClick={this.loadMore} variant="extended" aria-label="load" style={{opacity: `${p=>p.loading ? 0 : 1}`}}>
-            {BilegoIconLoading} Загрузить ещё
-          </SFab>}
+          <NoSsr>
+            {showButton &&
+            <SFab disabled={isLoading} onClick={this.loadMore} variant="extended" aria-label="load" style={{opacity: `${p=>p.loading ? 0 : 1}`}}>
+              {BilegoIconLoading} Загрузить ещё
+            </SFab>}
+          </NoSsr>
         </Grid>
       </Spin>
     );

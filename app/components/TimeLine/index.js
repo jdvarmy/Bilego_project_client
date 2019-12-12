@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
 import Fab from '@material-ui/core/Fab';
+import NoSsr from '@material-ui/core/NoSsr';
 import style from '../../theme/style';
 import { BilegoIconLoading } from '../../theme/BilegoIcons';
 
@@ -209,12 +210,14 @@ class TimeLine extends Component {
             })}
           </Container>
         </Wrapper>
-        <LoadMore>
-          {pagination.showButton &&
-          <SFab disabled={isLoading} onClick={this.loadMore} variant="extended" aria-label="load" style={{opacity: `${p=>p.loading ? 0 : 1}`}}>
-            {BilegoIconLoading} load more
-          </SFab>}
-        </LoadMore>
+        <NoSsr>
+          <LoadMore>
+            {pagination.showButton &&
+            <SFab disabled={isLoading} onClick={this.loadMore} variant="extended" aria-label="load" style={{opacity: `${p=>p.loading ? 0 : 1}`}}>
+              {BilegoIconLoading} load more
+            </SFab>}
+          </LoadMore>
+        </NoSsr>
       </Fragment>
     );
   }

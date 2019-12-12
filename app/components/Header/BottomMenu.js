@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import Grid from '@material-ui/core/Grid';
 import { style } from '../../theme';
 import SMenu from './SMenu';
@@ -11,11 +12,9 @@ const Wrapper = styled(Grid)`
 const LeftCol = styled(Grid)`
   height: 100%;
   background-color: ${style.$first};
-  padding-left: 30px;
 `;
 const RightCol = styled(Grid)`
   height: 100%;
-  padding-right: 30px;
 `;
 
 export default function BottomMenu() {

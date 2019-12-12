@@ -13,7 +13,6 @@ const Wrapper = styled(Grid)`
 const LeftCol = styled(Grid)`
   height: 100%;
   background-color: ${style.$first};
-  padding-left: 30px;
 `;
 const CenterCol = styled(Grid)`
   height: 100%;
@@ -22,7 +21,6 @@ const CenterCol = styled(Grid)`
 const RightCol = styled(Grid)`
   height: 100%;
   background-color: ${style.$first};
-  padding-right: 30px;
 `;
 
 export default function TopMenu() {

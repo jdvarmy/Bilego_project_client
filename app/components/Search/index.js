@@ -38,13 +38,13 @@ const StyledInput = styled(Input)`
   transition: all ${style.$transition} ${style.$transitionanimation};
   & input{
     border: none;
-    width: 100%
+    width: 100%;
     padding: 0px 70px 0 40px;
     background-color: transparent;
   }
   .ant-input-suffix, .ant-input-prefix{
     position: absolute;
-    color: ${style.$second}
+    color: ${style.$second};
     & svg:hover{
       fill: ${style.$red};
     }
