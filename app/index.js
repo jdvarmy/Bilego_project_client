@@ -7,22 +7,24 @@ import { createBrowserHistory, createMemoryHistory } from 'history';
 
 // import { Helmet } from 'react-helmet';
 import { renderRoutes } from 'react-router-config';
+import { Switch, Route, Router, useLocation } from 'react-router-dom';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import styled from 'styled-components';
-import { style } from './theme';
 
-import { Switch, Route, Router, useLocation } from 'react-router-dom';
+import { style, theme } from './theme';
 import routes from './routes';
 import * as stores from './stores';
 import ConfigureStartStore from './ConfigureStartStore';
 
-import { theme } from './theme';
 import { Header } from './components';
 import RightPanel from './components/RightPanel';
 import Footer from './components/Footer';
 
+/**
+ * @return {null}
+ */
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
@@ -38,7 +40,7 @@ const Main = styled.div`width: ${style.$leftBodyPanel};`;
 export const ClientBilegoGateUi = () => {
   const history = process.env.IS_SERVER
     ? createMemoryHistory({
-      initialEntries: ['/'],
+      initialEntries: ['/']
     })
     : createBrowserHistory();
 
@@ -53,47 +55,48 @@ export const ClientBilegoGateUi = () => {
   const routs = routes(store.baseNameForRouting);
 
   hydrate(
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <MobxProvider {...stores} globalStore={store}>
-          <Router history={history} path={window.location.pathname}>
-            <ScrollToTop />
-            <Root>
-              <Main>
-                <Header />
-                <Switch>
-                  {routs.map(props => (
-                    <Route {...props} />
-                  ))}
-                </Switch>
-                <RightPanel />
-              </Main>
-            </Root>
-            <Footer />
-          </Router>
-        </MobxProvider>
-      </MuiThemeProvider>,
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
+      <MobxProvider {...stores} globalStore={store}>
+        <Router history={history} path={window.location.pathname}>
+          <ScrollToTop />
+          <Root>
+            <Main>
+              <Header />
+              <Switch>
+                {routs.map(props => (
+                  <Route {...props} />
+                ))}
+              </Switch>
+              <RightPanel />
+            </Main>
+          </Root>
+          <Footer />
+        </Router>
+      </MobxProvider>
+    </MuiThemeProvider>,
     document.getElementById('app'),
     () => {
-      document.getElementById("jss-server").remove()
+      document.getElementById('jss-server').remove();
       // document.querySelector("style[data-styled]").remove()
     }
   );
 };
 
 export const ServerBilegoGateUi = (props) => {
+  // eslint-disable-next-line react/prop-types
   const routs = routes(props.serverBaseRout);
 
   return (
     <Fragment>
       <Root>
         <Main>
-          <Header/>
+          <Header />
           {renderRoutes(routs)}
           <RightPanel />
         </Main>
       </Root>
       <Footer />
     </Fragment>
-  )
+  );
 };

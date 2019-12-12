@@ -2,6 +2,7 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const alias = require('../alias');

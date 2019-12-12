@@ -12,16 +12,16 @@ import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { Provider as MobxProvider } from 'mobx-react';
 
-import ConfigureStartStore from '../app/ConfigureStartStore';
 import { parse as parseUrl } from 'url';
 
 import { MuiThemeProvider, ServerStyleSheets } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 import { theme } from '../app/theme';
-import { ServerStyleSheet, StyleSheetManager } from 'styled-components'
 
 import * as stores from '../app/stores';
 import { ServerBilegoGateUi } from '../app';
+import ConfigureStartStore from '../app/ConfigureStartStore';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -30,10 +30,10 @@ app.use(express.static('./build'));
 
 app.get('*', async (req, res) => {
   const url = req.originalUrl || req.url;
-  if(url.indexOf('favicon')+1) return; // fix for chrome requests... todo: сделать нормальный фикс этого говна. хром постоянно запрашивает иконку
+  if (url.indexOf('favicon') + 1) return; // fix for chrome requests... todo: сделать нормальный фикс этого говна. хром постоянно запрашивает иконку
 
   const history = createMemoryHistory({
-    initialEntries: [url],
+    initialEntries: [url]
   });
   const initialState = {};
   const ip = req.ip ||
@@ -43,7 +43,7 @@ app.get('*', async (req, res) => {
     req.connection.socket.remoteAddress;
 
   const store = new ConfigureStartStore(initialState, history);
-  await store.getData({ip: ip});
+  await store.getData({ ip });
   const location = parseUrl(url);
   const indexFile = path.resolve('./build/main.html');
 
@@ -51,7 +51,8 @@ app.get('*', async (req, res) => {
 
   if (context.url) {
     req.header('Location', context.url);
-    return res.send(302)
+    // eslint-disable-next-line consistent-return
+    return res.send(302);
   }
 
   const sheetsMui = new ServerStyleSheets();
@@ -63,7 +64,7 @@ app.get('*', async (req, res) => {
         <MuiThemeProvider theme={theme}>
           <MobxProvider {...stores} globalStore={store}>
             <CssBaseline />
-            <StaticRouter location={location} context={context}>
+            <StaticRouter context={context} location={location}>
               <ServerBilegoGateUi serverBaseRout={store.baseNameForRouting} />
             </StaticRouter>
           </MobxProvider>
@@ -81,14 +82,14 @@ app.get('*', async (req, res) => {
       console.log('Something went wrong:', err);
       return res.status(500).send('Oops, better luck next time!');
     }
-    data = data.replace('__STYLES__', styleTags);
-    data = data.replace('__MUISTYLES__', muicss);
-    data = data.replace('__LOADER__', '');
-    data = data.replace('<div id=app></div>', `<div id=app>${appContent}</div>`);
-    data = data.replace('<div id="app"></div>', `<div id="app">${appContent}</div>`);
-    data = data.replace('<title></title>', helmet.title.toString());
-    data = data.replace('<meta name="description" content=""/>', helmet.meta.toString());
-    data = data.replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${JSON.stringify(store.toJson())};</script>`);
+    data = data.replace('__STYLES__', styleTags)
+      .replace('__MUISTYLES__', muicss)
+      .replace('__LOADER__', '')
+      .replace('<div id=app></div>', `<div id=app>${appContent}</div>`)
+      .replace('<div id="app"></div>', `<div id="app">${appContent}</div>`)
+      .replace('<title></title>', helmet.title.toString())
+      .replace('<meta name="description" content=""/>', helmet.meta.toString())
+      .replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${JSON.stringify(store.toJson())};</script>`);
 
     return res.send(data);
   });
@@ -99,4 +100,3 @@ Loadable.preloadAll().then(() => {
     console.log(`😎 Server is listening on port ${PORT}`);
   });
 });
-
