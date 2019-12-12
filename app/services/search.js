@@ -1,6 +1,8 @@
 import requests from './helpers/requests';
 
 export default {
-  getSearchResult: (filterParams) => requests.get('/search', {...filterParams}),
-  getSearchPageResult: (filterParams) => requests.get('/searchpage', {...filterParams}),
+  getSearchResult: (apiRoot, filterParams) =>
+    requests.get(apiRoot+'/search', {...filterParams}),
+  getSearchPageResult: (apiRoot, filterParams) =>
+    requests.get(apiRoot+'/searchpage', {...filterParams}),
 }

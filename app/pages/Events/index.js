@@ -29,6 +29,8 @@ const SFab = styled(Fab)`
   transition: opacity .2s ease 0s;
 `;
 
+// todo: сделать рендеринг 21 события на сервере для всех страниц раздела
+
 @inject('pageStore', 'globalStore')
 @observer
 class Events extends Component{

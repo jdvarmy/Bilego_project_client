@@ -23,8 +23,8 @@ const CardWrap = styled(Card)`
 @observer
 class PopularOnWeek extends Component{
   componentDidMount() {
-    const {pageStore:{getPopularOnWeek}} = this.props;
-    getPopularOnWeek();
+    const {pageStore:{getPopularOnWeek}, globalStore:{apiRoot}} = this.props;
+    getPopularOnWeek(apiRoot);
   }
 
   render() {

@@ -61,7 +61,7 @@ class Search{
   };
 
   @action
-  getSearchResult = flow( function* getSearchResult(){
+  getSearchResult = flow( function* getSearchResult(apiRoot){
     this.isLoading = true;
     try {
       const key = this.request + this.date.getFullYear()+this.date.getMonth()+this.date.getDate();
@@ -74,7 +74,7 @@ class Search{
             text: this.request,
             date: this.date.getTime()
           };
-          this.searchResult = yield searchService.getSearchResult(args);
+          this.searchResult = yield searchService.getSearchResult(apiRoot, args);
           this.events = this.searchResult.events.length > 0 ? this.searchResult.events : undefined;
           this.items = this.searchResult.items.length > 0 ? this.searchResult.items : undefined;
           this.searchCache.set(key, this.searchResult)
@@ -87,14 +87,14 @@ class Search{
   }).bind(this);
 
   @action
-  getSearchPageResult = flow( function* getSearchPageResult(){
+  getSearchPageResult = flow( function* getSearchPageResult(apiRoot){
     this.isLoading = true;
     try {
       let args = this.parseString();
       args.size = this.pagination.pageSize;
       args.page = this.pagination.current;
 
-      const response = yield searchService.getSearchPageResult(args);
+      const response = yield searchService.getSearchPageResult(apiRoot, args);
       this.searchEvents = response;
 
       console.log(response)

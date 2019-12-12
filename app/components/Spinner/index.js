@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import { style } from '../../theme';
 
 export default function Spinner (props) {
-  const {leftPadding} = props;
+  const {leftPadding, position} = props;
 
   const Wrap = styled.div`
     width: 100px;
     height: 102px;
     border-radius: 100%;
-    position: fixed;
+    position: ${position ? position : `fixed`};
     top: ${()=>{
     const w = document.documentElement.clientHeight;
     return w - 50 - (w / 100 * 50)

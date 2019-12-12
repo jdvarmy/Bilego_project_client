@@ -90,7 +90,7 @@ const SIconButton = styled(IconButton)`
   }
 `;
 
-@inject('searchStore')
+@inject('searchStore', 'globalStore')
 @observer
 class Search extends Component{
   constructor(props) {
@@ -114,7 +114,7 @@ class Search extends Component{
 
   onInputChange = e => {
     const {target:{value}} = e,
-      {searchStore:{changeSearchStatus, setRequest, getSearchResult}} = this.props;
+      {searchStore:{changeSearchStatus, setRequest, getSearchResult}, globalStore:{apiRoot}} = this.props;
     switch (true) {
       case value.length === 0:
         changeSearchStatus(-1);
@@ -128,7 +128,7 @@ class Search extends Component{
         changeSearchStatus(1);
         setRequest(value);
         this.time = setTimeout(function(){
-          getSearchResult();
+          getSearchResult(apiRoot);
         }, 100);
         break;
       default:

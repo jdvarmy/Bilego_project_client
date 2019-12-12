@@ -1,15 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
-import Spinner from '../Spinner';
-import BlockHeaderTextOld from '../BlockHeaderTextOld';
-import { Spin } from 'antd';
+import { Scrollbars } from 'react-custom-scrollbars';
 import styled from 'styled-components';
+
+import { Spin } from 'antd';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
+import Spinner from '../Spinner';
+import BlockHeaderTextOld from '../BlockHeaderTextOld';
 import Event from './Event';
 import Item from './Item';
-import { Scrollbars } from 'react-custom-scrollbars';
 import style from '../../theme/style';
 
 const Wrapper = styled.div`
@@ -33,7 +35,7 @@ const Sh2 = styled.h2`
 `;
 const SBlockHeaderText = styled(BlockHeaderTextOld)`
     margin: 16px;
-    color: ${style.$grey}
+    color: ${style.$grey};
 `;
 
 @inject('searchStore', 'globalStore')
@@ -51,34 +53,34 @@ class SearchResult extends Component {
         <Divider />
         <SList>
           <Scroll>
-            <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
-              {events &&
-                <Fragment>
-                  <Sh2>События</Sh2>
-                  <List>
-                    {events.map(event=>(
-                      <ListItem key={event.id}>
-                        <Event {...event} baseNameForRouting={baseNameForRouting}/>
-                      </ListItem>
-                      ))
-                    }
-                  </List>
-                </Fragment>
-              }
-              {events && items && <Divider />}
-              {items &&
-              <Fragment>
-                <Sh2>Площадки</Sh2>
+            <Spin spinning={isLoading} indicator={<Spinner leftPadding={0} position="absolute"/>}>
+            {events &&
+              <div>
+                <Typography variant="h5" component="h4">События</Typography>
                 <List>
-                  {items.map(item=>(
-                    <ListItem key={item.id}>
-                      <Item {...item} baseNameForRouting={baseNameForRouting}/>
+                  {events.map(event=>(
+                    <ListItem key={event.id}>
+                      <Event {...event} baseNameForRouting={baseNameForRouting}/>
                     </ListItem>
-                  ))
+                    ))
                   }
                 </List>
-              </Fragment>
-              }
+              </div>
+            }
+            {events && items && <Divider />}
+            {items &&
+            <div>
+              <Typography variant="h5" component="h4">Площадки</Typography>
+              <List>
+                {items.map(item=>(
+                  <ListItem key={item.id}>
+                    <Item {...item} baseNameForRouting={baseNameForRouting}/>
+                  </ListItem>
+                ))
+                }
+              </List>
+            </div>
+            }
             </Spin>
           </Scroll>
         </SList>

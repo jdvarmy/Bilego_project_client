@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import {NavLink} from 'react-router-dom';
+
 import style from '../../theme/style';
 
 const Wrap = styled.div`
@@ -80,7 +81,7 @@ export default function Event(props){
 
   return(
     <Wrap className="event-search">
-      <NavLink to={`/${baseNameForRouting}/event/${name}`} exact>
+      <Link to={`/${baseNameForRouting}/event/${name}`}>
         <Image className="event-search-hover" img={img}>
           <div className="event-search-image"/>
           <div className="event-search-backgr"/>
@@ -92,7 +93,7 @@ export default function Event(props){
         <Text>
           {title}
         </Text>
-      </NavLink>
+      </Link>
     </Wrap>
   )
 }

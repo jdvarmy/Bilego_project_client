@@ -62,7 +62,7 @@ export default function Item140(props){
   const {title, address, name, img, meta:{map}, metro, categories, baseNameForRouting} = props;
 
   let addr = address.replace(/Москва, /g, '');
-  addr = address.replace(/Санкт-Петербург, /g, '');
+  addr = addr.replace(/Санкт-Петербург, /g, '');
 
   return (
     <Wrapper>

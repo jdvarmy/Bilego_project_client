@@ -1,5 +1,5 @@
-import {observable, action, configure, flow} from 'mobx';
-import {eventService} from '../services';
+import { observable, action, configure, flow } from 'mobx';
+import { eventService } from '../services';
 
 configure({
   enforceActions: 'always'
@@ -31,19 +31,16 @@ class SingleEvent{
   };
 
   @action
-  getEventDataBySlug = flow( function* getEventDataBySlug(params){
+  getEventDataBySlug = flow( function* getEventDataBySlug(apiRoot, params){
     this.isLoading = true;
     try{
       this.clear();
 
-      const response = yield eventService.getEventDataBySlug(params);
-
+      const response = yield eventService.getEventDataBySlug(apiRoot, params);
       this.event = response;
       this.id = response.id;
       this.sliderData = response.slider;
       this.sliderType = response.slider_type;
-
-      console.log(response)
     }catch(e){
       console.log(e);
     }finally {

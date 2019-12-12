@@ -1,5 +1,5 @@
-import {observable, action, configure, flow} from 'mobx';
-import {itemService} from '../services';
+import { observable, action, configure, flow } from 'mobx';
+import { itemService } from '../services';
 
 configure({
   enforceActions: 'always'
@@ -16,12 +16,12 @@ class SingleItem{
   };
 
   @action
-  getItemDataBySlug = flow( function* getItemDataBySlug(params){
+  getItemDataBySlug = flow( function* getItemDataBySlug(apiRoot, params){
     this.isLoading = true;
     try{
       this.clear();
 
-      const response = yield itemService.getItemDataBySlug(params);
+      const response = yield itemService.getItemDataBySlug(apiRoot, params);
       this.item = response;
 
       console.log(response)
