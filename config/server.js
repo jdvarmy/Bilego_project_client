@@ -28,13 +28,12 @@ const app = express();
 
 app.use(express.static('./build'));
 
-app.get('*', async (req, res) => {
-  const url = req.originalUrl || req.url;
-  if (url.indexOf('favicon') + 1) return; // fix for chrome requests... todo: сделать нормальный фикс этого говна. хром постоянно запрашивает иконку
+// const httpsRedirect = require('express-https-redirect'); //todo: установить на проме express-https-redirect
+// app.use('/', httpsRedirect());
 
-  const history = createMemoryHistory({
-    initialEntries: [url]
-  });
+app.get('/', async (req, res) => {
+  const url = req.originalUrl || req.url;
+  const history = createMemoryHistory({initialEntries: [url]});
   const initialState = {};
   const ip = req.ip ||
     (req.headers['x-forwarded-for'] || '').split(',').pop() ||
@@ -43,17 +42,27 @@ app.get('*', async (req, res) => {
     req.connection.socket.remoteAddress;
 
   const store = new ConfigureStartStore(initialState, history);
-  await store.getData({ ip });
+  await store.getData({ip});
+
+  res.redirect(302, '/' + store.baseNameForRouting);
+});
+
+app.get(/\/mos|\/spb/, async (req, res) => {
+  const url = req.originalUrl || req.url;
+  if (url.indexOf('favicon') + 1) return; // fix for chrome requests... todo: сделать нормальный фикс этого говна. хром постоянно запрашивает иконку
+
+  const history = createMemoryHistory({
+    initialEntries: [url]
+  });
+  const initialState = {};
+
+  const store = new ConfigureStartStore(initialState, history);
+  await store.getData();
   const location = parseUrl(url);
   const indexFile = path.resolve('./build/main.html');
+  await store.getDataCurrentPage();
 
   const context = {};
-
-  if (context.url) {
-    req.header('Location', context.url);
-    // eslint-disable-next-line consistent-return
-    return res.send(302);
-  }
 
   const sheetsMui = new ServerStyleSheets();
   const sheetStyled = new ServerStyleSheet();

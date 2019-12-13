@@ -51,10 +51,17 @@ export const ClientBilegoGateUi = () => {
   if (!process.env.IS_SERVER) {
     window.store = store;
   }
+  if (
+    !(history.location.pathname.indexOf('/mos') + 1)
+    && !(history.location.pathname.indexOf('/spb') + 1)
+  ) {
+    history.push(`/${store.baseNameForRouting}`);
+  }
 
   const routs = routes(store.baseNameForRouting);
 
   hydrate(
+    // eslint-disable-next-line react/jsx-filename-extension
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <MobxProvider {...stores} globalStore={store}>

@@ -127,6 +127,18 @@ export default class ConfigureStartStore {
     }
   }).bind(this);
 
+  @action getDataCurrentPage = flow( function* getDataCurrentPage(){
+    console.log(this.history.location.pathname)
+    try{
+      const resp = yield globalService.getPageData(props);
+      console.log(resp)
+
+      return resp;
+    }catch(e){
+      console.log(e);
+    }
+  }).bind(this);
+
   toJson() {
     return {
       CITY: this.CITY,

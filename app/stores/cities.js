@@ -10,12 +10,12 @@ export default [
       latitude: 55.7528773,
       longitude: 37.5825457
     },
-    category:{
+    category: {
       concerts: 19,
       festivals: 42,
       lectures: 38,
       exhibitions: 17,
-      children: 18,
+      children: 18
     }
   },
   { // 1 - Санкт-Петербург
@@ -29,12 +29,12 @@ export default [
       latitude: 59.939095,
       longitude: 30.315868
     },
-    category:{
+    category: {
       concerts: 4,
       festivals: 27,
       lectures: 23,
       exhibitions: 2,
-      children: 3,
+      children: 3
     }
-  },
+  }
 ];

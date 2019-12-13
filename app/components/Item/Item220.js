@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   position: relative;
   height: 350px;
   .item-220-hover{
-    background-image: url('${p=>(p.image)}');
+    background-image: url('${p => (p.image)}');
     transition: all .5s ease 0s;
     background-size: cover;
     background-position: center;
@@ -40,7 +40,7 @@ const Article = styled.article`
   border-radius: 0px;
 `;
 const Img = styled.div`
-  background-image: url('${p=>(p.image)}');
+  background-image: url('${p => (p.image)}');
   visibility: hidden;
   background-size: cover;
   background-position: center;
@@ -65,18 +65,20 @@ const Content = styled.div`
   }
 `;
 
-export default function Item220(props){
-  const {title, address, name, img, baseNameForRouting} = props;
+export default function Item220(props) {
+  // eslint-disable-next-line react/prop-types
+  const { title, address, name, img, baseNameForRouting } = props;
 
   return (
+    // eslint-disable-next-line react/jsx-filename-extension
     <Wrapper image={img !== undefined ? img : I220}>
       <Article>
-        <Img image={img !== undefined ? img : I220}/>
+        <Img image={img !== undefined ? img : I220} />
         {name !== undefined
         &&
         <React.Fragment>
           <Link to={`/${baseNameForRouting}/item/${name}`}>
-            <div className="item-220-hover"/>
+            <div className="item-220-hover" />
           </Link>
           <Content className="content">
             <div className="title">{title}</div>
@@ -86,5 +88,5 @@ export default function Item220(props){
         }
       </Article>
     </Wrapper>
-  )
+  );
 }

@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   }
 `;
 const Image = styled.div`
-  background-image: url('${p=>(p.img)}');
+  background-image: url('${p => (p.img)}');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -69,28 +69,30 @@ const SWrap = styled.div`
   }
 `;
 
-export default function Event300(props){
-  const {title, day, month, img, name, ticket_link, item_title, item_name, baseNameForRouting} = props;
+export default function Event300(props) {
+  // eslint-disable-next-line react/prop-types,camelcase,max-len
+  const { title, day, month, img, name, ticket_link, item_title, item_name, baseNameForRouting } = props;
 
   return (
     <Wrapper>
       {img !== undefined
-        ?
-        <React.Fragment>
+        ? <React.Fragment>
           <Link to={`/${baseNameForRouting}/event/${name}`}>
-            <Image className="event-300-hover" img={img}/>
+            <Image className="event-300-hover" img={img} />
           </Link>
           <Content>
             <SWrap>
-              <TicketsModalButton href={ticket_link}/>
+              {/* eslint-disable-next-line camelcase */}
+              <TicketsModalButton href={ticket_link} />
             </SWrap>
             <Title><Link to={`/${baseNameForRouting}/event/${name}`}>{title}</Link></Title>
+            {/* eslint-disable-next-line camelcase */}
             <Span>{day} {month} / <Link to={`/${baseNameForRouting}/item/${item_name}`}>{item_title}</Link></Span>
           </Content>
         </React.Fragment>
         :
-        <Image className="event-300-hover" img={E300}/>
+        <Image className="event-300-hover" img={E300} />
       }
     </Wrapper>
-  )
+  );
 }

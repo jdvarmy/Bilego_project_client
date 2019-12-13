@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
@@ -52,6 +52,7 @@ const BilegoDivider = styled.div`
 `;
 
 @inject('globalStore')
+@observer
 class Footer extends Component{
   render(){
     const {globalStore:{baseNameForRouting}} = this.props;

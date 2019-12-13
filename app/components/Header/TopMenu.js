@@ -25,15 +25,15 @@ const RightCol = styled(Grid)`
 
 export default function TopMenu() {
   return (
-    <Wrapper container alignItems="center" justify="center" spacing={0}>
+    <Wrapper alignItems="center" container justify="center" spacing={0}>
       <LeftCol item xs>
-         <Social />
+        <Social />
       </LeftCol>
       <CenterCol item xs={6}>
-         <Logo />
+        <Logo />
       </CenterCol>
       <RightCol item xs>
-         <Cities />
+        <Cities />
       </RightCol>
     </Wrapper>
   );

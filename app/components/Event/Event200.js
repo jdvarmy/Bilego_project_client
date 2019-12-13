@@ -38,7 +38,7 @@ const Info = styled.div`
   }
 `;
 const Image = styled.div`
-  background-image: url('${p=>(p.img)}');
+  background-image: url('${p => (p.img)}');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -82,31 +82,31 @@ const Footer = styled(Div)`
   }
 `;
 
-export default function Event200(props){
-  const {title, day, month, img, name, ticket_link, baseNameForRouting} = props;
+export default function Event200(props) {
+  // eslint-disable-next-line react/prop-types,camelcase
+  const { title, day, month, img, name, ticket_link, baseNameForRouting } = props;
 
   return (
     <Wrapper>
       {img !== undefined
-        ?
-        <React.Fragment>
+        ? <React.Fragment>
           <Info>
             <div>{day} {month}</div>
           </Info>
-          <Image className="event-200-hover" img={img}/>
+          <Image className="event-200-hover" img={img} />
           <Link to={`/${baseNameForRouting}/event/${name}`}>
-            <Hover/>
+            <Hover />
           </Link>
           <Content>
             <Title><Link to={`/${baseNameForRouting}/event/${name}`}>{title}</Link></Title>
           </Content>
           <Footer>
-            <TicketsModalButton href={ticket_link}/>
+            {/* eslint-disable-next-line camelcase */}
+            <TicketsModalButton href={ticket_link} />
           </Footer>
         </React.Fragment>
-        :
-        <Image className="event-200-hover" img={E200}/>
+        : <Image className="event-200-hover" img={E200} />
       }
     </Wrapper>
-  )
+  );
 }

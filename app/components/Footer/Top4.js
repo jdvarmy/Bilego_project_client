@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import {style} from '../../theme';
-import {Link} from 'react-router-dom';
-import {Input} from 'antd';
-import {BilegoIconFacebook, BilegoIconVk} from '../../theme/BilegoIcons';
+import { Link } from 'react-router-dom';
+import { Input } from 'antd';
 import IconButton from '@material-ui/core/IconButton';
+import { style } from '../../theme';
+import { BilegoIconFacebook, BilegoIconVk } from '../../theme/bilegoIcons';
 
 const Logo = styled.div`
   margin: 40px 0 50px;
@@ -42,24 +42,27 @@ const StyledIconButton = styled(IconButton)`
 `;
 
 const vk = (
+  // eslint-disable-next-line jsx-a11y/href-no-hash
   <a href="#">
-    <StyledIconButton className="bilego-button" aria-label="vk">
+    <StyledIconButton aria-label="vk" className="bilego-button">
       {BilegoIconVk}
     </StyledIconButton>
   </a>
 );
 const facebook = (
+  // eslint-disable-next-line jsx-a11y/href-no-hash
   <a href="#">
-    <StyledIconButton className="bilego-button" aria-label="facebook">
+    <StyledIconButton aria-label="facebook" className="bilego-button">
       {BilegoIconFacebook}
     </StyledIconButton>
   </a>
 );
 
-export default function Top4(props){
-  const {baseNameForRouting} = props;
+export default function Top4(props) {
+  // eslint-disable-next-line react/prop-types
+  const { baseNameForRouting } = props;
 
-  return(
+  return (
     <div>
       <Logo>
         <Link to={`/${baseNameForRouting}`}>Logo</Link>
@@ -67,10 +70,10 @@ export default function Top4(props){
       <Subscribe className="bilego-subscribe">
         <div>Подписаться на рассылку:</div>
         <Input.Search
-          placeholder="Enter your e-mail"
           enterButton="Send"
-          size="large"
           onSearch={value => console.log(value)}
+          placeholder="Enter your e-mail"
+          size="large"
         />
       </Subscribe>
       <Social>

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 import style from '../../theme/style';
 import { TicketsModalButton } from '../TicketsModal';
-import { BilegoIconMenuDotted } from '../../theme/BilegoIcons';
+import { BilegoIconMenuDotted } from '../../theme/bilegoIcons';
 
 import E430 from './images/E430.jpg';
 
@@ -40,7 +40,7 @@ const Info = styled.div`
   }
 `;
 const Image = styled.div`
-  background-image: url('${p=>(p.img)}');
+  background-image: url('${p => (p.img)}');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -89,31 +89,34 @@ const SIconButton = styled(IconButton)`
 `;
 
 export default function Event430(props){
+  // eslint-disable-next-line react/prop-types,camelcase
   const {title, day, month, img, name, ticket_link, item_title, item_name, baseNameForRouting} = props;
 
   return (
     <Wrapper>
       <Info>
         <div>{day} {month}</div>
-        <SIconButton className="bilego-button" aria-label="menu">
+        <SIconButton aria-label="menu" className="bilego-button">
           {BilegoIconMenuDotted}
         </SIconButton>
       </Info>
-      <Image className="event-430-hover" img={img !== undefined ? img : E430}/>
+      <Image className="event-430-hover" img={img !== undefined ? img : E430} />
       {name !== undefined &&
         <React.Fragment>
           <Link to={`/${baseNameForRouting}/event/${name}`}>
-            <Hover/>
+            <Hover />
           </Link>
           <Content>
             <Title><Link to={`/${baseNameForRouting}/event/${name}`}>{title}</Link></Title>
-            { ticket_link !== undefined && <TicketsModalButton href={ticket_link}/> }
+            {/* eslint-disable-next-line camelcase */}
+            { ticket_link !== undefined && <TicketsModalButton href={ticket_link} /> }
           </Content>
           <Footer>
+            {/* eslint-disable-next-line camelcase */}
             <Link to={`/${baseNameForRouting}/item/${item_name}`}>{item_title}</Link>
           </Footer>
         </React.Fragment>
       }
     </Wrapper>
-  )
+  );
 }

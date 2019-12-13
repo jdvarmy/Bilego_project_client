@@ -28,8 +28,9 @@ const StyledMenu = styled(AntMenu)`
   }
 `;
 
-export default function Bottom8(props){
-  const {baseNameForRouting} = props;
+export default function Bottom8(props) {
+  // eslint-disable-next-line react/prop-types
+  const { baseNameForRouting } = props;
 
   return (
     <Fragment>

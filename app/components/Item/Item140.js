@@ -52,40 +52,46 @@ const Image = styled.div`
   height: 70px;
   border: 1px solid ${style.$grey};
   border-radius: 50%;
-  background-image: url('${p=>(p.image)}');
+  background-image: url('${p => (p.image)}');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 `;
 
-export default function Item140(props){
-  const {title, address, name, img, meta:{map}, metro, categories, baseNameForRouting} = props;
+export default function Item140(props) {
+  // eslint-disable-next-line react/prop-types
+  const { title, address, name, img, metro, categories, baseNameForRouting } = props;
 
+  // eslint-disable-next-line react/prop-types
   let addr = address.replace(/Москва, /g, '');
   addr = addr.replace(/Санкт-Петербург, /g, '');
 
   return (
+    // eslint-disable-next-line react/jsx-filename-extension
     <Wrapper>
       <Content>
         <div className="category">
-          {categories.map((cat, k)=>(<span id={cat.id} key={k}>{cat.name}</span>))}
+          {/* eslint-disable-next-line react/prop-types,react/no-array-index-key */}
+          {categories.map((cat, k) => (<span key={k} id={cat.id}>{cat.name}</span>))}
         </div>
         <div className="title">
           <Link to={`/${baseNameForRouting}/item/${name}`}>{title}</Link>
         </div>
         <div className="address">{addr}</div>
         <div className="metro">
-          {metro.length > 0 && metro.map((el, k)=>{
-              return (<span key={k}>{el.number}</span>)
-            })
+          {/* eslint-disable-next-line react/prop-types,array-callback-return */}
+          {metro.length > 0 && metro.map((el, k) => {
+            // eslint-disable-next-line react/no-array-index-key,no-unused-expressions
+            <span key={k}>{el.number}</span>;
+          })
           }
         </div>
       </Content>
       <div>
         <Link to={`/${baseNameForRouting}/item/${name}`}>
-          <Image image={img !== undefined ? img : I140}/>
+          <Image image={img !== undefined ? img : I140} />
         </Link>
       </div>
     </Wrapper>
-  )
+  );
 }

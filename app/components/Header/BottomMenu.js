@@ -18,13 +18,13 @@ const RightCol = styled(Grid)`
 `;
 
 export default function BottomMenu() {
-  return(
-    <Wrapper container alignItems="center" justify="center" spacing={0}>
+  return (
+    <Wrapper alignItems="center" container justify="center" spacing={0}>
       <LeftCol item xs={8}>
-        <SMenu/>
+        <SMenu />
       </LeftCol>
       <RightCol item xs={4}>
-        <Search/>
+        <Search />
       </RightCol>
     </Wrapper>
   );

@@ -26,8 +26,7 @@ export default function Header() {
         <BottomMenu />
         <ScrollMenu />
       </Wrapper>
-       <SearchDrawer />
+      <SearchDrawer />
     </React.Fragment>
   );
 }
-
