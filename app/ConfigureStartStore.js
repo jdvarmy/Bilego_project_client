@@ -127,13 +127,14 @@ export default class ConfigureStartStore {
     }
   }).bind(this);
 
-  @action getDataCurrentPage = flow( function* getDataCurrentPage(){
-    console.log(this.history.location.pathname)
+  // todo: create this function
+  @action getDataCurrentPage = flow( function* getDataCurrentPage(props){
+    // console.log(this.history.location.pathname)
     try{
-      const resp = yield globalService.getPageData(props);
-      console.log(resp)
+      // const resp = yield globalService.getPageData(props);
+      // console.log(resp)
 
-      return resp;
+      // return resp;
     }catch(e){
       console.log(e);
     }

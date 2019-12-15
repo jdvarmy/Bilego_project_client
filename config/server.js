@@ -60,7 +60,7 @@ app.get(/\/mos|\/spb/, async (req, res) => {
   await store.getData();
   const location = parseUrl(url);
   const indexFile = path.resolve('./build/main.html');
-  await store.getDataCurrentPage();
+  await store.getDataCurrentPage({});
 
   const context = {};
 
