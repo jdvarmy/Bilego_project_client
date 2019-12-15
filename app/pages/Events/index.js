@@ -35,18 +35,18 @@ const SFab = styled(Fab)`
 @observer
 class Events extends Component{
   componentDidMount() {
-    const {pageStore:{changePageType, getEvents, clear}} = this.props;
+    const {pageStore:{changePageType, getEvents, clear}, globalStore:{apiRoot}} = this.props;
 
     clear();
     changePageType('page');
-    getEvents();
+    getEvents(apiRoot);
   }
 
   loadMore = () => {
-    const {pageStore:{pagination, setPagination, getEvents}} = this.props;
+    const {pageStore:{pagination, setPagination, getEvents}, globalStore:{apiRoot}} = this.props;
 
     setPagination(pagination.current + 1);
-    getEvents();
+    getEvents(apiRoot);
   };
 
   render(){

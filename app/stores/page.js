@@ -146,7 +146,7 @@ class Page{
 
 
   @action
-  getEvents = flow( function* getEvents(params){
+  getEvents = flow( function* getEvents(apiRoot, params){
     if(this.isLoading) return;
 
     this.isLoading = true;
