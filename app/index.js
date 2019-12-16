@@ -47,8 +47,6 @@ export const ClientBilegoGateUi = () => {
   // eslint-disable-next-line no-underscore-dangle
   const initialState = !process.env.IS_SERVER ? window.__INITIAL_DATA__ : {};
 
-  console.log(initialState)
-
   const store = new ConfigureStartStore(initialState, history);
   if (!process.env.IS_SERVER) {
     window.store = store;
@@ -65,7 +63,6 @@ export const ClientBilegoGateUi = () => {
   else if(store.eventsFirstData) {
     stores.pageStore.setStartDataEventsPage(store.eventsFirstData);
   }
-  console.log(store)
 
 
   const routs = routes(store.baseNameForRouting);

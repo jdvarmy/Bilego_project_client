@@ -127,10 +127,14 @@ class Page{
       };
       const response = yield pageService.getEvents(apiRoot, args, {...params});
       this.pagination.showButton = response.length === this.pagination.pageSize;
-      this.events = [
-        ...this.events,
-        ...response
-      ];
+
+      if(this.pagination.current === 1)
+        this.events = response;
+      else
+        this.events = [
+          ...this.events,
+          ...response
+        ];
     }catch(e){
       console.log(e);
     }finally {
@@ -148,7 +152,6 @@ class Page{
         size: this.pagination.pageSize
       };
       const response = yield pageService.getEventsByCategory(apiRoot, args, {categoryId: params.categoryId});
-      console.log(response)
       this.pagination.showButton = response.length === this.pagination.pageSize;
       this.eventsByCategory = [
         ...this.eventsByCategory,

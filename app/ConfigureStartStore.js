@@ -159,7 +159,7 @@ export default class ConfigureStartStore {
           break;
 
         case 'Events':
-          resp = yield pageService.getEvents(this.apiRoot);
+          resp = yield pageService.getEvents(this.apiRoot, {page: 1, size: 21});
           this.eventsFirstData = resp;
           break;
         case 'Concerts':

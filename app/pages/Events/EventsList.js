@@ -14,7 +14,8 @@ import { BilegoIconLoading } from '../../theme/BilegoIcons';
 import NoContent from '../../components/NoContent';
 
 const GridWrap = styled(Grid)`
-  min-height: ${document.documentElement.clientHeight - 160}px;
+  // min-height: ${document.documentElement.clientHeight - 160}px;
+  min-height: 485px;
 `;
 const CardWrap = styled(Card)`
   margin-bottom: 30px;
@@ -31,7 +32,7 @@ const SFab = styled(Fab)`
 @observer
 class EventsList extends Component{
   componentDidMount() {
-    const {pageStore:{categoryEventId, getEventsByCategory, clear}, globalStore:{apiRoot}} = this.props;
+    const {pageStore:{categoryEventId, getEventsByCategory}, globalStore:{apiRoot}} = this.props;
 
     if(categoryEventId === 0){
       const {pageStore:{changeCategoryEvent, changePageType, changePageName}, globalStore:{categoriesForMenu}} = this.props;
@@ -45,15 +46,18 @@ class EventsList extends Component{
       });
     }
 
-    clear();
     getEventsByCategory(apiRoot, {categoryId: this.props.pageStore.categoryEventId});
   };
 
+  componentWillUnmount() {
+    this.props.pageStore.clear();
+  }
+
   loadMore = () => {
-    const {pageStore:{pagination, setPagination, categoryEventId, getEventsByCategory}} = this.props;
+    const {pageStore:{pagination, setPagination, categoryEventId, getEventsByCategory}, globalStore:{apiRoot}} = this.props;
 
     setPagination(pagination.current + 1);
-    getEventsByCategory({categoryId: categoryEventId});
+    getEventsByCategory(apiRoot, {categoryId: this.props.pageStore.categoryEventId});
   };
 
   render() {

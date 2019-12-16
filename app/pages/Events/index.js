@@ -18,7 +18,7 @@ const GridWrap = styled(Grid)`
   .MuiPaper-elevation1{
     box-shadow: none;
   }
-  min-height: ${document.documentElement.clientHeight - 160}px;
+  min-height: 485px;
 `;
 const GridCont = styled(Grid)``;
 const CardWrap = styled(Card)`
@@ -35,11 +35,14 @@ const SFab = styled(Fab)`
 @observer
 class Events extends Component{
   componentDidMount() {
-    const {pageStore:{changePageType, getEvents, clear}, globalStore:{apiRoot}} = this.props;
+    const {pageStore:{changePageType, getEvents}, globalStore:{apiRoot}} = this.props;
 
-    clear();
     changePageType('page');
     getEvents(apiRoot);
+  }
+
+  componentWillUnmount() {
+    this.props.pageStore.clear();
   }
 
   loadMore = () => {

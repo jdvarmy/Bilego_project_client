@@ -7,8 +7,8 @@ export default {
   getPopularOnWeek: (apiRoot, filterParams) =>
     requests.get(apiRoot+'/events/popularOnWeek', {...filterParams}),
 
-  getEvents: (apiRoot, page = 1, size = 21) =>
-    requests.get(apiRoot+'/events', {page, size, ...size}),
+  getEvents: (apiRoot, {page = 1, size = 21}, filterParams) =>
+    requests.get(apiRoot+'/events', {page, size, ...filterParams}),
   getEventsByCategory: (apiRoot, {page = 1, size = 21}, filterParams) =>
     requests.get(apiRoot+'/events/category', {page, size, ...filterParams}),
 
