@@ -180,7 +180,7 @@ class DatePickerLine extends Component{
         <Fab onClick={()=>{this.handlerClickByDay('tomorrow')}} variant="extended" aria-label="tomorrow">Завтра</Fab>
       </WrapFab>,
       <WrapFab className={`bilego-wr-fab ${daysFilter==='weekend' && flag && 'selected'}`} key={4}>
-        <Fab onClick={()=>{this.handlerClickByDay('weekend')}} variant="extended" aria-label="weekend">В выходные</Fab>
+        <Fab onClick={()=>{this.handlerClickByDay('weekend')}} variant="extended" aria-label="weekend">Выходные</Fab>
       </WrapFab>
     ];
 
@@ -210,7 +210,7 @@ class DatePickerLine extends Component{
                 <Box className="bilego-buttons-filters">
                   <Fab onClick={()=>{this.handlerClickByDay('today')}} variant="extended" aria-label="today">Сегодня</Fab>
                   <Fab onClick={()=>{this.handlerClickByDay('tomorrow')}} variant="extended" aria-label="tomorrow">Завтра</Fab>
-                  <Fab onClick={()=>{this.handlerClickByDay('weekend')}} variant="extended" aria-label="weekend">В выходные</Fab>
+                  <Fab onClick={()=>{this.handlerClickByDay('weekend')}} variant="extended" aria-label="weekend">Выходные</Fab>
                 </Box>
               </SBox>
             </Grid>

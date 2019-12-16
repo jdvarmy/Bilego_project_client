@@ -27,11 +27,9 @@ const DateContainer = styled.div`
 @observer
 class FrontPage extends Component {
   componentDidMount() {
-    const {pageStore:{getEventsConcerts, getEventsHot, getEventsSoon, getItemsFrontPage}, globalStore:{categoryConcertsForFrontPage, apiRoot}} = this.props;
-    getEventsSoon(apiRoot);
-    getEventsHot(apiRoot);
-    getEventsConcerts(apiRoot, {categoryId: categoryConcertsForFrontPage});
-    getItemsFrontPage(apiRoot, {orderby: 'rand'});
+    const {pageStore:{getFrontPageData}, globalStore:{categoryConcertsForFrontPage, apiRoot}} = this.props;
+
+    getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
     this.props.sliderStore.getMainSlides(apiRoot);
   }
 

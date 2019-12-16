@@ -1,5 +1,6 @@
 import { observable, action, computed, flow, configure } from 'mobx';
-import { globalService } from './services';
+import { matchPath } from 'react-router-dom';
+import { globalService, pageService } from './services';
 import { cities } from './stores';
 
 configure({
@@ -15,6 +16,15 @@ export default class ConfigureStartStore {
   @observable daData;
   @observable data;
   @observable history;
+
+  @observable frontPageFirstData = null;
+  @observable eventsFirstData = null;
+  @observable concertsFirstData = null;
+  @observable festivalsFirstData = null;
+  @observable eventCategoryFirstData = null;
+  @observable itemsFirstData = null;
+  @observable singleEventFirstData = null;
+  @observable singleItemFirstData = null;
 
   // def variables
   @computed get baseNameForRouting(){
@@ -82,7 +92,14 @@ export default class ConfigureStartStore {
     this.cities = initialState.cities;
     this.daData = initialState.daData;
     this.data = initialState.data;
-
+    this.frontPageFirstData = initialState.frontPageFirstData;
+    this.eventsFirstData = initialState.eventsFirstData;
+    this.concertsFirstData = initialState.concertsFirstData;
+    this.festivalsFirstData = initialState.festivalsFirstData;
+    this.eventCategoryFirstData = initialState.eventCategoryFirstData;
+    this.itemsFirstData = initialState.itemsFirstData;
+    this.singleEventFirstData = initialState.singleEventFirstData;
+    this.singleItemFirstData = initialState.singleItemFirstData;
   };
   @action setHistory = (history) => {
     this.history = history;
@@ -128,13 +145,57 @@ export default class ConfigureStartStore {
   }).bind(this);
 
   // todo: create this function
-  @action getDataCurrentPage = flow( function* getDataCurrentPage(props){
-    // console.log(this.history.location.pathname)
+  @action getPageData = flow( function* getPageData(routes){
+    // console.log(routes)
     try{
-      // const resp = yield globalService.getPageData(props);
-      // console.log(resp)
+      const match = matchRoutesPath(this.history.location.pathname, routes);
+      let resp;
 
-      // return resp;
+      switch (match.component.key) {
+        case 'FrontPage':
+        case 'FrontPageCity':
+          resp = yield pageService.getFrontPageData(this.apiRoot, {categoryId: this.categoryConcertsForFrontPage, itemOrderby: 'rand'});
+          this.frontPageFirstData = resp;
+          break;
+
+        case 'Events':
+          resp = yield pageService.getEvents(this.apiRoot);
+          this.eventsFirstData = resp;
+          break;
+        case 'Concerts':
+          console.log('Concerts')
+          break;
+        case 'Festivals':
+          console.log('Festivals')
+          break;
+        case 'EventCategory':
+          console.log('EventCategory')
+          break;
+        case 'Items':
+          console.log('Items')
+          break;
+        case 'SingleEvent':
+          console.log('SingleEvent')
+          break;
+        case 'SingleItem':
+          console.log('SingleItem')
+          break;
+
+        case 'Offer':
+          console.log('Offer')
+          break;
+        case 'Advertising':
+          console.log('Advertising')
+          break;
+        case 'Contacts':
+          console.log('Contacts')
+          break;
+
+        default:
+          console.log('default')
+      }
+
+      return resp;
     }catch(e){
       console.log(e);
     }
@@ -147,6 +208,30 @@ export default class ConfigureStartStore {
       daData: this.daData,
       data: this.data,
       history: this.history,
+
+      frontPageFirstData: this.frontPageFirstData,
+      eventsFirstData: this.eventsFirstData,
+      concertsFirstData: this.concertsFirstData,
+      festivalsFirstData: this.festivalsFirstData,
+      eventCategoryFirstData: this.eventCategoryFirstData,
+      itemsFirstData: this.itemsFirstData,
+      singleEventFirstData: this.singleEventFirstData,
+      singleItemFirstData: this.singleItemFirstData
     };
   }
+}
+
+function matchRoutesPath(localPath, routes){
+  return routes.map(el => {
+    const rout = el.path;
+
+    const match = matchPath(
+      localPath,
+      { path: rout, exact: true }
+    );
+
+    if(match !== null) return {component: el, match}
+  }).filter(el => {
+    return el !== undefined
+  })[0];
 }

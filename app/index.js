@@ -5,7 +5,7 @@ import { hydrate } from 'react-dom';
 import { Provider as MobxProvider } from 'mobx-react';
 import { createBrowserHistory, createMemoryHistory } from 'history';
 
-// import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { renderRoutes } from 'react-router-config';
 import { Switch, Route, Router, useLocation } from 'react-router-dom';
 
@@ -47,6 +47,8 @@ export const ClientBilegoGateUi = () => {
   // eslint-disable-next-line no-underscore-dangle
   const initialState = !process.env.IS_SERVER ? window.__INITIAL_DATA__ : {};
 
+  console.log(initialState)
+
   const store = new ConfigureStartStore(initialState, history);
   if (!process.env.IS_SERVER) {
     window.store = store;
@@ -57,6 +59,14 @@ export const ClientBilegoGateUi = () => {
   ) {
     history.push(`/${store.baseNameForRouting}`);
   }
+
+  if(store.frontPageFirstData)
+    stores.pageStore.setStartDataFrontPage(store.frontPageFirstData);
+  else if(store.eventsFirstData) {
+    stores.pageStore.setStartDataEventsPage(store.eventsFirstData);
+  }
+  console.log(store)
+
 
   const routs = routes(store.baseNameForRouting);
 

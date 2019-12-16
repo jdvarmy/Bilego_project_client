@@ -50,41 +50,16 @@ class Page{
     this.categoryEventId = id;
   };
 
-  @action
-  getEventsSoon = flow( function* getEventsSoon(apiRoot){
-    this.isLoading = true;
-    try{
-      this.eventsSoon = [];
-      this.eventsSoon = yield pageService.getEventsSoon(apiRoot);
-    }catch(e){
-      console.log(e);
-    }finally {
-      this.isLoading = false;
-    }
-  }).bind(this);
-  @action
-  getEventsHot = flow( function* getEventsHot(apiRoot){
-    this.isLoading = true;
-    try{
-      this.eventsHot = [];
-      this.eventsHot = yield pageService.getEventsHot(apiRoot);
-    }catch(e){
-      console.log(e);
-    }finally {
-      this.isLoading = false;
-    }
-  }).bind(this);
-  @action
-  getEventsConcerts = flow( function* getEventsConcerts(apiRoot, params){
-    this.isLoading = true;
-    try{
-      this.eventsConcerts = [];
 
-      const args = {
-        page: 1,
-        size: 3
-      };
-      this.eventsConcerts = yield pageService.getEventsConcerts(apiRoot, args, params);
+  @action
+  getFrontPageData = flow( function* getFrontPageData(apiRoot, params){
+    this.isLoading = true;
+    try{
+      const resp = yield pageService.getFrontPageData(apiRoot, params);
+      this.eventsSoon = resp.events_soon;
+      this.eventsHot = resp.events_hot;
+      this.eventsConcerts = resp.events_concerts;
+      this.itemsFrontPage = resp.items_front_page;
     }catch(e){
       console.log(e);
     }finally {
@@ -92,22 +67,18 @@ class Page{
     }
   }).bind(this);
   @action
-  getItemsFrontPage = flow( function* getItemsFrontPage(apiRoot, params){
-    this.isLoading = true;
-    try{
-      this.itemsFrontPage = [];
+  setStartDataFrontPage = (data) => {
+    this.eventsSoon = data.events_soon;
+    this.eventsHot = data.events_hot;
+    this.eventsConcerts = data.events_concerts;
+    this.itemsFrontPage = data.items_front_page;
+  };
+  @action
+  setStartDataEventsPage = (data) => {
+    this.events = data;
+  };
 
-      const args = {
-        page: 1,
-        size: 4
-      };
-      this.itemsFrontPage = yield pageService.getItemsFrontPage(apiRoot, args, params);
-    }catch(e){
-      console.log(e);
-    }finally {
-      this.isLoading = false;
-    }
-  }).bind(this);
+
   @action
   getPopularOnWeek = flow( function* getPopularOnWeek(apiRoot){
     this.isLoading = true;
@@ -120,7 +91,6 @@ class Page{
       this.isLoading = false;
     }
   }).bind(this);
-
 
 
   @action

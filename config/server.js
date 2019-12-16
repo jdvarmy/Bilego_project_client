@@ -22,6 +22,7 @@ import { theme } from '../app/theme';
 import * as stores from '../app/stores';
 import { ServerBilegoGateUi } from '../app';
 import ConfigureStartStore from '../app/ConfigureStartStore';
+import routes from '../app/routes';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -60,10 +61,17 @@ app.get(/\/mos|\/spb/, async (req, res) => {
   await store.getData();
   const location = parseUrl(url);
   const indexFile = path.resolve('./build/main.html');
-  await store.getDataCurrentPage({});
+
+  const routs = routes(store.baseNameForRouting);
+
+  const pageData = await store.getPageData(routs);
+  if(store.frontPageFirstData)
+    stores.pageStore.setStartDataFrontPage(pageData);
+  else if(store.eventsFirstData)
+    stores.pageStore.setStartDataEventsPage(pageData);
+
 
   const context = {};
-
   const sheetsMui = new ServerStyleSheets();
   const sheetStyled = new ServerStyleSheet();
 
@@ -81,6 +89,10 @@ app.get(/\/mos|\/spb/, async (req, res) => {
       </StyleSheetManager>
     )
   );
+
+  if (context.url) {
+    res.redirect(301, context.url);
+  }
 
   const helmet = Helmet.renderStatic();
   const muicss = sheetsMui.toString();

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
@@ -18,6 +18,7 @@ const StyledMenu = styled(AntMenu)`
   }
 `;
 
+@withRouter
 @inject('pageStore', 'globalStore')
 @observer
 class SMenu extends Component{

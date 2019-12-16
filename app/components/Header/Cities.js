@@ -59,20 +59,8 @@ class Cities extends React.Component{
   };
 
   renderPageContent = () => {
-    const { pageStore:{
-        getEventsConcerts,
-        getEventsHot,
-        getEventsSoon,
-        getItemsFrontPage
-      }, globalStore:{
-        categoryConcertsForFrontPage
-      }
-    } = this.props;
-
-    getEventsSoon();
-    getEventsHot();
-    getEventsConcerts({categoryId: categoryConcertsForFrontPage});
-    getItemsFrontPage({orderby: 'rand'});
+    const {pageStore:{getFrontPageData}, globalStore:{categoryConcertsForFrontPage, apiRoot}} = this.props;
+    getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
   };
   renderRevolutionSlider = () => {
     this.props.sliderStore.getMainSlides();
