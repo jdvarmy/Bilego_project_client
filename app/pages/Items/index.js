@@ -33,11 +33,14 @@ const SFab = styled(Fab)`
 @observer
 class Items extends Component{
   componentDidMount() {
-    const {pageStore:{changePageType, getItems, clear}, globalStore:{apiRoot}} = this.props;
+    const {pageStore:{changePageType, getItems}, globalStore:{apiRoot}} = this.props;
 
-    clear();
     changePageType('page');
     getItems(apiRoot);
+  }
+
+  componentWillUnmount() {
+    this.props.pageStore.clear();
   }
 
   loadMore = () => {

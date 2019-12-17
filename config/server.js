@@ -69,6 +69,16 @@ app.get(/\/mos|\/spb/, async (req, res) => {
     stores.pageStore.setStartDataFrontPage(pageData);
   else if(store.eventsFirstData)
     stores.pageStore.setStartDataEventsPage(pageData);
+  else if(store.eventCategoryFirstData) {
+    stores.pageStore.setStartDataCategoryPage(pageData);
+    stores.pageStore.changePageName(store.pageName);
+  }
+  else if(store.itemsFirstData)
+    stores.pageStore.setStartDataItemsPage(pageData);
+  else if(store.singleEventFirstData)
+    stores.singleEventStore.setStartDataSingleEventPage(pageData);
+  else if(store.singleItemFirstData)
+    stores.singleItemStore.setStartDataSingleItemPage(pageData);
 
 
   const context = {};

@@ -31,11 +31,17 @@ class SingleEvent{
   };
 
   @action
+  setStartDataSingleEventPage = data => {
+    this.event = data;
+    this.id = data.id;
+    this.sliderData = data.slider;
+    this.sliderType = data.slider_type;
+  };
+
+  @action
   getEventDataBySlug = flow( function* getEventDataBySlug(apiRoot, params){
     this.isLoading = true;
     try{
-      this.clear();
-
       const response = yield eventService.getEventDataBySlug(apiRoot, params);
       this.event = response;
       this.id = response.id;

@@ -60,9 +60,18 @@ export const ClientBilegoGateUi = () => {
 
   if(store.frontPageFirstData)
     stores.pageStore.setStartDataFrontPage(store.frontPageFirstData);
-  else if(store.eventsFirstData) {
+  else if(store.eventsFirstData)
     stores.pageStore.setStartDataEventsPage(store.eventsFirstData);
+  else if(store.eventCategoryFirstData) {
+    stores.pageStore.setStartDataCategoryPage(store.eventCategoryFirstData);
+    stores.pageStore.changePageName(store.pageName);
   }
+  else if(store.itemsFirstData)
+    stores.pageStore.setStartDataItemsPage(store.itemsFirstData);
+  else if(store.singleEventFirstData)
+    stores.singleEventStore.setStartDataSingleEventPage(store.singleEventFirstData);
+  else if(store.singleItemFirstData)
+    stores.singleItemStore.setStartDataSingleItemPage(store.singleItemFirstData);
 
 
   const routs = routes(store.baseNameForRouting);

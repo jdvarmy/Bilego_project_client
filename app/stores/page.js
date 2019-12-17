@@ -77,6 +77,14 @@ class Page{
   setStartDataEventsPage = (data) => {
     this.events = data;
   };
+  @action
+  setStartDataCategoryPage = (data) => {
+    this.eventsByCategory = data;
+  };
+  @action
+  setStartDataItemsPage = (data) => {
+    this.items = data;
+  };
 
 
   @action
@@ -153,10 +161,14 @@ class Page{
       };
       const response = yield pageService.getEventsByCategory(apiRoot, args, {categoryId: params.categoryId});
       this.pagination.showButton = response.length === this.pagination.pageSize;
-      this.eventsByCategory = [
-        ...this.eventsByCategory,
-        ...response
-      ];
+
+      if(this.pagination.current === 1)
+        this.eventsByCategory = response;
+      else
+        this.eventsByCategory = [
+          ...this.eventsByCategory,
+          ...response
+        ];
     }catch(e){
       console.log(e);
     }finally {
@@ -175,10 +187,14 @@ class Page{
 
       const response = yield pageService.getItems(apiRoot, args, {...this.itemFilters, ...params});
       this.pagination.showButton = response.length === this.pagination.pageSize;
-      this.items = [
-        ...this.items,
-        ...response
-      ];
+
+      if(this.pagination.current === 1)
+        this.items = response;
+      else
+        this.items = [
+          ...this.items,
+          ...response
+        ];
     }catch(e){
       console.log(e);
     }finally {

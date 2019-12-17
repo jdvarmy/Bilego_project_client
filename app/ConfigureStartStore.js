@@ -1,6 +1,6 @@
 import { observable, action, computed, flow, configure } from 'mobx';
 import { matchPath } from 'react-router-dom';
-import { globalService, pageService } from './services';
+import { globalService, pageService, eventService, itemService } from './services';
 import { cities } from './stores';
 
 configure({
@@ -13,14 +13,13 @@ export default class ConfigureStartStore {
     this.CITY = val
   };
   cities;
+  pageName;
   @observable daData;
   @observable data;
   @observable history;
 
   @observable frontPageFirstData = null;
   @observable eventsFirstData = null;
-  @observable concertsFirstData = null;
-  @observable festivalsFirstData = null;
   @observable eventCategoryFirstData = null;
   @observable itemsFirstData = null;
   @observable singleEventFirstData = null;
@@ -92,10 +91,11 @@ export default class ConfigureStartStore {
     this.cities = initialState.cities;
     this.daData = initialState.daData;
     this.data = initialState.data;
+
+    this.pageName = initialState.pageName;
+
     this.frontPageFirstData = initialState.frontPageFirstData;
     this.eventsFirstData = initialState.eventsFirstData;
-    this.concertsFirstData = initialState.concertsFirstData;
-    this.festivalsFirstData = initialState.festivalsFirstData;
     this.eventCategoryFirstData = initialState.eventCategoryFirstData;
     this.itemsFirstData = initialState.itemsFirstData;
     this.singleEventFirstData = initialState.singleEventFirstData;
@@ -163,22 +163,24 @@ export default class ConfigureStartStore {
           this.eventsFirstData = resp;
           break;
         case 'Concerts':
-          console.log('Concerts')
-          break;
         case 'Festivals':
-          console.log('Festivals')
-          break;
         case 'EventCategory':
-          console.log('EventCategory')
+          const category = matchCategories(this.categoriesForMenu, match)[0];
+          resp = yield pageService.getEventsByCategory(this.apiRoot, {page: 1, size: 21}, {categoryId: category.id});
+          this.eventCategoryFirstData = resp;
+          this.pageName = category.name;
           break;
         case 'Items':
-          console.log('Items')
+          resp = yield pageService.getItems(this.apiRoot, {page: 1, size: 21});
+          this.itemsFirstData = resp;
           break;
         case 'SingleEvent':
-          console.log('SingleEvent')
+          resp = yield eventService.getEventDataBySlug(this.apiRoot, {slug: match.match.params.eventSlug});
+          this.singleEventFirstData = resp;
           break;
         case 'SingleItem':
-          console.log('SingleItem')
+          resp = yield itemService.getItemDataBySlug(this.apiRoot, {slug: match.match.params.itemSlug});
+          this.singleItemFirstData = resp;
           break;
 
         case 'Offer':
@@ -209,10 +211,10 @@ export default class ConfigureStartStore {
       data: this.data,
       history: this.history,
 
+      pageName: this.pageName,
+
       frontPageFirstData: this.frontPageFirstData,
       eventsFirstData: this.eventsFirstData,
-      concertsFirstData: this.concertsFirstData,
-      festivalsFirstData: this.festivalsFirstData,
       eventCategoryFirstData: this.eventCategoryFirstData,
       itemsFirstData: this.itemsFirstData,
       singleEventFirstData: this.singleEventFirstData,
@@ -234,4 +236,11 @@ function matchRoutesPath(localPath, routes){
   }).filter(el => {
     return el !== undefined
   })[0];
+}
+function matchCategories(categories, cat){
+  let c = categories.filter(category => {
+    if(category.cat === cat.component.key || category.cat.toLowerCase() === cat.match.params.catName)
+      return category;
+  });
+  return c;
 }

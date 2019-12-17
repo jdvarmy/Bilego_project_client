@@ -16,15 +16,16 @@ class SingleItem{
   };
 
   @action
+  setStartDataSingleItemPage = (data) => {
+    this.item = data;
+  };
+
+  @action
   getItemDataBySlug = flow( function* getItemDataBySlug(apiRoot, params){
     this.isLoading = true;
     try{
-      this.clear();
-
       const response = yield itemService.getItemDataBySlug(apiRoot, params);
       this.item = response;
-
-      console.log(response)
     }catch(e){
       console.log(e);
     }finally {
