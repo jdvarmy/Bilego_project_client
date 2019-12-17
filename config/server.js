@@ -50,7 +50,6 @@ app.get('/', async (req, res) => {
 
 app.get(/\/mos|\/spb/, async (req, res) => {
   const url = req.originalUrl || req.url;
-  if (url.indexOf('favicon') + 1) return; // fix for chrome requests... todo: сделать нормальный фикс этого говна. хром постоянно запрашивает иконку
 
   const history = createMemoryHistory({
     initialEntries: [url]
@@ -72,14 +71,14 @@ app.get(/\/mos|\/spb/, async (req, res) => {
   else if(store.eventCategoryFirstData) {
     stores.pageStore.setStartDataCategoryPage(pageData);
     stores.pageStore.changePageName(store.pageName);
-  }
-  else if(store.itemsFirstData)
+  }else if(store.itemsFirstData)
     stores.pageStore.setStartDataItemsPage(pageData);
   else if(store.singleEventFirstData)
     stores.singleEventStore.setStartDataSingleEventPage(pageData);
   else if(store.singleItemFirstData)
     stores.singleItemStore.setStartDataSingleItemPage(pageData);
 
+  console.log(url)
 
   const context = {};
   const sheetsMui = new ServerStyleSheets();

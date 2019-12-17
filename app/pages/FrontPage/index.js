@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
+import Helmet from 'react-helmet';
 
 import { Spin } from 'antd';
 import NoSsr from '@material-ui/core/NoSsr';
@@ -38,6 +39,7 @@ class FrontPage extends Component {
 
     return (
       <Spin spinning={pageStore.isLoading || sliderStore.isLoading} indicator={<Spinner leftPadding={27/2}/>}>
+        <Helmet title="Posts about react" />
         <div>
           <NoSsr>
             <Slider type="main"/>

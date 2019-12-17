@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
+import { NoSsr } from '@material-ui/core';
 import { style } from '../../theme';
 import SMenu from './SMenu';
 import Search from '../Search';
@@ -24,7 +25,9 @@ export default function BottomMenu() {
         <SMenu />
       </LeftCol>
       <RightCol item xs={4}>
-        <Search />
+        <NoSsr>
+          <Search />
+        </NoSsr>
       </RightCol>
     </Wrapper>
   );

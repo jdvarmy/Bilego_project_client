@@ -33,6 +33,10 @@ class SingleEvent extends Component{
     // }
   };
 
+  componentWillUnmount() {
+    this.props.singleEventStore.clear();
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     const {singleEventStore:{getEventDataBySlug}, globalStore:{apiRoot}} = this.props;
 

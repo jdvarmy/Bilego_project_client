@@ -115,10 +115,10 @@ class Page{
     this.pagination.pageSize = pageSize ? pageSize : this.pagination.pageSize;
   };
   @action
-  setItemFilter = (filters) => {
+  setItemFilter = (apiRoot, filters) => {
     this.itemFilters = { ...this.itemFilters, ...filters };
     this.clear();
-    this.getItemsSearch();
+    this.getItemsSearch(apiRoot);
   };
 
 

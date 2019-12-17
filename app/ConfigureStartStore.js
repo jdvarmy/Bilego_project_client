@@ -144,9 +144,7 @@ export default class ConfigureStartStore {
     }
   }).bind(this);
 
-  // todo: create this function
   @action getPageData = flow( function* getPageData(routes){
-    // console.log(routes)
     try{
       const match = matchRoutesPath(this.history.location.pathname, routes);
       let resp;
@@ -194,7 +192,6 @@ export default class ConfigureStartStore {
           break;
 
         default:
-          console.log('default')
       }
 
       return resp;

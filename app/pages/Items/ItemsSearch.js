@@ -29,17 +29,17 @@ class ItemsSearch extends Component{
   time;
 
   setCategory = event => {
-    const {pageStore:{setItemFilter}} = this.props,
-      value = 'Все площадки' === event.target.value ? '' : event.target.value;
-    setItemFilter({
-      category: value,
-    });
+    const {pageStore:{setItemFilter}, globalStore:{apiRoot}} = this.props;
+    const value = 'Все площадки' === event.target.value ? '' : event.target.value;
+
+    setItemFilter(apiRoot, {category: value});
   };
   setSearch = (event) => {
-    const {pageStore:{setItemFilter}} = this.props,
-      value = event.target.value;
+    const {pageStore:{setItemFilter}, globalStore:{apiRoot}} = this.props;
+    const value = event.target.value;
+
     this.time = setTimeout(function(){
-      setItemFilter({search: value});
+      setItemFilter(apiRoot, {search: value});
     }, 100);
   };
 

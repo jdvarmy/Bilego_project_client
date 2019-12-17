@@ -30,6 +30,10 @@ class SingleItem extends Component{
       getItemDataBySlug(apiRoot, {slug: this.props.match.params.itemSlug});
   }
 
+  // componentWillUnmount() {
+  //   this.props.singleItemStore.clear();
+  // }
+
   render(){
     const {singleItemStore:{isLoading, item}, globalStore:{baseNameForRouting}} = this.props;
     return(
