@@ -27,6 +27,11 @@ import routes from '../app/routes';
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+app.set('trust proxy', function (ip) {
+  console.log(ip)
+  return ip === '127.0.0.1' || ip === '123.123.123.123';
+});
+
 app.use(express.static('./build'));
 
 // const httpsRedirect = require('express-https-redirect'); //todo: установить на проме express-https-redirect
@@ -41,6 +46,8 @@ app.get('/', async (req, res) => {
     req.connection.remoteAddress ||
     req.socket.remoteAddress ||
     req.connection.socket.remoteAddress;
+
+  console.log(ip)
 
   const store = new ConfigureStartStore(initialState, history);
   await store.getData({ip});
@@ -78,7 +85,6 @@ app.get(/\/mos|\/spb/, async (req, res) => {
   else if(store.singleItemFirstData)
     stores.singleItemStore.setStartDataSingleItemPage(pageData);
 
-  console.log(url)
 
   const context = {};
   const sheetsMui = new ServerStyleSheets();

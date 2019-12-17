@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 
 export default function renderSiteMeta(props) {
   const {location, title, description, keywords} = props;
-  const canonical = location//.toLowerCase();
+  const canonical = location.toLowerCase();
 
   return (<Helmet
     link={[{
