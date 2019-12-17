@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
-import Helmet from 'react-helmet';
+import { withRouter } from 'react-router-dom';
 
 import { Spin } from 'antd';
 import NoSsr from '@material-ui/core/NoSsr';
@@ -15,6 +15,7 @@ import Selections from './Selections';
 import Items from './Items';
 import Spinner from '../../components/Spinner';
 import DatePickerLine from '../../components/DatePickerLine';
+import SiteMeta from '../../components/SiteMeta';
 
 const DateContainer = styled.div`
   height: ${style.$heightMenu}px;
@@ -24,6 +25,7 @@ const DateContainer = styled.div`
   align-items: center;
 `;
 
+@withRouter
 @inject('pageStore', 'globalStore', 'sliderStore')
 @observer
 class FrontPage extends Component {
@@ -35,11 +37,13 @@ class FrontPage extends Component {
   }
 
   render() {
-    const {pageStore, sliderStore} = this.props;
+    const {pageStore, sliderStore, history} = this.props;
+
+    console.log(history)
 
     return (
       <Spin spinning={pageStore.isLoading || sliderStore.isLoading} indicator={<Spinner leftPadding={27/2}/>}>
-        <Helmet title="Posts about react" />
+        <SiteMeta location={history.location.pathname} title="react"/>
         <div>
           <NoSsr>
             <Slider type="main"/>

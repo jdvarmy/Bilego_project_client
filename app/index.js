@@ -5,7 +5,6 @@ import { hydrate } from 'react-dom';
 import { Provider as MobxProvider } from 'mobx-react';
 import { createBrowserHistory, createMemoryHistory } from 'history';
 
-import { Helmet } from 'react-helmet';
 import { renderRoutes } from 'react-router-config';
 import { Switch, Route, Router, useLocation } from 'react-router-dom';
 
@@ -75,13 +74,14 @@ export const ClientBilegoGateUi = () => {
 
 
   const routs = routes(store.baseNameForRouting);
+  const path = window.location.pathname;
 
   hydrate(
     // eslint-disable-next-line react/jsx-filename-extension
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <MobxProvider {...stores} globalStore={store}>
-        <Router history={history} path={window.location.pathname}>
+        <Router history={history} path={path}>
           <ScrollToTop />
           <Root>
             <Main>

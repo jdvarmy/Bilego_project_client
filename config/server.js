@@ -115,6 +115,7 @@ app.get(/\/mos|\/spb/, async (req, res) => {
     data = data.replace('__STYLES__', styleTags)
       .replace('__MUISTYLES__', muicss)
       .replace('__LOADER__', '')
+      .replace('__LINKS__', helmet.link.toString())
       .replace('<div id=app></div>', `<div id=app>${appContent}</div>`)
       .replace('<div id="app"></div>', `<div id="app">${appContent}</div>`)
       .replace('<title></title>', helmet.title.toString())
