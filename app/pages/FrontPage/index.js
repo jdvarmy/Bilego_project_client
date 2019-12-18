@@ -37,13 +37,17 @@ class FrontPage extends Component {
   }
 
   render() {
-    const {pageStore, sliderStore, history} = this.props;
-
-    console.log(history)
+    const {pageStore, sliderStore, globalStore:{canonicalLink, meta}} = this.props;
 
     return (
       <Spin spinning={pageStore.isLoading || sliderStore.isLoading} indicator={<Spinner leftPadding={27/2}/>}>
-        <SiteMeta location={history.location.pathname} title="react"/>
+        <SiteMeta
+          location={canonicalLink}
+          title={meta.title}
+          description={meta.description}
+          keywords={meta.keywords}
+          opengraph={meta.opengraph}
+        />
         <div>
           <NoSsr>
             <Slider type="main"/>

@@ -9,6 +9,7 @@ import SliderEvents from './SliderEvents';
 import Events from './Events';
 import Address from './Address';
 import EventsList from './EventsList';
+import SiteMeta from '../../components/SiteMeta';
 
 const Wrapper = styled.div`
   min-height: 840px;
@@ -35,9 +36,16 @@ class SingleItem extends Component{
   // }
 
   render(){
-    const {singleItemStore:{isLoading, item}, globalStore:{baseNameForRouting}} = this.props;
+    const {singleItemStore:{isLoading, item}, globalStore:{baseNameForRouting, canonicalLink, meta}} = this.props;
     return(
       <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
+        <SiteMeta
+          location={canonicalLink}
+          title={meta.title}
+          description={meta.description}
+          keywords={meta.keywords}
+          opengraph={meta.opengraph}
+        />
         <Wrapper>
           {
             item &&

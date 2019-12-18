@@ -14,9 +14,16 @@ export default class ConfigureStartStore {
   };
   cities;
   pageName;
+  siteAddress = 'https://bilego.ru';
   @observable daData;
   @observable data;
   @observable history;
+
+  @observable title = '';
+  @observable description = '';
+  @observable keywords = '';
+  @observable opengraph = null;
+  @observable postMeta;
 
   @observable frontPageFirstData = null;
   @observable eventsFirstData = null;
@@ -79,6 +86,18 @@ export default class ConfigureStartStore {
 
     return false;
   }
+  @computed get canonicalLink(){
+    return this.siteAddress + this.history.location.pathname;
+  };
+  @computed get meta(){
+    return {
+      title: this.title,
+      description: this.description,
+      keywords: this.keywords,
+      opengraph: this.opengraph,
+      meta: this.postMeta
+    }
+  }
 
   constructor(initialState, history) {
     this.setData(initialState);
@@ -94,6 +113,12 @@ export default class ConfigureStartStore {
 
     this.pageName = initialState.pageName;
 
+    this.title = initialState.title;
+    this.description = initialState.description;
+    this.keywords = initialState.keywords;
+    this.opengraph = initialState.opengraph;
+    this.postMeta = initialState.postMeta;
+
     this.frontPageFirstData = initialState.frontPageFirstData;
     this.eventsFirstData = initialState.eventsFirstData;
     this.eventCategoryFirstData = initialState.eventCategoryFirstData;
@@ -103,6 +128,13 @@ export default class ConfigureStartStore {
   };
   @action setHistory = (history) => {
     this.history = history;
+  };
+  @action setMeta = (data) => {
+    this.title = data.title;
+    this.description = data.description;
+    this.keywords = data.keywords;
+    this.opengraph = data.opengraph;
+    this.postMeta = data;
   };
 
   @action getData = async (props) => {
@@ -153,6 +185,7 @@ export default class ConfigureStartStore {
         case 'FrontPage':
         case 'FrontPageCity':
           resp = yield pageService.getFrontPageData(this.apiRoot, {categoryId: this.categoryConcertsForFrontPage, itemOrderby: 'rand'});
+          this.setMeta(resp.meta);
           this.frontPageFirstData = resp;
           break;
 
@@ -174,10 +207,12 @@ export default class ConfigureStartStore {
           break;
         case 'SingleEvent':
           resp = yield eventService.getEventDataBySlug(this.apiRoot, {slug: match.match.params.eventSlug});
+          this.setMeta(resp.meta);
           this.singleEventFirstData = resp;
           break;
         case 'SingleItem':
           resp = yield itemService.getItemDataBySlug(this.apiRoot, {slug: match.match.params.itemSlug});
+          this.setMeta(resp.meta);
           this.singleItemFirstData = resp;
           break;
 
@@ -209,6 +244,12 @@ export default class ConfigureStartStore {
       history: this.history,
 
       pageName: this.pageName,
+
+      title: this.title,
+      description: this.description,
+      keywords: this.keywords,
+      opengraph: this.opengraph,
+      postMeta: this.postMeta,
 
       frontPageFirstData: this.frontPageFirstData,
       eventsFirstData: this.eventsFirstData,

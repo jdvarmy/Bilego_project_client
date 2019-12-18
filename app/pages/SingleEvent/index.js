@@ -11,6 +11,7 @@ import ConcertInfo from './ConcertInfo';
 import TicketsFrame from './TicketsFrame';
 import SliderEvent from './SliderEvent';
 import Content from './Content';
+import SiteMeta from '../../components/SiteMeta';
 
 const TicketsFrameWrap = styled.div`
   border-top: 1px solid ${style.$grey};
@@ -45,9 +46,16 @@ class SingleEvent extends Component{
   }
 
   render(){
-    const {singleEventStore:{isLoading}} = this.props;
+    const {singleEventStore:{isLoading}, globalStore:{canonicalLink, meta}} = this.props;
     return(
       <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
+        <SiteMeta
+          location={canonicalLink}
+          title={meta.title}
+          description={meta.description}
+          keywords={meta.keywords}
+          opengraph={meta.opengraph}
+        />
         <div>
           <SliderEvent />
         </div>
