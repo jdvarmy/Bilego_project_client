@@ -38,10 +38,8 @@ class FrontPage extends Component {
 
   render() {
     const {pageStore, sliderStore, history} = this.props;
-    let canonical = 'http://localhost:3000/mos';
-    if (!process.env.IS_SERVER) {
-      canonical = window.location;
-    }
+
+    console.log(history)
 
     return (
       <Spin spinning={pageStore.isLoading || sliderStore.isLoading} indicator={<Spinner leftPadding={27/2}/>}>
