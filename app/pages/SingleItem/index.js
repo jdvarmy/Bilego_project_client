@@ -9,43 +9,50 @@ import SliderEvents from './SliderEvents';
 import Events from './Events';
 import Address from './Address';
 import EventsList from './EventsList';
-import SiteMeta from '../../components/SiteMeta';
 
 const Wrapper = styled.div`
   min-height: 840px;
 `;
 
+// todo: если вордпресс не нашел клуб, то 404
+
 @withRouter
 @inject('singleItemStore', 'globalStore')
 @observer
 class SingleItem extends Component{
-  componentDidMount() {
-    const {singleItemStore:{getItemDataBySlug}, match, globalStore:{apiRoot}} = this.props;
-    getItemDataBySlug(apiRoot, {slug: match.params.itemSlug});
+  componentDidMount = async () => {
+    try {
+      const {singleItemStore:{getItemDataBySlug}, match, globalStore:{apiRoot, setMeta}} = this.props;
+      await getItemDataBySlug(apiRoot, {slug: match.params.itemSlug});
+
+      setMeta(this.props.singleItemStore.item.seo_meta);
+    }catch (e) {
+      console.log('single item: ', e);
+    }
+  };
+
+  componentDidUpdate = async (prevProps, prevState, snapshot) => {
+    try {
+      const {singleItemStore: {getItemDataBySlug}, globalStore: {apiRoot, setMeta}} = this.props;
+
+      if (prevProps.match.params.itemSlug !== this.props.match.params.itemSlug) {
+        await getItemDataBySlug(apiRoot, {slug: this.props.match.params.itemSlug});
+        setMeta(this.props.singleItemStore.item.seo_meta);
+      }
+    }catch (e) {
+      console.log('single item: ', e);
+    }
+  };
+
+  componentWillUnmount() {
+    this.props.singleItemStore.clear();
   }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const {singleItemStore:{getItemDataBySlug}, globalStore:{apiRoot}} = this.props;
-
-    if(prevProps.match.params.itemSlug !== this.props.match.params.itemSlug)
-      getItemDataBySlug(apiRoot, {slug: this.props.match.params.itemSlug});
-  }
-
-  // componentWillUnmount() {
-  //   this.props.singleItemStore.clear();
-  // }
 
   render(){
-    const {singleItemStore:{isLoading, item}, globalStore:{baseNameForRouting, canonicalLink, meta}} = this.props;
+    const {singleItemStore:{isLoading, item}, globalStore:{baseNameForRouting}} = this.props;
+
     return(
       <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
-        <SiteMeta
-          location={canonicalLink}
-          title={meta.title}
-          description={meta.description}
-          keywords={meta.keywords}
-          opengraph={meta.opengraph}
-        />
         <Wrapper>
           {
             item &&

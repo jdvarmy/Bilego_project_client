@@ -15,7 +15,6 @@ import Selections from './Selections';
 import Items from './Items';
 import Spinner from '../../components/Spinner';
 import DatePickerLine from '../../components/DatePickerLine';
-import SiteMeta from '../../components/SiteMeta';
 
 const DateContainer = styled.div`
   height: ${style.$heightMenu}px;
@@ -29,25 +28,23 @@ const DateContainer = styled.div`
 @inject('pageStore', 'globalStore', 'sliderStore')
 @observer
 class FrontPage extends Component {
-  componentDidMount() {
-    const {pageStore:{getFrontPageData}, globalStore:{categoryConcertsForFrontPage, apiRoot}} = this.props;
+  componentDidMount = async () => {
+    try {
+      const {pageStore: {getFrontPageData}, globalStore: {categoryConcertsForFrontPage, apiRoot, setMeta}} = this.props;
 
-    getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
-    this.props.sliderStore.getMainSlides(apiRoot);
-  }
+      await getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
+      setMeta(this.props.pageStore.seoPage);
+      this.props.sliderStore.getMainSlides(apiRoot);
+    }catch (e) {
+      console.log('front page: ', e);
+    }
+  };
 
   render() {
-    const {pageStore, sliderStore, globalStore:{canonicalLink, meta}} = this.props;
+    const {pageStore, sliderStore} = this.props;
 
     return (
       <Spin spinning={pageStore.isLoading || sliderStore.isLoading} indicator={<Spinner leftPadding={27/2}/>}>
-        <SiteMeta
-          location={canonicalLink}
-          title={meta.title}
-          description={meta.description}
-          keywords={meta.keywords}
-          opengraph={meta.opengraph}
-        />
         <div>
           <NoSsr>
             <Slider type="main"/>

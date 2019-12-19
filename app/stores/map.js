@@ -25,11 +25,13 @@ class Map{
     transitionEasing: easeCubic
   };
 
-  @action setViewport = (viewport) => {
+  @action
+  setViewport = (viewport) => {
     this.viewport = viewport;
   };
 
-  @action autoFit = (markers) => {
+  @action
+  autoFit = (markers) => {
     if(!markers.length) return;
 
     let coords = [];

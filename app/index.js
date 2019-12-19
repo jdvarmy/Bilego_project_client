@@ -20,6 +20,7 @@ import ConfigureStartStore from './ConfigureStartStore';
 import { Header } from './components';
 import RightPanel from './components/RightPanel';
 import Footer from './components/Footer';
+import SiteMeta from './components/SiteMeta';
 
 /**
  * @return {null}
@@ -81,6 +82,7 @@ export const ClientBilegoGateUi = () => {
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <MobxProvider {...stores} globalStore={store}>
+        <SiteMeta />
         <Router history={history} path={path}>
           <ScrollToTop />
           <Root>
@@ -112,6 +114,7 @@ export const ServerBilegoGateUi = (props) => {
 
   return (
     <Fragment>
+      <SiteMeta />
       <Root>
         <Main>
           <Header />

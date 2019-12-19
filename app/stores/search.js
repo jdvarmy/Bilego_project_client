@@ -40,23 +40,28 @@ class Search{
   @observable focus = false;
   @observable isLoading = false;
 
-  @action setSearchString = (string) => {
+  @action
+  setSearchString = (string) => {
     this.searchString = string;
   };
 
-  @action changeSearchStatus = (status) => {
+  @action
+  changeSearchStatus = (status) => {
     this.search = status;
   };
 
-  @action setRequest = (value) => {
+  @action
+  setRequest = (value) => {
     this.request = value;
   };
 
-  @action setDate = (value) => {
+  @action
+  setDate = (value) => {
     this.date = value;
   };
 
-  @action changeFocus = (flag) => {
+  @action
+  changeFocus = (flag) => {
     this.focus = flag;
   };
 

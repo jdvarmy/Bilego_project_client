@@ -33,23 +33,28 @@ export default class ConfigureStartStore {
   @observable singleItemFirstData = null;
 
   // def variables
-  @computed get baseNameForRouting(){
+  @computed
+  get baseNameForRouting(){
     if(this.CITY !== -1) return this.cities[this.CITY].baseName;
     return false;
   };
-  @computed get cityLabel(){
+  @computed
+  get cityLabel(){
     if(this.CITY !== -1) return this.cities[this.CITY].cityLabel;
     return false;
   };
-  @computed get categoryConcertsForFrontPage(){
+  @computed
+  get categoryConcertsForFrontPage(){
     if(this.CITY !== -1) return this.cities[this.CITY].categoryConcerts;
     return false;
   };
-  @computed get apiRoot(){
+  @computed
+  get apiRoot(){
     if(this.CITY !== -1) return this.cities[this.CITY].apiRoot;
     return false;
   };
-  @computed get categoriesForMenu(){
+  @computed
+  get categoriesForMenu(){
     if(this.CITY !== -1) return [
       {
         id: this.cities[this.CITY].category.concerts,
@@ -86,10 +91,12 @@ export default class ConfigureStartStore {
 
     return false;
   }
-  @computed get canonicalLink(){
+  @computed
+  get canonicalLink(){
     return this.siteAddress + this.history.location.pathname;
   };
-  @computed get meta(){
+  @computed
+  get meta(){
     return {
       title: this.title,
       description: this.description,
@@ -105,7 +112,8 @@ export default class ConfigureStartStore {
 
     this.cities = cities;
   }
-  @action setData = (initialState) => {
+  @action
+  setData = (initialState) => {
     this.CITY = initialState.CITY;
     this.cities = initialState.cities;
     this.daData = initialState.daData;
@@ -126,10 +134,12 @@ export default class ConfigureStartStore {
     this.singleEventFirstData = initialState.singleEventFirstData;
     this.singleItemFirstData = initialState.singleItemFirstData;
   };
-  @action setHistory = (history) => {
+  @action
+  setHistory = (history) => {
     this.history = history;
   };
-  @action setMeta = (data) => {
+  @action
+  setMeta = (data) => {
     this.title = data.title;
     this.description = data.description;
     this.keywords = data.keywords;
@@ -137,7 +147,8 @@ export default class ConfigureStartStore {
     this.postMeta = data;
   };
 
-  @action getData = async (props) => {
+  @action
+  getData = async (props) => {
     try {
       if (this.history.location.pathname.indexOf('mos') + 1) {
         this.setCity(0);
@@ -165,7 +176,8 @@ export default class ConfigureStartStore {
     }
   };
 
-  @action getSypex = flow( function* getSypex(props){
+  @action
+  getSypex = flow( function* getSypex(props){
     try{
       const resp = yield globalService.getSypex(props);
       this.daData = resp;
@@ -176,7 +188,8 @@ export default class ConfigureStartStore {
     }
   }).bind(this);
 
-  @action getPageData = flow( function* getPageData(routes){
+  @action
+  getPageData = flow( function* getPageData(routes){
     try{
       const match = matchRoutesPath(this.history.location.pathname, routes);
       let resp;
@@ -185,12 +198,13 @@ export default class ConfigureStartStore {
         case 'FrontPage':
         case 'FrontPageCity':
           resp = yield pageService.getFrontPageData(this.apiRoot, {categoryId: this.categoryConcertsForFrontPage, itemOrderby: 'rand'});
-          this.setMeta(resp.meta);
+          this.setMeta(resp.seo_meta);
           this.frontPageFirstData = resp;
           break;
 
         case 'Events':
           resp = yield pageService.getEvents(this.apiRoot, {page: 1, size: 21});
+          this.setMeta(resp.seo_meta);
           this.eventsFirstData = resp;
           break;
         case 'Concerts':
@@ -207,12 +221,12 @@ export default class ConfigureStartStore {
           break;
         case 'SingleEvent':
           resp = yield eventService.getEventDataBySlug(this.apiRoot, {slug: match.match.params.eventSlug});
-          this.setMeta(resp.meta);
+          this.setMeta(resp.seo_meta);
           this.singleEventFirstData = resp;
           break;
         case 'SingleItem':
           resp = yield itemService.getItemDataBySlug(this.apiRoot, {slug: match.match.params.itemSlug});
-          this.setMeta(resp.meta);
+          this.setMeta(resp.seo_meta);
           this.singleItemFirstData = resp;
           break;
 

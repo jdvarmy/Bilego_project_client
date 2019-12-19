@@ -1,33 +1,40 @@
 import React from 'react';
 import Helmet from 'react-helmet';
+import { inject, observer } from 'mobx-react';
 
-export default function renderSiteMeta(props) {
-  const {location, title, description, keywords, opengraph} = props;
-  const canonical = location.toLowerCase();
+@inject('globalStore')
+@observer
+class SiteMeta extends React.Component{
+  render() {
+    const {canonicalLink, title, description, keywords, opengraph} = this.props.globalStore;
+    const canonical = canonicalLink ? canonicalLink.toLowerCase() : '';
 
-  return (<Helmet
-    link={[{
-      href: canonical,
-      rel: 'canonical'
-    }]}
-    meta={[
-      {name: 'description', content: description},
-      {name: 'keywords', content: keywords},
+    return (<Helmet
+        link={[{
+          href: canonical,
+          rel: 'canonical'
+        }]}
+        meta={[
+          {name: 'description', content: description},
+          {name: 'keywords', content: keywords},
 
-      {property: 'og:locale', content: opengraph && opengraph.locale},
-      {property: 'og:type', content: opengraph && opengraph.type},
-      {property: 'og:title', content: opengraph && opengraph.title},
-      {property: 'og:description', content: opengraph && opengraph.description},
-      {property: 'og:site_name', content: opengraph && opengraph.site_name},
-      {property: 'og:image', content: opengraph && opengraph.image},
-      {property: 'og:image:secure_url', content: opengraph && opengraph.image_secure_url},
-      {property: 'og:image:width', content: opengraph && opengraph.image_width},
-      {property: 'og:image:height', content: opengraph && opengraph.image_height},
-      {property: 'og:url', content: canonical},
-    ]}
-    title={title} />
-  );
+          {property: 'og:locale', content: opengraph && opengraph.locale},
+          {property: 'og:type', content: opengraph && opengraph.type},
+          {property: 'og:title', content: opengraph && opengraph.title},
+          {property: 'og:description', content: opengraph && opengraph.description},
+          {property: 'og:site_name', content: opengraph && opengraph.site_name},
+          {property: 'og:image', content: opengraph && opengraph.image},
+          {property: 'og:image:secure_url', content: opengraph && opengraph.image_secure_url},
+          {property: 'og:image:width', content: opengraph && opengraph.image_width},
+          {property: 'og:image:height', content: opengraph && opengraph.image_height},
+          {property: 'og:url', content: canonical},
+        ]}
+        title={title}/>
+    );
+  }
 }
+
+export default SiteMeta;
 
 /*
 *

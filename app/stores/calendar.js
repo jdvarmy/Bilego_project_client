@@ -17,11 +17,13 @@ class Calendar{
   days = ['воскр', 'понед', 'вторн', 'среда', 'четв', 'пятн', 'субб'];
 
   @observable daysFilter = '';
-  @action setDaysFilter = day =>{
+  @action
+  setDaysFilter = day =>{
     this.daysFilter = day
   };
 
-  @computed get getYear() {
+  @computed
+  get getYear() {
     return (!this.start || !this.end)
            ? new Date().getFullYear()
            : this.start.getFullYear() === this.end.getFullYear()
@@ -30,13 +32,16 @@ class Calendar{
                ? this.start.getFullYear()
                : new Date().getFullYear();
   }
-  @computed get getStartDateString() {
+  @computed
+  get getStartDateString() {
     return this.start ? `${this.days[this.start.getDay()]}, ${this.start.getDate()} ${this.months[this.start.getMonth()]}` : null;
   }
-  @computed get getEndDateString() {
+  @computed
+  get getEndDateString() {
     return this.end ? `${this.days[this.end.getDay()]}, ${this.end.getDate()} ${this.months[this.end.getMonth()]}` : null;
   }
-  @computed get getSearchString() {
+  @computed
+  get getSearchString() {
     let string = null;
 
     if(this.start || this.end) {

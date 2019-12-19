@@ -28,7 +28,6 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.set('trust proxy', function (ip) {
-  console.log(ip)
   return ip === '127.0.0.1' || ip === '123.123.123.123';
 });
 

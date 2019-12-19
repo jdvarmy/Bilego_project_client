@@ -34,12 +34,13 @@ const SFab = styled(Fab)`
 @inject('pageStore', 'globalStore')
 @observer
 class Events extends Component{
-  componentDidMount() {
-    const {pageStore:{changePageType, getEvents}, globalStore:{apiRoot}} = this.props;
+  componentDidMount = async () => {
+    const {pageStore:{changePageType, getEvents}, globalStore:{apiRoot, setMeta}} = this.props;
 
     changePageType('page');
-    getEvents(apiRoot);
-  }
+    await getEvents(apiRoot);
+    setMeta(this.props.pageStore.seoPage);
+  };
 
   componentWillUnmount() {
     this.props.pageStore.clear();
@@ -61,7 +62,7 @@ class Events extends Component{
         <Grid item xs={12}>
           <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
             <GridCont container spacing={4}>
-              {events.length > 0
+              {events && events.length > 0
                 ?
                 events.map(event=>(
                   <Grid key={event.id} item xs={4}>

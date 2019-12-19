@@ -11,7 +11,6 @@ import ConcertInfo from './ConcertInfo';
 import TicketsFrame from './TicketsFrame';
 import SliderEvent from './SliderEvent';
 import Content from './Content';
-import SiteMeta from '../../components/SiteMeta';
 
 const TicketsFrameWrap = styled.div`
   border-top: 1px solid ${style.$grey};
@@ -20,42 +19,44 @@ const TicketsFrameWrap = styled.div`
 `;
 
 // https://ui8.net/products/stellar-ui-kit
+// todo: если вордпресс не нашел событие, то 404
 
 @withRouter
 @inject('singleEventStore', 'globalStore')
 @observer
 class SingleEvent extends Component{
-  componentDidMount = () => {
-    const {match, singleEventStore:{getEventDataBySlug}, globalStore:{apiRoot}} = this.props;
-    getEventDataBySlug(apiRoot, {slug: match.params.eventSlug});
+  componentDidMount = async () => {
+    try {
+      const {match, singleEventStore: {getEventDataBySlug}, globalStore: {apiRoot, setMeta}} = this.props;
+      await getEventDataBySlug(apiRoot, {slug: match.params.eventSlug});
 
-    // if( false ) { // todo: если вордпресс не нашел событие, то 404
-    //   this.props.history.push('/${baseNameForRouting}/404?query=' + this.props.match.params.eventSlug);
-    // }
+      setMeta(this.props.singleEventStore.event.seo_meta);
+    }catch (e) {
+      console.log('single event: ', e);
+    }
+  };
+
+  componentDidUpdate = async (prevProps, prevState, snapshot) => {
+    try {
+      const {singleEventStore: {getEventDataBySlug}, globalStore: {apiRoot, setMeta}} = this.props;
+
+      if (prevProps.match.params.eventSlug !== this.props.match.params.eventSlug) {
+        await getEventDataBySlug(apiRoot, {slug: this.props.match.params.eventSlug});
+        setMeta(this.props.singleEventStore.event.seo_meta);
+      }
+    }catch (e) {
+      console.log('single event: ', e);
+    }
   };
 
   componentWillUnmount() {
     this.props.singleEventStore.clear();
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const {singleEventStore:{getEventDataBySlug}, globalStore:{apiRoot}} = this.props;
-
-    if(prevProps.match.params.eventSlug !== this.props.match.params.eventSlug)
-      getEventDataBySlug(apiRoot, {slug: this.props.match.params.eventSlug});
-  }
-
   render(){
-    const {singleEventStore:{isLoading}, globalStore:{canonicalLink, meta}} = this.props;
+    const {singleEventStore:{isLoading}} = this.props;
     return(
       <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
-        <SiteMeta
-          location={canonicalLink}
-          title={meta.title}
-          description={meta.description}
-          keywords={meta.keywords}
-          opengraph={meta.opengraph}
-        />
         <div>
           <SliderEvent />
         </div>

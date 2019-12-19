@@ -36,6 +36,8 @@ class Page{
   @observable itemsByCategory = []; // not use
   @observable itemsCategoryList = [];
 
+  @observable seoPage = [];
+
   @action
   changePageName = (name) => {
     this.name = name
@@ -50,7 +52,6 @@ class Page{
     this.categoryEventId = id;
   };
 
-
   @action
   getFrontPageData = flow( function* getFrontPageData(apiRoot, params){
     this.isLoading = true;
@@ -60,12 +61,14 @@ class Page{
       this.eventsHot = resp.events_hot;
       this.eventsConcerts = resp.events_concerts;
       this.itemsFrontPage = resp.items_front_page;
+      this.seoPage = resp.seo_meta;
     }catch(e){
       console.log(e);
     }finally {
       this.isLoading = false;
     }
   }).bind(this);
+
   @action
   setStartDataFrontPage = (data) => {
     this.eventsSoon = data.events_soon;
@@ -75,7 +78,7 @@ class Page{
   };
   @action
   setStartDataEventsPage = (data) => {
-    this.events = data;
+    this.events = data.posts;
   };
   @action
   setStartDataCategoryPage = (data) => {
@@ -122,7 +125,6 @@ class Page{
   };
 
 
-
   @action
   getEvents = flow( function* getEvents(apiRoot, params){
     if(this.isLoading) return;
@@ -134,14 +136,16 @@ class Page{
         size: this.pagination.pageSize
       };
       const response = yield pageService.getEvents(apiRoot, args, {...params});
-      this.pagination.showButton = response.length === this.pagination.pageSize;
+      const posts = response.posts;
+      this.seoPage = response.seo_meta;
+      this.pagination.showButton = posts && posts.length === this.pagination.pageSize;
 
       if(this.pagination.current === 1)
-        this.events = response;
+        this.events = posts;
       else
         this.events = [
           ...this.events,
-          ...response
+          ...posts
         ];
     }catch(e){
       console.log(e);
