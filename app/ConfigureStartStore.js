@@ -212,11 +212,13 @@ export default class ConfigureStartStore {
         case 'EventCategory':
           const category = matchCategories(this.categoriesForMenu, match)[0];
           resp = yield pageService.getEventsByCategory(this.apiRoot, {page: 1, size: 21}, {categoryId: category.id});
+          this.setMeta(resp.seo_meta);
           this.eventCategoryFirstData = resp;
           this.pageName = category.name;
           break;
         case 'Items':
           resp = yield pageService.getItems(this.apiRoot, {page: 1, size: 21});
+          this.setMeta(resp.seo_meta);
           this.itemsFirstData = resp;
           break;
         case 'SingleEvent':

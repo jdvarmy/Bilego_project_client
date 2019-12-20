@@ -21,9 +21,9 @@ const StyledMenu = styled(AntMenu)`
 @inject('pageStore', 'globalStore')
 @observer
 class Menu extends Component{
-  handleClick = e => {
+  handleClick = async e => {
     const {cat, page, name} = e.item.props,
-      {pageStore:{changeCategoryEvent, changePageType, changePageName, clear}, globalStore:{apiRoot}} = this.props;
+      {pageStore:{changeCategoryEvent, changePageType, changePageName, clear}, globalStore:{apiRoot, setMeta}} = this.props;
 
     clear();
     changePageName(name);
@@ -31,7 +31,8 @@ class Menu extends Component{
     changeCategoryEvent(e.key, cat);
 
     const {pageStore:{categoryEventId, getEventsByCategory}} = this.props;
-    getEventsByCategory(apiRoot, {categoryId: categoryEventId});
+    await getEventsByCategory(apiRoot, {categoryId: categoryEventId});
+    setMeta(this.props.pageStore.seoPage);
   };
 
   render() {

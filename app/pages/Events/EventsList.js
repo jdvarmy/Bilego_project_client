@@ -31,8 +31,8 @@ const SFab = styled(Fab)`
 @inject('pageStore', 'globalStore')
 @observer
 class EventsList extends Component{
-  componentDidMount() {
-    const {pageStore:{categoryEventId, getEventsByCategory}, globalStore:{apiRoot}} = this.props;
+  componentDidMount = async () => {
+    const {pageStore:{categoryEventId, getEventsByCategory}, globalStore:{apiRoot, setMeta}} = this.props;
 
     if(categoryEventId === 0){
       const {pageStore:{changeCategoryEvent, changePageType, changePageName}, globalStore:{categoriesForMenu}} = this.props;
@@ -46,7 +46,8 @@ class EventsList extends Component{
       });
     }
 
-    getEventsByCategory(apiRoot, {categoryId: this.props.pageStore.categoryEventId});
+    await getEventsByCategory(apiRoot, {categoryId: this.props.pageStore.categoryEventId});
+    setMeta(this.props.pageStore.seoPage);
   };
 
   componentWillUnmount() {

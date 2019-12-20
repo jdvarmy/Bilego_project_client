@@ -10,6 +10,7 @@ class SingleItem{
   @observable slug = '';
   @observable item = undefined;
 
+  @action
   clear = () => {
     this.slug = '';
     this.item = undefined;

@@ -82,11 +82,11 @@ class Page{
   };
   @action
   setStartDataCategoryPage = (data) => {
-    this.eventsByCategory = data;
+    this.eventsByCategory = data.posts;
   };
   @action
   setStartDataItemsPage = (data) => {
-    this.items = data;
+    this.items = data.posts;
   };
 
 
@@ -164,14 +164,16 @@ class Page{
         size: this.pagination.pageSize
       };
       const response = yield pageService.getEventsByCategory(apiRoot, args, {categoryId: params.categoryId});
-      this.pagination.showButton = response.length === this.pagination.pageSize;
+      const posts = response.posts;
+      this.seoPage = response.seo_meta;
+      this.pagination.showButton = posts && posts.length === this.pagination.pageSize;
 
       if(this.pagination.current === 1)
-        this.eventsByCategory = response;
+        this.eventsByCategory = posts;
       else
         this.eventsByCategory = [
           ...this.eventsByCategory,
-          ...response
+          ...posts
         ];
     }catch(e){
       console.log(e);
@@ -190,14 +192,16 @@ class Page{
       };
 
       const response = yield pageService.getItems(apiRoot, args, {...this.itemFilters, ...params});
-      this.pagination.showButton = response.length === this.pagination.pageSize;
+      const posts = response.posts;
+      this.seoPage = response.seo_meta;
+      this.pagination.showButton = posts && posts.length === this.pagination.pageSize;
 
       if(this.pagination.current === 1)
-        this.items = response;
+        this.items = posts;
       else
         this.items = [
           ...this.items,
-          ...response
+          ...posts
         ];
     }catch(e){
       console.log(e);

@@ -32,12 +32,13 @@ const SFab = styled(Fab)`
 @inject('pageStore', 'globalStore')
 @observer
 class Items extends Component{
-  componentDidMount() {
-    const {pageStore:{changePageType, getItems}, globalStore:{apiRoot}} = this.props;
+  componentDidMount = async () => {
+    const {pageStore:{changePageType, getItems}, globalStore:{apiRoot, setMeta}} = this.props;
 
     changePageType('page');
-    getItems(apiRoot);
-  }
+    await getItems(apiRoot);
+    setMeta(this.props.pageStore.seoPage);
+  };
 
   componentWillUnmount() {
     this.props.pageStore.clear();
