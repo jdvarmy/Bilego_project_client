@@ -5,9 +5,7 @@ const rules = [
   {
     test: /\.jsx?$/,
     exclude: /(node_modules|app[/\\]+libs.*)/,
-    use: {
-      loader: 'babel-loader',
-    },
+    use: { loader: 'babel-loader' },
   },
   {
     test: /\.css$/,

@@ -1,4 +1,4 @@
-import 'babel-polyfill';
+import '@babel/polyfill';
 
 import React, { Fragment, useEffect } from 'react';
 import { hydrate } from 'react-dom';
