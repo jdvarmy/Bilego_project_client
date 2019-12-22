@@ -14,7 +14,6 @@ import { BilegoIconLoading } from '../../theme/BilegoIcons';
 import NoContent from '../../components/NoContent';
 
 const GridWrap = styled(Grid)`
-  // min-height: ${document.documentElement.clientHeight - 160}px;
   min-height: 485px;
 `;
 const CardWrap = styled(Card)`

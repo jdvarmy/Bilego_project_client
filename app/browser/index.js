@@ -1,4 +1,4 @@
 import '@babel/polyfill';
-import { ClientBilegoGateUi } from '../app';
+import { ClientBilegoGateUi } from '../../app';
 
 ClientBilegoGateUi();
