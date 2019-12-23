@@ -30,14 +30,13 @@ const Scroll = styled(Scrollbars)`
     height: 100%;
 `;
 
-const drawerWidth = style.$rightBodyPanel;
 const useStyles = makeStyles(theme => ({
   drawer: {
-    width: drawerWidth,
+    width: style.$rightBodyPanel,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: style.$rightBodyPanel,
   },
   toolbar: theme.mixins.toolbar,
   content: {
@@ -55,15 +54,15 @@ export default function RightPanel() {
       className={`${classes.drawer} bilego-drawer`}
       variant="permanent"
       anchor="right"
-      classes={{paper: classes.drawerPaper,}}
+      classes={{paper: classes.drawerPaper}}
     >
       <Wrapper style={{overflow: 'hidden'}}>
         <DatePickerLine flickity/>
       </Wrapper>
       <StyledList>
         <Divider />
+        <Mapbox/>
         <NoSsr>
-          <Mapbox/>
           <Scroll>
             <TimeLine/>
           </Scroll>

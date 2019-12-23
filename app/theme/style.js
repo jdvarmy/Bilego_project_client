@@ -27,4 +27,5 @@ const style = {
   $rightBodyPanel: '27%',
   $leftBodyPanel: '73%',
 };
+
 export default style;

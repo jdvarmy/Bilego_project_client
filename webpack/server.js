@@ -127,7 +127,6 @@ app.get(/\/mos|\/spb/, async (req, res) => {
 
     return res.send(data);
   });
-  // res.send('Hello World!');
 });
 
 Loadable.preloadAll().then(() => {

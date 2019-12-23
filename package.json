@@ -12,7 +12,8 @@
     "prod:build": "npm run generate:sitemap && cross-env NODE_ENV=production webpack --config config/webpack/server/webpack.prod.server.js",
     "dev:start": "npm run build:clean && cross-env NODE_ENV=development webpack -w --config config/webpack/server/webpack.dev.server.js",
     "start": "nodemon ./build/server.js",
-    "webpack": "npm run build:clean && webpack -w --config webpack/config.develop.js --progress"
+    "wp:dev": "npm run build:clean && webpack -w --config webpack/config.develop.js --progress",
+    "wp:prod": "npm run build:clean && webpack --config webpack/config.production.js --progress"
   },
   "dependencies": {
     "@babel/core": "^7.7.7",
@@ -72,6 +73,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "lint-staged": "^9.5.0",
+    "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.13.0",
     "null-loader": "^3.0.0",
     "postcss-loader": "^3.0.0",

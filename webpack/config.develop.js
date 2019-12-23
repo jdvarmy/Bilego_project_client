@@ -11,7 +11,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const rules = [
   {
     test: /\.jsx?$/,
-    exclude: /node_moduels/,
+    exclude: /node_modules/,
     loader: 'babel-loader'
   },
   {
@@ -31,7 +31,10 @@ const rules = [
 const serverConf = {
   mode: 'development',
   target: 'node',
-  externals: [nodeExternals(), 'react-helmet'],
+  externals: [
+    nodeExternals(),
+    'react-helmet'
+  ],
   entry: './webpack/server.js',
   output: {
     path: path.resolve('build'),
@@ -72,21 +75,20 @@ const serverConf = {
       '.jsx',
       '.react.js',
     ],
-  },
+  }
 };
 
 const clientConf = options => ({
   mode: 'development',
   target: 'web',
-  externals: [nodeExternals(), 'react-helmet'],
-  entry: ["@babel/polyfill", './app/browser/index.js'],
+  entry: ['@babel/polyfill', './app/browser/index.js'],
   output: {
     path: path.resolve('build'),
-    filename: '[name].js',
-    chunkFilename: '[name].chunk.js',
+    filename: '[name].[hash].js',
+    chunkFilename: '[name].[hash].bilego.js',
     publicPath: '/'
   },
-  devtool: 'eval-sourcemap',
+  devtool: 'eval-source-map',
   module: {
     rules: [
       ...rules,
@@ -111,8 +113,20 @@ const clientConf = options => ({
       template: 'public/static/main.html',
       filename: 'main.html',
     }),
-    new ExtractTextPlugin({filename: '[name].css'})
-  ]
+    new ExtractTextPlugin({filename: '[name].[hash].css'})
+  ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          name: 'vendors',
+          test: /node_modules/,
+          chunks: 'all',
+          enforce: true
+        }
+      }
+    }
+  }
 });
 
 module.exports = [clientConf, serverConf];

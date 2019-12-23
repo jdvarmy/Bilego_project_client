@@ -34,6 +34,9 @@ $leftBodyPanel: 73%;
 
 
 body{
+  .bilego-drawer > div{
+    width: $rightBodyPanel;
+  }
   //#root[aria-hidden="true"] .bilego-drawer > div{
   //  right: 12px;
   //  .bilego-timeline{padding-right: 17px;}
