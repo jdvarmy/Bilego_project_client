@@ -8,7 +8,7 @@ import Card from '@material-ui/core/Card';
 import { Item220 } from '../../components/Item';
 import BlockHeaderText from '../../components/BlockHeaderText';
 import Next from '../../components/Next';
-import { BilegoIconRightArrow } from '../../theme/BilegoIcons';
+import { BilegoIconRightArrow } from '../../theme/bilegoIcons';
 import style from '../../theme/style';
 
 const GridWrap = styled(Grid)`

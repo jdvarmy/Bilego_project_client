@@ -10,7 +10,7 @@ import NoSsr from '@material-ui/core/NoSsr';
 import { Spin } from 'antd';
 import { Event300 } from '../../components/Event';
 import Spinner from '../../components/Spinner';
-import { BilegoIconLoading } from '../../theme/BilegoIcons';
+import { BilegoIconLoading } from '../../theme/bilegoIcons';
 import NoContent from '../../components/NoContent';
 
 const GridWrap = styled(Grid)`

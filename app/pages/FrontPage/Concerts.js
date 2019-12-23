@@ -9,7 +9,7 @@ import style from '../../theme/style';
 import { Event300 } from '../../components/Event';
 import BlockHeaderText from '../../components/BlockHeaderText';
 import Next from '../../components/Next';
-import { BilegoIconRightArrow } from '../../theme/BilegoIcons';
+import { BilegoIconRightArrow } from '../../theme/bilegoIcons';
 
 const GridWrap = styled(Grid)`
   min-height: 533px;

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Input} from 'antd';
 import styled from 'styled-components';
 import {style} from '../../theme';
-import {BilegoIconSearch, BilegoIconClose} from '../../theme/BilegoIcons';
+import {BilegoIconSearch, BilegoIconClose} from '../../theme/bilegoIcons';
 import {observer, inject} from 'mobx-react';
 import {observable, action} from 'mobx';
 import IconButton from '@material-ui/core/IconButton';

@@ -15,18 +15,6 @@ const rules = [
     loader: 'babel-loader'
   },
   {
-    test: /\.css$/,
-    include: /(node_modules|app)/,
-    use: ['css-loader?modules=false'],
-  },
-  {
-    test: /\.scss$/,
-    use: ExtractTextPlugin.extract({
-      fallback: 'style-loader',
-      use: ['css-loader', 'sass-loader']
-    })
-  },
-  {
     test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
     loader: require.resolve('url-loader'),
     options: {
@@ -59,7 +47,7 @@ const serverConf = {
         use: 'html-loader',
       },
       {
-        test: /\.css$/,
+        test: [/\.css$/, /\.scss$/],
         use: 'null-loader'
       }
     ]
@@ -91,15 +79,29 @@ const clientConf = options => ({
   mode: 'development',
   target: 'web',
   externals: [nodeExternals(), 'react-helmet'],
-  entry: './app/browser/index.js',
+  entry: ["@babel/polyfill", './app/browser/index.js'],
   output: {
     path: path.resolve('build'),
-    filename: 'bilego.js'
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
+    publicPath: '/'
   },
   devtool: 'eval-sourcemap',
   module: {
     rules: [
-      ...rules
+      ...rules,
+      {
+        test: /\.css$/,
+        include: /(node_modules|app)/,
+        use: ['css-loader?modules=false'],
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
+      },
     ],
   },
   plugins: [
@@ -109,7 +111,7 @@ const clientConf = options => ({
       template: 'public/static/main.html',
       filename: 'main.html',
     }),
-    new ExtractTextPlugin('[name].css')
+    new ExtractTextPlugin({filename: '[name].css'})
   ]
 });
 

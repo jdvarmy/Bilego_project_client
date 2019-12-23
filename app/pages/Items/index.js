@@ -9,7 +9,7 @@ import { Spin } from 'antd';
 import BlockHeaderText from '../../components/BlockHeaderText';
 import Spinner from '../../components/Spinner';
 import NoContent from '../../components/NoContent';
-import { BilegoIconLoading } from '../../theme/BilegoIcons';
+import { BilegoIconLoading } from '../../theme/bilegoIcons';
 import { Item140 } from '../../components/Item';
 import ItemsSearch from './ItemsSearch';
 

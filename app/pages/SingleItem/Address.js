@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import Fab from '@material-ui/core/Fab';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import { BilegoIconMapPin } from '../../theme/BilegoIcons';
+import { BilegoIconMapPin } from '../../theme/bilegoIcons';
 import BlockHeaderText from '../../components/BlockHeaderText';
 
 const Padding = styled.div`

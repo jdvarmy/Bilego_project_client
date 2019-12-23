@@ -10,7 +10,7 @@ import { Spin } from 'antd';
 import Spinner from '../../components/Spinner';
 import BlockHeaderText from '../../components/BlockHeaderText';
 import { Event300 } from '../../components/Event';
-import { BilegoIconLoading } from '../../theme/BilegoIcons';
+import { BilegoIconLoading } from '../../theme/bilegoIcons';
 import NoContent from '../../components/NoContent';
 
 const GridWrap = styled(Grid)`

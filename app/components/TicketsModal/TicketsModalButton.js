@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BilegoIconTicket} from '../../theme/BilegoIcons';
+import {BilegoIconTicket} from '../../theme/bilegoIcons';
 import Fab from '@material-ui/core/Fab';
 import {inject} from 'mobx-react';
 

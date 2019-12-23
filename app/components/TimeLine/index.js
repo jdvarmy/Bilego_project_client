@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import Fab from '@material-ui/core/Fab';
 import NoSsr from '@material-ui/core/NoSsr';
 import style from '../../theme/style';
-import { BilegoIconLoading } from '../../theme/BilegoIcons';
+import { BilegoIconLoading } from '../../theme/bilegoIcons';
 
 const Wrapper = styled.div`
   position: relative;

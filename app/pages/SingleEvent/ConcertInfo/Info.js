@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Box from '@material-ui/core/Box';
 import style from '../../../theme/style';
-import { BilegoIconFacebook, BilegoIconVk } from '../../../theme/BilegoIcons';
+import { BilegoIconFacebook, BilegoIconVk } from '../../../theme/bilegoIcons';
 
 const StyledIconButton = styled(IconButton)`
   margin: 0 5px!important;

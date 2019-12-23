@@ -6,7 +6,7 @@ import { action, observable } from 'mobx';
 
 import Button from '@material-ui/core/Button';
 import ModalAnimated from '../ModalAnimated';
-import { BilegoIconCity } from '../../theme/BilegoIcons';
+import { BilegoIconCity } from '../../theme/bilegoIcons';
 import style from '../../theme/style';
 
 const Wrapper = styled.div`
