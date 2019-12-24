@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
+import { observable, action } from 'mobx';
 import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
@@ -16,27 +18,47 @@ const CardWrap = styled(Card)`
   margin-bottom: 30px;
 `;
 
-export default function Events(props){
-  const {events, baseNameForRouting} = props;
+@inject('singleItemStore', 'globalStore')
+@observer
+class Events extends Component{
+  @observable count = 6;
+  @observable showLoadBtn = false;
 
-  return (
-    <GridWrap container spacing={4}>
-      <Grid item xs={12}>
-        <BlockHeaderText>
-          События
-        </BlockHeaderText>
-      </Grid>
-      <Grid item xs={12}>
-        <Grid container spacing={4}>
-          {events.map(event=>(
-            <Grid key={event.id} item xs={4}>
-              <CardWrap>
-                <Event200 {...event} baseNameForRouting={baseNameForRouting}/>
-              </CardWrap>
-            </Grid>
-          ))}
+  @action loadMore = () => {
+
+  };
+
+  @action componentDidMount() {
+    this.showLoadBtn = this.props.singleItemStore.item.events ? this.props.singleItemStore.item.events.length > this.count : false;
+
+  }
+
+  render() {
+    const {singleItemStore:{item}, globalStore:{baseNameForRouting}} = this.props;
+
+    return (
+      item.events
+      ?
+      <GridWrap container spacing={4}>
+        <Grid item xs={12}>
+          <BlockHeaderText>События</BlockHeaderText>
         </Grid>
-      </Grid>
-    </GridWrap>
-  )
+        <Grid item xs={12}>
+          <Grid container spacing={4}>
+            {item.events.map(event => (
+              <Grid key={event.id} item xs={4}>
+                <CardWrap>
+                  <Event200 {...event} baseNameForRouting={baseNameForRouting}/>
+                </CardWrap>
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+      </GridWrap>
+      :
+      null
+    )
+  }
 }
+
+export default Events;

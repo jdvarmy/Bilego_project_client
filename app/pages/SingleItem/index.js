@@ -58,7 +58,7 @@ class SingleItem extends Component{
             item &&
             <Fragment>
               <SliderEvents item={item} baseNameForRouting={baseNameForRouting}/>
-              {item.events && <Events events={item.events} baseNameForRouting={baseNameForRouting}/>}
+              <Events />
               <EventsList item={item}/>
               <Address item={item}/>
             </Fragment>
