@@ -12,7 +12,7 @@
     "prod:build": "npm run generate:sitemap && cross-env NODE_ENV=production webpack --config config/webpack/server/webpack.prod.server.js",
     "dev:start": "npm run build:clean && cross-env NODE_ENV=development webpack -w --config config/webpack/server/webpack.dev.server.js",
     "start": "nodemon ./build/server.js",
-    "wp:dev": "npm run build:clean && webpack -w --config webpack/config.develop.js --progress",
+    "wp:dev": "npm run build:clean && webpack -w --config webpack/config.develop.js",
     "wp:prod": "npm run build:clean && webpack --config webpack/config.production.js --progress"
   },
   "dependencies": {
@@ -23,9 +23,7 @@
     "@babel/plugin-transform-runtime": "^7.7.6",
     "@babel/polyfill": "^7.7.0",
     "@babel/preset-env": "^7.7.7",
-    "@babel/preset-es2015": "^7.0.0-beta.53",
     "@babel/preset-react": "^7.7.4",
-    "@babel/preset-stage-0": "^7.0.0",
     "@babel/runtime": "^7.7.7",
     "@date-io/date-fns": "^1.3.13",
     "@material-ui/core": "^4.7.0",

@@ -14,7 +14,6 @@ const StyledMenu = styled(AntMenu)`
   align-items: center;
   &.ant-menu-horizontal{
     border-bottom: none;
-    margin-left: 5px;
   }
 `;
 

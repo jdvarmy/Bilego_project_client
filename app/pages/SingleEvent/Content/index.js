@@ -91,6 +91,7 @@ class Content extends Component{
           </Grid>
           <Grid container spacing={4}>
             <Grid item xs={12}>
+              <Padding />
               <AddressWidthMap />
             </Grid>
           </Grid>

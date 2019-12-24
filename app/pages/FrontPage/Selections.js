@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import Paper from '@material-ui/core/Paper';
 import Selection from '../../components/Selection';
 import BlockHeaderText from '../../components/BlockHeaderText';
 
@@ -17,10 +18,6 @@ const GridWrap = styled(Grid)`
   .MuiPaper-elevation1{
     box-shadow: none;
   }
-`;
-const CardWrap = styled(Card)`
-  height: 300px;
-  margin-bottom: 30px;
 `;
 
 @inject('globalStore')
@@ -59,25 +56,25 @@ class Selections extends Component{
     return (
       <GridWrap container spacing={4}>
         <Grid item xs={12}><BlockHeaderText>Подборки Bilego</BlockHeaderText></Grid>
-        <Grid item xs={12}>
-          <Grid container spacing={4}>
-            <Grid item xs={6}>
-              <CardWrap>
-                <Selection {...selections.weekends}/>
-              </CardWrap>
-              <CardWrap>
-                <Selection {...selections.bilego}/>
-              </CardWrap>
-            </Grid>
-            <Grid item xs={6}>
-              <CardWrap>
-                <Selection {...selections.art}/>
-              </CardWrap>
-              <CardWrap>
-                <Selection {...selections.theatre}/>
-              </CardWrap>
-            </Grid>
-          </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper>
+            <Selection {...selections.weekends}/>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper>
+            <Selection {...selections.bilego}/>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper>
+            <Selection {...selections.art}/>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper>
+            <Selection {...selections.theatre}/>
+          </Paper>
         </Grid>
       </GridWrap>
     );

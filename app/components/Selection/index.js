@@ -11,7 +11,6 @@ const Wrapper = styled.div`
   svg text {text-anchor: start;}
   svg #${p=>p.mask}-alpha {fill: white;}
   svg .title {font-size: 28px; font-weight: bold; text-transform: uppercase;}
-  svg #${p=>p.mask}-base {fill: white; mask: url(#${p=>p.mask}-mask);}
 `;
 const Container = styled.figure`
   height: 300px;
@@ -48,24 +47,26 @@ const Figcaption = styled.figcaption`
 `;
 
 export default function Selection(props){
+  const {mask, image, title, link} = props;
+
   return(
-    <Wrapper mask={props.mask}>
+    <Wrapper className="bilego-recommend" mask={mask}>
       <Container>
-        <Media className="media" image={props.image}/>
+        <Media className="media" image={image}/>
         <Figcaption>
           <svg viewBox="0 0 200 200" version="1.1" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <mask id={`${props.mask}-mask`} x="0" y="0" width="100%" height="100%">
-                <rect id={`${props.mask}-alpha`} x="0" y="0" width="100%" height="100%"/>
-                {props.title.map((el,k)=>(
+              <mask id={`${mask}-mask`} x="0" y="0" width="100%" height="100%">
+                <rect id={`${mask}-alpha`} x="0" y="0" width="100%" height="100%"/>
+                {title.map((el,k)=>(
                   <text key={el} className="title" dx="10%" dy={`${2+k}.5em`}>{el}</text>
                 ))}
               </mask>
             </defs>
-            <rect id={`${props.mask}-base`} x="0" y="0" width="100%" height="100%"/>
+            <rect id={`${mask}-base`} x="0" y="0" width="100%" height="100%"/>
           </svg>
         </Figcaption>
-        <a href={props.link} />
+        <a href={link} />
       </Container>
     </Wrapper>
   );

@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 const Border = styled('span')`
   position: absolute;
-  bottom: 20px;
+  bottom: 17px;
   left: 0;
   height: 2px;
   width: calc(100% - 30px);

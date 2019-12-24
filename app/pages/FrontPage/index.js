@@ -46,9 +46,9 @@ class FrontPage extends Component {
     return (
       <Spin spinning={pageStore.isLoading || sliderStore.isLoading} indicator={<Spinner leftPadding={27/2}/>}>
         <div>
-          <NoSsr>
-            <Slider type="main"/>
-          </NoSsr>
+          {/*<NoSsr>*/}
+          {/*  <Slider type="main"/>*/}
+          {/*</NoSsr>*/}
         </div>
         <DateContainer align='middle' type='flex' justify='center'>
           <DatePickerLine/>
