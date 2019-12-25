@@ -21,7 +21,6 @@ const tokenPlugin = request => {
 
 };
 
-// todo: globalStore is not defined = globalStore.apiRoot
 export default {
   get: (url, query = {}) =>
     http

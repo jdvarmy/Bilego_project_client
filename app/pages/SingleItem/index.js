@@ -11,7 +11,7 @@ import Address from './Address';
 import EventsList from './EventsList';
 
 const Wrapper = styled.div`
-  min-height: 840px;
+  min-height: 533px;
 `;
 
 // todo: если вордпресс не нашел клуб, то 404

@@ -36,24 +36,6 @@ app.set('trust proxy', function (ip) {
 // const httpsRedirect = require('express-https-redirect'); //todo: установить на проме express-https-redirect
 // app.use('/', httpsRedirect());
 
-app.get('/', async (req, res) => {
-  const url = req.originalUrl || req.url;
-  const history = createMemoryHistory({initialEntries: [url]});
-  const initialState = {};
-  const ip = req.ip ||
-    (req.headers['x-forwarded-for'] || '').split(',').pop() ||
-    req.connection.remoteAddress ||
-    req.socket.remoteAddress ||
-    req.connection.socket.remoteAddress;
-
-  console.log(ip);
-
-  const store = new ConfigureStartStore(initialState, history);
-  await store.getData({ip});
-
-  res.redirect(302, '/' + store.baseNameForRouting);
-});
-
 app.get(/\/mos|\/spb/, async (req, res) => {
   const url = req.originalUrl || req.url;
 
@@ -127,6 +109,24 @@ app.get(/\/mos|\/spb/, async (req, res) => {
 
     return res.send(data);
   });
+});
+
+app.get('*', async (req, res) => {
+  const url = req.originalUrl || req.url;
+  const history = createMemoryHistory({initialEntries: [url]});
+  const initialState = {};
+  const ip = req.ip ||
+    (req.headers['x-forwarded-for'] || '').split(',').pop() ||
+    req.connection.remoteAddress ||
+    req.socket.remoteAddress ||
+    req.connection.socket.remoteAddress;
+
+  console.log(ip);
+
+  const store = new ConfigureStartStore(initialState, history);
+  await store.getData({ip});
+
+  res.redirect(302, '/' + store.baseNameForRouting);
 });
 
 Loadable.preloadAll().then(() => {

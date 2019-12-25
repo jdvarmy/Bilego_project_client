@@ -31,7 +31,7 @@ export default function MainSlider (props) {
         && props.slides.length > 0
       ) {
         window.$(sliderEl.current).show().revolution({
-          jsFileLocation: "js/",
+          jsFileLocation: "scripts/",
           sliderLayout: "auto",
           visibilityLevels: "1240,1024,778,480",
           gridwidth: "1240,1024,778,480",

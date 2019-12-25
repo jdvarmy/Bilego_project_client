@@ -7,7 +7,7 @@ export default class EventSingleDoubleEffects extends React.Component {
     if(window.$(slider).revolution !== undefined) {
       window.$(slider).show().revolution({
         sliderType:"hero",
-        jsFileLocation:"js/",
+        jsFileLocation:"scripts/",
         visibilityLevels:"1240,1024,778,480",
         gridwidth:"1240,1024,778,480",
         gridheight:"590,500,480,480",

@@ -63,12 +63,12 @@ class Cities extends React.Component{
     getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
   };
   renderRevolutionSlider = () => {
-    this.props.sliderStore.getMainSlides();
+    this.props.sliderStore.getMainSlides(this.props.globalStore.apiRoot);
   };
   renderTimeLine = async () =>{
     const {rightPanelStore:{getDataTimeLine}} = this.props;
     this.props.rightPanelStore.clear();
-    await getDataTimeLine();
+    await getDataTimeLine(this.props.globalStore.apiRoot);
     const {rightPanelStore:{markers}, mapStore:{autoFit}} = this.props;
     autoFit(markers);
   };

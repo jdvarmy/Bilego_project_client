@@ -18,7 +18,7 @@ const GridWrap = styled(Grid)`
   .MuiPaper-elevation1{
     box-shadow: none;
   }
-  min-height: 485px;
+  min-height: 533px;
 `;
 const GridCont = styled(Grid)``;
 const CardWrap = styled(Card)`
@@ -28,8 +28,6 @@ const SFab = styled(Fab)`
   margin: 50px auto!important;
   transition: opacity .2s ease 0s;
 `;
-
-// todo: сделать рендеринг 21 события на сервере для всех страниц раздела
 
 @inject('pageStore', 'globalStore')
 @observer

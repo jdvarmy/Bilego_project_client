@@ -4,11 +4,10 @@ import { action, observable } from 'mobx';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import styled from 'styled-components';
 
-import Fab from '@material-ui/core/Fab';
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import { BilegoIconMapPin } from '../../theme/bilegoIcons';
 import BlockHeaderText from '../../components/BlockHeaderText';
+import { MapDefaultPin } from '../../components/MapPins';
 
 const Padding = styled.div`
   padding-top:48px;
@@ -51,7 +50,7 @@ class Address extends Component {
           onViewportChange={this.setViewport}
         >
           <Marker latitude={this.props.item.meta.map.latitude*1} longitude={this.props.item.meta.map.longitude*1}>
-            <Fab>{BilegoIconMapPin}</Fab>
+            <MapDefaultPin />
           </Marker>
         </ReactMapGL>
         <Padding />

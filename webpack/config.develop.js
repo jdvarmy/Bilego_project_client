@@ -32,8 +32,7 @@ const serverConf = {
   mode: 'development',
   target: 'node',
   externals: [
-    nodeExternals(),
-    'react-helmet'
+    nodeExternals()
   ],
   entry: './webpack/server.js',
   output: {
@@ -84,8 +83,8 @@ const clientConf = options => ({
   entry: ['@babel/polyfill', './app/browser/index.js'],
   output: {
     path: path.resolve('build'),
-    filename: '[name].[hash].js',
-    chunkFilename: '[name].[hash].bilego.js',
+    filename: '[name].js',
+    chunkFilename: '[name].bilego.js',
     publicPath: '/'
   },
   devtool: 'eval-source-map',
@@ -113,7 +112,7 @@ const clientConf = options => ({
       template: 'public/static/main.html',
       filename: 'main.html',
     }),
-    new ExtractTextPlugin({filename: '[name].[hash].css'})
+    new ExtractTextPlugin({filename: '[name].css'})
   ],
   optimization: {
     splitChunks: {

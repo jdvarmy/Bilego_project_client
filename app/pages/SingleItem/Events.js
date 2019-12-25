@@ -18,7 +18,11 @@ const GridWrap = styled(Grid)`
   }
 `;
 const StyleGrid = styled(Grid)`
-  text-align: center;
+  & > button{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `;
 const CardWrap = styled(Card)`
   margin-bottom: 30px;

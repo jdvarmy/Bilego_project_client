@@ -6,7 +6,7 @@ import { Provider as MobxProvider } from 'mobx-react';
 import { createBrowserHistory, createMemoryHistory } from 'history';
 
 import { renderRoutes } from 'react-router-config';
-import { Switch, Route, Router, useLocation } from 'react-router-dom';
+import { Router, useLocation } from 'react-router-dom';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,6 +17,7 @@ import routes from './routes';
 import * as stores from './stores';
 import ConfigureStartStore from './ConfigureStartStore';
 
+import BilegoFrontUi from './BilegoFrontUi';
 import { Header } from './components';
 import RightPanel from './components/RightPanel';
 import Footer from './components/Footer';
@@ -88,11 +89,7 @@ export const ClientBilegoGateUi = () => {
           <Root>
             <Main>
               <Header />
-              <Switch>
-                {routs.map(props => (
-                  <Route {...props} />
-                ))}
-              </Switch>
+              <BilegoFrontUi />
               <RightPanel />
             </Main>
           </Root>

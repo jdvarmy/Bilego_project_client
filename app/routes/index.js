@@ -10,7 +10,7 @@ export default function (baseRouter) {
         exact: true,
       },
       {
-        path: `/${baseRouter}/`,
+        path: `/${baseRouter}`,
         key: 'FrontPageCity',
         component: FrontPage,
         exact: true,
@@ -83,6 +83,11 @@ export default function (baseRouter) {
       },
       {
         path: '*',
+        key: 'Page404',
+        component: Page404,
+      },
+      {
+        path: '/404',
         key: 'Page404',
         component: Page404,
       },

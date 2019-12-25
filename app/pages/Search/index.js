@@ -19,7 +19,7 @@ const GridWrap = styled(Grid)`
   .MuiPaper-elevation1{
     box-shadow: none;
   }
-  min-height: 485px;
+  min-height: 533px;
 `;
 const CardWrap = styled(Card)`
   margin-bottom: 30px;

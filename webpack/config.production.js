@@ -33,11 +33,7 @@ const rules = [
 const serverConf = {
   mode: 'production',
   target: 'node',
-  // todo: попробовать удалить все это externals
-  externals: [
-    nodeExternals(),
-    'react-helmet'
-  ],
+  externals: [nodeExternals()],
   entry: './webpack/server.js',
   output: {
     path: path.resolve('build'),
