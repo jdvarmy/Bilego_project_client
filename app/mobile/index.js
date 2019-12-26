@@ -1,8 +1,9 @@
 import React from 'react';
+import { renderRoutes } from 'react-router-config';
 import { Switch, Route } from 'react-router-dom';
+import { inject } from 'mobx-react';
 import routes from './routes';
-import {inject} from "mobx-react";
-import {renderRoutes} from "react-router-config";
+import Header from './components/Header';
 
 // https://habr.com/ru/post/432368/
 
@@ -14,6 +15,7 @@ export default class Mobile extends React.Component{
 
     return (
       <React.Fragment>
+        <Header />
         {type === 'server' && renderRoutes(routs)}
         {type === 'client' &&
         <Switch>
