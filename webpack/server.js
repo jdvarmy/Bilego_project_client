@@ -12,6 +12,8 @@ import { StaticRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { Provider as MobxProvider } from 'mobx-react';
 
+import MobileDetect from 'mobile-detect';
+
 import { parse as parseUrl } from 'url';
 
 import { MuiThemeProvider, ServerStyleSheets } from '@material-ui/core/styles';
@@ -49,6 +51,9 @@ app.get(/\/mos|\/spb/, async (req, res) => {
   const location = parseUrl(url);
   const indexFile = path.resolve('./build/main.html');
 
+  const md = new MobileDetect(req.headers['user-agent']);
+  store.setMobile(md.mobile());
+
   const routs = routes(store.baseNameForRouting);
 
   const pageData = await store.getPageData(routs);
@@ -77,7 +82,7 @@ app.get(/\/mos|\/spb/, async (req, res) => {
           <MobxProvider {...stores} globalStore={store}>
             <CssBaseline />
             <StaticRouter context={context} location={location}>
-              <ServerBilegoGateUi serverBaseRout={store.baseNameForRouting} />
+              <ServerBilegoGateUi serverBaseRout={store.baseNameForRouting} mobile={store.mobile}/>
             </StaticRouter>
           </MobxProvider>
         </MuiThemeProvider>

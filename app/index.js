@@ -4,6 +4,7 @@ import React, { Fragment, useEffect } from 'react';
 import { hydrate } from 'react-dom';
 import { Provider as MobxProvider } from 'mobx-react';
 import { createBrowserHistory, createMemoryHistory } from 'history';
+import Loadable from 'react-loadable';
 
 import { renderRoutes } from 'react-router-config';
 import { Router, useLocation } from 'react-router-dom';
@@ -22,6 +23,8 @@ import { Header } from './components';
 import RightPanel from './components/RightPanel';
 import Footer from './components/Footer';
 import SiteMeta from './components/SiteMeta';
+
+import Mobile from './mobile';
 
 /**
  * @return {null}
@@ -78,31 +81,38 @@ export const ClientBilegoGateUi = () => {
   const routs = routes(store.baseNameForRouting);
   const path = window.location.pathname;
 
-  hydrate(
-    // eslint-disable-next-line react/jsx-filename-extension
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <MobxProvider {...stores} globalStore={store}>
-        <SiteMeta />
-        <Router history={history} path={path}>
-          <ScrollToTop />
-          <Root>
-            <Main>
-              <Header />
-              <BilegoFrontUi />
-              <RightPanel />
-            </Main>
-          </Root>
-          <Footer />
-        </Router>
-      </MobxProvider>
-    </MuiThemeProvider>,
-    document.getElementById('app'),
-    () => {
-      document.getElementById('jss-server').remove();
-      // document.querySelector("style[data-styled]").remove()
-    }
-  );
+  Loadable.preloadReady().then(() => {
+    hydrate(
+      // eslint-disable-next-line react/jsx-filename-extension
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline/>
+        <MobxProvider {...stores} globalStore={store}>
+          <SiteMeta/>
+          <Router history={history} path={path}>
+            <ScrollToTop/>
+            {!store.mobile
+            ? <Fragment>
+                <Root>
+                  <Main>
+                    <Header/>
+                    <BilegoFrontUi/>
+                    <RightPanel/>
+                  </Main>
+                </Root>
+                <Footer/>
+              </Fragment>
+            :
+              <Mobile type="client"/>
+            }
+          </Router>
+        </MobxProvider>
+      </MuiThemeProvider>,
+      document.getElementById('app'),
+      () => {
+        document.getElementById('jss-server').remove()
+      }
+    );
+  });
 };
 
 export const ServerBilegoGateUi = (props) => {
@@ -112,14 +122,20 @@ export const ServerBilegoGateUi = (props) => {
   return (
     <Fragment>
       <SiteMeta />
-      <Root>
-        <Main>
-          <Header />
-          {renderRoutes(routs)}
-          <RightPanel />
-        </Main>
-      </Root>
-      <Footer />
+      {!props.mobile
+      ? <Fragment>
+          <Root>
+            <Main>
+              <Header/>
+              {renderRoutes(routs)}
+              <RightPanel/>
+            </Main>
+          </Root>
+          <Footer/>
+        </Fragment>
+      :
+        <Mobile type="server"/>
+      }
     </Fragment>
   );
 };

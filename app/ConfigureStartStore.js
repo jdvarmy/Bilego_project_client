@@ -32,6 +32,11 @@ export default class ConfigureStartStore {
   @observable singleEventFirstData = null;
   @observable singleItemFirstData = null;
 
+  @observable mobile;
+  @action setMobile = val => {
+    this.mobile = val
+  };
+
   // def variables
   @computed
   get baseNameForRouting(){
@@ -133,6 +138,8 @@ export default class ConfigureStartStore {
     this.itemsFirstData = initialState.itemsFirstData;
     this.singleEventFirstData = initialState.singleEventFirstData;
     this.singleItemFirstData = initialState.singleItemFirstData;
+
+    this.mobile = initialState.mobile;
   };
   @action
   setHistory = (history) => {
@@ -272,7 +279,9 @@ export default class ConfigureStartStore {
       eventCategoryFirstData: this.eventCategoryFirstData,
       itemsFirstData: this.itemsFirstData,
       singleEventFirstData: this.singleEventFirstData,
-      singleItemFirstData: this.singleItemFirstData
+      singleItemFirstData: this.singleItemFirstData,
+
+      mobile: this.mobile
     };
   }
 }
