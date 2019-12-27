@@ -21,7 +21,11 @@ const Wrapper = styled.div`
   }
 `;
 const Gradient = styled.div`
-  background: radial-gradient(circle at right, transparent 40%, black);
+  background: rgb(204,204,204);
+  background: linear-gradient(180deg, rgba(20,20,20,0.75) 0%, 
+              rgba(20,20,20,0.15) 30%, 
+              rgba(20,20,20,0) 80%, 
+              rgba(20,20,20,0.6) 100%);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
