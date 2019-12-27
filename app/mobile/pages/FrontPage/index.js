@@ -1,9 +1,40 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
+import styled from 'styled-components';
 
 import Typography from '@material-ui/core/Typography';
 import { Carousel } from 'antd';
+import style from "../../../theme/style";
+
+const Wrapper = styled.div`
+  height: 375px;
+  background-color: ${style.$greydark};
+  .ant-carousel .slick-slide {
+    text-align: center;
+    height: 375px;
+    overflow: hidden;
+    position: relative;
+  }
+  .slick-slide div{
+    height: 100%;
+  }
+`;
+const Gradient = styled.div`
+  background: radial-gradient(circle at right, transparent 40%, black);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  position: absolute;
+  top: 0;
+`;
+const Image = styled.div`
+  background-image: url('${p=>(p.img)}');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
 
 @inject('globalStore', 'sliderStore')
 @observer
@@ -15,27 +46,31 @@ class FrontPage extends React.Component{
 
   render() {
     const { globalStore:{ baseNameForRouting }, sliderStore:{ slides } } = this.props;
-
     console.log(slides)
 
     return (
-      // {item.events.length > 0 && <Carousel effect="fade" autoplay>
-      //     {item.events.map(event => {
-      //       return (
-      //         <div key={event.id}>
-      //           <Gradient/>
-      //           <Image alt={event.title} img={event.origin_img}/>
-      //           <Link to={`/${baseNameForRouting}/event/${event.name}`} className="bilego-item-slider-event-title">
-      //             <Typography variant="subtitle2" component="div">
-      //               {event.title}
-      //             </Typography>
-      //           </Link>
-      //         </div>
-      //       )
-      //     })}
-      //   </Carousel>
-      // }
-      <div>1</div>
+      <React.Fragment>
+        <Wrapper>
+        {slides && slides.length>0 &&
+          <Carousel effect="fade" autoplay>
+            {slides.map(slide => {
+              return (
+                <div key={slide.id}>
+                  <Gradient/>
+                  <Image alt={slide.title} img={slide.image_src}/>
+                  <Link to={`/${baseNameForRouting}/event/${slide.name}`} className="bilego-item-slider-event-title">
+                    <Typography variant="subtitle2" component="div">
+                      {slide.title}
+                    </Typography>
+                  </Link>
+                </div>
+              )
+            })}
+          </Carousel>
+        }
+        </Wrapper>
+        <div>1</div>
+      </React.Fragment>
     );
   }
 }

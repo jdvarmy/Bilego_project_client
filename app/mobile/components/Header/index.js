@@ -18,7 +18,6 @@ import { BilegoIconMenuDotted, BilegoIconSearch } from '../../../theme/bilegoIco
 const styles = createStyles(theme => ({
   root: {
     flexGrow: 1,
-    marginBottom: theme.spacing(2),
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -28,6 +27,7 @@ const styles = createStyles(theme => ({
     flexGrow: 1,
   },
   bar: {
+    backgroundColor: 'transparent!important',
     boxShadow: '0px 2px 0px -1px rgba(0,0,0,0.09)'
   },
   drawerPaper: {
@@ -68,7 +68,7 @@ class Header extends React.Component{
 
     return (
       <div className={classes.root}>
-        <AppBar position="relative" className={classes.bar}>
+        <AppBar position="absolute" className={classes.bar}>
           <Toolbar>
             <IconButton onClick={this.toggleMenu} className={`${classes.menuButton}`} aria-label="menu">
               {BilegoIconMenuDotted}
