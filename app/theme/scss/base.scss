@@ -554,6 +554,26 @@ body{
       margin: 0;
     }
   }
+
+  // mobile
+  .bilego-item-slider-event-title-mobile{
+    position: absolute;
+    bottom: 95px;
+    left: 20px;
+    color: $white;
+    text-align: left;
+  }
+  .bilego-item-slider-event-subtitle-mobile{
+    position: absolute;
+    display: block;
+    left: 20px;
+    color: $white;
+    bottom: 45px;
+    font-weight: 100;
+  }
+  .bilego-item-slider-event-subtitle-mobile.first{
+    bottom: 66px;
+  }
 }
 
 

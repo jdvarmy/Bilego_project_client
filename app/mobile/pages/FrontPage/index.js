@@ -3,9 +3,13 @@ import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
+import Flickity from 'react-flickity-component';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import { Carousel } from 'antd';
-import style from "../../../theme/style";
+import style from '../../../theme/style';
+import DatePickerLine from '../../../components/DatePickerLine';
+import { Event143 } from '../../components/Event';
 
 const Wrapper = styled.div`
   height: 375px;
@@ -19,6 +23,18 @@ const Wrapper = styled.div`
   .slick-slide div{
     height: 100%;
   }
+  .slick-dots.slick-dots-bottom{
+    bottom: 30px;
+  }
+`;
+const Content = styled.div`
+  background-color: ${style.$white};
+  overflow: hidden;
+  margin-top: -16px;
+  border-radius: 16px 16px 0 0;
+  z-index: 1;
+  position: relative;
+  padding-top: 16px;
 `;
 const Gradient = styled.div`
   background: rgb(204,204,204);
@@ -39,8 +55,23 @@ const Image = styled.div`
   background-position: center;
   background-repeat: no-repeat;
 `;
+const DateContainer = styled.div`
+  height: ${style.$heightMenu}px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+const GridWrap = styled(Grid)`
+  padding: 0 16px;
+`;
+const SBlockHeaderText = styled(Typography)`
+  a{
+    color: ${style.$black};
+  }
+`;
 
-@inject('globalStore', 'sliderStore')
+
+@inject('globalStore', 'sliderStore', 'pageStore')
 @observer
 class FrontPage extends React.Component{
   componentDidMount() {
@@ -50,7 +81,6 @@ class FrontPage extends React.Component{
 
   render() {
     const { globalStore:{ baseNameForRouting }, sliderStore:{ slides } } = this.props;
-    console.log(slides)
 
     return (
       <React.Fragment>
@@ -62,18 +92,76 @@ class FrontPage extends React.Component{
                 <div key={slide.id}>
                   <Gradient/>
                   <Image alt={slide.title} img={slide.image_src}/>
-                  <Link to={`/${baseNameForRouting}/event/${slide.name}`} className="bilego-item-slider-event-title">
-                    <Typography variant="subtitle2" component="div">
+                  <Link to={`/${baseNameForRouting}/event/${slide.name}`} className="bilego-item-slider-event-title-mobile">
+                    <Typography variant="h6" component="div">
                       {slide.title}
                     </Typography>
                   </Link>
+                  <Typography className="bilego-item-slider-event-subtitle-mobile first" variant="subtitle2" component="span">
+                    {slide.date}
+                  </Typography>
+                  <Typography className="bilego-item-slider-event-subtitle-mobile second" variant="subtitle2" component="span">
+                    {slide.location}
+                  </Typography>
                 </div>
               )
             })}
           </Carousel>
         }
         </Wrapper>
-        <div>1</div>
+        <Content>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <DateContainer style={{overflow: 'hidden'}}>
+                <DatePickerLine flickity mini/>
+              </DateContainer>
+            </Grid>
+            <Grid item xs={12}>
+              {[
+                {
+                  id: 1,
+                  name: 'Ближайшие события',
+                  link: '/events',
+                  carts: this.props.pageStore.eventsSoon
+                },
+                {
+                  id: 2,
+                  name: 'Популярные события',
+                  link: '',
+                  carts: this.props.pageStore.eventsHot
+                },
+                {
+                  id: 3,
+                  name: 'Концерты',
+                  link: '/events/concerts',
+                  carts: this.props.pageStore.eventsConcerts
+                }
+              ].map(el=>{
+                return(
+                  <GridWrap container spacing={3} key={el.id}>
+                    <Grid item xs={12}>
+                      <SBlockHeaderText component="h5" variant="h5">
+                        {el.link !== ''
+                        ? <Link to={`/${baseNameForRouting + el.link}`}>
+                            {el.name}
+                          </Link>
+                          : el.name
+                          }
+                      </SBlockHeaderText>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Flickity options={{prevNextButtons: false, pageDots: false, contain: true, freeScroll: true}}>
+                        {el.carts.slice(0, 4).map(event=>(
+                            <Event143 key={event.id} {...event} baseNameForRouting={baseNameForRouting}/>
+                          ))}
+                      </Flickity>
+                    </Grid>
+                  </GridWrap>
+                )
+              })}
+            </Grid>
+          </Grid>
+        </Content>
       </React.Fragment>
     );
   }

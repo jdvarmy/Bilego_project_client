@@ -31,7 +31,9 @@ const SBox = styled(Box)`
   padding: 16px;
 `;
 const WrapFab = styled.div`
-  margin: 0 18px;
+  ${p=>(
+    p.mini ? 'margin: 0 6px;' : 'margin: 0 18px;'
+  )}
   .MuiFab-extended{
     color: ${style.$greydark};
     background-color: ${style.$white};
@@ -39,6 +41,12 @@ const WrapFab = styled.div`
   &.selected button{
     color: ${style.$white};
     background-color: ${style.$red};
+  }
+  &:first-child{
+    margin: 0 6px 0 25px;
+  }
+  &:last-child{
+    margin: 0 25px 0 6px;
   }
 `;
 
@@ -170,16 +178,16 @@ class DatePickerLine extends Component{
       buffy = <Fab onClick={this.handlerClickOpen} variant="extended" aria-label="Calendar">Отмена</Fab>;
 
     const Buttons = [
-      <WrapFab className="bilego-wr-fab" key={1}>
+      <WrapFab mini={this.props.mini} className="bilego-wr-fab" key={1}>
         <Fab onClick={this.handlerClickOpen} variant="extended" aria-label="Calendar">{BilegoIconCalendar} Календарь {ArrowDown}</Fab>
       </WrapFab>,
-      <WrapFab className={`bilego-wr-fab ${daysFilter==='today' && flag && 'selected'}`} key={2}>
+      <WrapFab mini={this.props.mini} className={`bilego-wr-fab ${daysFilter==='today' && flag && 'selected'}`} key={2}>
         <Fab onClick={()=>{this.handlerClickByDay('today')}} variant="extended" aria-label="today">Сегодня</Fab>
       </WrapFab>,
-      <WrapFab className={`bilego-wr-fab ${daysFilter==='tomorrow' && flag && 'selected'}`} key={3}>
+      <WrapFab mini={this.props.mini} className={`bilego-wr-fab ${daysFilter==='tomorrow' && flag && 'selected'}`} key={3}>
         <Fab onClick={()=>{this.handlerClickByDay('tomorrow')}} variant="extended" aria-label="tomorrow">Завтра</Fab>
       </WrapFab>,
-      <WrapFab className={`bilego-wr-fab ${daysFilter==='weekend' && flag && 'selected'}`} key={4}>
+      <WrapFab mini={this.props.mini} className={`bilego-wr-fab ${daysFilter==='weekend' && flag && 'selected'}`} key={4}>
         <Fab onClick={()=>{this.handlerClickByDay('weekend')}} variant="extended" aria-label="weekend">Выходные</Fab>
       </WrapFab>
     ];
@@ -202,19 +210,28 @@ class DatePickerLine extends Component{
           className="bilego-calendar"
         >
           <Grid container>
-            <Grid item xs={5}>
-              <SBox>
-                <Button className="bilego-today">
-                  <Typography variant="h5" component="h4">Сегодня {`${days[new Date().getDay()]}, ${new Date().getDate()} ${months[new Date().getMonth()]}`}</Typography>
-                </Button>
-                <Box className="bilego-buttons-filters">
-                  <Fab onClick={()=>{this.handlerClickByDay('today')}} variant="extended" aria-label="today">Сегодня</Fab>
-                  <Fab onClick={()=>{this.handlerClickByDay('tomorrow')}} variant="extended" aria-label="tomorrow">Завтра</Fab>
-                  <Fab onClick={()=>{this.handlerClickByDay('weekend')}} variant="extended" aria-label="weekend">Выходные</Fab>
-                </Box>
-              </SBox>
-            </Grid>
-            <Grid item xs={7} style={{overflow: 'hidden'}}>
+            {!this.props.mini &&
+              <Grid item xs={5}>
+                <SBox>
+                  <Button className="bilego-today">
+                    <Typography variant="h5"
+                                component="h4">Сегодня {`${days[new Date().getDay()]}, ${new Date().getDate()} ${months[new Date().getMonth()]}`}</Typography>
+                  </Button>
+                  <Box className="bilego-buttons-filters">
+                    <Fab onClick={() => {
+                      this.handlerClickByDay('today')
+                    }} variant="extended" aria-label="today">Сегодня</Fab>
+                    <Fab onClick={() => {
+                      this.handlerClickByDay('tomorrow')
+                    }} variant="extended" aria-label="tomorrow">Завтра</Fab>
+                    <Fab onClick={() => {
+                      this.handlerClickByDay('weekend')
+                    }} variant="extended" aria-label="weekend">Выходные</Fab>
+                  </Box>
+                </SBox>
+              </Grid>
+            }
+            <Grid item xs={this.props.mini ? 12 : 7} style={{overflow: 'hidden'}}>
               <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ruLocale}>
                 <Calendar
                   disablePast

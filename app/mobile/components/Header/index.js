@@ -21,14 +21,15 @@ const styles = createStyles(theme => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
-    color: style.$black
+    color: style.$white
   },
   title: {
     flexGrow: 1,
+    color: style.$white
   },
   bar: {
     backgroundColor: 'transparent!important',
-    boxShadow: '0px 2px 0px -1px rgba(0,0,0,0.09)'
+    boxShadow: '0px 2px 0px -1px rgba(255,255,255,0.09)'
   },
   drawerPaper: {
     width: '100%'
