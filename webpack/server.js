@@ -54,6 +54,8 @@ app.get(/\/mos|\/spb/, async (req, res) => {
   const md = new MobileDetect(req.headers['user-agent']);
   store.setMobile(md.mobile());
 
+  store.ssrSide = 'server';
+
   const routs = routes(store.baseNameForRouting);
 
   const pageData = await store.getPageData(routs);

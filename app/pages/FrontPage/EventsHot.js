@@ -39,7 +39,7 @@ class EventsSoon extends Component{
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>
-            {events.map(event=>(
+            {events.slice(0, 3).map(event=>(
               <Grid key={event.id} item xs={4}>
                 <CardWrap>
                   <Event300 {...event} baseNameForRouting={baseNameForRouting}/>

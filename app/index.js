@@ -62,6 +62,8 @@ export const ClientBilegoGateUi = () => {
     history.push(`/${store.baseNameForRouting}`);
   }
 
+  store.ssrSide = 'client';
+
   if(store.frontPageFirstData)
     stores.pageStore.setStartDataFrontPage(store.frontPageFirstData);
   else if(store.eventsFirstData)
@@ -102,7 +104,7 @@ export const ClientBilegoGateUi = () => {
                 <Footer/>
               </Fragment>
             :
-              <Mobile type="client"/>
+              <Mobile/>
             }
           </Router>
         </MobxProvider>
@@ -134,7 +136,7 @@ export const ServerBilegoGateUi = (props) => {
           <Footer/>
         </Fragment>
       :
-        <Mobile type="server"/>
+        <Mobile/>
       }
     </Fragment>
   );

@@ -8,7 +8,7 @@ import style from '../../theme/style';
 
 const Wrapper = styled.div`
   height: 360px;
-  background-color: ${style.$greydark};
+  background-color: radial-gradient(circle, rgba(238,174,202,0.6) 0%, rgba(148,187,233,0.6) 100%);
   .ant-carousel .slick-slide {
     text-align: center;
     height: 360px;

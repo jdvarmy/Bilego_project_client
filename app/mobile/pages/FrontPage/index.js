@@ -1,32 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
+import { observable, action } from 'mobx';
 import styled from 'styled-components';
-
 import Flickity from 'react-flickity-component';
+
+import style from '../../../theme/style';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { Carousel } from 'antd';
-import style from '../../../theme/style';
+import Fab from '@material-ui/core/Fab';
 import DatePickerLine from '../../../components/DatePickerLine';
-import { Event143 } from '../../components/Event';
+import { Event143, Event190 } from '../../components/Event';
+import Slider from './Slider';
+import { BilegoIconLoading } from '../../../theme/bilegoIcons';
 
-const Wrapper = styled.div`
-  height: 375px;
-  background-color: ${style.$greydark};
-  .ant-carousel .slick-slide {
-    text-align: center;
-    height: 375px;
-    overflow: hidden;
-    position: relative;
-  }
-  .slick-slide div{
-    height: 100%;
-  }
-  .slick-dots.slick-dots-bottom{
-    bottom: 30px;
-  }
-`;
 const Content = styled.div`
   background-color: ${style.$white};
   overflow: hidden;
@@ -35,25 +22,6 @@ const Content = styled.div`
   z-index: 1;
   position: relative;
   padding-top: 16px;
-`;
-const Gradient = styled.div`
-  background: rgb(204,204,204);
-  background: linear-gradient(180deg, rgba(20,20,20,0.75) 0%, 
-              rgba(20,20,20,0.15) 30%, 
-              rgba(20,20,20,0) 80%, 
-              rgba(20,20,20,0.6) 100%);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  width: 100%;
-  position: absolute;
-  top: 0;
-`;
-const Image = styled.div`
-  background-image: url('${p=>(p.img)}');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 `;
 const DateContainer = styled.div`
   height: ${style.$heightMenu}px;
@@ -65,50 +33,36 @@ const GridWrap = styled(Grid)`
   padding: 0 16px;
 `;
 const SBlockHeaderText = styled(Typography)`
-  a{
-    color: ${style.$black};
+  a{ color: ${style.$black}; }
+`;
+const Line = styled.div`
+  width: 1000px;
+  > div{
+    display: inline-block;
   }
 `;
+const SFab = styled(Fab)`
+  width: 90%!important;
+  margin: 20px auto!important;
+  display: block!important;
+`;
 
-
-@inject('globalStore', 'sliderStore', 'pageStore')
+@inject('globalStore', 'pageStore')
 @observer
 class FrontPage extends React.Component{
-  componentDidMount() {
-    const { globalStore:{ apiRoot }, sliderStore:{ getMainSlides }}  = this.props;
-    getMainSlides(apiRoot);
-  }
+  @observable selectionsCount = 2;
+  @action loadMore = () => {
+    this.selectionsCount += 2;
+  };
 
   render() {
-    const { globalStore:{ baseNameForRouting }, sliderStore:{ slides } } = this.props;
+    const { globalStore:{ baseNameForRouting, ssrSide, selections } } = this.props;
+
+    console.log(ssrSide)
 
     return (
       <React.Fragment>
-        <Wrapper>
-        {slides && slides.length>0 &&
-          <Carousel effect="fade" autoplay>
-            {slides.map(slide => {
-              return (
-                <div key={slide.id}>
-                  <Gradient/>
-                  <Image alt={slide.title} img={slide.image_src}/>
-                  <Link to={`/${baseNameForRouting}/event/${slide.name}`} className="bilego-item-slider-event-title-mobile">
-                    <Typography variant="h6" component="div">
-                      {slide.title}
-                    </Typography>
-                  </Link>
-                  <Typography className="bilego-item-slider-event-subtitle-mobile first" variant="subtitle2" component="span">
-                    {slide.date}
-                  </Typography>
-                  <Typography className="bilego-item-slider-event-subtitle-mobile second" variant="subtitle2" component="span">
-                    {slide.location}
-                  </Typography>
-                </div>
-              )
-            })}
-          </Carousel>
-        }
-        </Wrapper>
+        <Slider />
         <Content>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -150,15 +104,55 @@ class FrontPage extends React.Component{
                       </SBlockHeaderText>
                     </Grid>
                     <Grid item xs={12}>
-                      <Flickity options={{prevNextButtons: false, pageDots: false, contain: true, freeScroll: true}}>
-                        {el.carts.slice(0, 4).map(event=>(
-                            <Event143 key={event.id} {...event} baseNameForRouting={baseNameForRouting}/>
-                          ))}
-                      </Flickity>
+                      { // todo: Warning: Did not expect server HTML to contain a <div> in <div>
+                        ssrSide === 'client'
+                          ?
+                          <Flickity options={{
+                            prevNextButtons: false,
+                            pageDots: false,
+                            contain: true,
+                            freeScroll: true
+                          }}>
+                            {el.carts.slice(0, 4).map(event => (
+                              <Event143 key={event.id} {...event} baseNameForRouting={baseNameForRouting}/>
+                            ))}
+                          </Flickity>
+                          :
+                          <div>
+                            <div>
+                              <Line>
+                                {el.carts.slice(0, 4).map(event => (
+                                  <Event143 key={event.id} {...event} baseNameForRouting={baseNameForRouting}/>
+                                ))}
+                              </Line>
+                            </div>
+                          </div>
+                      }
                     </Grid>
                   </GridWrap>
                 )
               })}
+            </Grid>
+            <Grid item xs={12}>
+              <GridWrap container spacing={3}>
+                <Grid item xs={12}>
+                  <SBlockHeaderText component="h5" variant="h5">Подборки Bilego</SBlockHeaderText>
+                </Grid>
+                {Object.keys(selections).slice(0, this.selectionsCount).map(key=>{
+                  return (
+                    <Grid key={selections[key].mask} item xs={12}>
+                      <Event190 {...selections[key]}/>
+                    </Grid>
+                  )
+                })}
+              </GridWrap>
+              <Grid item xs={12}>
+                {Object.keys(selections).length > this.selectionsCount &&
+                  <SFab onClick={this.loadMore} variant="extended" aria-label="load">
+                    {BilegoIconLoading} Показать ещё
+                  </SFab>
+                }
+              </Grid>
             </Grid>
           </Grid>
         </Content>

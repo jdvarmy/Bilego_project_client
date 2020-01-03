@@ -3,6 +3,11 @@ import { matchPath } from 'react-router-dom';
 import { globalService, pageService, eventService, itemService } from './services';
 import { cities } from './stores';
 
+import imgWeekends from './pages/FrontPage/images/weekends.jpg';
+import imgForKids from './pages/FrontPage/images/bilego_for_kids.jpg';
+import imgArt from './pages/FrontPage/images/art.jpg';
+import imgTheatre from './pages/FrontPage/images/theatre.jpg';
+
 configure({
   enforceActions: 'always'
 });
@@ -14,6 +19,7 @@ export default class ConfigureStartStore {
   };
   cities;
   pageName;
+  ssrSide; // server or client
   siteAddress = 'https://bilego.ru';
   @observable daData;
   @observable data;
@@ -110,6 +116,35 @@ export default class ConfigureStartStore {
       meta: this.postMeta
     }
   }
+  @computed
+  get selections(){
+    return {
+      weekends: {
+        image: imgWeekends,
+        title: ['Чем', 'заняться в', 'выходные'],
+        mask: 'weekends',
+        link: `/${this.baseNameForRouting}/search/?mask=weekends`
+      },
+      bilego: {
+        image: imgForKids,
+        title: ['Bilego', 'для', 'Детей'],
+        mask: 'bilego',
+        link: `/${this.baseNameForRouting}/search/?mask=bilego`
+      },
+      art: {
+        image: imgArt,
+        title: ['Art', 'лекторий', 'в кино'],
+        mask: 'art',
+        link: `/${this.baseNameForRouting}/search/?mask=art`
+      },
+      theatre: {
+        image: imgTheatre,
+        title: ['Olympic', 'theatre'],
+        mask: 'theatre',
+        link: `/${this.baseNameForRouting}/search/?mask=theatre`
+      }
+    }
+  };
 
   constructor(initialState, history) {
     this.setData(initialState);

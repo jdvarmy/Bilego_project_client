@@ -8,7 +8,6 @@ import { TicketsModalButton } from '../../../components/TicketsModal';
 import Typography from '@material-ui/core/Typography';
 
 const Wrapper = styled.div`
-  width: 100%;
   height: 236px;
   width: 208px;
   overflow: hidden;
@@ -17,9 +16,6 @@ const Wrapper = styled.div`
     height: 143px;
     overflow: hidden;
     display: block;
-  }
-  &:hover .event-143-hover{
-    transform: scale(1.10, 1.10);
   }
 `;
 const Image = styled.div`
@@ -66,7 +62,6 @@ const SWrap = styled.div`
 `;
 
 export default function Event143(props) {
-  // eslint-disable-next-line react/prop-types,camelcase,max-len
   const { title, day, month, img, name, ticket_link, item_title, item_name, baseNameForRouting } = props;
 
   return (
