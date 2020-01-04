@@ -68,11 +68,11 @@ export default function Top4(props) {
         <Link to={`/${baseNameForRouting}`}>Logo</Link>
       </Logo>
       <Subscribe className="bilego-subscribe">
-        <div>Подписаться на рассылку:</div>
+        <div>Подпишитесь на акции и анонсы событий:</div>
         <Input.Search
           enterButton="Send"
           onSearch={value => console.log(value)}
-          placeholder="Enter your e-mail"
+          placeholder="Электронная почта"
           size="large"
         />
       </Subscribe>
