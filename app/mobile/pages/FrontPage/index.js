@@ -42,9 +42,8 @@ const Line = styled.div`
   }
 `;
 const SFab = styled(Fab)`
-  width: 90%!important;
-  margin: 20px auto!important;
-  display: block!important;
+  width: calc(100% - 40px)!important;
+  margin: 10px 20px!important;
 `;
 
 @inject('globalStore', 'pageStore')
@@ -53,6 +52,17 @@ class FrontPage extends React.Component{
   @observable selectionsCount = 2;
   @action loadMore = () => {
     this.selectionsCount += 2;
+  };
+
+  componentDidMount = async () => {
+    try {
+      const {pageStore: {getFrontPageData}, globalStore: {categoryConcertsForFrontPage, apiRoot, setMeta}} = this.props;
+
+      await getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
+      setMeta(this.props.pageStore.seoPage);
+    }catch (e) {
+      console.log('front page: ', e);
+    }
   };
 
   render() {
@@ -75,19 +85,19 @@ class FrontPage extends React.Component{
                 {
                   id: 1,
                   name: 'Ближайшие события',
-                  link: '/events',
+                  link: '/search?cat=all',
                   carts: this.props.pageStore.eventsSoon
                 },
                 {
                   id: 2,
                   name: 'Популярные события',
-                  link: '',
+                  link: '/search?cat=pop',
                   carts: this.props.pageStore.eventsHot
                 },
                 {
                   id: 3,
                   name: 'Концерты',
-                  link: '/events/concerts',
+                  link: '/search?cat=concerts',
                   carts: this.props.pageStore.eventsConcerts
                 }
               ].map(el=>{

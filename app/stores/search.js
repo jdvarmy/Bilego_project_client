@@ -11,6 +11,8 @@ class Search{
   @observable date = new Date();
   @observable dateDayFlag = null;
 
+  @observable title = 'Поиск';
+
   @observable searchResult = undefined; // events, items
   @observable events = undefined;
   @observable items = undefined;
@@ -65,6 +67,13 @@ class Search{
     this.focus = flag;
   };
 
+  // todo: описать код
+  @action
+  setTitle = (args) => {
+    // console.log(args)
+    this.title = args;
+  };
+
   @action
   getSearchResult = flow( function* getSearchResult(apiRoot){
     this.isLoading = true;
@@ -92,17 +101,20 @@ class Search{
   }).bind(this);
 
   @action
-  getSearchPageResult = flow( function* getSearchPageResult(apiRoot){
+  getSearchPageResult = flow( function* getSearchPageResult(apiRoot, all=false){
     this.isLoading = true;
     try {
       let args = this.parseString();
-      args.size = this.pagination.pageSize;
-      args.page = this.pagination.current;
+      if(all){
+        args.size = -1;
+        args.page = 1;
+      }else {
+        args.size = this.pagination.pageSize;
+        args.page = this.pagination.current;
+      }
 
       const response = yield searchService.getSearchPageResult(apiRoot, args);
-      this.searchEvents = response;
-
-      console.log(response)
+      this.searchEvents = response.events.length > 0 ? response.events : [];
     } catch (e) {
       console.log(e);
     } finally {
@@ -118,6 +130,7 @@ class Search{
       end: params.get('end'),
       s: params.get('s'),
       mask: params.get('mask'),
+      cat: params.get('cat'),
     };
   }
 }

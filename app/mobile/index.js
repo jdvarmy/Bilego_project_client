@@ -19,11 +19,11 @@ export default class Mobile extends React.Component{
         <Header />
         {ssrSide === 'server' && renderRoutes(routs)}
         {ssrSide === 'client' &&
-        <Switch>
-          {routs.map(props => (
-            <Route {...props} />
-          ))}
-        </Switch>}
+          <Switch>
+            {routs.map(props => (
+              <Route {...props} />
+            ))}
+          </Switch>}
         <Footer />
       </React.Fragment>
     )

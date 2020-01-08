@@ -162,7 +162,8 @@ class DatePickerLine extends Component{
   };
 
   render() {
-    const id = this.open ? 'simple-popover' : undefined, flag = this.props.history.location.pathname.indexOf('search') +1;
+    const id = this.open ? 'simple-popover' : undefined,
+      flag = this.props.history.location.pathname.indexOf('search') +1;
     const {calendarStore:{start, end, months, days, selectedDate, daysFilter}} = this.props,
       sd = start ? start.getDate() : null,
       ed = end ? end.getDate() : null,

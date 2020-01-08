@@ -31,9 +31,7 @@ const rules = [
 const serverConf = {
   mode: 'development',
   target: 'node',
-  externals: [
-    nodeExternals()
-  ],
+  externals: [nodeExternals()],
   entry: './webpack/server.js',
   output: {
     path: path.resolve('build'),

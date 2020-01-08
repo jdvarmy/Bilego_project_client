@@ -6,21 +6,18 @@ import styled from 'styled-components';
 import { Input } from 'antd';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import { style } from '../../../theme';
 import { BilegoIconFacebook, BilegoIconVk } from '../../../theme/bilegoIcons';
 
 import lama from './images/screen-2.jpg';
 
 const Wrapper = styled(Grid)`
-  &.MuiGrid-root{
-    width: 100%;
-    margin: 0;
-    margin-top: 25px;
+  width: 100%!important;
+  margin: 0!important;
+  margin-top: 25px!important;
+  position: relative!important;
+  .MuiGrid-root{
     position: relative;
-    .MuiGrid-root{
-      position: relative;
-    }
   }
   .bilego-flex.MuiGrid-item{
     display: flex;
@@ -76,33 +73,31 @@ const Logo = styled.div`
   margin: 40px 0 50px;
 `;
 const Subscribe = styled.div`
-  & > div{
+  > div{
     color: ${style.$white};
     margin-bottom: 8px;
   }
 `;
 const Social = styled.div`
-  margin-top: 50px;
-  text-align: right;
-  & > div{
+  margin-top: 50px!important;
+  text-align: right!important;
+  > div{
     color: ${style.$white};
     margin-bottom: 8px;
   }
-  & > span{
+  > span{
     display: block;
     margin-right: 15px;
   }
 `;
 const StyledIconButton = styled(IconButton)`
-  &.MuiIconButton-root{
-    margin: 0 5px;
-    svg{
-      vertical-align: middle;
-      font-size: 1.25rem!important;
-      color: ${style.$white};
-      &:hover{
-        fill: ${style.$red};
-      }
+  margin: 0 5px!important;
+  svg{
+    vertical-align: middle;
+    font-size: 1.25rem!important;
+    color: ${style.$white};
+    &:hover{
+      fill: ${style.$red};
     }
   }
 `;
@@ -141,7 +136,7 @@ class Footer extends Component{
           <Subscribe>
             <div>Подпишитесь на акции и анонсы событий:</div>
             <Input.Search
-              enterButton="Send"
+              enterButton="Далее"
               onSearch={value => console.log(value)}
               placeholder="Электронная почта"
               size="large"

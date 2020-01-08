@@ -39,12 +39,12 @@ export default function (baseRouter) {
         component: Search,
         exact: true,
       },
-      {
-        path: `/${baseRouter}/events`,
-        key: 'Events',
-        component: Events,
-        exact: true,
-      },
+      // {
+      //   path: `/${baseRouter}/events`,
+      //   key: 'Events',
+      //   component: Events,
+      //   exact: true,
+      // },
       {
         path: `/${baseRouter}/event/:eventSlug`,
         key: 'SingleEvent',

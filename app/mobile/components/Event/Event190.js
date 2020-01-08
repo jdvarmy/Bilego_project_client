@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   overflow: hidden;
   position: relative;
   height: 190px;
-  border-radius: 16px;
+  border-radius: 12px;
 `;
 const Image = styled.div`
   background-image: url('${p => (p.img)}');

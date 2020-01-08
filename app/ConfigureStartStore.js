@@ -129,7 +129,7 @@ export default class ConfigureStartStore {
         image: imgForKids,
         title: ['Bilego', 'для', 'Детей'],
         mask: 'bilego',
-        link: `/${this.baseNameForRouting}/search/?mask=bilego`
+        link: `/${this.baseNameForRouting}/search/?mask=for_kids`
       },
       art: {
         image: imgArt,
