@@ -151,8 +151,6 @@ class SingleEvent extends React.Component{
 
   render() {
     const {singleEventStore: {sliderData, event}, globalStore:{baseNameForRouting}} = this.props;
-    // console.log(sliderData)
-    console.log(event)
 
     return (
       <Content>
@@ -187,13 +185,15 @@ class SingleEvent extends React.Component{
                       <Typography component="div" variant="caption">{event.item.address}</Typography>
                     </Grid>
                     <Grid item xs={3}>
-                      <ItemImage img={event.item.img}><div /></ItemImage>
+                      <Link to={`/${baseNameForRouting}/item/${event.item.name}`}>
+                        <ItemImage img={event.item.img}><div /></ItemImage>
+                      </Link>
                     </Grid>
                   </Grid>
                 </Grid>
                 <Grid item xs={12}>
                   <div style={{marginTop: '1em'}}/>
-                  <Typography component="h1" variant="h6">{event.title}</Typography>
+                  <Typography component="h1" variant="h4">{event.title}</Typography>
                   <div style={{marginTop: '1em'}}/>
                   <Typography className="bilego-event-content" component="div" variant="body1">
                     <span dangerouslySetInnerHTML={{ __html: event.content }} />

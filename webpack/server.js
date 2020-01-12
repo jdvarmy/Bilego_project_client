@@ -31,9 +31,7 @@ const app = express();
 
 app.use(express.static('./build'));
 
-app.set('trust proxy', function (ip) {
-  return ip === '127.0.0.1' || ip === '123.123.123.123';
-});
+app.set('trust proxy', 'loopback');
 
 // const httpsRedirect = require('express-https-redirect'); //todo: установить на проме express-https-redirect
 // app.use('/', httpsRedirect());
@@ -53,6 +51,18 @@ app.get(/\/mos|\/spb/, async (req, res) => {
 
   const md = new MobileDetect(req.headers['user-agent']);
   store.setMobile(md.mobile());
+
+  // const ip = {
+  //   ip: req.ip ? req.ip : null,
+  //   ips: req.ips ? req.ips : null,
+  //   headers: (req.headers['x-forwarded-for'] || '').split(',').pop(),
+  //   connection: req.connection ? req.connection.remoteAddress : null,
+  //   socket: req.socket ? req.socket.remoteAddress : null,
+  //   connectionSocket: req.connection && req.connection.socket ? req.connection.socket.remoteAddress : null,
+  //   reqHeaders: req.headers,
+  //   iteration: 2
+  // }
+  // store.setReq(ip);
 
   store.ssrSide = 'server';
 
@@ -122,7 +132,8 @@ app.get('*', async (req, res) => {
   const url = req.originalUrl || req.url;
   const history = createMemoryHistory({initialEntries: [url]});
   const initialState = {};
-  const ip = req.ip ||
+  const ip = (req.headers['x-real-ip'] || '').split(',').pop() ||
+    req.ip ||
     (req.headers['x-forwarded-for'] || '').split(',').pop() ||
     req.connection.remoteAddress ||
     req.socket.remoteAddress ||

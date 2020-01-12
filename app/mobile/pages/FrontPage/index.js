@@ -43,7 +43,7 @@ const Line = styled.div`
 `;
 const SFab = styled(Fab)`
   width: calc(100% - 40px)!important;
-  margin: 10px 20px!important;
+  margin: 20px!important;
 `;
 
 @inject('globalStore', 'pageStore')

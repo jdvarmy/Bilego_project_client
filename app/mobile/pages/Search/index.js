@@ -37,7 +37,7 @@ const Title = styled(Typography)`
 `;
 const SFab = styled(Fab)`
   width: calc(100% - 40px)!important;
-  margin: 10px 20px!important;
+  margin: 20px!important;
 `;
 
 @withRouter
@@ -69,7 +69,7 @@ class Search extends Component{
     const {searchStore:{setSearchString, getSearchPageResult}, globalStore:{apiRoot}} = this.props;
 
     if(prevProps.location.search.substr(1) !== this.props.location.search.substr(1)) {
-      // setSearchString(this.props.location.search.substr(1));
+      setSearchString(this.props.location.search.substr(1));
       getSearchPageResult(apiRoot, true);
     }
   }
