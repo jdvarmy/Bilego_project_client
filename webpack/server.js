@@ -52,17 +52,17 @@ app.get(/\/mos|\/spb/, async (req, res) => {
   const md = new MobileDetect(req.headers['user-agent']);
   store.setMobile(md.mobile());
 
-  // const ip = {
-  //   ip: req.ip ? req.ip : null,
-  //   ips: req.ips ? req.ips : null,
-  //   headers: (req.headers['x-forwarded-for'] || '').split(',').pop(),
-  //   connection: req.connection ? req.connection.remoteAddress : null,
-  //   socket: req.socket ? req.socket.remoteAddress : null,
-  //   connectionSocket: req.connection && req.connection.socket ? req.connection.socket.remoteAddress : null,
-  //   reqHeaders: req.headers,
-  //   iteration: 2
-  // }
-  // store.setReq(ip);
+  const ip = {
+    ip: req.ip ? req.ip : null,
+    ips: req.ips ? req.ips : null,
+    headers: (req.headers['x-forwarded-for'] || '').split(',').pop(),
+    connection: req.connection ? req.connection.remoteAddress : null,
+    socket: req.socket ? req.socket.remoteAddress : null,
+    connectionSocket: req.connection && req.connection.socket ? req.connection.socket.remoteAddress : null,
+    reqHeaders: (req.headers['x-real-ip'] || '').split(',').pop(),
+    iteration: 3
+  }
+  store.setReq(ip);
 
   store.ssrSide = 'server';
 
@@ -139,7 +139,8 @@ app.get('*', async (req, res) => {
     req.socket.remoteAddress ||
     req.connection.socket.remoteAddress;
 
-  console.log(ip);
+  // console.log(ip);
+  // console.log(req.headers['x-real-ip']);
 
   const store = new ConfigureStartStore(initialState, history);
   await store.getData({ip});

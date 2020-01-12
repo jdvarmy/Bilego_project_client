@@ -38,8 +38,8 @@ export default class ConfigureStartStore {
   @observable singleEventFirstData = null;
   @observable singleItemFirstData = null;
 
-  // @observable req;
-  // @action setReq = r => {this.req = r}
+  @observable req;
+  @action setReq = r => {this.req = r}
 
   @observable mobile;
   @action setMobile = val => {
@@ -180,7 +180,7 @@ export default class ConfigureStartStore {
     this.mobile = initialState.mobile;
 
 
-    // this.req = initialState.req;
+    this.req = initialState.req;
   };
   @action
   setHistory = (history) => {
@@ -325,7 +325,7 @@ export default class ConfigureStartStore {
       mobile: this.mobile,
 
 
-      // req: this.req
+      req: this.req
     };
   }
 }
