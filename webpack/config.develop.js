@@ -4,6 +4,7 @@ const nodeExternals = require('webpack-node-externals');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const reactLoadableWebpack = require('react-loadable/webpack');
 
 // https://habr.com/ru/post/432368/#mobile
 // https://habr.com/ru/post/325688/
@@ -110,7 +111,11 @@ const clientConf = options => ({
       template: 'public/static/main.html',
       filename: 'main.html',
     }),
-    new ExtractTextPlugin({filename: '[name].css'})
+    new ExtractTextPlugin({filename: '[name].css'}),
+    // сейчас эта штука не используется, оставил на всякий случай
+    // new reactLoadableWebpack.ReactLoadablePlugin({
+    //   filename: 'build/dist/react-loadable.json',
+    // }),
   ],
   optimization: {
     splitChunks: {

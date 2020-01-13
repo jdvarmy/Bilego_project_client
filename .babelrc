@@ -5,7 +5,9 @@
       { "legacy":  true }
     ],
     "@babel/plugin-transform-runtime",
-    "@babel/plugin-proposal-class-properties"
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-syntax-dynamic-import",
+    "react-loadable/babel"
   ],
   "presets": [
     [

@@ -26,6 +26,9 @@ import { ServerBilegoGateUi } from '../app';
 import ConfigureStartStore from '../app/ConfigureStartStore';
 import routes from '../app/routes';
 
+// import { getBundles } from 'react-loadable/webpack'
+// import stats from '../build/dist/react-loadable.json';
+
 const PORT = process.env.PORT || 3000;
 const app = express();
 
@@ -61,7 +64,7 @@ app.get(/\/mos|\/spb/, async (req, res) => {
     connectionSocket: req.connection && req.connection.socket ? req.connection.socket.remoteAddress : null,
     reqHeaders: (req.headers['x-real-ip'] || '').split(',').pop(),
     iteration: 3
-  }
+  };
   store.setReq(ip);
 
   store.ssrSide = 'server';
@@ -83,24 +86,31 @@ app.get(/\/mos|\/spb/, async (req, res) => {
   else if(store.singleItemFirstData)
     stores.singleItemStore.setStartDataSingleItemPage(pageData);
 
+  let modules = [];
   const context = {};
   const sheetsMui = new ServerStyleSheets();
   const sheetStyled = new ServerStyleSheet();
 
   const appContent = ReactDOMServer.renderToString(
     sheetsMui.collect(
-      <StyleSheetManager sheet={sheetStyled.instance}>
-        <MuiThemeProvider theme={theme}>
-          <MobxProvider {...stores} globalStore={store}>
-            <CssBaseline />
-            <StaticRouter context={context} location={location}>
-              <ServerBilegoGateUi serverBaseRout={store.baseNameForRouting} mobile={store.mobile}/>
-            </StaticRouter>
-          </MobxProvider>
-        </MuiThemeProvider>
-      </StyleSheetManager>
+      <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+        <StyleSheetManager sheet={sheetStyled.instance}>
+          <MuiThemeProvider theme={theme}>
+            <MobxProvider {...stores} globalStore={store}>
+              <CssBaseline />
+              <StaticRouter context={context} location={location}>
+                <ServerBilegoGateUi serverBaseRout={store.baseNameForRouting} mobile={store.mobile}/>
+              </StaticRouter>
+            </MobxProvider>
+          </MuiThemeProvider>
+        </StyleSheetManager>
+      </Loadable.Capture>
     )
   );
+
+  // const bundles = getBundles(stats, modules);
+  // console.log(modules)
+  // console.log(bundles)
 
   if (context.url) {
     res.redirect(301, context.url);

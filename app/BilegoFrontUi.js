@@ -8,7 +8,7 @@ import routes from './routes';
 class BilegoFrontUi extends React.Component{
   render(){
     const {globalStore:{baseNameForRouting}} = this.props;
-    const routs = routes(baseNameForRouting);
+    const routs = routes(baseNameForRouting, false);
 
     return(
       <Switch>
