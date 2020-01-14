@@ -12,7 +12,7 @@ import { Event300 } from '../../components/Event';
 import Spinner from '../../components/Spinner';
 import { BilegoIconLoading } from '../../theme/bilegoIcons';
 import NoContent from '../../components/NoContent';
-import { SpinnerEventsList } from '../../components/LoadingsTemplate';
+import { LoadingForEvents } from '../../components/LoadingsTemplate';
 
 const GridWrap = styled(Grid)`
   min-height: 533px;
@@ -67,26 +67,25 @@ class EventsList extends Component{
     const content = <React.Fragment>
       {eventsByCategory.length > 0
         ? eventsByCategory.map(event=>(
-          <React.Fragment key={event.id}>
-            <Grid item xs={4}>
-              <CardWrap>
-                <Event300 {...event} baseNameForRouting={baseNameForRouting}/>
-              </CardWrap>
-            </Grid>
-            <Grid container spacing={4}>
-              <NoSsr>
-                {showButton &&
-                <SFab disabled={isLoading} onClick={this.loadMore} variant="extended" aria-label="load" style={{opacity: `${p=>p.loading ? 0 : 1}`}}>
-                  {BilegoIconLoading} Загрузить ещё
-                </SFab>}
-              </NoSsr>
-            </Grid>
-          </React.Fragment>
+          <Grid item xs={4} key={event.id}>
+            <CardWrap>
+              <Event300 {...event} baseNameForRouting={baseNameForRouting}/>
+            </CardWrap>
+          </Grid>
         ))
-        : !isLoading && <Grid item xs={12}>
+        : !isLoading &&
+        <Grid item xs={12}>
           <NoContent/>
         </Grid>
       }
+      <Grid container spacing={4}>
+        <NoSsr>
+          {showButton &&
+          <SFab disabled={isLoading} onClick={this.loadMore} variant="extended" aria-label="load" style={{opacity: `${p=>p.loading ? 0 : 1}`}}>
+            {BilegoIconLoading} Загрузить ещё
+          </SFab>}
+        </NoSsr>
+      </Grid>
     </React.Fragment>
 
     return (
@@ -94,7 +93,7 @@ class EventsList extends Component{
         {/*<Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>*/}
           <GridWrap container spacing={4}>
             {isLoading && eventsByCategory.length <= 0
-              ? <SpinnerEventsList lines="2" />
+              ? <LoadingForEvents />
               : content
             }
           </GridWrap>

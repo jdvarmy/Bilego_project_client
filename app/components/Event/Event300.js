@@ -9,7 +9,6 @@ import E300 from './images/E300.jpg';
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 340px;
   overflow: hidden;
   & > a{
     height: 219px;

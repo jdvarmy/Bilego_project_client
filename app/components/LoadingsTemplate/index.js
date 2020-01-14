@@ -1,1 +1,1 @@
-export { default as SpinnerEventsList } from './EventsList';
+export { default as LoadingForEvents } from './LoadingForEvents';
