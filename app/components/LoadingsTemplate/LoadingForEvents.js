@@ -59,7 +59,8 @@ const SubTitle = styled.div`
   background-attachment: fixed;
   background-position-x: 0;
   background-size: 200vw;
-  border-radius: 24px;animation: ${keyframes`
+  border-radius: 24px;
+  animation: ${keyframes`
         from{background-position-x:0;}50%{background-position-x:-200%;}
         to{background-position-x:-200%;}
       `} 2s linear infinite;

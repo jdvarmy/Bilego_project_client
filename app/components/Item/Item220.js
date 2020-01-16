@@ -20,7 +20,7 @@ const Wrapper = styled.div`
     position: absolute;
     height: 205px;
     top: 0;
-    border-radius: 0px;
+    border-radius: 12px;
   }
   &:hover .content {
     background-color: transparent;
@@ -37,7 +37,7 @@ const Article = styled.article`
   background-color: ${style.$white};
   position: relative;
   overflow: hidden;
-  border-radius: 0px;
+  border-radius: 12px;
 `;
 const Img = styled.div`
   background-image: url('${p => (p.image)}');
@@ -47,7 +47,7 @@ const Img = styled.div`
   background-repeat: no-repeat;
   width: 100%;
   height: 205px;
-  border-radius: 0px;
+  border-radius: 12px;
 `;
 const Content = styled.div`
   z-index: 2;

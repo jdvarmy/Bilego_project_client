@@ -1,7 +1,14 @@
-import React, {Component} from 'react';
-import {BilegoIconTicket} from '../../theme/bilegoIcons';
+import React, { Component } from 'react';
+import { inject } from 'mobx-react';
+import styled from 'styled-components';
+
 import Fab from '@material-ui/core/Fab';
-import {inject} from 'mobx-react';
+import { BilegoIconTicket } from '../../theme/bilegoIcons';
+
+
+const SFab = styled(Fab)`
+  white-space: nowrap;
+`;
 
 @inject('ticketsModalStore')
 class TicketsModalButton extends Component{
@@ -16,9 +23,9 @@ class TicketsModalButton extends Component{
     const {href} = this.props;
 
     return(
-      <Fab onClick={this.setTicketsModal} variant="extended" aria-label="buy" href={href}>
+      <SFab onClick={this.setTicketsModal} variant="extended" aria-label="buy" href={href}>
         {BilegoIconTicket} купить билеты
-      </Fab>
+      </SFab>
     )
   }
 }

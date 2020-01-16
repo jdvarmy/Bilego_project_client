@@ -6,8 +6,9 @@ import style from '../../theme/style';
 const Wrapper = styled.div`
   width: 100%;
   background: radial-gradient(circle at right, ${style.$second} 20%, ${style.$blackdark});
+  border-radius: 12px;
   
-  svg {height: inherit; width: 100%;}
+  svg {height: inherit; width: 100%; border-radius: 12px;}
   svg text {text-anchor: start;}
   svg #${p=>p.mask}-alpha {fill: white;}
   svg .title {font-size: 28px; font-weight: bold; text-transform: uppercase;}
@@ -16,6 +17,7 @@ const Container = styled.figure`
   height: 300px;
   overflow: hidden;
   position: relative;
+  border-radius: 12px;
   a {
     position: absolute;
     left: 0;
@@ -41,6 +43,7 @@ const Figcaption = styled.figcaption`
   left: 0;
   top: 0;
   width: 42%;
+  // border-radius: 12px;
   color: #252830;
   height: calc(100% - 30px);
   margin: 30px;

@@ -43,10 +43,38 @@ class EventsSoon extends Component{
   };
 
   render() {
-    const {pageStore:{eventsSoon}, globalStore:{baseNameForRouting}} = this.props;
+    const {pageStore:{eventsSoon, isLoading}, globalStore:{baseNameForRouting}} = this.props;
 
     this.eventsArray = eventsSoon.length > 0 ? eventsSoon.map(e=>({...e})) : [];
     this.event430 = this.getEvent430();
+
+    const content = <React.Fragment>
+      <Grid item xs={4}>
+        <CardWrapLarge>
+          <Event430 {...this.event430[0]} baseNameForRouting={baseNameForRouting}/>
+        </CardWrapLarge>
+      </Grid>
+      <Grid item xs={8}>
+        <Grid container spacing={4}>
+          <Grid item xs={6}>
+            <CardWrap>
+              <Event200 {...this.eventsArray[0]} baseNameForRouting={baseNameForRouting}/>
+            </CardWrap>
+            <CardWrap>
+              <Event200 {...this.eventsArray[1]} baseNameForRouting={baseNameForRouting}/>
+            </CardWrap>
+          </Grid>
+          <Grid item xs={6}>
+            <CardWrap>
+              <Event200 {...this.eventsArray[3]} baseNameForRouting={baseNameForRouting}/>
+            </CardWrap>
+            <CardWrap>
+              <Event200 {...this.eventsArray[4]} baseNameForRouting={baseNameForRouting}/>
+            </CardWrap>
+          </Grid>
+        </Grid>
+      </Grid>
+    </React.Fragment>
 
     return (
       <GridWrap container spacing={4}>
@@ -60,31 +88,11 @@ class EventsSoon extends Component{
             </Link>
           </SBlockHeaderText>
         </Grid>
-        <Grid item xs={4}>
-          <CardWrapLarge>
-            <Event430 {...this.event430[0]} baseNameForRouting={baseNameForRouting}/>
-          </CardWrapLarge>
-        </Grid>
-        <Grid item xs={8}>
-          <Grid container spacing={4}>
-            <Grid item xs={6}>
-              <CardWrap>
-                <Event200 {...this.eventsArray[0]} baseNameForRouting={baseNameForRouting}/>
-              </CardWrap>
-              <CardWrap>
-                <Event200 {...this.eventsArray[1]} baseNameForRouting={baseNameForRouting}/>
-              </CardWrap>
-            </Grid>
-            <Grid item xs={6}>
-              <CardWrap>
-                <Event200 {...this.eventsArray[3]} baseNameForRouting={baseNameForRouting}/>
-              </CardWrap>
-              <CardWrap>
-                <Event200 {...this.eventsArray[4]} baseNameForRouting={baseNameForRouting}/>
-              </CardWrap>
-            </Grid>
-          </Grid>
-        </Grid>
+        {isLoading
+          ? 'load'
+          : content
+        }
+
       </GridWrap>
     );
   }

@@ -77,7 +77,9 @@ export default function Event300(props) {
       {img !== undefined
         ? <React.Fragment>
           <Link to={`/${baseNameForRouting}/event/${name}`}>
-            <Image className="event-300-hover" img={img} />
+            <div style={{borderRadius: '12px', overflow: 'hidden'}}>
+              <Image className="event-300-hover" img={img} />
+            </div>
           </Link>
           <Content>
             <SWrap>

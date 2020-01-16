@@ -86,7 +86,7 @@ class EventsList extends Component{
           </SFab>}
         </NoSsr>
       </Grid>
-    </React.Fragment>
+    </React.Fragment>;
 
     return (
       <React.Fragment>

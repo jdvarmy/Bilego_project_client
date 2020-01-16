@@ -34,7 +34,6 @@ class FrontPage extends Component {
 
       await getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
       setMeta(this.props.pageStore.seoPage);
-      this.props.sliderStore.getMainSlides(apiRoot);
     }catch (e) {
       console.log('front page: ', e);
     }
@@ -44,10 +43,11 @@ class FrontPage extends Component {
     const {pageStore, sliderStore} = this.props;
 
     return (
-      <Spin spinning={pageStore.isLoading || sliderStore.isLoading} indicator={<Spinner leftPadding={27/2}/>}>
+      <React.Fragment>
+      {/*<Spin spinning={pageStore.isLoading || sliderStore.isLoading} indicator={<Spinner leftPadding={27/2}/>}>*/}
         <div>
           <NoSsr>
-            <Slider type="main"/>
+            <Slider />
           </NoSsr>
         </div>
         <DateContainer align='middle' type='flex' justify='center'>
@@ -60,7 +60,8 @@ class FrontPage extends Component {
           <Selections/>
           <Items/>
         </div>
-      </Spin>
+      {/*</Spin>*/}
+      </React.Fragment>
     );
   }
 }

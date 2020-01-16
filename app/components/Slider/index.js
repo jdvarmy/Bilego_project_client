@@ -9,6 +9,12 @@ import MainSlider from './MainSlider';
 @inject('sliderStore', 'globalStore')
 @observer
 class Slider extends Component{
+  componentDidMount() {
+    const {globalStore: {apiRoot}, sliderStore:{getMainSlides}} = this.props;
+
+    getMainSlides(apiRoot);
+  }
+
   render() {
     const {sliderStore:{slides}, globalStore:{baseNameForRouting}} = this.props;
 

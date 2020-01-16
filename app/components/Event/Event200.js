@@ -16,6 +16,7 @@ const Div = styled.div`
 `;
 const Wrapper = styled.div`
   overflow: hidden;
+  border-radius: 12px;
   position: relative;
   height: 200px;
   &:hover .event-200-hover{
