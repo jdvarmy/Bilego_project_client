@@ -9,6 +9,7 @@ import { Event430, Event200 } from '../../components/Event';
 import BlockHeaderText from '../../components/BlockHeaderText';
 import Next from '../../components/Next';
 import { BilegoIconRightArrow } from '../../theme/bilegoIcons';
+import { LoadingForEventsWith430and200 } from '../../components/LoadingsTemplate';
 import style from '../../theme/style';
 
 const GridWrap = styled(Grid)`
@@ -74,7 +75,7 @@ class EventsSoon extends Component{
           </Grid>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </React.Fragment>;
 
     return (
       <GridWrap container spacing={4}>
@@ -88,11 +89,10 @@ class EventsSoon extends Component{
             </Link>
           </SBlockHeaderText>
         </Grid>
-        {isLoading
-          ? 'load'
+        {isLoading && eventsSoon.length <= 0
+          ? <LoadingForEventsWith430and200 />
           : content
         }
-
       </GridWrap>
     );
   }

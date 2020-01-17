@@ -39,6 +39,10 @@ class FrontPage extends Component {
     }
   };
 
+  componentWillUnmount() {
+    this.props.pageStore.clear();
+  }
+
   render() {
     const {pageStore, sliderStore} = this.props;
 

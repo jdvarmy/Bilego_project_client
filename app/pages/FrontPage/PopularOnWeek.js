@@ -8,6 +8,7 @@ import { Event200 } from '../../components/Event';
 import BlockHeaderText from '../../components/BlockHeaderText';
 import Next from '../../components/Next';
 import { BilegoIconRightArrow } from '../../theme/bilegoIcons';
+import { LoadingForEventsWith200 } from '../../components/LoadingsTemplate';
 
 const GridWrap = styled(Grid)`
   padding: 24px;
@@ -28,28 +29,28 @@ class PopularOnWeek extends Component{
   }
 
   render() {
-    const {pageStore:{popularOnWeek}, globalStore:{baseNameForRouting}} = this.props;
-    const events = popularOnWeek && popularOnWeek.length>0 ? popularOnWeek : [{id:0},{id:1},{id:2}];
+    const {pageStore:{popularOnWeek, isLoading}, globalStore:{baseNameForRouting}} = this.props;
+    // const events = popularOnWeek && popularOnWeek.length>0 ? popularOnWeek : [{id:0},{id:1},{id:2}];
 
     return (
       <GridWrap container spacing={4}>
         <Grid item xs={12}>
           <BlockHeaderText>
             Популярно на этой неделе
-            <Next ariaLabel="buy">
-              {BilegoIconRightArrow} Смотреть все
-            </Next>
           </BlockHeaderText>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>
-            {events.map(event=>(
-              <Grid key={event.id} item xs={4}>
-                <CardWrap>
-                  <Event200 {...event} baseNameForRouting={baseNameForRouting}/>
-                </CardWrap>
-              </Grid>
-            ))}
+            {isLoading || popularOnWeek.length <= 0
+              ? <LoadingForEventsWith200 />
+              : popularOnWeek.slice(0, 3).map(event=>(
+                <Grid key={event.id} item xs={4}>
+                  <CardWrap>
+                    <Event200 {...event} baseNameForRouting={baseNameForRouting}/>
+                  </CardWrap>
+                </Grid>
+              ))
+            }
           </Grid>
         </Grid>
       </GridWrap>

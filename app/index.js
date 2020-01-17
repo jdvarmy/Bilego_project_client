@@ -78,8 +78,10 @@ export const ClientBilegoGateUi = () => {
     stores.singleEventStore.setStartDataSingleEventPage(store.singleEventFirstData);
   else if(store.singleItemFirstData)
     stores.singleItemStore.setStartDataSingleItemPage(store.singleItemFirstData);
+  else if(store.searchFirstData)
+    stores.searchStore.setStartDataSearchPage(store.searchFirstData);
 
-  console.log(store.req)
+  // console.log(store.req)
 
   const routs = routes(store.baseNameForRouting);
   const path = window.location.pathname;

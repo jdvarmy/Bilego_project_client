@@ -27,6 +27,7 @@ class Page{
   @observable eventsHot = [];
   @observable eventsConcerts = [];
   @observable itemsFrontPage = [];
+
   @observable popularOnWeek = [];
 
   // another page
@@ -110,6 +111,11 @@ class Page{
     this.events = [];
     this.itemsByCategory = [];
     this.items = [];
+
+    this.eventsSoon = [];
+    this.eventsHot = [];
+    this.eventsConcerts = [];
+
     this.pagination = {current: 1, pageSize: this.defaultPageSize, showButton: true}
   };
   @action

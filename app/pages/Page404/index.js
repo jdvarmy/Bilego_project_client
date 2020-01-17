@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import NoDramaLama from './No-Drama-Lama.jpg';
 
 // https://revolution.themepunch.com/404-error-page-template/
-const Wrapper = styled.div`
-  min-height: 533px;
-`;
+const Wrapper = styled.div``;
 
 class Page404 extends React.Component{
   componentDidMount() {

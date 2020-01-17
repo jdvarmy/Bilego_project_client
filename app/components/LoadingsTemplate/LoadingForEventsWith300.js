@@ -69,10 +69,10 @@ const SubTitle = styled.div`
   height: 12px;
 `;
 
-export default function LoadingForEvents(){
+export default function LoadingForEventsWith300(){
   return(
     <React.Fragment>
-      {[1,2,3,4,5,6].map((el, k) => (
+      {[1,2,3].map((el, k) => (
         <Grid key={k} item xs={4}>
           <CardWrap>
             <Image />

@@ -43,6 +43,11 @@ class Search{
   @observable isLoading = false;
 
   @action
+  setStartDataSearchPage = (data) => {
+    this.searchEvents = data.events.length > 0 ? data.events : [];
+  };
+
+  @action
   setSearchString = (string) => {
     this.searchString = string;
   };

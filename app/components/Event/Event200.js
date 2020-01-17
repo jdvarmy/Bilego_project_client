@@ -12,7 +12,7 @@ const Div = styled.div`
   position: absolute!important;
   background: transparent;
   color: white!important;
-  left: 40px;
+  left: 20px;
 `;
 const Wrapper = styled.div`
   overflow: hidden;
@@ -34,7 +34,7 @@ const Info = styled.div`
     background: transparent;
     text-transform: uppercase;
     color: ${style.$white};
-    left: 40px;
+    left: 20px;
     top: 20px;
   }
 `;

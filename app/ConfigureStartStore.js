@@ -1,7 +1,7 @@
 import { observable, action, computed, flow, configure } from 'mobx';
 import { matchPath } from 'react-router-dom';
-import { globalService, pageService, eventService, itemService } from './services';
-import { cities } from './stores';
+import { globalService, pageService, eventService, itemService, searchService } from './services';
+import { cities, searchStore } from './stores';
 
 import imgWeekends from './pages/FrontPage/images/weekends.jpg';
 import imgForKids from './pages/FrontPage/images/bilego_for_kids.jpg';
@@ -38,8 +38,10 @@ export default class ConfigureStartStore {
   @observable singleEventFirstData = null;
   @observable singleItemFirstData = null;
 
+  @observable searchFirstData = null;
+
   @observable req;
-  @action setReq = r => {this.req = r}
+  @action setReq = r => {this.req = r};
 
   @observable mobile;
   @action setMobile = val => {
@@ -177,6 +179,8 @@ export default class ConfigureStartStore {
     this.singleEventFirstData = initialState.singleEventFirstData;
     this.singleItemFirstData = initialState.singleItemFirstData;
 
+    this.searchFirstData = initialState.searchFirstData;
+
     this.mobile = initialState.mobile;
 
 
@@ -279,6 +283,16 @@ export default class ConfigureStartStore {
           this.setMeta(resp.seo_meta);
           this.singleItemFirstData = resp;
           break;
+        case 'Search':
+          searchStore.setSearchString(this.history.location.search.substr(1));
+          let args = searchStore.parseString();
+          args.size = searchStore.pagination.pageSize;
+          args.page = searchStore.pagination.current;
+
+          resp = yield searchService.getSearchPageResult(this.apiRoot, args);
+          // this.setMeta(resp.seo_meta); // todo: приходит meta, поменять в php на seo_meta
+          this.searchFirstData = resp;
+          break;
 
         case 'Offer':
           console.log('Offer')
@@ -321,6 +335,8 @@ export default class ConfigureStartStore {
       itemsFirstData: this.itemsFirstData,
       singleEventFirstData: this.singleEventFirstData,
       singleItemFirstData: this.singleItemFirstData,
+
+      searchFirstData: this.searchFirstData,
 
       mobile: this.mobile,
 

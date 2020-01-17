@@ -85,6 +85,8 @@ app.get(/\/mos|\/spb/, async (req, res) => {
     stores.singleEventStore.setStartDataSingleEventPage(pageData);
   else if(store.singleItemFirstData)
     stores.singleItemStore.setStartDataSingleItemPage(pageData);
+  else if(store.searchFirstData)
+    stores.searchStore.setStartDataSearchPage(pageData);
 
   let modules = [];
   const context = {};

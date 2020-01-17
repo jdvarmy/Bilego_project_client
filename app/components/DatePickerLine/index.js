@@ -42,12 +42,16 @@ const WrapFab = styled.div`
     color: ${style.$white};
     background-color: ${style.$red};
   }
-  &:first-child{
-    margin: 0 6px 0 25px;
-  }
-  &:last-child{
-    margin: 0 25px 0 6px;
-  }
+  ${p=>(
+    p.mini && `
+      &:first-child{
+        margin: 0 6px 0 25px;
+      }
+      &:last-child{
+        margin: 0 25px 0 6px;
+      }
+    `
+  )}
 `;
 
 @withRouter

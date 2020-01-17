@@ -12,14 +12,13 @@ import { Event300 } from '../../components/Event';
 import style from '../../theme/style';
 import DatePickerLine from '../../components/DatePickerLine';
 import PopularOnWeek from '../FrontPage/PopularOnWeek';
+import { LoadingForEvents } from '../../components/LoadingsTemplate';
 
-// todo: высоту 485 подобрал на обум, проанализировать и поменять на нужную, если это надо вообще. добавить проверку на "сервер"
 const GridWrap = styled(Grid)`
   padding: 24px;
   .MuiPaper-elevation1{
     box-shadow: none;
   }
-  min-height: 533px;
 `;
 const CardWrap = styled(Card)`
   margin-bottom: 30px;
@@ -46,13 +45,28 @@ class Search extends Component{
     const {searchStore:{setSearchString, getSearchPageResult}, globalStore:{apiRoot}} = this.props;
 
     if(prevProps.location.search.substr(1) !== this.props.location.search.substr(1)) {
-      // setSearchString(this.props.location.search.substr(1));
+      setSearchString(this.props.location.search.substr(1));
       getSearchPageResult(apiRoot);
     }
   }
 
   render(){
     const {searchStore:{isLoading, searchEvents}, globalStore:{baseNameForRouting}} = this.props;
+
+    const content = searchEvents.length > 0
+        ?
+        searchEvents.map(event=>(
+          <Grid key={event.id} item xs={4}>
+            <CardWrap>
+              <Event300 {...event} baseNameForRouting={baseNameForRouting}/>
+            </CardWrap>
+          </Grid>
+        ))
+        :
+        !isLoading &&
+        <Grid item xs={12}>
+          <NoContent/>
+        </Grid>;
 
     return(
       <GridWrap container spacing={4}>
@@ -62,19 +76,9 @@ class Search extends Component{
         <Grid item xs={12}>
           <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
             <Grid container spacing={4}>
-              {searchEvents.length > 0
-                ?
-                searchEvents.map(event=>(
-                  <Grid key={event.id} item xs={4}>
-                    <CardWrap>
-                      <Event300 {...event} baseNameForRouting={baseNameForRouting}/>
-                    </CardWrap>
-                  </Grid>
-                ))
-                :
-                !isLoading && <Grid item xs={12}>
-                  <NoContent/>
-                </Grid>
+              {isLoading && searchEvents.length <= 0
+                ? <LoadingForEvents />
+                : content
               }
             </Grid>
           </Spin>
