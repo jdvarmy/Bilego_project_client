@@ -15,6 +15,14 @@ class SingleEvent{
   @observable sliderData = undefined;
   @observable sliderType = undefined; // esdse, video, image
 
+  notFoundMeta = {
+    id: 0,
+    type: "article",
+    title: 'Мы не смогли найти событие | Bilego',
+    description: 'Событие было удалено или перещено, попробуйте воспользоваться поиском',
+    keywords: '',
+  };
+
   @action
   clear = () => {
     this.id = -1;

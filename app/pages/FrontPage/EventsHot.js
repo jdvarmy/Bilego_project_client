@@ -9,6 +9,7 @@ import BlockHeaderText from '../../components/BlockHeaderText';
 import Next from '../../components/Next';
 import { BilegoIconRightArrow } from '../../theme/bilegoIcons';
 import { LoadingForEventsWith300 } from '../../components/LoadingsTemplate';
+import {Link} from "react-router-dom";
 
 const GridWrap = styled(Grid)`
   padding: 24px;
@@ -31,10 +32,12 @@ class EventsSoon extends Component{
       <GridWrap container spacing={4}>
         <Grid item xs={12}>
           <BlockHeaderText>
-            Популярные события
-            <Next ariaLabel="buy" href="#">
-              {BilegoIconRightArrow} Смотреть все
-            </Next>
+            <Link to={`/${baseNameForRouting}/search?cat=pop`}>
+              Популярные события
+              <Next ariaLabel="buy" href="#">
+                {BilegoIconRightArrow} Смотреть все
+              </Next>
+            </Link>
           </BlockHeaderText>
         </Grid>
         <Grid item xs={12}>

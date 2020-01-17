@@ -26,26 +26,31 @@ const TicketsFrameWrap = styled.div`
 @observer
 class SingleEvent extends Component{
   componentDidMount = async () => {
+    const {match, singleEventStore: {getEventDataBySlug, notFoundMeta}, globalStore: {apiRoot, setMeta}} = this.props;
     try {
-      const {match, singleEventStore: {getEventDataBySlug}, globalStore: {apiRoot, setMeta}} = this.props;
       await getEventDataBySlug(apiRoot, {slug: match.params.eventSlug});
 
       setMeta(this.props.singleEventStore.event.seo_meta);
+
+      console.log(this.props.singleEventStore.event.seo_meta)
     }catch (e) {
       console.log('single event: ', e);
+      setMeta(notFoundMeta); // todo: сделать для SSR серверной части
     }
   };
 
   componentDidUpdate = async (prevProps, prevState, snapshot) => {
-    try {
-      const {singleEventStore: {getEventDataBySlug}, globalStore: {apiRoot, setMeta}} = this.props;
+    const {singleEventStore: {getEventDataBySlug, notFoundMeta, clear}, globalStore: {apiRoot, setMeta}} = this.props;
 
+    try {
       if (prevProps.match.params.eventSlug !== this.props.match.params.eventSlug) {
+        clear();
         await getEventDataBySlug(apiRoot, {slug: this.props.match.params.eventSlug});
         setMeta(this.props.singleEventStore.event.seo_meta);
       }
     }catch (e) {
       console.log('single event: ', e);
+      setMeta(notFoundMeta);
     }
   };
 
