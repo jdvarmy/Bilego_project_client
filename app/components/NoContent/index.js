@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import image from './lama-llama-pistolet-me-solo.jpg';
 
 const Wrap = styled.div`

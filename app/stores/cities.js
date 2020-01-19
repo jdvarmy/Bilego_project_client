@@ -23,18 +23,18 @@ export default [
     baseName: 'spb',
     cityLabel: 'Санкт-Петербурга',
     cityRus: 'Санкт-Петербург',
-    categoryConcerts: 4,
+    categoryConcerts: 19,
     apiRoot: 'https://spb.bilego.ru/wp-json/bilego/v2',
     mapData: {
       latitude: 59.939095,
       longitude: 30.315868
     },
     category: {
-      concerts: 4,
-      festivals: 27,
-      lectures: 23,
-      exhibitions: 2,
-      children: 3
+      concerts: 19,
+      festivals: 42,
+      lectures: 38,
+      exhibitions: 17,
+      children: 18
     }
   }
 ];
