@@ -49,7 +49,7 @@ class SingleItem extends Component{
   }
 
   render(){
-    const {singleItemStore:{isLoading, item}, globalStore:{baseNameForRouting}} = this.props;
+    const {singleItemStore:{isLoading, item}, globalStore:{baseNameForRouting, ssrSide}} = this.props;
 
     return(
       <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
@@ -57,7 +57,7 @@ class SingleItem extends Component{
           {
             item &&
             <Fragment>
-              <SliderEvents item={item} baseNameForRouting={baseNameForRouting}/>
+              <SliderEvents item={item} baseNameForRouting={baseNameForRouting} ssrSide={ssrSide}/>
               <Events />
               <EventsList item={item}/>
               <Address item={item}/>
