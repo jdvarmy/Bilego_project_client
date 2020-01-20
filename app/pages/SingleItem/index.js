@@ -49,22 +49,24 @@ class SingleItem extends Component{
   }
 
   render(){
-    const {singleItemStore:{isLoading, item}, globalStore:{baseNameForRouting, ssrSide}} = this.props;
+    const {singleItemStore:{item}, globalStore:{baseNameForRouting, ssrSide}} = this.props;
 
     return(
-      <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
-        <Wrapper>
-          {
-            item &&
-            <Fragment>
-              <SliderEvents item={item} baseNameForRouting={baseNameForRouting} ssrSide={ssrSide}/>
-              <Events />
-              <EventsList item={item}/>
-              <Address item={item}/>
-            </Fragment>
-          }
-        </Wrapper>
-      </Spin>
+      <React.Fragment>
+        {/*<Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>*/}
+          <Wrapper>
+            {
+              item &&
+              <Fragment>
+                <SliderEvents item={item} baseNameForRouting={baseNameForRouting} ssrSide={ssrSide}/>
+                <Events />
+                <EventsList item={item}/>
+                <Address item={item}/>
+              </Fragment>
+            }
+          </Wrapper>
+        {/*</Spin>*/}
+      </React.Fragment>
     );
   }
 }
