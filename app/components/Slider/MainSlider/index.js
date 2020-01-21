@@ -1,14 +1,43 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import SvgIcon from '@material-ui/core/SvgIcon/SvgIcon';
 
 let sliderLayer = 1;
 
-export default function MainSlider (props) {
-  const sliderEl = useRef(null);
+export default class MainSlider extends React.Component {
+  componentDidMount() {
+    const slider = document.getElementById('rev_slider_18_1');
 
-  const renderPosts = () => {
-    const slides = props.slides;
+    if (window.$(slider).revolution !== undefined) {
+      window.$(slider).show().revolution({
+        jsFileLocation:"scripts/",
+        sliderLayout:"auto",
+        visibilityLevels:"1240,1024,778,480",
+        gridwidth:"1240,1024,778,480",
+        gridheight:"590,490,960,720",
+        minHeight:"",
+        editorheight:"590,490,960,720",
+        responsiveLevels:"1240,1024,778,480",
+        disableProgressBar:"on",
+        navigation: {
+          keyboardNavigation:true,
+          keyboard_direction:"vertical",
+          onHoverStop:false
+        },
+        parallax: {
+          levels:[5,10,15,20,25,30,35,40,45,46,47,48,49,50,51,55],
+          type:"mouse",
+          origo:"slidercenter"
+        },
+        fallbacks: {
+          allowHTML5AutoPlayOnAndroid:true
+        },
+      });
+    }
+  }
+
+  renderPosts = () => {
+    const slides = this.props.slides;
 
     return slides.map((slide, k) => (
       <Slide id={slide.id} key={slide.id} title={slide.title}>
@@ -16,64 +45,82 @@ export default function MainSlider (props) {
           ? <SliderVideo src={slide.image_src} youid={slide.youtybe_id} mlVideoSrc={slide.ml_video_src}/>
           : <SliderImage src={slide.image_src}/>
         }
-        <SliderZone id={slide.id} title={slide.image_title} title1={slide.image_title1}
-                    title2={slide.image_title2}/>
+        <rs-zone id={`rrzm_${slide.id}`} class="rev_row_zone_middle" style={{zIndex: 18}}>
+          <rs-row id={`slider-18-slide-${slide.id}-layer-3`}
+            data-type="row"
+            data-xy="y:m;yo:-426px;"
+            data-text="l:22;a:inherit;"
+            data-dim="w:1240;"
+            data-cbreak="3"
+            data-basealign="slide"
+            data-rsp_bd="off"
+            data-frame_0="tp:600;"
+            data-frame_1="tp:600;sR:10;"
+            data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+            style={{zIndex:1,fontFamily:'Roboto'}}>
+            <rs-column id={`slider-18-slide-${slide.id}-layer-4`}
+              data-type="column"
+              data-xy="xo:100px;yo:100px;"
+              data-text="l:22;a:right;"
+              data-rsp_bd="off"
+              data-column="w:50%;"
+              data-frame_0="tp:600;"
+              data-frame_1="tp:600;"
+              data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+              style={{zIndex:2,fontFamily:'Roboto',width:'100%'}}>
+              <rs-layer id={`slider-18-slide-${slide.id}-layer-1`}
+                data-type="text"
+                data-text="w:normal;s:100,80,60,60;l:80,65,50,50;ls:-7px,-6px,-4px,-4px;a:right;"
+                data-dim="w:100%;"
+                data-rsp_o="off"
+                data-rsp_bd="off"
+                data-margin="t:30;b:70;"
+                data-frame_0="o:1;tp:600;blu:10px;"
+                data-frame_0_chars="x:50px;o:0;blu:10px;"
+                data-frame_1="tp:600;e:Power4.easeOut;st:300;sp:1000;sR:290;"
+                data-frame_1_chars="dir:middletoedge;d:3;"
+                data-frame_999="o:0;tp:600;e:Power4.easeOut;st:w;sp:100;sR:7340;"
+                style={{zIndex:3,fontFamily:'Limelight',display:'inline-block'}}>
+                {slide.image_title}
+                {slide.image_title1 && <br/>}
+                {slide.image_title1}
+                {slide.image_title2 && <br/>}
+                {slide.image_title2}
+              </rs-layer>
+            </rs-column>
+            <rs-column id={`slider-18-slide-${slide.id}-layer-5`}
+              data-type="column"
+              data-xy="xo:100px;yo:100px;"
+              data-text="l:22;a:inherit;"
+              data-rsp_bd="off"
+              data-column="w:50%;"
+              data-frame_0="tp:600;"
+              data-frame_1="tp:600;"
+              data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+              style={{zIndex:4,fontFamily:'Roboto',width:'100%'}}>
+            </rs-column>
+          </rs-row>
+        </rs-zone>
+
         <SliderGroup id={slide.id} slidesCnt={slides.length} slideNumber={k + 1}/>
-        <SliderLayer id={slide.id} link={`/${props.baseNameForRouting}/event/${slide.name}`}/>
+        <SliderLayer id={slide.id} link={`/${this.props.baseNameForRouting}/event/${slide.name}`}/>
       </Slide>
     ))
   };
 
-  const renderRevolutionSlider = () => {
-      if (
-        window.$(sliderEl.current).length > 0
-        && window.$(sliderEl.current).revolution !== undefined
-        && props.slides.length > 0
-      ) {
-        window.$(sliderEl.current).show().revolution({
-          jsFileLocation: "scripts/",
-          sliderLayout: "auto",
-          visibilityLevels: "1240,1024,778,480",
-          gridwidth: "1240,1024,778,480",
-          gridheight: "590,490,960,720",
-          minHeight: "",
-          editorheight: "590,490,960,720",
-          responsiveLevels: "1240,1024,778,480",
-          disableProgressBar: "on",
-          navigation: {
-            keyboardNavigation: true,
-            keyboard_direction: "vertical",
-            mouseScrollNavigation: false,
-            onHoverStop: false
-          },
-          parallax: {
-            levels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 46, 47, 48, 49, 50, 51, 55],
-            type: "mouse",
-            origo: "slidercenter"
-          },
-          fallbacks: {
-            allowHTML5AutoPlayOnAndroid: true
-          },
-        });
-      }
-  };
-
-  useEffect(() => {
-    renderRevolutionSlider()
-  }, [sliderEl]);
-
-  return <rs-module-wrap id="rev_slider_7_1_wrapper" data-alias="clear-cut" data-source="gallery"
-                      style={{background: 'transparent', padding: 0}}>
-        <rs-module id="rev_slider_7_1" ref={sliderEl} style={{display: 'none'}}>
+  render() {
+    return (
+      <rs-module-wrap id="rev_slider_18_1_wrapper" data-alias="clear-cut" data-source="gallery" style={{background:'transparent',padding:0}}>
+        <rs-module id="rev_slider_18_1" style={{display:'none'}}>
           <rs-slides>
-            {renderPosts()}
+            {this.renderPosts()}
           </rs-slides>
-          <rs-progress className="rs-bottom" style={{visibility: 'hidden !important'}}/>
+          <rs-progress class="rs-bottom" style={{visibility:'hidden!important'}}/>
         </rs-module>
       </rs-module-wrap>
-    ;
+    );
+  }
 }
-
 
 function Slide(props){
   const {children, id, title} = props;
@@ -83,6 +130,7 @@ function Slide(props){
     </rs-slide>
   );
 }
+
 function SliderImage(props){
   const {src} = props;
   return (
@@ -114,6 +162,7 @@ function SliderVideo(props){
     </Fragment>
   );
 }
+
 function SliderZone(props){
   const {id, title, title1, title2} = props;
 
@@ -279,24 +328,24 @@ function SliderGroup(props){
 function SliderLayer(props){
   const {id, link} = props;
   return (
-    <rs-layer
-      id={`slider-7-slide-${id}-layer-${sliderLayer++}`} class="rs-layer"
+    <rs-layer id={`slider-7-slide-${id}-layer-${sliderLayer++}`} class="rs-layer"
       href={link} target="_blank" rel="nofollow"
       data-type="text"
       data-xy="x:c,c,c,l;y:b,b,b,t;yo:60px,60px,60px,0;"
-      data-text="s:25,25,25,15;l:30;a:inherit;"
+      data-text="s:25,25,25,15;l:30;a:center;"
       data-rsp_o="off"
       data-rsp_bd="off"
       data-padding="r:10;l:30;"
-      data-border="boc:#ffffff;bow:1px,1px,1px,1px;bor:2px,2px,2px,2px;"
+      data-border="bos:solid;boc:#ffffff;bow:1px,5px,1px,5px;bor:30px,30px,30px,30px;"
       data-frame_0="o:1;tp:600;"
       data-frame_0_sfx="se:blocktoleft;"
       data-frame_1="tp:600;st:150;sp:500;sR:140;"
       data-frame_1_sfx="se:blocktoleft;"
       data-frame_999="o:0;tp:600;e:Power4.easeOut;st:w;sp:500;sR:8350;"
-      data-frame_hover="c:#fff;boc:#fff;bor:2px,2px,2px,2px;bos:none;bow:1px,1px,1px,1px;oX:50;oY:50;sp:0;"
+      data-frame_hover="c:#f6255a;boc:#f6255a;bor:30px,30px,30px,30px;bos:solid;bow:1px,5px,1px,5px;oX:50;oY:50;sp:0;"
       style={{zIndex:13,fontFamily:'Open Sans',cursor:'pointer'}}
-    ><Link className="bilego-ticket-view" to={link}>Купить билеты <i className="fa-ticket" style={{marginLeft:'10px'}} /></Link>
+    >
+      <Link className="bilego-ticket-view" to={link}>Купить билеты <i className="fa-ticket" style={{marginLeft:'10px'}} /></Link>
     </rs-layer>
   );
 }

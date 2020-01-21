@@ -39,7 +39,7 @@ class Menu extends Component{
 
     return (
       <Fragment>
-        <StyledMenu onSelect={this.handleClick} mode="horizontal">
+        <StyledMenu onSelect={this.handleClick} mode="horizontal" className="bilego-menu">
           {categoriesForMenu.map(el=>(
             <AntMenu.Item key={el.id} cat={el.cat} page={el.page} name={el.name}>
               <NavLink to={`/${baseNameForRouting}/${el.link}`} exact activeClassName="menu__item-select" className="menu__item">

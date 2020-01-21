@@ -10,7 +10,7 @@ class ContentInfo extends Component{
   render() {
     const {singleEventStore:{event, isLoading}} = this.props;
 
-    return !isLoading || !event === undefined
+    return isLoading && event === undefined
       ? <LoadingContentInfo />
       : <Info {...event}/>
   }

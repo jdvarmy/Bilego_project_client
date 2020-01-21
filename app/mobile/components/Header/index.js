@@ -185,7 +185,7 @@ class Header extends React.Component{
               </SIconButton>
             </SGrid>
           </Grid>
-          <AntMenu onSelect={this.handleClick} >
+          <AntMenu onSelect={this.handleClick} className="bilego-menu">
             {this.menu.map((el, k)=>(
               <AntMenu.Item key={k} name={el.name} link={`/${baseNameForRouting}${el.link}`}>
                 <NavLink to={`/${baseNameForRouting}${el.link}`} exact className="menu__item">

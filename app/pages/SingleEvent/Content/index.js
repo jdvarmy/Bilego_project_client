@@ -11,6 +11,7 @@ import Gallery from './Gallery';
 import AddressWidthMap from './AddressWidthMap';
 import PopularOnWeek from '../../FrontPage/PopularOnWeek';
 import style from '../../../theme/style';
+import { LoadingContent } from '../../../components/LoadingsTemplate';
 
 const Padding = styled.div`
   padding-top:48px;
@@ -40,12 +41,12 @@ const ItemBg = styled.div`
 @observer
 class Content extends Component{
   render() {
-    const {singleEventStore:{event}, globalStore:{baseNameForRouting}} = this.props;
+    const {singleEventStore:{isLoading, event}, globalStore:{baseNameForRouting}} = this.props;
 
     return(
-      event
-        ?
-        <div>
+      isLoading && event === undefined
+        ? <LoadingContent />
+        : <div>
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <Gallery />
@@ -101,8 +102,6 @@ class Content extends Component{
             </Grid>
           </Grid>
         </div>
-        :
-        null
     )
   }
 }

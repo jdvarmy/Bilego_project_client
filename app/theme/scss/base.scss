@@ -55,6 +55,17 @@ body{
     left: 2px;
   }
 
+  .ant-menu-submenu.ant-menu-submenu-popup {
+    z-index: 9999;
+    .ant-menu.ant-menu-sub.ant-menu-vertical {
+      li {
+        a {
+          padding: 0 0 0 16px;
+        }
+      }
+    }
+  }
+
   //#root[aria-hidden="true"] .bilego-drawer > div{
   //  right: 12px;
   //  .bilego-timeline{padding-right: 17px;}
@@ -76,9 +87,9 @@ body{
     background-color: $first
   }
 
-  .ant-menu{
-    padding-left: 50px;
-    background: $first;
+  .ant-menu.bilego-menu{
+    // padding-left: 50px;
+    // background: $first;
     color: $black;
     text-transform: uppercase;
 
@@ -286,7 +297,7 @@ body{
 
   .bilego-ticket-view{
     color: $white;
-    transition: color $transition $transitionanimation;
+    // transition: color $transition $transitionanimation;
     &:hover{
       color: $red;
     }

@@ -68,6 +68,11 @@ const SubTitle = styled(Typography)`
 const SFab = styled(Fab)`
   width: calc(100% - 40px)!important;
   margin: 10px 20px!important;
+  position: relative;
+  z-index: 99999;
+  a{
+    white-space: nowrap;
+  }
 `;
 const GridWrap = styled(Grid)`
   padding: 5px 16px;

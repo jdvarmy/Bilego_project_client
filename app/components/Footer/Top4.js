@@ -6,6 +6,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { style } from '../../theme';
 import { BilegoIconFacebook, BilegoIconVk } from '../../theme/bilegoIcons';
 
+import LogoImg from './Bilego-logo-slogan_white-pink.png';
+
 const Logo = styled.div`
   margin: 40px 0 50px;
 `;
@@ -65,7 +67,7 @@ export default function Top4(props) {
   return (
     <div>
       <Logo>
-        <Link to={`/${baseNameForRouting}`}>Logo</Link>
+        <Link to={`/${baseNameForRouting}`}><img alt="Bilego" src={LogoImg}/></Link>
       </Logo>
       <Subscribe className="bilego-subscribe">
         <div>Подпишитесь на акции и анонсы событий:</div>

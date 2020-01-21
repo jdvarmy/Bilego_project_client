@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import NoSsr from '@material-ui/core/NoSsr';
-import { Spin } from 'antd';
 import style from '../../theme/style';
+import { Spin } from 'antd';
 import Spinner from '../../components/Spinner';
 import ConcertInfo from './ConcertInfo';
 import TicketsFrame from './TicketsFrame';
@@ -16,6 +16,11 @@ const TicketsFrameWrap = styled.div`
   border-top: 1px solid ${style.$grey};
   height: 645px;
   margin-bottom: -31px;
+  background: radial-gradient(circle, 
+  rgba(238,174,202,0.22) 0%, 
+  rgba(237,237,237,0.4) 16%, 
+  rgba(237,237,237,0) 62%
+  );
 `;
 
 // https://ui8.net/products/stellar-ui-kit
@@ -61,20 +66,22 @@ class SingleEvent extends Component{
   render(){
     const {singleEventStore:{isLoading}} = this.props;
     return(
-      <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
-        <div>
-          <SliderEvent />
-        </div>
-        <div>
-          <ConcertInfo />
-        </div>
-        <TicketsFrameWrap>
-          <NoSsr>
-            <TicketsFrame />
-          </NoSsr>
-        </TicketsFrameWrap>
-        <Content />
-      </Spin>
+      <React.Fragment>
+        <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
+          <div>
+            <SliderEvent />
+          </div>
+          <div>
+            <ConcertInfo />
+          </div>
+          <TicketsFrameWrap>
+            <NoSsr>
+              <TicketsFrame />
+            </NoSsr>
+          </TicketsFrameWrap>
+          <Content />
+        </Spin>
+      </React.Fragment>
     );
   }
 }

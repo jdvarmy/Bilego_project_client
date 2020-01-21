@@ -19,27 +19,29 @@ const Image = styled.div`
         to{background-position-x:-200%;}
       `} 2s linear infinite;
   display: block;
+  margin: 25px auto;
   border-radius: 12px;
-  height: 68px;
+  height: 65px;
   width: 100%;
+  text-align: center;
 `;
 const Dates = styled(Image)`
   width: 100px;
 `;
 const Time = styled(Image)`
-  width: 100px;
+  width: 80px;
 `;
 const Social = styled(Image)`
-  width: 100px;
+  width: 35px;
 `;
 
 export default function LoadingContentInfo(){
   return(
-    <Grid container spacing={4}>
+    <Grid container spacing={4} justify="center" alignItems="center">
       <Grid item xs={3}>
       </Grid>
       <Grid item xs={5}>
-        <Grid container spacing={4}>
+        <Grid container spacing={4} justify="center" alignItems="center">
           <Grid item xs={6}>
             <Dates />
           </Grid>
@@ -49,7 +51,7 @@ export default function LoadingContentInfo(){
         </Grid>
       </Grid>
       <Grid item xs={4}>
-        <Grid container spacing={4}>
+        <Grid container spacing={4} justify="center" alignItems="center">
           <Grid item xs={6}>
             <Time />
           </Grid>

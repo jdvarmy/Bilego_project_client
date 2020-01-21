@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
 import style from '../../theme/style';
-import {inject, observer} from 'mobx-react';
-// import LogoImg from './Bilego-logo-slogan.png'
+import LogoImg from './Bilego-logo_main.png';
 
 const Wrapper = styled.div`
   height: ${style.$heightMenu}px;
@@ -21,7 +21,7 @@ class Logo extends Component{
 
     return (
       <Wrapper>
-        <Link to={`/${baseNameForRouting}`}>Logo</Link>
+        <Link to={`/${baseNameForRouting}`}><img alt="Bilego" src={LogoImg}/></Link>
       </Wrapper>
     );
   }

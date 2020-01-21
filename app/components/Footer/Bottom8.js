@@ -34,7 +34,7 @@ export default function Bottom8(props) {
 
   return (
     <Fragment>
-      <StyledMenu mode="horizontal">
+      <StyledMenu mode="horizontal" className="bilego-menu">
         <AntMenu.Item key="Main">
           <Link to={`/${baseNameForRouting}`}>
             <span className="">Главная</span>
