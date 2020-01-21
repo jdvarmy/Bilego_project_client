@@ -59,29 +59,23 @@ const Image = styled.div`
 `;
 
 export default function Item140(props) {
-  // eslint-disable-next-line react/prop-types
   const { title, address, name, img, metro, categories, baseNameForRouting } = props;
 
-  // eslint-disable-next-line react/prop-types
   let addr = address.replace(/Москва, /g, '');
   addr = addr.replace(/Санкт-Петербург, /g, '');
 
   return (
-    // eslint-disable-next-line react/jsx-filename-extension
     <Wrapper>
       <Content>
         <div className="category">
-          {/* eslint-disable-next-line react/prop-types,react/no-array-index-key */}
-          {categories.map((cat, k) => (<span key={k} id={cat.id}>{cat.name}</span>))}
+          {categories && categories.length > 0 && categories.map((cat, k) => (<span key={k} id={cat.id}>{cat.name}</span>))}
         </div>
         <div className="title">
           <Link to={`/${baseNameForRouting}/item/${name}`}>{title}</Link>
         </div>
         <div className="address">{addr}</div>
         <div className="metro">
-          {/* eslint-disable-next-line react/prop-types,array-callback-return */}
           {metro.length > 0 && metro.map((el, k) => {
-            // eslint-disable-next-line react/no-array-index-key,no-unused-expressions
             <span key={k}>{el.number}</span>;
           })
           }
