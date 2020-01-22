@@ -12,7 +12,7 @@ const STextFieldCat = styled(TextField)`
   width: 200px;
 `;
 const Sform = styled.form`
-  width: 870px;
+  max-width: 870px;
   display: flex;
   justify-content: space-between;
   align-items: center;

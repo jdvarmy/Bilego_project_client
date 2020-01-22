@@ -116,6 +116,8 @@ class Page{
     this.eventsHot = [];
     this.eventsConcerts = [];
 
+    this.itemFilters = [];
+
     this.pagination = {current: 1, pageSize: this.defaultPageSize, showButton: true}
   };
   @action
@@ -126,7 +128,8 @@ class Page{
   @action
   setItemFilter = (apiRoot, filters) => {
     this.itemFilters = { ...this.itemFilters, ...filters };
-    this.clear();
+    this.setPagination(1);
+    // this.clear();
     this.getItemsSearch(apiRoot);
   };
 
@@ -220,12 +223,17 @@ class Page{
   getItemsSearch = flow( function* getItemsSearch(apiRoot, params){
     this.isLoading = true;
     try{
-      const key = this.itemFilters.search.toString() + this.itemFilters.category.toString() + this.pagination.current.toString();
+      const s = this.itemFilters.search ? this.itemFilters.search.toString() : '';
+      const c = this.itemFilters.category ? this.itemFilters.category.toString() : '';
+      const i = this.itemFilters.current ? this.itemFilters.current.toString() : '';
+      const key = s + c + i;
 
       if(this.ItemsSearchCache.exist(key)){
         this.items = this.ItemsSearchCache.get(key);
       }else {
-        this.items = yield pageService.getItems(apiRoot, {page: 1, size: this.pagination.pageSize}, {...this.itemFilters, ...params});
+        const resp = yield pageService.getItems(apiRoot, {page: 1, size: this.pagination.pageSize}, {...this.itemFilters, ...params});
+        this.items = resp.posts;
+        this.seoPage = resp.seo_meta;
         this.pagination.showButton = this.items.length === this.pagination.pageSize;
         this.ItemsSearchCache.set(key, this.items)
       }

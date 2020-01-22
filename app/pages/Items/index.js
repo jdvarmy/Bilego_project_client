@@ -12,14 +12,13 @@ import NoContent from '../../components/NoContent';
 import { BilegoIconLoading } from '../../theme/bilegoIcons';
 import { Item140 } from '../../components/Item';
 import ItemsSearch from './ItemsSearch';
+import { LoadingForItems } from '../../components/LoadingsTemplate';
 
-// todo: высоту 485 подобрал на обум, проанализировать и поменять на нужную, если это надо вообще. добавить проверку на "сервер"
 const GridWrap = styled(Grid)`
   padding: 24px;
   .MuiPaper-elevation1{
     box-shadow: none;
   }
-  min-height: 533px;
 `;
 const CardWrap = styled(Card)`
   max-width: 870px;
@@ -53,6 +52,30 @@ class Items extends Component{
 
   render(){
     const {pageStore:{items, isLoading, pagination:{showButton}}, globalStore:{cityLabel, baseNameForRouting}} = this.props;
+    const content = <React.Fragment>
+      <Grid container spacing={4}>
+        {items.length > 0
+          ?
+          items.map(item=>(
+            <Grid key={item.id} item xs={12}>
+              <CardWrap>
+                <Item140 {...item} baseNameForRouting={baseNameForRouting}/>
+              </CardWrap>
+            </Grid>
+          ))
+          :
+          !isLoading && <Grid item xs={12}>
+            <NoContent/>
+          </Grid>
+        }
+      </Grid>
+      <Grid container spacing={4}>
+        {items.length > 0 && showButton &&
+        <SFab onClick={this.loadMore} variant="extended" aria-label="load" style={{opacity: `${p=>p.loading ? 0 : 1}`}}>
+          {BilegoIconLoading} Загрузить ещё
+        </SFab>}
+      </Grid>
+    </React.Fragment>;
 
     return(
       <GridWrap container spacing={4}>
@@ -61,29 +84,11 @@ class Items extends Component{
           <ItemsSearch/>
         </Grid>
         <Grid item xs={12}>
-          <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
-            <Grid container spacing={4}>
-              {items.length > 0
-                ?
-                items.map(item=>(
-                  <Grid key={item.id} item xs={12}>
-                    <CardWrap>
-                      <Item140 {...item} baseNameForRouting={baseNameForRouting}/>
-                    </CardWrap>
-                  </Grid>
-                ))
-                :
-                !isLoading && <Grid item xs={12}>
-                  <NoContent/>
-                </Grid>
-              }
-            </Grid>
-            <Grid container spacing={4}>
-              {items.length > 0 && showButton &&
-              <SFab onClick={this.loadMore} variant="extended" aria-label="load" style={{opacity: `${p=>p.loading ? 0 : 1}`}}>
-                {BilegoIconLoading} Загрузить ещё
-              </SFab>}
-            </Grid>
+          <Spin spinning={isLoading && items.length > 0} indicator={<Spinner leftPadding={27/2}/>}>
+          {isLoading && items.length <= 0
+            ? <LoadingForItems />
+            : content
+          }
           </Spin>
         </Grid>
       </GridWrap>

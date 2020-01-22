@@ -99,12 +99,12 @@ export const ClientBilegoGateUi = () => {
             ? <Fragment>
                 <Root>
                   <Main>
-                    <Header/>
-                    <BilegoFrontUi/>
-                    <RightPanel/>
+                    <Header />
+                    <BilegoFrontUi />
+                    {/*<RightPanel />*/}
                   </Main>
                 </Root>
-                <Footer/>
+                <Footer />
               </Fragment>
             :
               <Mobile/>
@@ -133,7 +133,7 @@ export const ServerBilegoGateUi = (props) => {
             <Main>
               <Header/>
               {renderRoutes(routs)}
-              <RightPanel/>
+              {/*<RightPanel/>*/}
             </Main>
           </Root>
           <Footer/>

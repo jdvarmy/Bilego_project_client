@@ -46,7 +46,7 @@ class Content extends Component{
     return(
       isLoading && event === undefined
         ? <LoadingContent />
-        : <div>
+        : event !== undefined && <div>
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <Gallery />
