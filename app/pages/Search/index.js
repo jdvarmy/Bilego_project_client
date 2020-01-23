@@ -14,8 +14,11 @@ import DatePickerLine from '../../components/DatePickerLine';
 import PopularOnWeek from '../FrontPage/PopularOnWeek';
 import { LoadingForEvents } from '../../components/LoadingsTemplate';
 
+const Wrap = styled.div`
+  padding: 20px;
+  overflow: hidden;
+`;
 const GridWrap = styled(Grid)`
-  padding: 24px;
   .MuiPaper-elevation1{
     box-shadow: none;
   }
@@ -69,26 +72,28 @@ class Search extends Component{
         </Grid>;
 
     return(
-      <GridWrap container spacing={4}>
-        <DateContainer align='middle' type='flex' justify='center'>
-          <DatePickerLine/>
-        </DateContainer>
-        <Grid item xs={12}>
-          <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
-            <Grid container spacing={4}>
-              {isLoading && searchEvents.length <= 0
-                ? <LoadingForEvents />
-                : content
-              }
-            </Grid>
-          </Spin>
-        </Grid>
-        <Grid container spacing={4}>
+      <Wrap>
+        <GridWrap container spacing={4}>
+          <DateContainer align='middle' type='flex' justify='center'>
+            <DatePickerLine/>
+          </DateContainer>
           <Grid item xs={12}>
-            <PopularOnWeek />
+            <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
+              <Grid container spacing={4}>
+                {isLoading && searchEvents.length <= 0
+                  ? <LoadingForEvents />
+                  : content
+                }
+              </Grid>
+            </Spin>
           </Grid>
-        </Grid>
-      </GridWrap>
+          <Grid container spacing={4}>
+            <Grid item xs={12}>
+              <PopularOnWeek />
+            </Grid>
+          </Grid>
+        </GridWrap>
+      </Wrap>
     );
   }
 }

@@ -13,11 +13,14 @@ import PopularOnWeek from '../../FrontPage/PopularOnWeek';
 import style from '../../../theme/style';
 import { LoadingContent } from '../../../components/LoadingsTemplate';
 
+const Wrap = styled.div`
+  padding: 20px;
+  overflow: hidden;
+`;
 const Padding = styled.div`
   padding-top:48px;
 `;
 const SBox = styled(Box)`
-  margin: 24px;
   & div:first-child a{
     color: ${style.$black};
     :hover{
@@ -46,7 +49,7 @@ class Content extends Component{
     return(
       isLoading && event === undefined
         ? <LoadingContent />
-        : event !== undefined && <div>
+        : event !== undefined && <Wrap>
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <Gallery />
@@ -101,7 +104,7 @@ class Content extends Component{
               <PopularOnWeek />
             </Grid>
           </Grid>
-        </div>
+        </Wrap>
     )
   }
 }

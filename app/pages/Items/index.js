@@ -14,8 +14,11 @@ import { Item140 } from '../../components/Item';
 import ItemsSearch from './ItemsSearch';
 import { LoadingForItems } from '../../components/LoadingsTemplate';
 
+const Wrap = styled.div`
+  padding: 20px;
+  overflow: hidden;
+`;
 const GridWrap = styled(Grid)`
-  padding: 24px;
   .MuiPaper-elevation1{
     box-shadow: none;
   }
@@ -78,20 +81,22 @@ class Items extends Component{
     </React.Fragment>;
 
     return(
-      <GridWrap container spacing={4}>
-        <Grid item xs={12}><BlockHeaderText>Концертные площадки {cityLabel}</BlockHeaderText></Grid>
-        <Grid item xs={12}>
-          <ItemsSearch/>
-        </Grid>
-        <Grid item xs={12}>
-          <Spin spinning={isLoading && items.length > 0} indicator={<Spinner leftPadding={27/2}/>}>
-          {isLoading && items.length <= 0
-            ? <LoadingForItems />
-            : content
-          }
-          </Spin>
-        </Grid>
-      </GridWrap>
+      <Wrap>
+        <GridWrap container spacing={4}>
+          <Grid item xs={12}><BlockHeaderText>Концертные площадки {cityLabel}</BlockHeaderText></Grid>
+          <Grid item xs={12}>
+            <ItemsSearch />
+          </Grid>
+          <Grid item xs={12}>
+            <Spin spinning={isLoading && items.length > 0} indicator={<Spinner leftPadding={27/2} />}>
+            {isLoading && items.length <= 0
+              ? <LoadingForItems />
+              : content
+            }
+            </Spin>
+          </Grid>
+        </GridWrap>
+      </Wrap>
     );
   }
 }

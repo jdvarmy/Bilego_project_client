@@ -6,8 +6,11 @@ import Grid from '@material-ui/core/Grid';
 import EventsList from '../EventsList';
 import BlockHeaderText from '../../../components/BlockHeaderText';
 
+const Wrap = styled.div`
+  padding: 20px;
+  overflow: hidden;
+`;
 const GridWrap = styled(Grid)`
-  padding: 24px;
   .MuiPaper-elevation1{
     box-shadow: none;
   }
@@ -17,12 +20,14 @@ const GridWrap = styled(Grid)`
 class Concerts extends Component{
   render(){
     return(
-      <GridWrap container spacing={4}>
-        <Grid item xs={12}><BlockHeaderText>Концерты</BlockHeaderText></Grid>
-        <Grid item xs={12}>
-          <EventsList/>
-        </Grid>
-      </GridWrap>
+      <Wrap>
+        <GridWrap container spacing={4}>
+          <Grid item xs={12}><BlockHeaderText>Концерты</BlockHeaderText></Grid>
+          <Grid item xs={12}>
+            <EventsList/>
+          </Grid>
+        </GridWrap>
+      </Wrap>
     );
   }
 }

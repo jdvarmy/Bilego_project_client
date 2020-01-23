@@ -9,6 +9,10 @@ import Box from '@material-ui/core/Box';
 import style from '../../../theme/style';
 import { BilegoIconFacebook, BilegoIconVk } from '../../../theme/bilegoIcons';
 
+const Wrap = styled.div`
+  padding: auto 20px;
+  overflow: hidden;
+`;
 const StyledIconButton = styled(IconButton)`
   margin: 0 5px!important;
   svg{
@@ -46,8 +50,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function ConcertInfo(props){
   const classes = useStyles();
+  const {share, site, event} = props;
+
   return(
-    <Grid container spacing={4}>
+    <Wrap>
+      <Grid container spacing={4}>
       <Grid item xs={3}>
       </Grid>
       <Grid item xs={5}>
@@ -95,20 +102,6 @@ export default function ConcertInfo(props){
         </Grid>
       </Grid>
     </Grid>
+    </Wrap>
   );
 }
-
-const vk = (
-  <a href="#">
-    <StyledIconButton className="bilego-button" aria-label="vk">
-      {BilegoIconVk}
-    </StyledIconButton>
-  </a>
-);
-const facebook = (
-  <a href="#">
-    <StyledIconButton className="bilego-button" aria-label="facebook">
-      {BilegoIconFacebook}
-    </StyledIconButton>
-  </a>
-);

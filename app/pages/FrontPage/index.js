@@ -23,6 +23,10 @@ const DateContainer = styled.div`
   justify-content: center;
   align-items: center;
 `;
+const Container = styled.div`
+  flex-grow: 1;
+  overflow: hidden;
+`;
 
 @withRouter
 @inject('pageStore', 'globalStore', 'sliderStore')
@@ -57,13 +61,13 @@ class FrontPage extends Component {
         <DateContainer align='middle' type='flex' justify='center'>
           <DatePickerLine/>
         </DateContainer>
-        <div>
+        <Container>
           <EventsSoon/>
           <EventsHot/>
           <Concerts/>
           <Selections/>
           <Items/>
-        </div>
+        </Container>
       {/*</Spin>*/}
       </React.Fragment>
     );

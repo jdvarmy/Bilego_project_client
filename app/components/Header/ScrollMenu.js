@@ -65,7 +65,7 @@ export default function ScrollMenuFunction(props) {
 
   return (
     <HideOnScroll {...props}>
-      <AppBar className={classes.root}>
+      <AppBar className={`${classes.root} bilego-menu-wrapper`}>
         <Toolbar>
           <Grid alignItems="center" container justify="center" spacing={0}>
             <Grid item xs={8}>

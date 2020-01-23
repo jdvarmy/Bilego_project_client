@@ -64,7 +64,9 @@ class SingleEvent extends Component{
   }
 
   render(){
-    const {singleEventStore:{isLoading}} = this.props;
+    const {singleEventStore:{isLoading, event}, history, globalStore} = this.props;
+
+    console.log(this.props)
     return(
       <React.Fragment>
         <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
@@ -72,7 +74,11 @@ class SingleEvent extends Component{
             <SliderEvent />
           </div>
           <div>
-            <ConcertInfo />
+            <ConcertInfo
+              share={history.location.pathname}
+              site={globalStore.siteAddress}
+              event={event}
+            />
           </div>
           <TicketsFrameWrap>
             <NoSsr>

@@ -98,7 +98,7 @@ export const ClientBilegoGateUi = () => {
             {!store.mobile
             ? <Fragment>
                 <Root>
-                  <Main>
+                  <Main className="bilego-main">
                     <Header />
                     <BilegoFrontUi />
                     <RightPanel />
@@ -130,7 +130,7 @@ export const ServerBilegoGateUi = (props) => {
       {!props.mobile
       ? <Fragment>
           <Root>
-            <Main>
+            <Main className="bilego-main">
               <Header/>
               {renderRoutes(routs)}
               <RightPanel/>

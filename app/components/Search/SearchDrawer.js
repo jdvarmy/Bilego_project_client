@@ -24,6 +24,7 @@ class SearchDrawer extends Component{
     return (
       <div>
         <StyledDrawer
+          className="bilego-search-drawer"
           variant="temporary"
           anchor="right"
           open={search === 1}

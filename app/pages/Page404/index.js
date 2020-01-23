@@ -5,6 +5,8 @@ import NoDramaLama from './No-Drama-Lama.jpg';
 // https://revolution.themepunch.com/404-error-page-template/
 const Wrapper = styled.div``;
 
+// todo: сделать нормальную страницу
+
 class Page404 extends React.Component{
   componentDidMount() {
     const slider = document.getElementById('rev_slider_16_1');

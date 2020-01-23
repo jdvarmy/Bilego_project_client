@@ -10,8 +10,9 @@ import Events from './Events';
 import Address from './Address';
 import EventsList from './EventsList';
 
-const Wrapper = styled.div`
-  min-height: 533px;
+// todo: сделать загрузку как у остальных страниц
+const Wrap = styled.div`
+  overflow: hidden;
 `;
 
 // todo: если вордпресс не нашел клуб, то 404
@@ -54,17 +55,17 @@ class SingleItem extends Component{
     return(
       <React.Fragment>
         {/*<Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>*/}
-          <Wrapper>
-            {
-              item &&
-              <Fragment>
-                <SliderEvents item={item} baseNameForRouting={baseNameForRouting} ssrSide={ssrSide}/>
+          {
+            item &&
+            <Fragment>
+              <SliderEvents item={item} baseNameForRouting={baseNameForRouting} ssrSide={ssrSide}/>
+              <Wrap>
                 <Events />
                 <EventsList item={item}/>
                 <Address item={item}/>
-              </Fragment>
-            }
-          </Wrapper>
+              </Wrap>
+            </Fragment>
+          }
         {/*</Spin>*/}
       </React.Fragment>
     );

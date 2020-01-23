@@ -64,7 +64,7 @@ export default function RightPanel() {
         <Mapbox/>
         <NoSsr>
           <Scroll>
-            <TimeLine/>
+            <TimeLine className="bilego-hidden"/>
           </Scroll>
         </NoSsr>
       </StyledList>
