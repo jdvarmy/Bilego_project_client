@@ -3,7 +3,6 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-import { Spin } from 'antd';
 import NoSsr from '@material-ui/core/NoSsr';
 
 import style from '../../theme/style';
@@ -13,7 +12,6 @@ import EventsHot from './EventsHot';
 import Concerts from './Concerts';
 import Selections from './Selections';
 import Items from './Items';
-import Spinner from '../../components/Spinner';
 import DatePickerLine from '../../components/DatePickerLine';
 
 const DateContainer = styled.div`
@@ -52,7 +50,6 @@ class FrontPage extends Component {
 
     return (
       <React.Fragment>
-      {/*<Spin spinning={pageStore.isLoading || sliderStore.isLoading} indicator={<Spinner leftPadding={27/2}/>}>*/}
         <div>
           <NoSsr>
             <Slider />
@@ -68,7 +65,6 @@ class FrontPage extends Component {
           <Selections/>
           <Items/>
         </Container>
-      {/*</Spin>*/}
       </React.Fragment>
     );
   }

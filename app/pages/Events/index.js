@@ -6,8 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Fab from '@material-ui/core/Fab';
 import NoSsr from '@material-ui/core/NoSsr';
-import { Spin } from 'antd';
-import Spinner from '../../components/Spinner';
 import BlockHeaderText from '../../components/BlockHeaderText';
 import { Event300 } from '../../components/Event';
 import { BilegoIconLoading } from '../../theme/bilegoIcons';
@@ -88,12 +86,10 @@ class Events extends Component{
         <GridWrap container spacing={4}>
           <Grid item xs={12}><BlockHeaderText>События</BlockHeaderText></Grid>
           <Grid item xs={12}>
-            {/*<Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>*/}
             {isLoading && events.length <= 0
               ? <LoadingForEvents />
               : content
             }
-            {/*</Spin>*/}
           </Grid>
         </GridWrap>
       </Wrap>

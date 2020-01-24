@@ -3,14 +3,12 @@ import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Spin } from 'antd';
-import Spinner from '../../components/Spinner';
 import SliderEvents from './SliderEvents';
 import Events from './Events';
 import Address from './Address';
 import EventsList from './EventsList';
+import LoadingSingleItem from '../../components/LoadingsTemplate/LoadingSingleItem';
 
-// todo: сделать загрузку как у остальных страниц
 const Wrap = styled.div`
   overflow: hidden;
 `;
@@ -50,14 +48,14 @@ class SingleItem extends Component{
   }
 
   render(){
-    const {singleItemStore:{item}, globalStore:{baseNameForRouting, ssrSide}} = this.props;
+    const {singleItemStore:{item, isLoading}, globalStore:{baseNameForRouting, ssrSide}} = this.props;
 
     return(
       <React.Fragment>
-        {/*<Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>*/}
-          {
-            item &&
-            <Fragment>
+        {
+          isLoading && item === undefined
+          ? <LoadingSingleItem />
+          :  item !== undefined && <Fragment>
               <SliderEvents item={item} baseNameForRouting={baseNameForRouting} ssrSide={ssrSide}/>
               <Wrap>
                 <Events />
@@ -65,8 +63,7 @@ class SingleItem extends Component{
                 <Address item={item}/>
               </Wrap>
             </Fragment>
-          }
-        {/*</Spin>*/}
+        }
       </React.Fragment>
     );
   }

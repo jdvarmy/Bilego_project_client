@@ -10,6 +10,7 @@ import { style } from '../../../theme';
 import { BilegoIconFacebook, BilegoIconVk } from '../../../theme/bilegoIcons';
 
 import lama from './images/screen-2.jpg';
+import {Typography} from "@material-ui/core";
 
 const Wrapper = styled(Grid)`
   width: 100%!important;
@@ -101,6 +102,11 @@ const StyledIconButton = styled(IconButton)`
     }
   }
 `;
+const Copy = styled.div`
+  color: ${style.$white};
+  text-align: center;
+  margin-top: 30px;
+`;
 
 const vk = (
   // eslint-disable-next-line jsx-a11y/href-no-hash
@@ -124,6 +130,7 @@ const facebook = (
 class Footer extends Component{
   render(){
     const {globalStore:{baseNameForRouting}} = this.props;
+    const date = new Date().getFullYear();
 
     return(
       <Wrapper container spacing={6}>
@@ -149,6 +156,11 @@ class Footer extends Component{
               {facebook}
             </span>
           </Social>
+          <Copy>
+            <Typography variant="caption" component="span">
+              Copyright &#169; {`2019-${date} Bilego. Все права защищены.`}
+            </Typography>
+          </Copy>
         </Grid>
       </Wrapper>
     );

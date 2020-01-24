@@ -1,26 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import Box from '@material-ui/core/Box';
-import style from '../../../theme/style';
-import { BilegoIconFacebook, BilegoIconVk } from '../../../theme/bilegoIcons';
-
-const StyledIconButton = styled(IconButton)`
-  margin: 0 5px!important;
-  svg{
-    cursor: pointer;
-    vertical-align: middle;
-    font-size: 1.25rem!important;
-    color: ${style.$black};
-    &:hover{
-      fill: ${style.$red};
-    }
-  }
-`;
+import Shared from '../../../components/Shared';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -86,8 +70,9 @@ export default function ConcertInfo(props){
           </Grid>
           <Grid item xs={6} className={classes.grid}>
             <Box component="div" m={1} className={classes.box}>
-              {vk}
-              {facebook}
+              <Shared type="vk" />
+              <Shared type="facebook" />
+              <Shared type="twitter" />
             </Box>
           </Grid>
         </Grid>
@@ -95,18 +80,3 @@ export default function ConcertInfo(props){
     </Grid>
   );
 }
-
-const vk = (
-  <a href="#">
-    <StyledIconButton className="bilego-button" aria-label="vk">
-      {BilegoIconVk}
-    </StyledIconButton>
-  </a>
-);
-const facebook = (
-  <a href="#">
-    <StyledIconButton className="bilego-button" aria-label="facebook">
-      {BilegoIconFacebook}
-    </StyledIconButton>
-  </a>
-);

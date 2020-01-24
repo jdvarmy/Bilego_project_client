@@ -6,3 +6,5 @@ export { default as LoadingForEventsWith430and200 } from './LoadingForEventsWith
 
 export { default as LoadingContentInfo } from './SingleEvent/LoadingContentInfo';
 export { default as LoadingContent } from './SingleEvent/LoadingContent';
+
+export { default as LoadingSingleItem } from './LoadingSingleItem';

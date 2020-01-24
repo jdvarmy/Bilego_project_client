@@ -40,6 +40,7 @@ const SFab = styled(Fab)`
   margin: 20px!important;
 `;
 
+// todo: сделать сео для страницы
 @withRouter
 @inject('searchStore', 'globalStore', 'calendarStore')
 @observer

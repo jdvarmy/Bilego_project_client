@@ -7,9 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Fab from '@material-ui/core/Fab';
 import NoSsr from '@material-ui/core/NoSsr';
-import { Spin } from 'antd';
 import { Event300 } from '../../components/Event';
-import Spinner from '../../components/Spinner';
 import { BilegoIconLoading } from '../../theme/bilegoIcons';
 import NoContent from '../../components/NoContent';
 import { LoadingForEvents } from '../../components/LoadingsTemplate';
@@ -88,14 +86,12 @@ class EventsList extends Component{
 
     return (
       <React.Fragment>
-        {/*<Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>*/}
           <GridWrap container spacing={4}>
             {isLoading && eventsByCategory.length <= 0
               ? <LoadingForEvents />
               : content
             }
           </GridWrap>
-        {/*</Spin>*/}
       </React.Fragment>
     );
   }

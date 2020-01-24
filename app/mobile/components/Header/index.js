@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 import { withRouter } from 'react-router-dom';
+import styled from 'styled-components';
 
 import createStyles from '@material-ui/styles/createStyles/createStyles';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -11,8 +12,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import { Menu as AntMenu } from 'antd';
+
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import lama from './images/screen-2.jpg';
 
@@ -22,8 +26,6 @@ import {
   BilegoIconMenuDotted,
   BilegoIconSearch, BilegoIconVk
 } from '../../../theme/bilegoIcons';
-import Grid from '@material-ui/core/Grid';
-import styled from 'styled-components';
 
 const styles = createStyles(theme => ({
   root: {
@@ -94,15 +96,16 @@ const SSwipeableDrawer = styled(SwipeableDrawer)`
       position: absolute;
     }
   }
-  .ant-menu{
-    background: transparent;
-    .ant-menu-item{
-      .menu__item-name{
+  .bilego-mobile-menu-list{
+    margin-top: 30px;
+    padding: 8px 12px;
+    .bilego-mobile-menu-item{
+      h6{
         color: ${style.$white};
+        text-transform: uppercase;
       }
     }
   }
-  
 `;
 
 @withRouter
@@ -116,9 +119,8 @@ class Header extends React.Component{
     this.openMenu = !this.openMenu;
   };
 
-  handleClick = async e => {
-    const {link} = e.item.props,
-      {setSearchString} = this.props.searchStore;
+  handleClick = link => {
+    const {setSearchString} = this.props.searchStore;
 
     this.props.history.push(link);
     setSearchString(link);
@@ -185,23 +187,26 @@ class Header extends React.Component{
               </SIconButton>
             </SGrid>
           </Grid>
-          <AntMenu onSelect={this.handleClick} className="bilego-menu">
+          <MenuList className="bilego-mobile-menu-list">
             {this.menu.map((el, k)=>(
-              <AntMenu.Item key={k} name={el.name} link={`/${baseNameForRouting}${el.link}`}>
-                <NavLink to={`/${baseNameForRouting}${el.link}`} exact className="menu__item">
-                  <Typography component="h6" variant="subtitle2" className="menu__item-name">{el.name}</Typography>
-                </NavLink>
-              </AntMenu.Item>
+            <MenuItem className="bilego-mobile-menu-item"
+                      key={k}
+                      onClick={()=>{this.handleClick(`/${baseNameForRouting}${el.link}`)}}>
+              <NavLink to={`/${baseNameForRouting}${el.link}`} exact>
+                <Typography component="h6" variant="h6">{el.name}</Typography>
+              </NavLink>
+            </MenuItem>
             ))}
-            <AntMenu.Divider />
             {this.subMenu.map((el, k)=>(
-              <AntMenu.Item key={k} name={el.name} link={`/${baseNameForRouting}${el.link}`}>
-                <NavLink to={`/${baseNameForRouting}${el.link}`} exact className="menu__item">
-                  <Typography component="h6" variant="subtitle2" className="menu__item-name">{el.name}</Typography>
-                </NavLink>
-              </AntMenu.Item>
+            <MenuItem className="bilego-mobile-menu-item"
+                      key={k}
+                      onClick={()=>{this.handleClick(`/${baseNameForRouting}${el.link}`)}}>
+              <NavLink to={`/${baseNameForRouting}${el.link}`} exact>
+                <Typography component="h6" variant="h6">{el.name}</Typography>
+              </NavLink>
+            </MenuItem>
             ))}
-          </AntMenu>
+          </MenuList>
         </SSwipeableDrawer>
       </div>
     )

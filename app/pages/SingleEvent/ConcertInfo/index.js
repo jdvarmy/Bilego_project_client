@@ -12,7 +12,7 @@ class ContentInfo extends Component{
 
     return isLoading && event === undefined
       ? <LoadingContentInfo />
-      : <Info {...event}/>
+      : <Info {...event} />
   }
 }
 

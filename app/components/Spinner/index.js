@@ -6,6 +6,10 @@ import { style } from '../../theme';
 export default function Spinner (props) {
   const {leftPadding, position} = props;
 
+  let width = undefined;
+  if(process.browser)
+    width = window.innerWidth;
+
   const Wrap = styled.div`
     width: 100px;
     height: 102px;
@@ -14,8 +18,11 @@ export default function Spinner (props) {
     top: ${()=>{
     const w = document.documentElement.clientHeight;
     return w - 50 - (w / 100 * 50)
-  }}px;
-    left: calc(${()=>(leftPadding ? 50 - leftPadding : 50)}% - 50px);
+    }}px;
+    left: calc(${()=>{
+      if(width !== undefined && width<1110) return 50;
+      else return leftPadding ? 50 - leftPadding : 50
+    }}% - 50px);
   `;
   const Circle = styled.div`
     width: 100%;
