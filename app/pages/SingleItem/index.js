@@ -32,9 +32,10 @@ class SingleItem extends Component{
 
   componentDidUpdate = async (prevProps, prevState, snapshot) => {
     try {
-      const {singleItemStore: {getItemDataBySlug}, globalStore: {apiRoot, setMeta}} = this.props;
+      const {singleItemStore: {getItemDataBySlug, clear}, globalStore: {apiRoot, setMeta}} = this.props;
 
       if (prevProps.match.params.itemSlug !== this.props.match.params.itemSlug) {
+        clear();
         await getItemDataBySlug(apiRoot, {slug: this.props.match.params.itemSlug});
         setMeta(this.props.singleItemStore.item.seo_meta);
       }

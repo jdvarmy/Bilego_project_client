@@ -43,6 +43,17 @@ class Search{
   @observable isLoading = false;
 
   @action
+  clear = () => {
+    this.searchResult = undefined;
+    this.events = undefined;
+    this.items = undefined;
+    this.cache = {};
+
+    this.changeSearchStatus(-1);
+    this.setRequest('');
+  };
+
+  @action
   setStartDataSearchPage = (data) => {
     this.searchEvents = data.events.length > 0 ? data.events : [];
   };
@@ -89,14 +100,14 @@ class Search{
         this.events = this.searchResult.events.length > 0 ? this.searchResult.events : undefined;
         this.items = this.searchResult.items.length > 0 ? this.searchResult.items : undefined;
       }else {
-          const args = {
-            text: this.request,
-            date: this.date.getTime()
-          };
-          this.searchResult = yield searchService.getSearchResult(apiRoot, args);
-          this.events = this.searchResult.events.length > 0 ? this.searchResult.events : undefined;
-          this.items = this.searchResult.items.length > 0 ? this.searchResult.items : undefined;
-          this.searchCache.set(key, this.searchResult)
+        const args = {
+          text: this.request,
+          date: this.date.getTime()
+        };
+        this.searchResult = yield searchService.getSearchResult(apiRoot, args);
+        this.events = this.searchResult.events.length > 0 ? this.searchResult.events : undefined;
+        this.items = this.searchResult.items.length > 0 ? this.searchResult.items : undefined;
+        this.searchCache.set(key, this.searchResult)
       }
     } catch (e) {
       console.log(e);

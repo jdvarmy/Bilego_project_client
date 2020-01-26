@@ -37,7 +37,7 @@ const StyledIcon = styled.div`
 `;
 
 @withRouter
-@inject('globalStore', 'pageStore', 'sliderStore', 'mapStore', 'rightPanelStore')
+@inject('globalStore', 'pageStore', 'sliderStore', 'mapStore', 'rightPanelStore', 'searchStore')
 @observer
 class Cities extends React.Component{
   @observable open = false;
@@ -47,8 +47,11 @@ class Cities extends React.Component{
   };
 
   changeCity = id => {
-    const {globalStore:{setCity}} = this.props;
+    const {globalStore:{setCity}, searchStore, pageStore} = this.props;
     setCity(id);
+
+    searchStore.clear();
+    pageStore.clear();
 
     const {baseNameForRouting} = this.props.globalStore;
     this.props.history.push(`/${baseNameForRouting}`);
