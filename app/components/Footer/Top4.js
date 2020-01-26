@@ -72,7 +72,7 @@ export default function Top4(props) {
       <Subscribe className="bilego-subscribe">
         <div>Подпишитесь на акции и анонсы событий:</div>
         <Input.Search
-          enterButton="Send"
+          enterButton="Далее"
           onSearch={value => console.log(value)}
           placeholder="Электронная почта"
           size="large"
