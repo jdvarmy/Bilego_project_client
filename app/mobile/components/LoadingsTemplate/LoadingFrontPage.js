@@ -64,7 +64,11 @@ const SubTitle = styled(Image)`
   width: 80%;
   margin: 0;
 `;
-
+const SImage = styled(Image)`
+  height: 190px;
+  margin: 25px 16px;
+  width: inherit;
+`;
 
 export default function LoadingSingleEvent(){
   return (
@@ -75,9 +79,9 @@ export default function LoadingSingleEvent(){
         </Grid>
         <Grid item xs={12}>
           {[1,2,3].map((el, key) => (
-            <React.Fragment>
+            <React.Fragment key={key}>
               <TitleWrap />
-              <Line key={key}>
+              <Line>
                 {[1,2,3,4].map((e, k) => (
                   <Wrap key={k}>
                     <EventImage />
@@ -88,6 +92,11 @@ export default function LoadingSingleEvent(){
               </Line>
             </React.Fragment>
           ))}
+        </Grid>
+        <Grid item xs={12}>
+          <TitleWrap />
+          <SImage />
+          <SImage />
         </Grid>
       </Grid>
     </React.Fragment>
