@@ -17,7 +17,7 @@ import LogoImg from "../../../components/Footer/Bilego-logo-slogan_white-pink.pn
 const Wrapper = styled(Grid)`
   width: 100%!important;
   margin: 0!important;
-  margin-top: 25px!important;
+  // margin-top: 25px!important;
   position: relative!important;
   .MuiGrid-root{
     position: relative;

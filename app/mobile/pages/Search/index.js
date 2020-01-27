@@ -20,11 +20,9 @@ import { LoadingForEvents } from '../../components/LoadingsTemplate';
 const Content = styled.div`
   background-color: ${style.$white};
   overflow: hidden;
-  margin-top: -16px;
-  border-radius: 16px 16px 0 0;
   z-index: 1;
   position: relative;
-  padding-top: 16px;
+  padding-top: 56px;
 `;
 const DateContainer = styled.div`
   height: ${style.$heightMenu}px;
@@ -102,30 +100,32 @@ class Search extends Component{
     </React.Fragment>;
 
     return(
-      <Content>
+      <React.Fragment>
         <Padding>
           <div />
         </Padding>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Title component="h1" variant="h4">
-              {title}
-            </Title>
+        <Content>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Title component="h1" variant="h4">
+                {title}
+              </Title>
+            </Grid>
+            <Grid item xs={12}>
+              <DateContainer style={{overflow: 'hidden'}}>
+                <DatePickerLine flickity mini/>
+              </DateContainer>
+            </Grid>
+            {isLoading && searchEvents.length <= 0
+              ? <LoadingForEvents />
+              : content
+            }
+            <Grid item xs={12}>
+              <PopularOnWeek />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <DateContainer style={{overflow: 'hidden'}}>
-              <DatePickerLine flickity mini/>
-            </DateContainer>
-          </Grid>
-          {isLoading && searchEvents.length <= 0
-            ? <LoadingForEvents />
-            : content
-          }
-          <Grid item xs={12}>
-            <PopularOnWeek />
-          </Grid>
-        </Grid>
-      </Content>
+        </Content>
+      </React.Fragment>
     );
   }
 }

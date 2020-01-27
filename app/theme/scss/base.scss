@@ -34,6 +34,9 @@ $leftBodyPanel: 73%;
 
 
 body{
+  #app{
+    height: 100%;
+  }
   .bilego-recommend{
     svg #art-base {fill: white; mask: url(#art-mask);}
     svg #weekends-base {fill: white; mask: url(#weekends-mask);}

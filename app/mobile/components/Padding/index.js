@@ -5,7 +5,6 @@ import style from '../../../theme/style';
 import lama from '../Footer/images/screen-2.jpg';
 
 const Wrapper = styled.div`
-  position: relative;
   height: 56px;
   background-image: url('${lama}');
   background-size: cover;
@@ -20,6 +19,10 @@ const Wrapper = styled.div`
     background: ${style.$second};
     opacity: 0.8;
   }
+  z-index: 9;
+  position: absolute;
+  width: 100%;
+  top: 0;
 `;
 
 export default function Padding(props){
