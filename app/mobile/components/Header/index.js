@@ -19,6 +19,7 @@ import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import lama from './images/screen-2.jpg';
+import logo from './images/Bilego-logo_white-pink.png';
 
 import style from '../../../theme/style';
 import {
@@ -162,9 +163,9 @@ class Header extends React.Component{
             <IconButton onClick={this.toggleMenu} className={`${classes.menuButton}`} aria-label="menu">
               {BilegoIconMenuDotted}
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              Bilego
-            </Typography>
+            <NavLink to={`/${baseNameForRouting}`} exact className={classes.title}>
+              <img src={logo} alt="bilego" width="73px" height="17px" />
+            </NavLink>
             <IconButton className={`${classes.menuButton}`} aria-label="search">
               {BilegoIconSearch}
             </IconButton>

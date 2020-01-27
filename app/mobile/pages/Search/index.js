@@ -15,6 +15,7 @@ import PopularOnWeek from './../../components/PopularOnWeek';
 import { BilegoIconLoading } from '../../../theme/bilegoIcons';
 import NoContent from '../../../components/NoContent';
 import Padding from '../../components/Padding';
+import { LoadingForEvents } from '../../components/LoadingsTemplate';
 
 const Content = styled.div`
   background-color: ${style.$white};
@@ -67,9 +68,10 @@ class Search extends Component{
     }
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const {searchStore:{setSearchString, getSearchPageResult}, globalStore:{apiRoot}} = this.props;
+    const {searchStore:{setSearchString, getSearchPageResult, clear}, globalStore:{apiRoot}} = this.props;
 
     if(prevProps.location.search.substr(1) !== this.props.location.search.substr(1)) {
+      clear();
       setSearchString(this.props.location.search.substr(1));
       getSearchPageResult(apiRoot, true);
     }
@@ -77,6 +79,27 @@ class Search extends Component{
 
   render(){
     const {searchStore:{isLoading, searchEvents, title}, globalStore:{baseNameForRouting}} = this.props;
+    const content = <React.Fragment>
+      <Grid item xs={12}>
+        {searchEvents.length > 0
+          ?
+          searchEvents.slice(0, this.count).map(event => (
+            <EventDef key={event.id} {...event} baseNameForRouting={baseNameForRouting}/>
+          ))
+          :
+          <NoContent />
+        }
+      </Grid>
+      <Grid item xs={12}>
+        <NoSsr>
+          {searchEvents.length > this.count &&
+          <SFab onClick={this.loadMore} variant="extended" aria-label="load">
+            {BilegoIconLoading} Показать ещё
+          </SFab>
+          }
+        </NoSsr>
+      </Grid>
+    </React.Fragment>;
 
     return(
       <Content>
@@ -94,25 +117,10 @@ class Search extends Component{
               <DatePickerLine flickity mini/>
             </DateContainer>
           </Grid>
-          <Grid item xs={12}>
-            {searchEvents.length > 0
-              ?
-              searchEvents.slice(0, this.count).map(event => (
-                <EventDef key={event.id} {...event} baseNameForRouting={baseNameForRouting}/>
-              ))
-              :
-              <NoContent />
-            }
-          </Grid>
-          <Grid item xs={12}>
-            <NoSsr>
-              {searchEvents.length > this.count &&
-              <SFab onClick={this.loadMore} variant="extended" aria-label="load">
-                {BilegoIconLoading} Показать ещё
-              </SFab>
-              }
-            </NoSsr>
-          </Grid>
+          {isLoading && searchEvents.length <= 0
+            ? <LoadingForEvents />
+            : content
+          }
           <Grid item xs={12}>
             <PopularOnWeek />
           </Grid>

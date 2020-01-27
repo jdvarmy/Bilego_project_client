@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import { BilegoIconTicket } from '../../../theme/bilegoIcons';
 
 const Wrapper = styled.div`
-  height: 266px;
+  // height: 266px;
   overflow: hidden;
   margin: 0 16px 20px;
   & > a{

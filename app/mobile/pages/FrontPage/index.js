@@ -13,6 +13,7 @@ import DatePickerLine from '../../../components/DatePickerLine';
 import { Event143, Event190 } from '../../components/Event';
 import Slider from './Slider';
 import { BilegoIconLoading } from '../../../theme/bilegoIcons';
+import { LoadingFrontPage } from '../../components/LoadingsTemplate';
 
 const Content = styled.div`
   background-color: ${style.$white};
@@ -66,105 +67,109 @@ class FrontPage extends React.Component{
   };
 
   render() {
-    const { globalStore:{ baseNameForRouting, ssrSide, selections } } = this.props;
+    const { globalStore:{ baseNameForRouting, ssrSide, selections }, pageStore } = this.props;
 
-    console.log(ssrSide)
+    // console.log(ssrSide)
+    const content =
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <DateContainer style={{overflow: 'hidden'}}>
+            <DatePickerLine flickity mini/>
+          </DateContainer>
+        </Grid>
+        <Grid item xs={12}>
+          {[
+            {
+              id: 1,
+              name: 'Ближайшие события',
+              link: '/search?cat=all',
+              carts: pageStore.eventsSoon
+            },
+            {
+              id: 2,
+              name: 'Популярные события',
+              link: '/search?cat=pop',
+              carts: pageStore.eventsHot
+            },
+            {
+              id: 3,
+              name: 'Концерты',
+              link: '/search?cat=concerts',
+              carts: pageStore.eventsConcerts
+            }
+          ].map(el=>{
+            return(
+              <GridWrap container spacing={3} key={el.id}>
+                <Grid item xs={12}>
+                  <SBlockHeaderText component="h5" variant="h5">
+                    {el.link !== ''
+                      ? <Link to={`/${baseNameForRouting + el.link}`}>
+                        {el.name}
+                      </Link>
+                      : el.name
+                    }
+                  </SBlockHeaderText>
+                </Grid>
+                <Grid item xs={12}>
+                  { // todo: Warning: Did not expect server HTML to contain a <div> in <div>
+                    ssrSide === 'client'
+                      ?
+                      <Flickity options={{
+                        prevNextButtons: false,
+                        pageDots: false,
+                        contain: true,
+                        freeScroll: true
+                      }}>
+                        {el.carts.slice(0, 4).map(event => (
+                          <Event143 key={event.id} {...event} baseNameForRouting={baseNameForRouting}/>
+                        ))}
+                      </Flickity>
+                      :
+                      <div>
+                        <div>
+                          <Line>
+                            {el.carts.slice(0, 4).map(event => (
+                              <Event143 key={event.id} {...event} baseNameForRouting={baseNameForRouting}/>
+                            ))}
+                          </Line>
+                        </div>
+                      </div>
+                  }
+                </Grid>
+              </GridWrap>
+            )
+          })}
+        </Grid>
+        <Grid item xs={12}>
+          <GridWrap container spacing={3}>
+            <Grid item xs={12}>
+              <SBlockHeaderText component="h5" variant="h5">Подборки Bilego</SBlockHeaderText>
+            </Grid>
+            {Object.keys(selections).slice(0, this.selectionsCount).map(key=>{
+              return (
+                <Grid key={selections[key].mask} item xs={12}>
+                  <Event190 {...selections[key]}/>
+                </Grid>
+              )
+            })}
+          </GridWrap>
+          <Grid item xs={12}>
+            {Object.keys(selections).length > this.selectionsCount &&
+            <SFab onClick={this.loadMore} variant="extended" aria-label="load">
+              {BilegoIconLoading} Показать ещё
+            </SFab>
+            }
+          </Grid>
+        </Grid>
+      </Grid>;
 
     return (
       <React.Fragment>
         <Slider />
         <Content>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <DateContainer style={{overflow: 'hidden'}}>
-                <DatePickerLine flickity mini/>
-              </DateContainer>
-            </Grid>
-            <Grid item xs={12}>
-              {[
-                {
-                  id: 1,
-                  name: 'Ближайшие события',
-                  link: '/search?cat=all',
-                  carts: this.props.pageStore.eventsSoon
-                },
-                {
-                  id: 2,
-                  name: 'Популярные события',
-                  link: '/search?cat=pop',
-                  carts: this.props.pageStore.eventsHot
-                },
-                {
-                  id: 3,
-                  name: 'Концерты',
-                  link: '/search?cat=concerts',
-                  carts: this.props.pageStore.eventsConcerts
-                }
-              ].map(el=>{
-                return(
-                  <GridWrap container spacing={3} key={el.id}>
-                    <Grid item xs={12}>
-                      <SBlockHeaderText component="h5" variant="h5">
-                        {el.link !== ''
-                        ? <Link to={`/${baseNameForRouting + el.link}`}>
-                            {el.name}
-                          </Link>
-                          : el.name
-                          }
-                      </SBlockHeaderText>
-                    </Grid>
-                    <Grid item xs={12}>
-                      { // todo: Warning: Did not expect server HTML to contain a <div> in <div>
-                        ssrSide === 'client'
-                          ?
-                          <Flickity options={{
-                            prevNextButtons: false,
-                            pageDots: false,
-                            contain: true,
-                            freeScroll: true
-                          }}>
-                            {el.carts.slice(0, 4).map(event => (
-                              <Event143 key={event.id} {...event} baseNameForRouting={baseNameForRouting}/>
-                            ))}
-                          </Flickity>
-                          :
-                          <div>
-                            <div>
-                              <Line>
-                                {el.carts.slice(0, 4).map(event => (
-                                  <Event143 key={event.id} {...event} baseNameForRouting={baseNameForRouting}/>
-                                ))}
-                              </Line>
-                            </div>
-                          </div>
-                      }
-                    </Grid>
-                  </GridWrap>
-                )
-              })}
-            </Grid>
-            <Grid item xs={12}>
-              <GridWrap container spacing={3}>
-                <Grid item xs={12}>
-                  <SBlockHeaderText component="h5" variant="h5">Подборки Bilego</SBlockHeaderText>
-                </Grid>
-                {Object.keys(selections).slice(0, this.selectionsCount).map(key=>{
-                  return (
-                    <Grid key={selections[key].mask} item xs={12}>
-                      <Event190 {...selections[key]}/>
-                    </Grid>
-                  )
-                })}
-              </GridWrap>
-              <Grid item xs={12}>
-                {Object.keys(selections).length > this.selectionsCount &&
-                  <SFab onClick={this.loadMore} variant="extended" aria-label="load">
-                    {BilegoIconLoading} Показать ещё
-                  </SFab>
-                }
-              </Grid>
-            </Grid>
-          </Grid>
+          {pageStore.isLoading && (pageStore.eventsSoon.length <= 0 && pageStore.eventsHot.length <= 0 && pageStore.eventsConcerts.length <= 0)
+            ? <LoadingFrontPage />
+            : content}
         </Content>
       </React.Fragment>
     );

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,11 +6,13 @@ import styled from 'styled-components';
 import { Input } from 'antd';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
+import { Typography } from '@material-ui/core';
 import { style } from '../../../theme';
 import { BilegoIconFacebook, BilegoIconVk } from '../../../theme/bilegoIcons';
 
 import lama from './images/screen-2.jpg';
-import {Typography} from "@material-ui/core";
+import logo from './images/Bilego-logo-slogan_white-pink.png';
+import LogoImg from "../../../components/Footer/Bilego-logo-slogan_white-pink.png";
 
 const Wrapper = styled(Grid)`
   width: 100%!important;
@@ -138,7 +140,9 @@ class Footer extends Component{
         <SBackgr/>
         <Grid item xs={12}>
           <Logo>
-            <Link to={`/${baseNameForRouting}`}>Logo</Link>
+            <Link to={`/${baseNameForRouting}`}>
+              <img alt="Bilego" src={logo} width="100px" height="35px" />
+            </Link>
           </Logo>
           <Subscribe>
             <div>Подпишитесь на акции и анонсы событий:</div>

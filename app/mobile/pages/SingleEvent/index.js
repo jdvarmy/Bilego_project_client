@@ -13,11 +13,15 @@ import PopularOnWeek from '../../components/PopularOnWeek';
 import style from '../../../theme/style';
 import { BilegoIconTicket } from '../../../theme/bilegoIcons';
 import makeStyles from '@material-ui/styles/makeStyles';
+import { LoadingSingleEvent } from '../../components/LoadingsTemplate';
 
+const Wrap = styled.div`
+  overflow: hidden;
+`;
 const Content = styled.div`
   background-color: ${style.$white};
   overflow: hidden;
-  margin-top: -16px;
+  margin-top: -24px;
   border-radius: 16px 16px 0 0;
   z-index: 1;
   position: relative;
@@ -138,15 +142,17 @@ class SingleEvent extends React.Component{
   };
 
   componentDidUpdate = async (prevProps, prevState, snapshot) => {
-    try {
-      const {singleEventStore: {getEventDataBySlug}, globalStore: {apiRoot, setMeta}} = this.props;
+    const {singleEventStore: {getEventDataBySlug, notFoundMeta, clear}, globalStore: {apiRoot, setMeta}} = this.props;
 
+    try {
       if (prevProps.match.params.eventSlug !== this.props.match.params.eventSlug) {
+        clear();
         await getEventDataBySlug(apiRoot, {slug: this.props.match.params.eventSlug});
         setMeta(this.props.singleEventStore.event.seo_meta);
       }
     }catch (e) {
       console.log('single event: ', e);
+      setMeta(notFoundMeta);
     }
   };
 
@@ -155,69 +161,79 @@ class SingleEvent extends React.Component{
   }
 
   render() {
-    const {singleEventStore: {sliderData, event}, globalStore:{baseNameForRouting}} = this.props;
+    const {singleEventStore: {sliderData, event, isLoading}, globalStore:{baseNameForRouting}} = this.props;
 
     return (
-      <Content>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Header>
-              <Gradient />
-              <Image img={sliderData && sliderData.image} />
-              <span>
-                <Title>
-                  <Typography component="h2" variant="h4">{sliderData && sliderData.title1}</Typography>
-                  <Typography component="h2" variant="h4">{sliderData && sliderData.title2}</Typography>
-                </Title>
-                <SubTitle component="h3" variant="subtitle2">{sliderData && sliderData.sub_title}</SubTitle>
-              </span>
-            </Header>
-          </Grid>
-          <Grid item xs={12}>
-            <SFab variant="extended" aria-label="tickets" href={event && event.ticket_link}>
-              {BilegoIconTicket} Купить билеты
-            </SFab>
-            {event &&
-            <React.Fragment>
-              <Info {...event}/>
-              <GridWrap container spacing={2}>
+      <Wrap>
+        {isLoading && event === undefined
+        ? <LoadingSingleEvent />
+        : event !== undefined &&
+          <React.Fragment>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Header>
+                  <Gradient />
+                  <Image img={sliderData && sliderData.image} />
+                  <span>
+                    <Title>
+                      <Typography component="h2" variant="h4">{sliderData && sliderData.title1}</Typography>
+                      <Typography component="h2" variant="h4">{sliderData && sliderData.title2}</Typography>
+                    </Title>
+                    <SubTitle component="h3" variant="subtitle2">{sliderData && sliderData.sub_title}</SubTitle>
+                  </span>
+                </Header>
+              </Grid>
+            </Grid>
+            <Content>
+              <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Grid container spacing={2} alignItems="center">
-                    <Grid item xs={9}>
-                      <Typography component="div" variant="subtitle1">
-                        <Link to={`/${baseNameForRouting}/item/${event.item.name}`}>{event.item.title}</Link>
-                      </Typography>
-                      <Typography component="div" variant="caption">{event.item.address}</Typography>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Link to={`/${baseNameForRouting}/item/${event.item.name}`}>
-                        <ItemImage img={event.item.img}><div /></ItemImage>
-                      </Link>
-                    </Grid>
-                  </Grid>
+                  <SFab variant="extended" aria-label="tickets" href={event && event.ticket_link}>
+                    {BilegoIconTicket} Купить билеты
+                  </SFab>
+                  {event &&
+                  <React.Fragment>
+                    <Info {...event}/>
+                    <GridWrap container spacing={2}>
+                      <Grid item xs={12}>
+                        <Grid container spacing={2} alignItems="center">
+                          <Grid item xs={9}>
+                            <Typography component="div" variant="subtitle1">
+                              <Link to={`/${baseNameForRouting}/item/${event.item.name}`}>{event.item.title}</Link>
+                            </Typography>
+                            <Typography component="div" variant="caption">{event.item.address}</Typography>
+                          </Grid>
+                          <Grid item xs={3}>
+                            <Link to={`/${baseNameForRouting}/item/${event.item.name}`}>
+                              <ItemImage img={event.item.img}><div /></ItemImage>
+                            </Link>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <div style={{marginTop: '1em'}}/>
+                        <Typography component="h1" variant="h4">{event.title}</Typography>
+                        <div style={{marginTop: '1em'}}/>
+                        <Typography className="bilego-event-content" component="div" variant="body1">
+                          <span dangerouslySetInnerHTML={{ __html: event.content }} />
+                        </Typography>
+                      </Grid>
+                    </GridWrap>
+                  </React.Fragment>
+                  }
                 </Grid>
                 <Grid item xs={12}>
-                  <div style={{marginTop: '1em'}}/>
-                  <Typography component="h1" variant="h4">{event.title}</Typography>
-                  <div style={{marginTop: '1em'}}/>
-                  <Typography className="bilego-event-content" component="div" variant="body1">
-                    <span dangerouslySetInnerHTML={{ __html: event.content }} />
-                  </Typography>
+                  <PopularOnWeek/>
                 </Grid>
-              </GridWrap>
-            </React.Fragment>
-            }
-          </Grid>
-          <Grid item xs={12}>
-            <PopularOnWeek/>
-          </Grid>
-        </Grid>
-        <ScrollTop {...this.props}>
-          <SFab variant="extended" aria-label="tickets" href={event && event.ticket_link}>
-            {BilegoIconTicket} Купить билеты
-          </SFab>
-        </ScrollTop>
-      </Content>
+              </Grid>
+            </Content>
+            <ScrollTop {...this.props}>
+              <SFab variant="extended" aria-label="tickets" href={event && event.ticket_link}>
+                {BilegoIconTicket} Купить билеты
+              </SFab>
+            </ScrollTop>
+          </React.Fragment>
+          }
+      </Wrap>
     );
   }
 }

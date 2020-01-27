@@ -10,10 +10,13 @@ import PopularOnWeek from '../../components/PopularOnWeek';
 import Slider from './Slider';
 import Events from './Events';
 
+const Wrap = styled.div`
+  overflow: hidden;
+`;
 const Content = styled.div`
   background-color: ${style.$white};
   overflow: hidden;
-  margin-top: -16px;
+  margin-top: -24px;
   border-radius: 16px 16px 0 0;
   z-index: 1;
   position: relative;
@@ -59,33 +62,37 @@ class SingleItem extends Component {
     const {singleItemStore:{item}, globalStore:{baseNameForRouting}} = this.props;
 
     return (
-      <Content>
+      <Wrap>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             {item && <Slider item={item} baseNameForRouting={baseNameForRouting} />}
           </Grid>
-          <Grid item xs={12}>
-            {item && <Events />}
-          </Grid>
-          <Grid item xs={12}>
-            <GridWrap container spacing={2}>
-              <Grid item xs={12}>
-                <div style={{marginTop: '1em'}}/>
-                <Typography component="h1" variant="h4">{item && item.title}</Typography>
-                <div style={{marginTop: '1em'}}/>
-                {item &&
-                <Typography className="bilego-event-content" component="div" variant="body1">
-                  <span dangerouslySetInnerHTML={{ __html: item.content }}/>
-                </Typography>
-                }
-              </Grid>
-            </GridWrap>
-          </Grid>
-          <Grid item xs={12}>
-            <PopularOnWeek />
-          </Grid>
         </Grid>
-      </Content>
+        <Content>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              {item && <Events />}
+            </Grid>
+            <Grid item xs={12}>
+              <GridWrap container spacing={2}>
+                <Grid item xs={12}>
+                  <div style={{marginTop: '1em'}}/>
+                  <Typography component="h1" variant="h4">{item && item.title}</Typography>
+                  <div style={{marginTop: '1em'}}/>
+                  {item &&
+                  <Typography className="bilego-event-content" component="div" variant="body1">
+                    <span dangerouslySetInnerHTML={{ __html: item.content }}/>
+                  </Typography>
+                  }
+                </Grid>
+              </GridWrap>
+            </Grid>
+            <Grid item xs={12}>
+              <PopularOnWeek />
+            </Grid>
+          </Grid>
+        </Content>
+      </Wrap>
     )
   }
 }

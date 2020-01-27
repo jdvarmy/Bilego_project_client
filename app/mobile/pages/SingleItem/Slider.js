@@ -20,7 +20,7 @@ const Wrapper = styled.div`
     height: 100%;
   }
   .slick-dots.slick-dots-bottom{
-    bottom: 25px;
+    bottom: 33px;
   }
   .bilego-item-subtitle{
     position: absolute;
@@ -60,7 +60,7 @@ const Title = styled.div`
     position: absolute;
     width: 65px;
     height: 65px;
-    bottom: 50px;
+    bottom: 60px;
     left: 0;
     overflow: hidden;
     border-radius: 100%;
