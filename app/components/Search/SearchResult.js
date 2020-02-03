@@ -29,9 +29,9 @@ const SList = styled.div`
 `;
 const Scroll = styled(Scrollbars)`
     height: 100%;
-`;
-const Sh2 = styled.h2`
-    margin: 16px;
+    h4{
+      margin-left: 15px;
+    }
 `;
 const SBlockHeaderText = styled(BlockHeaderTextOld)`
     margin: 16px;

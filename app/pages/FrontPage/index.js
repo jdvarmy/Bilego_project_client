@@ -46,8 +46,6 @@ class FrontPage extends Component {
   }
 
   render() {
-    const {pageStore, sliderStore} = this.props;
-
     return (
       <React.Fragment>
         <div>

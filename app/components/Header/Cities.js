@@ -9,6 +9,9 @@ import ModalAnimated from '../ModalAnimated';
 import { BilegoIconCity } from '../../theme/bilegoIcons';
 import style from '../../theme/style';
 
+import lama from './lama-priroda-fon-12.jpg';
+import Typography from '@material-ui/core/Typography';
+
 const Wrapper = styled.div`
   height: ${style.$heightMenu}px;
   display: flex;
@@ -23,9 +26,11 @@ const StyledButton = styled(Button)`
 const Modal = styled.div`
   width: 400px;
   padding: 16px 0px;
-  p{
-    cursor: pointer;
-    padding: 8px 28px;
+  h5{
+    padding: 15px 28px;
+    a{
+      color: ${style.$white};
+    }
   }
 `;
 const StyledIcon = styled.div`
@@ -34,6 +39,28 @@ const StyledIcon = styled.div`
     font-size: 1.25rem!important;
     margin-right: 7px;
   }
+`;
+const ImageLama = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('${lama}');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+`;
+const ImageShadow = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #202124;
+  z-index: -1;
+  opacity: 0.8;
 `;
 
 @withRouter
@@ -92,12 +119,14 @@ class Cities extends React.Component{
           <StyledIcon>{BilegoIconCity}</StyledIcon>
           {cities[CITY].cityRus}
         </StyledButton>
-        <ModalAnimated closable show={this.open} onClose={this.handleOpen} header="Выберите город">
+        <ModalAnimated city closable show={this.open} onClose={this.handleOpen} header="Выберите город">
+          <ImageLama />
+          <ImageShadow />
           <Modal>
             {cities.map(el=>(
-              <p key={el.baseName}>
+              <Typography variant="h5" component="h5" key={el.baseName}>
                 <Link to={`/${el.baseName}`} onClick={() => this.handlerClick(el.id)}>{el.cityRus}</Link>
-              </p>
+              </Typography>
             ))}
           </Modal>
         </ModalAnimated>

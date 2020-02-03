@@ -19,6 +19,7 @@ import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import lama from './images/screen-2.jpg';
+import lamaSearch from './images/lama-priroda-fon-1.jpg';
 import logo from './images/Bilego-logo_white-pink.png';
 
 import style from '../../../theme/style';
@@ -27,6 +28,17 @@ import {
   BilegoIconMenuDotted,
   BilegoIconSearch, BilegoIconVk
 } from '../../../theme/bilegoIcons';
+import { Input, Spin } from 'antd';
+
+import { Scrollbars } from 'react-custom-scrollbars';
+import SearchResult from '../../../components/Search/SearchResult';
+import Drawer from '@material-ui/core/Drawer';
+import Spinner from '../../../components/Spinner';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Event from '../../../components/Search/Event';
+import Divider from '@material-ui/core/Divider';
+import Item from '../../../components/Search/Item';
 
 const styles = createStyles(theme => ({
   root: {
@@ -108,16 +120,73 @@ const SSwipeableDrawer = styled(SwipeableDrawer)`
     }
   }
 `;
+const SearchSSwipeableDrawer = styled(SSwipeableDrawer)`
+  .MuiDrawer-paper{
+    overflow: hidden;
+    background-image: url('${lamaSearch}');
+    ::before{
+      content: '';
+      background: linear-gradient(to bottom,rgba(40,49,56,0.5) 0%,rgba(40,49,56,0.3) 100%)!important;
+      z-index: -1;
+    }
+  }
+`;
+const Subscribe = styled.div`
+  margin: 0 30px;
+  > div{
+    color: ${style.$white};
+    margin-bottom: 8px;
+  }
+  .ant-input{
+    position: relative;
+    display: flex;
+    height: 44px;
+    width: 100%;
+    border-radius: 80px;
+    border: none;
+    font-size: 14px;
+    padding: 0 25px;
+    letter-spacing: 0.05em;
+    color: ${style.$black};
+    background: rgba(255,255,255,0.5);
+  }
+`;
+const Results = styled.div`
+  position: absolute;
+  padding-top: 16px;
+  width: 100%;
+  height: calc(100% - 153px);
+  background: ${style.$white};
+  bottom: 0;
+  border-radius: 16px 16px 0 0;
+  transform: translate(0, 93%);
+  transition: transform ${style.$transitionfast} ${style.$transitionanimation};
+  &.show{
+    transform: translate(0, 0);
+  }
+`;
+const Scroll = styled(Scrollbars)`
+    height: 100%;
+    h4{
+      margin-left: 15px;
+    }
+`;
 
 @withRouter
 @inject('globalStore', 'searchStore')
 @observer
 class Header extends React.Component{
   @observable openMenu = false;
+  @observable openSearch = false;
 
   @action
   toggleMenu = () => {
     this.openMenu = !this.openMenu;
+  };
+  @action
+  toggleSearch = () => {
+    this.openSearch = !this.openSearch;
+    this.props.searchStore.clear();
   };
 
   handleClick = link => {
@@ -153,8 +222,38 @@ class Header extends React.Component{
     }
   ];
 
+  time;
+  componentWillUnmount(){
+    clearTimeout(this.time);
+  };
+
+  onInputSearchChange = e => {
+    const {target:{value}} = e,
+      {searchStore:{changeSearchStatus, setRequest, getSearchResult}, globalStore:{apiRoot}} = this.props;
+    switch (true) {
+      case value.length === 0:
+        changeSearchStatus(-1);
+        setRequest(value);
+        break;
+      case value.length === 1:
+        changeSearchStatus(0);
+        setRequest(value);
+        break;
+      case value.length > 1:
+        changeSearchStatus(1);
+        setRequest(value);
+        this.time = setTimeout(function(){
+          getSearchResult(apiRoot);
+        }, 100);
+        break;
+      default:
+        break;
+    }
+  };
+  handleDrawerToggle = () => {};
+
   render() {
-    const { classes, globalStore:{ baseNameForRouting } } = this.props;
+    const { classes, globalStore:{ baseNameForRouting }, searchStore:{events, items, isLoading, search} } = this.props;
 
     return (
       <div className={classes.root}>
@@ -166,7 +265,7 @@ class Header extends React.Component{
             <NavLink to={`/${baseNameForRouting}`} exact className={classes.title}>
               <img src={logo} alt="bilego" width="73px" height="17px" />
             </NavLink>
-            <IconButton className={`${classes.menuButton}`} aria-label="search">
+            <IconButton onClick={this.toggleSearch} className={`${classes.menuButton}`} aria-label="search">
               {BilegoIconSearch}
             </IconButton>
           </Toolbar>
@@ -209,6 +308,69 @@ class Header extends React.Component{
             ))}
           </MenuList>
         </SSwipeableDrawer>
+        <SearchSSwipeableDrawer
+          classes={{paper: classes.drawerPaper}}
+          className={classes.drawer}
+          open={this.openSearch}
+          onClose={this.toggleSearch}
+          onOpen={this.toggleSearch}
+          anchor="right">
+          <Grid container spacing={2}>
+            <SGrid item xs={9}>
+              {vk}
+              {facebook}
+            </SGrid>
+            <SGrid item xs={3}>
+              <SIconButton className="bilego-button" onClick={this.toggleSearch} aria-label="cancel">
+                {BilegoIconClose}
+              </SIconButton>
+            </SGrid>
+            <Grid item xs={12}>
+              <Subscribe>
+                <div>События, артисты, места</div>
+                <Input
+                  onChange={this.onInputSearchChange}
+                  placeholder="Начните вводить запрос"
+                  size="large"
+                />
+              </Subscribe>
+
+              <Results className={search === 1 && `show`}>
+                <Scroll>
+                  <Spin spinning={isLoading} indicator={<Spinner leftPadding={0} position="absolute"/>}>
+                    {events &&
+                    <div>
+                      <Typography variant="h5" component="h4">События</Typography>
+                      <List>
+                        {events.map(event=>(
+                          <ListItem onClick={this.toggleSearch} key={event.id}>
+                            <Event {...event} baseNameForRouting={baseNameForRouting}/>
+                          </ListItem>
+                        ))
+                        }
+                      </List>
+                    </div>
+                    }
+                    {events && items && <Divider />}
+                    {items &&
+                    <div>
+                      <Typography variant="h5" component="h4">Площадки</Typography>
+                      <List>
+                        {items.map(item=>(
+                          <ListItem onClick={this.toggleSearch} key={item.id}>
+                            <Item {...item} baseNameForRouting={baseNameForRouting}/>
+                          </ListItem>
+                        ))
+                        }
+                      </List>
+                    </div>
+                    }
+                  </Spin>
+                </Scroll>
+              </Results>
+            </Grid>
+          </Grid>
+        </SearchSSwipeableDrawer>
       </div>
     )
   }

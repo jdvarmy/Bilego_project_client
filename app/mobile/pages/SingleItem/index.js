@@ -25,6 +25,9 @@ const Content = styled.div`
 const GridWrap = styled(Grid)`
   padding: 5px 16px;
 `;
+const SGrid = styled(Grid)`
+  background: ${style.$greydark};
+`;
 
 @withRouter
 @inject('singleItemStore', 'globalStore')
@@ -64,9 +67,9 @@ class SingleItem extends Component {
     return (
       <Wrap>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <SGrid item xs={12}>
             {item && <Slider item={item} baseNameForRouting={baseNameForRouting} />}
-          </Grid>
+          </SGrid>
         </Grid>
         <Content>
           <Grid container spacing={2}>

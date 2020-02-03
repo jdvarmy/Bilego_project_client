@@ -7,6 +7,7 @@ const style = {
   // colors
   $black: '#12141f',
   $white: '#ffffff',
+  $shadowWhite: 'rgba(255,255,255,0.3)',
   $grey: '#c8ccd4',
   $greydark: 'rgba(0, 0, 0, 0.5)',
   // buttons

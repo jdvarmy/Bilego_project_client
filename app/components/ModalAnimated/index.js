@@ -24,9 +24,16 @@ export default function ModalAnimated(props) {
       `} .7s ease-in-out;
     `,
     Children = styled.div`
+      ${p=>(p.light 
+        ? `
+          padding: 35px;
+        `
+        : `
+          background: ${style.$white}
+        `
+      )}
       visibility: visible;
       opacity: 1;
-      background: ${style.$white}
       width: 100%;
       height: 100%;
       animation: ${keyframes`
@@ -45,18 +52,40 @@ export default function ModalAnimated(props) {
       position: relative;
     `,
     Header = styled.div`
+      ${p => (p.light
+        ? `
+          color: ${style.$white};
+          border-bottom: 1px solid ${style.$shadowWhite};
+        `
+        : `
+          color: ${style.$black};
+          border-bottom: 1px solid ${style.$grey};
+        `
+      )}
+      text-align: center;
       padding: 16px 24px;
-      color: ${style.$black};
-      background: ${style.$white};
-      border-bottom: 1px solid ${style.$grey};
-      border-radius: 3px 3px 0 0;
-      & *{
+      & div{
         margin: 0;
-        color: ${style.$black};
         font-weight: 500;
-        font-size: 16px;
+        font-size: 20px;
         line-height: 22px;
         word-wrap: break-word;
+        position: relative;
+        display: inline-block;
+        text-transform: uppercase;
+        ::after{
+          content: '';
+          height: 8px;
+          width: 109px;
+          background: ${style.$red};
+          position: absolute;
+          left: 1px;
+          bottom: -2px;
+        }
+        span{
+          position: relative;
+          z-index: 1;
+        }
       }
     `,
     Body = styled.div`
@@ -67,13 +96,15 @@ export default function ModalAnimated(props) {
     Footer = styled.div`
       padding: 10px 16px;
       text-align: right;
-      background: ${style.$white};
       border-top: 1px solid ${style.$grey};
-      border-radius: 0 0 3px 3px;
     `,
-    Close = styled.div``;
+    Close = styled.div`
+      ${p => (p.light ? `color: ${style.$white};` : ``)}
+    `;
 
-  const {header, footer, closable, onClose, show, children, ModalClass} = props;
+  const {header, footer, closable, onClose, show, children, ModalClass, city} = props;
+
+  const light = !!city;
 
   return (
     <StyledModal
@@ -88,9 +119,9 @@ export default function ModalAnimated(props) {
     >
       <Fade in={show} timeout={50} className={`bilego-modal-fade ${ModalClass ? ModalClass : ''}`}>
         <FadeWrap>
-          <Children className="bilego-modal-ch">
+          <Children className="bilego-modal-ch" light={light}>
             {closable &&
-            <Close className="bilego-close-modal">
+            <Close light={light} className="bilego-close-modal">
               <div onClick={onClose}>
                 <IconButton className="bilego-button" aria-label="close">
                   {BilegoIconClose}
@@ -98,7 +129,7 @@ export default function ModalAnimated(props) {
               </div>
             </Close>
             }
-            {header && <Header><div>{header}</div></Header>}
+            {header && <Header light={light}><div><span>{header}</span></div></Header>}
             <Body className="bilego-modal-body">{children}</Body>
             {footer && <Footer><div>{footer}</div></Footer>}
           </Children>
