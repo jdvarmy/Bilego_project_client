@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import style from '../../theme/style';
-import animateBackground from "../../components/animatedBackground";
+import animateBackground from '../../components/animatedBackground';
 
 const GridWrap = styled(Grid)`
   position: absolute;

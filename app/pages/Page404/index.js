@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import NoDramaLama from './No-Drama-Lama.jpg';
 
 // https://revolution.themepunch.com/404-error-page-template/
+// https://texterra.ru/blog/kak-sdelat-iz-stranitsy-404-chto-to-poleznoe-i-interesnoe-primery.html
 const Wrapper = styled.div``;
 
 // todo: сделать нормальную страницу

@@ -20,7 +20,7 @@ const Wrap = styled.div`
       width: 80px;
       overflow: hidden;
       position: relative;
-      border-radius: 100px;
+      border-radius: 100%;
 
       .item-search-backgr{
         background-color: ${style.$redtr};
@@ -39,6 +39,8 @@ const Wrap = styled.div`
     }
     &:hover .item-search-image{
       transform: scale(1.10, 1.10);
+      overflow: hidden;
+      border-radius: 100%;
     }
   }
 `;

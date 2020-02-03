@@ -50,6 +50,7 @@ class FrontPage extends Component {
       <React.Fragment>
         <div>
           <NoSsr>
+            {/* todo: посмотерть такой слайдер: https://www.google.com/recaptcha/intro/v3.html*/}
             <Slider />
           </NoSsr>
         </div>

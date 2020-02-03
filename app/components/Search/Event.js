@@ -60,6 +60,8 @@ const Wrap = styled.div`
     }
     &:hover .event-search-image{
       transform: scale(1.10, 1.10);
+      overflow: hidden;
+      border-radius: 100%;
     }
   }
 `;
