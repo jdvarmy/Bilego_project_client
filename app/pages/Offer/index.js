@@ -1,10 +1,10 @@
 import React from 'react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import style from '../../theme/style';
-import animateBackground from '../../components/animatedBackground';
 
 const GridWrap = styled(Grid)`
   position: absolute;
@@ -18,27 +18,23 @@ const Title = styled(Typography)`
   text-align: center;
   margin-top: 25px!important;
 `;
-const Canvas = styled.canvas`
-  display: block;
-  width: 100%;
-  height: 100%;
-`;
 
+// todo: переделать
+
+@inject('servicePagesStore', 'globalStore')
+@observer
 class Offer extends React.Component{
-  constructor(props) {
-    super(props);
-    this.canvas = React.createRef();
-  }
+  componentDidMount = async () => {
+    const { servicePagesStore:{getMetaPageByName}, globalStore:{apiRoot, setMeta}} = this.props;
 
-  componentDidMount() {
-    animateBackground(this.canvas);
-  }
+    await getMetaPageByName(apiRoot, {slug:'offer'});
+    setMeta(this.props.servicePagesStore.seoPage);
+  };
 
   render() {
     return (
       <React.Fragment>
         <Content>
-          <Canvas ref={this.canvas} />
           <GridWrap container spacing={2}>
             <Grid item xs={12}>
               <Title component="div" variant="subtitle1">

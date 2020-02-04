@@ -5,3 +5,4 @@ export { default as pageService } from './page';
 export { default as rightPanelService } from './rightPanel';
 export { default as eventService } from './event';
 export { default as itemService } from './item';
+export { default as servicePagesService } from './servicePages';

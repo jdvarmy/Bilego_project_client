@@ -1,4 +1,5 @@
 import React from 'react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
@@ -70,7 +71,16 @@ const IconContainer = styled.div`
   }
 `;
 
+@inject('servicePagesStore', 'globalStore')
+@observer
 class Contacts extends React.Component{
+  componentDidMount = async () => {
+    const { servicePagesStore:{getMetaPageByName}, globalStore:{apiRoot, setMeta}} = this.props;
+
+    await getMetaPageByName(apiRoot, {slug:'contacts'});
+    setMeta(this.props.servicePagesStore.seoPage);
+  };
+
   send = () => {
     console.log('send')
   };

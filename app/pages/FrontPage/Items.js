@@ -7,9 +7,9 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import { Item220 } from '../../components/Item';
 import BlockHeaderText from '../../components/BlockHeaderText';
-import Next from '../../components/Next';
 import { BilegoIconRightArrow } from '../../theme/bilegoIcons';
 import style from '../../theme/style';
+import Typography from '@material-ui/core/Typography';
 
 const GridWrap = styled(Grid)`
   padding: 24px;
@@ -20,9 +20,14 @@ const GridWrap = styled(Grid)`
 const CardWrap = styled(Card)`
   margin-bottom: 30px;
 `;
-const SBlockHeaderText = styled(BlockHeaderText)`
-  a{
-    color: ${style.$black};
+const STypography = styled(Typography)`
+  svg{
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  }
+  :hover{
+    svg{
+      transform: translate(15px, 0);
+    }
   }
 `;
 
@@ -36,14 +41,11 @@ class Items extends Component{
     return (
       <GridWrap container spacing={4}>
         <Grid item xs={12}>
-          <SBlockHeaderText>
+          <STypography component="h3" variant="h3">
             <Link to={baseNameForRouting + '/items'}>
-              Концертные площадки {cityLabel}
-              <Next ariaLabel="buy">
-                {BilegoIconRightArrow} Смотреть все
-              </Next>
+              Концертные площадки {cityLabel} {BilegoIconRightArrow}
             </Link>
-          </SBlockHeaderText>
+          </STypography>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>

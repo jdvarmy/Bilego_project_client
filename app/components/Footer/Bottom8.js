@@ -40,11 +40,11 @@ export default function Bottom8(props) {
             <span className="">Главная</span>
           </Link>
         </AntMenu.Item>
-        <AntMenu.Item key="Advertising">
-          <Link to={`/${baseNameForRouting}/advertising`}>
-            <span className="">Реклама</span>
-          </Link>
-        </AntMenu.Item>
+        {/*<AntMenu.Item key="Advertising">*/}
+        {/*  <Link to={`/${baseNameForRouting}/advertising`}>*/}
+        {/*    <span className="">Реклама</span>*/}
+        {/*  </Link>*/}
+        {/*</AntMenu.Item>*/}
         <AntMenu.Item key="Contacts">
           <Link to={`/${baseNameForRouting}/contacts`}>
             <span className="">Контакты</span>

@@ -1,54 +1,52 @@
 import React from 'react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import style from '../../theme/style';
-import animateBackground from '../../components/animatedBackground';
 
 const GridWrap = styled(Grid)`
-  position: absolute;
-  top: calc( 50% - 68px );
 `;
 const Content = styled.div`
+  position: relative;
   background-color: ${style.$white};
-  overflow: hidden;
+  z-index: 1;
+  padding: 20px;
+  max-width: 1250px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
-const Title = styled(Typography)`
-  text-align: center;
-  margin-top: 25px!important;
-`;
-const Canvas = styled.canvas`
-  display: block;
-  width: 100%;
-  height: 100%;
+const Padding = styled.div`
+  padding-top:48px;
 `;
 
+// todo: сделать
+
+
+@inject('servicePagesStore', 'globalStore')
+@observer
 class Advertising extends React.Component{
-  constructor(props) {
-    super(props);
-    this.canvas = React.createRef();
-  }
+  componentDidMount = async () => {
+    const { servicePagesStore:{getMetaPageByName}, globalStore:{apiRoot, setMeta}} = this.props;
 
-  componentDidMount() {
-    animateBackground(this.canvas);
-  }
+    await getMetaPageByName(apiRoot, {slug:'reklama'});
+    setMeta(this.props.servicePagesStore.seoPage);
+  };
 
   render() {
     return (
       <React.Fragment>
         <Content>
-          <Canvas ref={this.canvas} />
-          <GridWrap container spacing={2}>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Title component="div" variant="subtitle1">
-                По вопросам рекламы:
-              </Title>
-              <Title component="h4" variant="h4">
-                contacts
-              </Title>
+              <Typography component="h1" variant="h2">Реклама</Typography>
+              <Padding />
             </Grid>
-          </GridWrap>
+            <Grid item xs={12}></Grid>
+          </Grid>
         </Content>
       </React.Fragment>
     );

@@ -9,3 +9,4 @@ export { default as ticketsModalStore } from './ticketsModal';
 export { default as singleEventStore } from './singleEvent';
 export { default as singleItemStore } from './singleItem';
 export { default as calendarStore } from './calendar';
+export { default as servicePagesStore } from './servicePages';

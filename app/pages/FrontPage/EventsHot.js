@@ -5,11 +5,10 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import { Event300 } from '../../components/Event';
-import BlockHeaderText from '../../components/BlockHeaderText';
-import Next from '../../components/Next';
 import { BilegoIconRightArrow } from '../../theme/bilegoIcons';
 import { LoadingForEventsWith300 } from '../../components/LoadingsTemplate';
 import {Link} from "react-router-dom";
+import Typography from "@material-ui/core/Typography";
 
 const GridWrap = styled(Grid)`
   padding: 24px;
@@ -19,6 +18,16 @@ const GridWrap = styled(Grid)`
 `;
 const CardWrap = styled(Card)`
   margin-bottom: 30px;
+`;
+const STypography = styled(Typography)`
+  svg{
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  }
+  :hover{
+    svg{
+      transform: translate(15px, 0);
+    }
+  }
 `;
 
 @inject('pageStore', 'globalStore')
@@ -31,14 +40,11 @@ class EventsSoon extends Component{
     return (
       <GridWrap container spacing={4}>
         <Grid item xs={12}>
-          <BlockHeaderText>
+          <STypography component="h3" variant="h3">
             <Link to={`/${baseNameForRouting}/search?cat=pop`}>
-              Популярные события
-              <Next ariaLabel="buy" href="#">
-                {BilegoIconRightArrow} Смотреть все
-              </Next>
+              Популярные события {BilegoIconRightArrow}
             </Link>
-          </BlockHeaderText>
+          </STypography>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>

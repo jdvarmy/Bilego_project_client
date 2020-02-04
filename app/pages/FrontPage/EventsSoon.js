@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -6,11 +6,9 @@ import Grid from '@material-ui/core/Grid';
 
 import Card from '@material-ui/core/Card';
 import { Event430, Event200 } from '../../components/Event';
-import BlockHeaderText from '../../components/BlockHeaderText';
-import Next from '../../components/Next';
+import Typography from '@material-ui/core/Typography';
 import { BilegoIconRightArrow } from '../../theme/bilegoIcons';
 import { LoadingForEventsWith430and200 } from '../../components/LoadingsTemplate';
-import style from '../../theme/style';
 
 const GridWrap = styled(Grid)`
   padding: 24px;
@@ -19,13 +17,18 @@ const GridWrap = styled(Grid)`
   }
 `;
 const CardWrapLarge = styled(Card)``;
-const SBlockHeaderText = styled(BlockHeaderText)`
-  a{
-    color: ${style.$black};
-  }
-`;
 const CardWrap = styled(Card)`
   margin-bottom: 30px;
+`;
+const STypography = styled(Typography)`
+  svg{
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  }
+  :hover{
+    svg{
+      transform: translate(15px, 0);
+    }
+  }
 `;
 
 @inject('pageStore', 'globalStore')
@@ -80,14 +83,11 @@ class EventsSoon extends Component{
     return (
       <GridWrap container spacing={4}>
         <Grid item xs={12}>
-          <SBlockHeaderText>
+          <STypography component="h3" variant="h3">
             <Link to={`/${baseNameForRouting}/events`}>
-              Ближайшие события
-              <Next ariaLabel="buy">
-                {BilegoIconRightArrow} Смотреть все
-              </Next>
+              Ближайшие события {BilegoIconRightArrow}
             </Link>
-          </SBlockHeaderText>
+          </STypography>
         </Grid>
         {isLoading && eventsSoon.length <= 0
           ? <LoadingForEventsWith430and200 />

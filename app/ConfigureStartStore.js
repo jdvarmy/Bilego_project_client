@@ -1,6 +1,6 @@
 import { observable, action, computed, flow, configure } from 'mobx';
 import { matchPath } from 'react-router-dom';
-import { globalService, pageService, eventService, itemService, searchService } from './services';
+import { globalService, pageService, eventService, itemService, searchService, servicePagesService } from './services';
 import { cities, searchStore } from './stores';
 
 import imgWeekends from './pages/FrontPage/images/weekends.jpg';
@@ -295,13 +295,16 @@ export default class ConfigureStartStore {
           break;
 
         case 'Offer':
-          console.log('Offer')
+          resp = yield servicePagesService.getMetaPageByName(this.apiRoot,{slug: 'offer'});
+          this.setMeta(resp);
           break;
         case 'Advertising':
-          console.log('Advertising')
+          resp = yield servicePagesService.getMetaPageByName(this.apiRoot,{slug: 'reklama'});
+          this.setMeta(resp);
           break;
         case 'Contacts':
-          console.log('Contacts')
+          resp = yield servicePagesService.getMetaPageByName(this.apiRoot,{slug: 'contacts'});
+          this.setMeta(resp);
           break;
 
         default:

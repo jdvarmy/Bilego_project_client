@@ -5,12 +5,10 @@ import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import style from '../../theme/style';
 import { Event300 } from '../../components/Event';
-import BlockHeaderText from '../../components/BlockHeaderText';
-import Next from '../../components/Next';
 import { BilegoIconRightArrow } from '../../theme/bilegoIcons';
 import { LoadingForEventsWith300 } from '../../components/LoadingsTemplate';
+import Typography from "@material-ui/core/Typography";
 
 const GridWrap = styled(Grid)`
   padding: 24px;
@@ -18,13 +16,18 @@ const GridWrap = styled(Grid)`
     box-shadow: none;
   }
 `;
-const SBlockHeaderText = styled(BlockHeaderText)`
-  a{
-    color: ${style.$black};
-  }
-`;
 const CardWrap = styled(Card)`
   margin-bottom: 30px;
+`;
+const STypography = styled(Typography)`
+  svg{
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  }
+  :hover{
+    svg{
+      transform: translate(15px, 0);
+    }
+  }
 `;
 
 @inject('pageStore', 'globalStore')
@@ -37,14 +40,11 @@ class Concerts extends Component{
     return (
       <GridWrap container spacing={4}>
         <Grid item xs={12}>
-          <SBlockHeaderText>
+          <STypography component="h3" variant="h3">
             <Link to={`/${baseNameForRouting}/events/concerts`}>
-              Концерты
-              <Next ariaLabel="buy">
-                {BilegoIconRightArrow} Смотреть все
-              </Next>
+              Концерты {BilegoIconRightArrow}
             </Link>
-          </SBlockHeaderText>
+          </STypography>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>

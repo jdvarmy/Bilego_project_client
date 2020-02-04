@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
 export default function BlockHeaderText(props) {
   const classes = useStyles();
   return (
-    <Typography className={classes.title} component="h3" variant="h3">
+    <Typography className={classes.title} component="h1" variant="h2">
       {/* eslint-disable-next-line react/prop-types */}
       {props.children}
     </Typography>

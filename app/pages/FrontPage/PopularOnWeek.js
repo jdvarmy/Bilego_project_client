@@ -5,10 +5,8 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import { Event200 } from '../../components/Event';
-import BlockHeaderText from '../../components/BlockHeaderText';
-import Next from '../../components/Next';
-import { BilegoIconRightArrow } from '../../theme/bilegoIcons';
 import { LoadingForEventsWith200 } from '../../components/LoadingsTemplate';
+import Typography from '@material-ui/core/Typography';
 
 const GridWrap = styled(Grid)`
   padding: 24px;
@@ -35,9 +33,9 @@ class PopularOnWeek extends Component{
     return (
       <GridWrap container spacing={4}>
         <Grid item xs={12}>
-          <BlockHeaderText>
+          <Typography component="h3" variant="h3">
             Популярно на этой неделе
-          </BlockHeaderText>
+          </Typography>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>
