@@ -7,7 +7,11 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
 import style from '../../theme/style';
-import {IconFacebook, IconVk, IconInstagram} from '../../theme/bilegoIcons';
+import { IconFacebook, IconVk, IconInstagram, IconSkype, IconTwitter, IconYoutube,
+  BilegoIconHelp,
+  BilegoIconTarget,
+  BilegoIconHandshake
+} from '../../theme/bilegoIcons';
 
 const GridWrap = styled(Grid)`
   padding: 20px 0;
@@ -20,13 +24,26 @@ const Content = styled.div`
   background-color: ${style.$white};
   z-index: 1;
   padding: 20px;
+  max-width: 1250px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .center{
+    text-align: center;
+  }
+  form{
+    padding: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.42);
+    border-radius: 12px;
+  }
 `;
 const Padding = styled.div`
   padding-top:48px;
 `;
 const StyledA = styled(IconButton)`
-  margin: 10px 10px 10px 0!important;
-  border: 1px solid rgba(0, 0, 0, 0.38)!important;
+  margin: 10px 18px 10px 0!important;
+  border: 1px solid rgba(0, 0, 0, 0.78)!important;
   transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1)!important;
   svg{
     cursor: pointer;
@@ -36,10 +53,20 @@ const StyledA = styled(IconButton)`
   }
   :hover{
     background-color: transparent!important;
-    border-color: ${style.$red}!important;
+    border-color: inherit!important;
     svg{
-      fill: ${style.$red};
+      // fill: ${style.$red};
     }
+  }
+  :last-child{
+    margin-right: 0!important;
+  }
+`;
+const IconContainer = styled.div`
+  svg{
+    font-size: 3rem;
+    display: block;
+    margin: 0 auto 20px;
   }
 `;
 
@@ -55,12 +82,11 @@ class Contacts extends React.Component{
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography component="h1" variant="h2">Свяжитесь с нами</Typography>
+              <Padding />
             </Grid>
             <Grid item xs={12}>
-              <Typography component="div" variant="h6">Можно смело писать</Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <Typography component="div" variant="subtitle2">По организационным вопросам:</Typography>
+              <Grid container spacing={2} className="center">
+                <Grid item xs={12}>
                   <StyledA href="#">
                     <IconButton aria-label="vk" className="bilego-button">
                       {IconVk}
@@ -76,22 +102,19 @@ class Contacts extends React.Component{
                       {IconInstagram}
                     </IconButton>
                   </StyledA>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography component="div" variant="subtitle2">По техническим вопросам:</Typography>
                   <StyledA href="#">
-                    <IconButton aria-label="vk" className="bilego-button">
-                      {IconVk}
+                    <IconButton aria-label="facebook" className="bilego-button">
+                      {IconTwitter}
                     </IconButton>
                   </StyledA>
                   <StyledA href="#">
                     <IconButton aria-label="facebook" className="bilego-button">
-                      {IconFacebook}
+                      {IconSkype}
                     </IconButton>
                   </StyledA>
                   <StyledA href="#">
                     <IconButton aria-label="facebook" className="bilego-button">
-                      {IconInstagram}
+                      {IconYoutube}
                     </IconButton>
                   </StyledA>
                 </Grid>
@@ -99,9 +122,11 @@ class Contacts extends React.Component{
             </Grid>
             <Grid item xs={12}>
               <Padding />
-              <Padding />
             </Grid>
-            <Grid item xs>
+            <Grid item xs className="center">
+              <IconContainer>
+                {BilegoIconHandshake}
+              </IconContainer>
               <Typography component="div" variant="subtitle1">
                 Сотрудничество:
               </Typography>
@@ -109,7 +134,10 @@ class Contacts extends React.Component{
                 <a href="mailto:sales@bilego.ru">sales@bilego.ru</a>
               </Typography>
             </Grid>
-            <Grid item xs>
+            <Grid item xs className="center">
+              <IconContainer>
+                {BilegoIconTarget}
+              </IconContainer>
               <Typography component="div" variant="subtitle1">
                 Реклама:
               </Typography>
@@ -117,7 +145,10 @@ class Contacts extends React.Component{
                 <a href="mailto:adv@bilego.ru">adv@bilego.ru</a>
               </Typography>
             </Grid>
-            <Grid item xs>
+            <Grid item xs className="center">
+              <IconContainer>
+                {BilegoIconHelp}
+              </IconContainer>
               <Typography component="div" variant="subtitle1">
                 Техподдержка:
               </Typography>
@@ -129,8 +160,8 @@ class Contacts extends React.Component{
               <Padding />
             </Grid>
             <Grid item xs={12}>
-              <Typography component="h4" variant="h4">Задайте вопрос</Typography>
               <form noValidate autoComplete="off">
+                <Typography component="h4" variant="h4">Задайте вопрос</Typography>
                 <GridWrap container spacing={8}>
                   <Grid item xs={6}>
                     <TextField id="name" name="name" label="Ваше имя" />
