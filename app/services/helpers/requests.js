@@ -18,7 +18,6 @@ const tokenPlugin = request => {
   // todo: включить на проме, блокирует запросы с разных адресов
   // request.set('X-Requested-With', 'XMLHttpRequest');
   // request.set('X-NX-Origin', 'SG');
-
 };
 
 export default {

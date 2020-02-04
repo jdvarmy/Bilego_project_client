@@ -7,19 +7,21 @@ import Typography from '@material-ui/core/Typography';
 import style from '../../theme/style';
 
 const GridWrap = styled(Grid)`
-  position: absolute;
-  top: calc( 50% - 68px );
 `;
 const Content = styled.div`
+  position: relative;
   background-color: ${style.$white};
-  overflow: hidden;
+  z-index: 1;
+  padding: 20px;
+  max-width: 1250px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
-const Title = styled(Typography)`
-  text-align: center;
-  margin-top: 25px!important;
+const Padding = styled.div`
+  padding-top:48px;
 `;
-
-// todo: переделать
 
 @inject('servicePagesStore', 'globalStore')
 @observer
@@ -37,12 +39,8 @@ class Offer extends React.Component{
         <Content>
           <GridWrap container spacing={2}>
             <Grid item xs={12}>
-              <Title component="div" variant="subtitle1">
-                Оферта:
-              </Title>
-              <Title component="h4" variant="h4">
-                link
-              </Title>
+              <Typography component="h1" variant="h2">Свяжитесь с нами</Typography>
+              <Padding />
             </Grid>
           </GridWrap>
         </Content>

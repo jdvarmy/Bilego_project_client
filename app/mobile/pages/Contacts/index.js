@@ -5,59 +5,130 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import style from '../../../theme/style';
 import Padding from '../../components/Padding';
-import animateBackground from '../../../components/animatedBackground';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
+import Fab from '@material-ui/core/Fab';
+import { inject } from 'mobx-react';
 
 const GridWrap = styled(Grid)`
 `;
 const Content = styled.div`
   background-color: ${style.$white};
+  overflow: hidden;
   z-index: 1;
   position: relative;
+  padding-top: 56px;
+  margin: auto 16px;
+  form{
+    h4{
+      padding-bottom: 20px;
+    }
+    button{
+      margin: 0 auto;
+      display: block;
+    }
+  }
+`;
+const LinePadding = styled.div`
+  padding-top:48px;
 `;
 const Title = styled(Typography)`
   text-align: center;
-  margin-top: 15px!important;
-  margin-bottom: 15px!important;
+  margin-top: 25px!important;
 `;
-const Canvas = styled.canvas`
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
+const StyledA = styled(IconButton)`
+  margin: 10px 18px!important;
+  border: 1px solid rgba(0, 0, 0, 0.78)!important;
+  svg{
+    cursor: pointer;
+    vertical-align: middle;
+    font-size: 1.25rem!important;
+    color: ${style.$black};
+  }
+`;
+const IconContainer = styled.div`
+  svg{
+    font-size: 4rem;
+    display: block;
+    margin: 0 auto;
+  }
 `;
 
+@inject('servicePagesStore')
 class Contacts extends React.Component{
-  constructor(props) {
-    super(props);
-    this.canvas = React.createRef();
-  }
-
-  componentDidMount() {
-    animateBackground(this.canvas);
-  }
-
   render() {
+    const {servicePagesStore:{social, contacts}} = this.props;
+
     return (
       <React.Fragment>
         <Padding>
           <div/>
         </Padding>
         <Content>
-          <Canvas ref={this.canvas} />
-          <GridWrap container spacing={2}>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Title component="h4" variant="subtitle1">
-                Сотрудничество: <a style={{color: '#fff'}} href="mailto:sales@bilego.ru">sales@bilego.ru</a>
-              </Title>
-              <Title component="h4" variant="subtitle1">
-                Реклама: <a style={{color: '#fff'}} href="mailto:adv@bilego.ru">adv@bilego.ru</a>
-              </Title>
-              <Title component="h4" variant="subtitle1">
-                Техподдержка: <a style={{color: '#fff'}} href="mailto:support@bilego.ru">support@bilego.ru</a>
-              </Title>
+              <Title component="h1" variant="h4">Свяжитесь с нами</Title>
             </Grid>
-          </GridWrap>
+            <Grid item xs={12}>
+              <Grid container spacing={2} justify="center">
+                {social.map(el=>(
+                  <Grid key={el.name} item>
+                    <StyledA href={el.link}>
+                      <IconButton aria-label={el.name} className="bilego-button">
+                        {el.icon}
+                      </IconButton>
+                    </StyledA>
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <LinePadding />
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container spacing={2} justify="center" style={{textAlign: 'center'}}>
+              {contacts.map(el=>(
+                <Grid key={el.name} item xs={12}>
+                  <IconContainer>
+                    {el.icon}
+                  </IconContainer>
+                  <Typography component="div" variant="subtitle1">
+                    {el.name}:
+                  </Typography>
+                  <Typography component="h5" variant="h5">
+                    <a href={`mailto:${el.email}`}>{el.email}</a>
+                  </Typography>
+                  <LinePadding />
+                </Grid>
+              ))}
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <form autoComplete="off">
+                <Typography component="h4" variant="h4">Задайте вопрос</Typography>
+                <GridWrap container spacing={4}>
+                  <Grid item xs={12}>
+                    <TextField id="name" name="name" label="Ваше имя" fullWidth />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField id="email" name="email" label="E-mail" fullWidth />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField id="message" name="message" label="Сообщение" fullWidth />
+                  </Grid>
+                  <Grid item xs={12}>
+                    {/*todo: добавить капчу*/}
+                  </Grid>
+                  <Grid item xs={12} style={{textAlign: 'end'}}>
+                    <Fab onClick={this.send} variant="extended" aria-label="send">
+                      Отправить
+                    </Fab>
+                  </Grid>
+                </GridWrap>
+              </form>
+              <LinePadding />
+            </Grid>
+          </Grid>
         </Content>
       </React.Fragment>
     );

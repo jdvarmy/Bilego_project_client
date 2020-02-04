@@ -1,24 +1,19 @@
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import { observable, action } from 'mobx';
 import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
 import style from '../../theme/style';
-import { IconFacebook, IconVk, IconInstagram, IconSkype, IconTwitter, IconYoutube,
-  BilegoIconHelp,
-  BilegoIconTarget,
-  BilegoIconHandshake
-} from '../../theme/bilegoIcons';
+
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import { BilegoSendMail } from '../../theme/bilegoIcons';
 
 const GridWrap = styled(Grid)`
   padding: 20px 0;
-  .MuiTextField-root{
-    width: 100%;
-  }
 `;
 const Content = styled.div`
   position: relative;
@@ -55,9 +50,6 @@ const StyledA = styled(IconButton)`
   :hover{
     background-color: transparent!important;
     border-color: inherit!important;
-    svg{
-      // fill: ${style.$red};
-    }
   }
   :last-child{
     margin-right: 0!important;
@@ -81,11 +73,43 @@ class Contacts extends React.Component{
     setMeta(this.props.servicePagesStore.seoPage);
   };
 
-  send = () => {
+  @observable disabled = false;
+  @observable name = '';
+  @observable email = '';
+  @observable message = '';
+
+  @action clear = () => {
+    this.name = '';
+    this.email = '';
+    this.message = '';
+    this.disabled = false;
+  };
+
+  @action
+  handleChange = (event) => {
+    this[event.target.name] = event.target.value;
+  };
+
+  @action
+  send = async () => {
+    this.disabled = true;
+
+    const {servicePagesStore:{sendContactForm}, globalStore:{cityLabel}} = this.props;
+    await sendContactForm({
+      'your-name': this.name,
+      'your-email': this.email,
+      'your-message': this.message,
+      'your-subject': cityLabel
+    });
+
     console.log('send')
+
+    this.clear();
   };
 
   render() {
+    const {servicePagesStore:{social, contacts}} = this.props;
+
     return (
       <React.Fragment>
         <Content>
@@ -97,101 +121,82 @@ class Contacts extends React.Component{
             <Grid item xs={12}>
               <Grid container spacing={2} className="center">
                 <Grid item xs={12}>
-                  <StyledA href="#">
-                    <IconButton aria-label="vk" className="bilego-button">
-                      {IconVk}
-                    </IconButton>
-                  </StyledA>
-                  <StyledA href="#">
-                    <IconButton aria-label="facebook" className="bilego-button">
-                      {IconFacebook}
-                    </IconButton>
-                  </StyledA>
-                  <StyledA href="#">
-                    <IconButton aria-label="facebook" className="bilego-button">
-                      {IconInstagram}
-                    </IconButton>
-                  </StyledA>
-                  <StyledA href="#">
-                    <IconButton aria-label="facebook" className="bilego-button">
-                      {IconTwitter}
-                    </IconButton>
-                  </StyledA>
-                  <StyledA href="#">
-                    <IconButton aria-label="facebook" className="bilego-button">
-                      {IconSkype}
-                    </IconButton>
-                  </StyledA>
-                  <StyledA href="#">
-                    <IconButton aria-label="facebook" className="bilego-button">
-                      {IconYoutube}
-                    </IconButton>
-                  </StyledA>
+                  {social.map(el=>(
+                    <StyledA key={el.name} href={el.link}>
+                      <IconButton aria-label={el.name} className="bilego-button">
+                        {el.icon}
+                      </IconButton>
+                    </StyledA>
+                  ))}
                 </Grid>
               </Grid>
             </Grid>
             <Grid item xs={12}>
               <Padding />
             </Grid>
-            <Grid item xs className="center">
-              <IconContainer>
-                {BilegoIconHandshake}
-              </IconContainer>
-              <Typography component="div" variant="subtitle1">
-                Сотрудничество:
-              </Typography>
-              <Typography component="h5" variant="h5">
-                <a href="mailto:sales@bilego.ru">sales@bilego.ru</a>
-              </Typography>
-            </Grid>
-            <Grid item xs className="center">
-              <IconContainer>
-                {BilegoIconTarget}
-              </IconContainer>
-              <Typography component="div" variant="subtitle1">
-                Реклама:
-              </Typography>
-              <Typography component="h5" variant="h5">
-                <a href="mailto:adv@bilego.ru">adv@bilego.ru</a>
-              </Typography>
-            </Grid>
-            <Grid item xs className="center">
-              <IconContainer>
-                {BilegoIconHelp}
-              </IconContainer>
-              <Typography component="div" variant="subtitle1">
-                Техподдержка:
-              </Typography>
-              <Typography component="h5" variant="h5">
-                <a href="mailto:support@bilego.ru">support@bilego.ru</a>
-              </Typography>
-            </Grid>
+            {contacts.map(el=>(
+              <Grid key={el.name} item xs className="center">
+                <IconContainer>
+                  {el.icon}
+                </IconContainer>
+                <Typography component="div" variant="subtitle1">
+                  {el.name}:
+                </Typography>
+                <Typography component="h5" variant="h5">
+                  <a href={`mailto:${el.email}`}>{el.email}</a>
+                </Typography>
+              </Grid>
+            ))}
             <Grid item xs={12}>
               <Padding />
             </Grid>
             <Grid item xs={12}>
-              <form noValidate autoComplete="off">
+              <ValidatorForm onSubmit={this.send} autoComplete="off">
                 <Typography component="h4" variant="h4">Задайте вопрос</Typography>
                 <GridWrap container spacing={8}>
                   <Grid item xs={6}>
-                    <TextField id="name" name="name" label="Ваше имя" />
+                    <TextValidator
+                      onChange={this.handleChange}
+                      fullWidth
+                      name="name"
+                      label="Ваше имя"
+                      validators={['required']}
+                      errorMessages={['this field is required']}
+                      value={this.name} />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField id="email" name="email" label="E-mail" />
+                    <TextValidator
+                      onChange={this.handleChange}
+                      fullWidth
+                      name="email"
+                      label="E-mail"
+                      validators={['required', 'isEmail']}
+                      errorMessages={['this field is required', 'email is not valid']}
+                      value={this.email} />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField id="message" name="message" label="Сообщение" />
+                    <TextValidator
+                      onChange={this.handleChange}
+                      fullWidth
+                      name="message"
+                      label="Сообщение"
+                      validators={['required']}
+                      errorMessages={['this field is required']}
+                      value={this.message} />
                   </Grid>
                   <Grid item xs={6}>
                     {/*todo: добавить капчу*/}
                   </Grid>
                   <Grid item xs={6} style={{textAlign: 'end'}}>
-                    <Fab onClick={this.send} variant="extended" aria-label="send">
-                      Отправить
+                    <Fab type="submit" variant="extended" disabled={this.disabled} aria-label="send">
+                      {
+                        (this.disabled && 'Ваше сообщение отправлено!')
+                        || (!this.disabled && `Отправить ${BilegoSendMail}`)
+                      }
                     </Fab>
                   </Grid>
                 </GridWrap>
-              </form>
+              </ValidatorForm>
               <Padding />
             </Grid>
           </Grid>

@@ -210,10 +210,11 @@ class Header extends React.Component{
     }
   ];
   subMenu = [
+    // {
+    //   name: 'Реклама',
+    //   link: '/advertising',
+    // },
     {
-      name: 'Реклама',
-      link: '/advertising',
-    }, {
       name: 'Контакты',
       link: '/contacts',
     }, {

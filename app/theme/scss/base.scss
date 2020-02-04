@@ -37,6 +37,9 @@ body{
   #app{
     height: 100%;
   }
+  h1, h2, h3, h4, h5, h6{
+    color: $black;
+  }
   .bilego-recommend{
     svg #art-base {fill: white; mask: url(#art-mask);}
     svg #weekends-base {fill: white; mask: url(#weekends-mask);}
