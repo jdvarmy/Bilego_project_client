@@ -7,11 +7,12 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Fab from '@material-ui/core/Fab';
+import Snackbar from '@material-ui/core/Snackbar';
+import Slide from '@material-ui/core/Slide';
 import style from '../../theme/style';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { BilegoSendMail } from '../../theme/bilegoIcons';
-import Snackbar from "@material-ui/core/Snackbar";
 
 const GridWrap = styled(Grid)`
   padding: 20px 0;
@@ -63,6 +64,22 @@ const IconContainer = styled.div`
     margin: 0 auto 20px;
   }
 `;
+const SSnackbar = styled(Snackbar)`
+  max-width: 480px;
+  left: calc(50% - 240px)!important;
+  z-index: 99999!important;
+  .MuiPaper-root{
+    border-radius: 12px;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.1), 
+                0 0 12px rgba(255, 255, 255, 0.1), 
+                inset 0 0 4px rgba(255, 255, 255, 0.1), 
+                0 0 8px rgba(0, 0, 0, 0.15);
+    background: ${style.$white};
+    padding: 10px 30px;
+    font-weight: 500;
+    color: ${style.$black};
+  }
+`;
 
 @inject('servicePagesStore', 'globalStore')
 @observer
@@ -97,20 +114,35 @@ class Contacts extends React.Component{
 
     const {servicePagesStore:{sendContactForm}, globalStore:{cityLabel}} = this.props;
     const resp = await sendContactForm([
-      {'your-name': ''},
+      {'your-name': this.name},
       {'your-email': this.email},
       {'your-message': this.message},
       {'your-subject': cityLabel}
     ]);
 
-    console.log(resp)
+    this.handleSnackbar(resp.status === 'mail_sent', resp.message);
+  };
 
-    if(resp.status === 'mail_sent'){
+  @observable openSnackbar = false;
+  @observable snackbarMessage = '';
+  @observable snackbarSeverity = 'success';
+  @action
+  handleSnackbar = (flag, message) => {
+    if(flag) {
       this.clear();
-    }else{
-      // todo: сделать всплывающее окно
+      this.openSnackbar = true;
+      this.snackbarSeverity = 'success';
+      this.snackbarMessage = message;
+    }else {
+      this.disabled = false;
+      this.openSnackbar = true;
+      this.snackbarSeverity = 'error';
+      this.snackbarMessage = message;
     }
-
+  };
+  @action
+  handleCloseSnackbar = () => {
+    this.openSnackbar = false;
   };
 
   render() {
@@ -204,6 +236,15 @@ class Contacts extends React.Component{
             </Grid>
           </Grid>
         </Content>
+        <Slide direction="up" in={this.openSnackbar} mountOnEnter unmountOnExit>
+          <SSnackbar
+            open
+            autoHideDuration={8000}
+            onClose={this.handleCloseSnackbar}
+            message={this.snackbarMessage}
+            severity={this.snackbarSeverity}
+          />
+        </Slide>
       </React.Fragment>
     );
   }
