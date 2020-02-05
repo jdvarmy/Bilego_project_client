@@ -161,7 +161,7 @@ class Contacts extends React.Component{
                       name="name"
                       label="Ваше имя"
                       validators={['required']}
-                      errorMessages={['this field is required']}
+                      errorMessages={['пожалуйста, заполните поле']}
                       value={this.name} />
                   </Grid>
                   <Grid item xs={6}>
@@ -171,7 +171,7 @@ class Contacts extends React.Component{
                       name="email"
                       label="E-mail"
                       validators={['required', 'isEmail']}
-                      errorMessages={['this field is required', 'email is not valid']}
+                      errorMessages={['пожалуйста, заполните поле', 'email не похож сам на себя =)']}
                       value={this.email} />
                   </Grid>
                   <Grid item xs={12}>
@@ -181,7 +181,7 @@ class Contacts extends React.Component{
                       name="message"
                       label="Сообщение"
                       validators={['required']}
-                      errorMessages={['this field is required']}
+                      errorMessages={['пожалуйста, заполните поле']}
                       value={this.message} />
                   </Grid>
                   <Grid item xs={6}>
@@ -191,7 +191,7 @@ class Contacts extends React.Component{
                     <Fab type="submit" variant="extended" disabled={this.disabled} aria-label="send">
                       {
                         (this.disabled && 'Ваше сообщение отправлено!')
-                        || (!this.disabled && `Отправить ${BilegoSendMail}`)
+                        || (!this.disabled && <React.Fragment>{BilegoSendMail}Отправить</React.Fragment>)
                       }
                     </Fab>
                   </Grid>

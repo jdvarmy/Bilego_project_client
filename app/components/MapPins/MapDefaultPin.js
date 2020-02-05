@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Fab from '@material-ui/core/Fab';
-import {BilegoIconMapPin} from '../../theme/bilegoIcons';
+import { BilegoIconMapPin } from '../../theme/bilegoIcons';
 
 const StyledFab = styled(Fab)`
   box-shadow: none!important;
