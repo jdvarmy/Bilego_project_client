@@ -11,6 +11,7 @@ import style from '../../theme/style';
 
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { BilegoSendMail } from '../../theme/bilegoIcons';
+import Snackbar from "@material-ui/core/Snackbar";
 
 const GridWrap = styled(Grid)`
   padding: 20px 0;
@@ -95,16 +96,21 @@ class Contacts extends React.Component{
     this.disabled = true;
 
     const {servicePagesStore:{sendContactForm}, globalStore:{cityLabel}} = this.props;
-    await sendContactForm({
-      'your-name': this.name,
-      'your-email': this.email,
-      'your-message': this.message,
-      'your-subject': cityLabel
-    });
+    const resp = await sendContactForm([
+      {'your-name': ''},
+      {'your-email': this.email},
+      {'your-message': this.message},
+      {'your-subject': cityLabel}
+    ]);
 
-    console.log('send')
+    console.log(resp)
 
-    this.clear();
+    if(resp.status === 'mail_sent'){
+      this.clear();
+    }else{
+      // todo: сделать всплывающее окно
+    }
+
   };
 
   render() {
@@ -189,10 +195,7 @@ class Contacts extends React.Component{
                   </Grid>
                   <Grid item xs={6} style={{textAlign: 'end'}}>
                     <Fab type="submit" variant="extended" disabled={this.disabled} aria-label="send">
-                      {
-                        (this.disabled && 'Ваше сообщение отправлено!')
-                        || (!this.disabled && <React.Fragment>{BilegoSendMail}Отправить</React.Fragment>)
-                      }
+                      <React.Fragment>{BilegoSendMail}Отправить</React.Fragment>
                     </Fab>
                   </Grid>
                 </GridWrap>

@@ -37,6 +37,22 @@ export default {
       .end(handleErrors)
       .then(responseBody)
       .catch(err => handleCatch(url, err)),
+  fileUpload: (url, query = {}, files = [], fields = []) => {
+    let req = http.post(`${url}`);
+    files.forEach((file)=> {
+      req.attach(file.name, file);
+    });
+    fields.forEach( (field)=> {
+      req.field(field);
+    });
+
+    return req
+      .query(query)
+      .use(tokenPlugin)
+      .end(handleErrors)
+      .then(responseBody)
+      .catch(err => handleCatch(url, err));
+  },
   getDaData: () =>
     http
       .get('https://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address')

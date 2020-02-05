@@ -51,8 +51,7 @@ class servicePages{
   sendContactForm = flow( function* sendContactForm(params) {
     this.isLoading = true;
     try {
-      const resp = yield servicePagesService.sendContactForm(params);
-      console.log(resp)
+      return yield servicePagesService.sendContactForm(params);
     } catch (e) {
       console.log(e);
     } finally {
