@@ -5,8 +5,8 @@ import tRexCrashImg from './images/trex_crash.png'
 import tRexDuck1Img from './images/trex_duck_1.png'
 import tRexDuck2Img from './images/trex_duck_2.png'
 import tRexFistFrameImg from './images/trex_first_frame.png'
-import jumpSound from './sounds/button-press.mp3'
-import hitSound from './sounds/hit.mp3'
+// import jumpSound from './sounds/button-press.mp3'
+// import hitSound from './sounds/hit.mp3'
 
 const STATUS = Object.freeze({
   START: 'START',
@@ -39,10 +39,10 @@ class Trex extends Sprite {
     GRAVITY: 2000,
     JUMP_SPEED: 550,
     SPEED: 70, // move when you start the game for the first time
-    SOUNDS: {
-      JUMP: jumpSound,
-      HIT: hitSound,
-    },
+    // SOUNDS: {
+    //   JUMP: jumpSound,
+    //   HIT: hitSound,
+    // },
   };
 
 
@@ -52,7 +52,7 @@ class Trex extends Sprite {
       ...this.config,
       ...options,
     };
-    this.loadSounds();
+    // this.loadSounds();
     this.xPos = 0;
     this.groundY =
       this.canvas.height - this.img.height - this.config.GROUND_HEIGHT;
@@ -111,36 +111,35 @@ class Trex extends Sprite {
     }
     this.status = STATUS.JUMP;
     this.jumpVelocity = speed;
-    this.playSound(this.config.SOUNDS.JUMP)
+    // this.playSound(this.config.SOUNDS.JUMP)
   }
 
   crash() {
     this.status = STATUS.CRASH;
-    // landing
     this.jumpVelocity = -1 * Math.abs(this.jumpVelocity);
-    this.playSound(this.config.SOUNDS.HIT)
+    // this.playSound(this.config.SOUNDS.HIT)
   }
 
   start() {
     this.status = STATUS.JUMP
   }
 
-  loadSounds() {
-    Object.values(this.config.SOUNDS)
-      .forEach(src => {
-        const audio = new Audio(src);
-        this.audioMap.set(src, audio)
-      })
-  }
+  // loadSounds() {
+  //   Object.values(this.config.SOUNDS)
+  //     .forEach(src => {
+  //       const audio = new Audio(src);
+  //       this.audioMap.set(src, audio)
+  //     })
+  // }
 
-  playSound(sound) {
-    const audio = this.audioMap.get(sound);
-    // HTMLMediaElement.readyState
-    if (!audio || audio.readyState !== 4) {
-      return
-    }
-    audio.play()
-  }
+  // playSound(sound) {
+  //   const audio = this.audioMap.get(sound);
+  //   // HTMLMediaElement.readyState
+  //   if (!audio || audio.readyState !== 4) {
+  //     return
+  //   }
+  //   audio.play()
+  // }
 }
 
 export default Trex;

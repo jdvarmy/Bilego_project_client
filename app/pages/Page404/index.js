@@ -26,8 +26,10 @@ const Wrapper = styled.div`
     height: 100%;
   }
 `;
-
-// todo: сделать нормальную страницу
+const Padding = styled.div`
+  padding: 38px;
+`;
+// todo: не работает клавиатура после этой страницы
 
 @inject('globalStore')
 class Page404 extends React.Component{
@@ -41,7 +43,9 @@ class Page404 extends React.Component{
             <Typography component="h1" variant="h2">Четыре Ноль Четыре</Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
+                <Padding />
                 <Game />
+                <Padding />
               </Grid>
             </Grid>
           </Grid>
