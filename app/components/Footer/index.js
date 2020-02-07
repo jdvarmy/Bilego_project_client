@@ -55,7 +55,7 @@ const BilegoDivider = styled.div`
 @observer
 class Footer extends Component{
   render(){
-    const {globalStore:{baseNameForRouting}} = this.props;
+    const {globalStore:{baseNameForRouting, categoriesForFooterMenu}} = this.props;
 
     return(
       <Fragment>
@@ -81,7 +81,7 @@ class Footer extends Component{
                 <Bottom4/>
               </Grid>
               <Grid item xs={8}>
-                <Bottom8 baseNameForRouting={baseNameForRouting}/>
+                <Bottom8 categoriesForFooterMenu={categoriesForFooterMenu} baseNameForRouting={baseNameForRouting}/>
               </Grid>
             </Grid>
           </Grid>

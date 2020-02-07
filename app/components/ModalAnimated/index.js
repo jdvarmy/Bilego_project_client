@@ -26,7 +26,7 @@ export default function ModalAnimated(props) {
     Children = styled.div`
       ${p=>(p.light 
         ? `
-          padding: 35px;
+          padding: 70px 100px;
         `
         : `
           background: ${style.$white}

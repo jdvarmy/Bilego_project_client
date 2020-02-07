@@ -7,6 +7,7 @@ import imgWeekends from './pages/FrontPage/images/weekends.jpg';
 import imgForKids from './pages/FrontPage/images/bilego_for_kids.jpg';
 import imgArt from './pages/FrontPage/images/art.jpg';
 import imgTheatre from './pages/FrontPage/images/theatre.jpg';
+import { BilegoIconHandshake } from './theme/bilegoIcons';
 
 configure({
   enforceActions: 'always'
@@ -78,34 +79,85 @@ export default class ConfigureStartStore {
         page: 'page',
         name: 'Концерты',
         link: 'events/concerts',
+        icon: BilegoIconHandshake,
       }, {
         id: this.cities[this.CITY].category.festivals,
         cat: 'Festivals',
         page: 'page',
         name: 'Фестивали',
         link: 'events/festivals',
+        icon: BilegoIconHandshake,
       }, {
         id: this.cities[this.CITY].category.lectures,
         cat: 'Lectures',
         page: 'category',
         name: 'Лекции',
         link: 'events/lectures',
+        icon: BilegoIconHandshake,
       }, {
         id: this.cities[this.CITY].category.exhibitions,
         cat: 'Exhibitions',
         page: 'category',
         name: 'Выставки',
         link: 'events/exhibitions',
+        icon: BilegoIconHandshake,
       }, {
         id: this.cities[this.CITY].category.children,
         cat: 'Children',
         page: 'category',
         name: 'Детям',
         link: 'events/forkids',
+        icon: BilegoIconHandshake,
       }
     ];
 
-    return false;
+    return [];
+  }
+  @computed
+  get categoriesForFooterMenu(){
+    if(this.CITY !== -1) return [
+      // {
+      //   id: 'advertising',
+      //   cat: false,
+      //   page: 'page',
+      //   name: 'Реклама',
+      //   link: `/${this.baseNameForRouting}/advertising`,
+      //   icon: BilegoIconHandshake,
+      // },
+      {
+        id: 'contacts',
+        cat: false,
+        page: 'page',
+        name: 'Контакты',
+        link: `/${this.baseNameForRouting}/contacts`,
+        icon: BilegoIconHandshake,
+      },
+      {
+        id: 'offer',
+        cat: false,
+        page: 'page',
+        name: 'Оферта',
+        link: `/${this.baseNameForRouting}/offer`,
+        icon: BilegoIconHandshake,
+      },
+      {
+        id: 'events',
+        cat: false,
+        page: 'page',
+        name: 'События',
+        link: `/${this.baseNameForRouting}/events`,
+        icon: BilegoIconHandshake,
+      },
+      {
+        id: 'items',
+        cat: false,
+        page: 'page',
+        name: 'Места',
+        link: `/${this.baseNameForRouting}/items`,
+        icon: BilegoIconHandshake,
+      },
+    ];
+    return [];
   }
   @computed
   get canonicalLink(){

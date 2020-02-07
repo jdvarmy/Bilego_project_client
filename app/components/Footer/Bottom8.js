@@ -29,8 +29,7 @@ const StyledMenu = styled(AntMenu)`
 `;
 
 export default function Bottom8(props) {
-  // eslint-disable-next-line react/prop-types
-  const { baseNameForRouting } = props;
+  const { categoriesForFooterMenu, baseNameForRouting } = props;
 
   return (
     <Fragment>
@@ -40,31 +39,13 @@ export default function Bottom8(props) {
             <span className="">Главная</span>
           </Link>
         </AntMenu.Item>
-        {/*<AntMenu.Item key="Advertising">*/}
-        {/*  <Link to={`/${baseNameForRouting}/advertising`}>*/}
-        {/*    <span className="">Реклама</span>*/}
-        {/*  </Link>*/}
-        {/*</AntMenu.Item>*/}
-        <AntMenu.Item key="Contacts">
-          <Link to={`/${baseNameForRouting}/contacts`}>
-            <span className="">Контакты</span>
-          </Link>
-        </AntMenu.Item>
-        <AntMenu.Item key="Offer">
-          <Link to={`/${baseNameForRouting}/offer`}>
-            <span className="">Оферта</span>
-          </Link>
-        </AntMenu.Item>
-        <AntMenu.Item key="Events">
-          <Link to={`/${baseNameForRouting}/events`}>
-            <span className="">События</span>
-          </Link>
-        </AntMenu.Item>
-        <AntMenu.Item key="Items">
-          <Link to={`/${baseNameForRouting}/items`}>
-            <span className="">Места</span>
-          </Link>
-        </AntMenu.Item>
+        {categoriesForFooterMenu.map(el=>(
+          <AntMenu.Item key={el.id}>
+            <Link to={el.link}>
+              <span className="">{el.name}</span>
+            </Link>
+          </AntMenu.Item>
+        ))}
       </StyledMenu>
     </Fragment>
   );
