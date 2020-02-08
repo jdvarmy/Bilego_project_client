@@ -64,8 +64,6 @@ class Runner extends React.Component {
       console.error('Cannot load Images')
     }
 
-    console.log('hell')
-
     const { ID, WIDTH, HEIGHT, INIT_SPEED } = this.config;
     this.canvas = document.createElement('canvas');
     // ID && (this.canvas.id = ID)

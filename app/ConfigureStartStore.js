@@ -49,6 +49,25 @@ export default class ConfigureStartStore {
     this.mobile = val
   };
 
+  meta404 = {
+    id: 0,
+    type: 'page',
+    title: 'Страница не найдена | Bilego',
+    description: false,
+    keywords: '',
+    opengraph: {
+      locale: 'ru_RU',
+      type: 'website',
+      title: 'Страница не найдена | Bilego',
+      description: false,
+      site_name: 'Bilego',
+      image: null,
+      image_secure_url: null,
+      image_width: null,
+      image_height: null },
+    company_logo: 'https://mos.bilego.ru/wp-content/uploads/2019/03/bilego-logo-1.png'
+  };
+
   // def variables
   @computed
   get baseNameForRouting(){
@@ -357,6 +376,10 @@ export default class ConfigureStartStore {
         case 'Contacts':
           resp = yield servicePagesService.getMetaPageByName(this.apiRoot,{slug: 'contacts'});
           this.setMeta(resp);
+          console.log(resp)
+          break;
+        case 'Page404':
+          this.setMeta(this.meta404);
           break;
 
         default:

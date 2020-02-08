@@ -30,9 +30,16 @@ const Padding = styled.div`
   padding: 38px;
 `;
 // todo: не работает клавиатура после этой страницы
+// todo: иконки для меню
 
 @inject('globalStore')
 class Page404 extends React.Component{
+  componentDidMount = () => {
+    const { meta404, setMeta } = this.props.globalStore;
+
+    setMeta(meta404);
+  };
+
   render(){
     const {globalStore:{baseNameForRouting, categoriesForMenu, categoriesForFooterMenu}} = this.props;
 
@@ -53,7 +60,7 @@ class Page404 extends React.Component{
             <List component="nav" aria-label="main">
               {categoriesForMenu.map(el=>(
                 <ListItem key={el.id} button>
-                  <ListItemIcon>{el.icon}</ListItemIcon>
+                  {/*<ListItemIcon>{el.icon}</ListItemIcon>*/}
                   <Link to={`/${baseNameForRouting}/${el.link}`}>
                     <ListItemText primary={el.name} />
                   </Link>
@@ -64,7 +71,7 @@ class Page404 extends React.Component{
             <List component="nav" aria-label="secondary">
               {categoriesForFooterMenu.map(el=>(
                 <ListItem key={el.id} button>
-                  <ListItemIcon>{el.icon}</ListItemIcon>
+                  {/*<ListItemIcon>{el.icon}</ListItemIcon>*/}
                   <Link to={`/${baseNameForRouting}/${el.link}`}>
                     <ListItemText primary={el.name} />
                   </Link>
