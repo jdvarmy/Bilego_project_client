@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 @observer
 class TicketsFrame extends Component{
   iframe = (link) => (
-    {__html: `<iframe src="${link}" width="100%" height="100%" allowfullscreen="" />`}
+    {__html: `<iframe src="${link}" width="100%" height="100%" allowfullscreen />`}
   );
 
   render() {

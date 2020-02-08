@@ -15,6 +15,7 @@ import Content from './Content';
 const TicketsFrameWrap = styled.div`
   border-top: 1px solid ${style.$grey};
   height: 645px;
+  width: 100%;
   margin-bottom: -31px;
   background: radial-gradient(circle, 
   rgba(238,174,202,0.22) 0%, 
@@ -44,7 +45,7 @@ class SingleEvent extends Component{
     }
   };
 
-  componentDidUpdate = async (prevProps, prevState, snapshot) => {
+  componentDidUpdate = async (prevProps) => {
     const {singleEventStore: {getEventDataBySlug, notFoundMeta, clear}, globalStore: {apiRoot, setMeta}} = this.props;
 
     try {

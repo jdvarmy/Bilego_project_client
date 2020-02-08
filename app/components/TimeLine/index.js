@@ -214,7 +214,7 @@ class TimeLine extends Component {
           <LoadMore>
             {pagination.showButton &&
             <SFab disabled={isLoading} onClick={this.loadMore} variant="extended" aria-label="load" style={{opacity: `${p=>p.loading ? 0 : 1}`}}>
-              {BilegoIconLoading} load more
+              {BilegoIconLoading} Загрузить еще
             </SFab>}
           </LoadMore>
         </NoSsr>

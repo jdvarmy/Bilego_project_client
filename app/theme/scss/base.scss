@@ -374,9 +374,11 @@ body{
   }
   .bilego-line-event:hover .event-image{
     transform: scale(1.10, 1.10);
+    border-radius: 100%;
   }
   .bilego-line-event:hover .line-event-dot{
     transform: scale(1.50, 1.50);
+    border-radius: 100%;
   }
 
   /* MODAL WINDOW */

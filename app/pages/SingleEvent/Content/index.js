@@ -59,7 +59,7 @@ class Content extends Component{
             <Grid item xs={4}>
               <Divider />
               <Padding />
-              Ya music and videos
+              {/* todo: Ya music and videos */}
             </Grid>
             <Grid item xs={8}>
               <Divider />

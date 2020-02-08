@@ -6,8 +6,8 @@ import styled from 'styled-components';
 
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
-import BlockHeaderText from '../../components/BlockHeaderText';
 import { MapDefaultPin } from '../../components/MapPins';
+import Typography from '@material-ui/core/Typography';
 
 const Padding = styled.div`
   padding-top:48px;
@@ -40,7 +40,7 @@ class Address extends Component {
       <Box>
         <Grid style={{padding: '20px'}} container spacing={4}>
           <Grid item xs={12}>
-            <BlockHeaderText>Карта</BlockHeaderText>
+            <Typography component="h3" variant="h2">Карта</Typography>
           </Grid>
         </Grid>
         <ReactMapGL
