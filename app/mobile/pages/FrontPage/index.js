@@ -69,7 +69,6 @@ class FrontPage extends React.Component{
   render() {
     const { globalStore:{ baseNameForRouting, ssrSide, selections }, pageStore } = this.props;
 
-    // console.log(ssrSide)
     const content =
       <Grid container spacing={2}>
         <Grid item xs={12}>
@@ -159,6 +158,7 @@ class FrontPage extends React.Component{
               {BilegoIconLoading} Показать ещё
             </SFab>
             }
+            <div style={{height: '2em'}} />
           </Grid>
         </Grid>
       </Grid>;

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,6 +9,7 @@ import style from '../../../theme/style';
 import PopularOnWeek from '../../components/PopularOnWeek';
 import Slider from './Slider';
 import Events from './Events';
+import { LoadingSingleItem } from '../../components/LoadingsTemplate';
 
 const Wrap = styled.div`
   overflow: hidden;
@@ -44,7 +45,7 @@ class SingleItem extends Component {
     }
   };
 
-  componentDidUpdate = async (prevProps, prevState, snapshot) => {
+  componentDidUpdate = async (prevProps) => {
     try {
       const {singleItemStore: {getItemDataBySlug}, globalStore: {apiRoot, setMeta}} = this.props;
 
@@ -62,39 +63,45 @@ class SingleItem extends Component {
   }
 
   render() {
-    const {singleItemStore:{item}, globalStore:{baseNameForRouting}} = this.props;
+    const {singleItemStore:{item, isLoading}, globalStore:{baseNameForRouting}} = this.props;
 
     return (
       <Wrap>
-        <Grid container spacing={2}>
-          <SGrid item xs={12}>
-            {item && <Slider item={item} baseNameForRouting={baseNameForRouting} />}
-          </SGrid>
-        </Grid>
-        <Content>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              {item && <Events />}
+        {isLoading && item === undefined
+          ? <LoadingSingleItem/>
+          : item !== undefined &&
+          <React.Fragment>
+            <Grid container spacing={2}>
+              <SGrid item xs={12}>
+                {item && <Slider item={item} baseNameForRouting={baseNameForRouting}/>}
+              </SGrid>
             </Grid>
-            <Grid item xs={12}>
-              <GridWrap container spacing={2}>
+            <Content>
+              <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <div style={{marginTop: '1em'}}/>
-                  <Typography component="h1" variant="h4">{item && item.title}</Typography>
-                  <div style={{marginTop: '1em'}}/>
-                  {item &&
-                  <Typography className="bilego-event-content" component="div" variant="body1">
-                    <span dangerouslySetInnerHTML={{ __html: item.content }}/>
-                  </Typography>
-                  }
+                  {item && <Events/>}
                 </Grid>
-              </GridWrap>
-            </Grid>
-            <Grid item xs={12}>
-              <PopularOnWeek />
-            </Grid>
-          </Grid>
-        </Content>
+                <Grid item xs={12}>
+                  <GridWrap container spacing={2}>
+                    <Grid item xs={12}>
+                      <div style={{ marginTop: '1em' }}/>
+                      <Typography component="h1" variant="h4">{item && item.title}</Typography>
+                      <div style={{ marginTop: '1em' }}/>
+                      {item &&
+                      <Typography className="bilego-event-content" component="div" variant="body1">
+                        <span dangerouslySetInnerHTML={{ __html: item.content }}/>
+                      </Typography>
+                      }
+                    </Grid>
+                  </GridWrap>
+                </Grid>
+                <Grid item xs={12}>
+                  <PopularOnWeek/>
+                </Grid>
+              </Grid>
+            </Content>
+          </React.Fragment>
+        }
       </Wrap>
     )
   }

@@ -1,13 +1,20 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import Grid from '@material-ui/core/Grid';
+import { style } from '../../../theme';
 
 const Wrap = styled.div`
-  overflow: hidden;
   .MuiPaper-elevation1{
     box-shadow: none;
   }
   padding: 24px;
+  overflow: hidden;
+  margin-top: -16px;
+  border-radius: 16px 16px 0 0;
+  z-index: 1;
+  position: relative;
+  padding-top: 16px;
+  background: ${style.$white};
 `;
 const Image = styled.div`
   background: linear-gradient( to right,

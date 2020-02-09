@@ -4,9 +4,11 @@ import { globalService, pageService, eventService, itemService, searchService, s
 import { cities, searchStore } from './stores';
 
 import imgWeekends from './pages/FrontPage/images/weekends.jpg';
-import imgForKids from './pages/FrontPage/images/bilego_for_kids.jpg';
-import imgArt from './pages/FrontPage/images/art.jpg';
-import imgTheatre from './pages/FrontPage/images/theatre.jpg';
+import imgForKids from './pages/FrontPage/images/forKids.jpg';
+import game from './pages/FrontPage/images/game.jpg';
+import onAir from './pages/FrontPage/images/onAir.jpg';
+import studyNew from './pages/FrontPage/images/studyNew.jpg';
+import withBrain from './pages/FrontPage/images/withBrain.jpg';
 import { BilegoIconHandshake } from './theme/bilegoIcons';
 
 configure({
@@ -148,7 +150,7 @@ export default class ConfigureStartStore {
         cat: false,
         page: 'page',
         name: 'Контакты',
-        link: `/${this.baseNameForRouting}/contacts`,
+        link: `/contacts`,
         icon: BilegoIconHandshake,
       },
       {
@@ -156,7 +158,7 @@ export default class ConfigureStartStore {
         cat: false,
         page: 'page',
         name: 'Оферта',
-        link: `/${this.baseNameForRouting}/offer`,
+        link: `/offer`,
         icon: BilegoIconHandshake,
       },
       {
@@ -164,7 +166,7 @@ export default class ConfigureStartStore {
         cat: false,
         page: 'page',
         name: 'События',
-        link: `/${this.baseNameForRouting}/events`,
+        link: `/events`,
         icon: BilegoIconHandshake,
       },
       {
@@ -172,7 +174,7 @@ export default class ConfigureStartStore {
         cat: false,
         page: 'page',
         name: 'Места',
-        link: `/${this.baseNameForRouting}/items`,
+        link: `/items`,
         icon: BilegoIconHandshake,
       },
     ];
@@ -194,32 +196,44 @@ export default class ConfigureStartStore {
   }
   @computed
   get selections(){
-    return {
-      weekends: {
+    return [
+      {
         image: imgWeekends,
         title: ['Чем', 'заняться в', 'выходные'],
         mask: 'weekends',
         link: `/${this.baseNameForRouting}/search/?mask=weekends`
       },
-      bilego: {
+      {
         image: imgForKids,
         title: ['Bilego', 'для', 'Детей'],
-        mask: 'bilego',
+        mask: 'forKids',
         link: `/${this.baseNameForRouting}/search/?mask=for_kids`
       },
-      art: {
-        image: imgArt,
-        title: ['Art', 'лекторий', 'в кино'],
-        mask: 'art',
-        link: `/${this.baseNameForRouting}/search/?mask=art`
+      {
+        image: onAir,
+        title: ['На', 'открытом', 'воздухе'],
+        mask: 'onAir',
+        link: `/${this.baseNameForRouting}/search/?mask=on_air`
       },
-      theatre: {
-        image: imgTheatre,
-        title: ['Olympic', 'theatre'],
-        mask: 'theatre',
-        link: `/${this.baseNameForRouting}/search/?mask=theatre`
-      }
-    }
+      {
+        image: withBrain,
+        title: ['Отдых', 'с умом'],
+        mask: 'withBrain',
+        link: `/${this.baseNameForRouting}/search/?mask=with_brain`
+      },
+      {
+        image: studyNew,
+        title: ['Научись', 'новому'],
+        mask: 'studyNew',
+        link: `/${this.baseNameForRouting}/search/?mask=study_new`
+      },
+      {
+        image: game,
+        title: ['Игровое', 'пространство'],
+        mask: 'game',
+        link: `/${this.baseNameForRouting}/search/?mask=game`
+      },
+    ]
   };
 
   constructor(initialState, history) {

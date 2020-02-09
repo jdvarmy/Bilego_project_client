@@ -12,7 +12,6 @@ import Info from './Info';
 import PopularOnWeek from '../../components/PopularOnWeek';
 import style from '../../../theme/style';
 import { BilegoIconTicket } from '../../../theme/bilegoIcons';
-import makeStyles from '@material-ui/styles/makeStyles';
 import { LoadingSingleEvent } from '../../components/LoadingsTemplate';
 
 const Wrap = styled.div`
@@ -99,19 +98,15 @@ const ItemImage = styled.div`
     border-radius: 100%;
   }
 `;
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    position: 'fixed',
-    bottom: theme.spacing(2),
-    left: 0,
-    zIndex: 9999
-  },
-}));
+const Sdiv = styled.div`
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  z-index: 9999;
+`;
 
 function ScrollTop(props) {
   const { children } = props;
-  const classes = useStyles();
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 425,
@@ -119,9 +114,9 @@ function ScrollTop(props) {
 
   return (
     <Zoom in={trigger}>
-      <div className={classes.root}>
+      <Sdiv >
         {children}
-      </div>
+      </Sdiv>
     </Zoom>
   );
 }

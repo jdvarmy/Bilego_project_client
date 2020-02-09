@@ -10,7 +10,7 @@ import BlockHeaderText from '../../components/BlockHeaderText';
 import { Event300 } from '../../components/Event';
 import { BilegoIconLoading } from '../../theme/bilegoIcons';
 import NoContent from '../../components/NoContent';
-import {LoadingForEvents} from "../../components/LoadingsTemplate";
+import { LoadingForEvents } from '../../components/LoadingsTemplate';
 
 const Wrap = styled.div`
   padding: 20px;
@@ -87,7 +87,7 @@ class Events extends Component{
           <Grid item xs={12}><BlockHeaderText>События</BlockHeaderText></Grid>
           <Grid item xs={12}>
             {isLoading && events.length <= 0
-              ? <LoadingForEvents />
+              ? <Grid container spacing={4}><LoadingForEvents /></Grid>
               : content
             }
           </Grid>

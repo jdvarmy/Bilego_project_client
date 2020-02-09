@@ -12,7 +12,6 @@ import { BilegoIconFacebook, BilegoIconVk } from '../../../theme/bilegoIcons';
 
 import lama from './images/screen-2.jpg';
 import logo from './images/Bilego-logo-slogan_white-pink.png';
-import LogoImg from "../../../components/Footer/Bilego-logo-slogan_white-pink.png";
 
 const Wrapper = styled(Grid)`
   width: 100%!important;

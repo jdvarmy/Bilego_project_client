@@ -38,6 +38,28 @@ class Page404 extends React.Component{
     setMeta(meta404);
   };
 
+  menu = [
+    {
+      name: 'Главная',
+      link: '',
+    }, {
+      name: 'Концерты',
+      link: '/search?cat=concerts',
+    }, {
+      name: 'Фестивали',
+      link: '/search?cat=festivals',
+    }
+  ];
+  subMenu = [
+    {
+      name: 'Контакты',
+      link: '/contacts',
+    }, {
+      name: 'Оферта',
+      link: '/offer',
+    }
+  ];
+
   render(){
     const {globalStore:{baseNameForRouting, categoriesForMenu, categoriesForFooterMenu}} = this.props;
 
@@ -52,9 +74,8 @@ class Page404 extends React.Component{
               <Title component="h1" variant="h4">Четыре Ноль Четыре</Title>
               <Typography component="h2" variant="h5">Такой страницы не существует</Typography>
               <List component="nav" aria-label="main">
-                {categoriesForMenu.map(el=>(
-                  <ListItem key={el.id} button>
-                    {/*<ListItemIcon>{el.icon}</ListItemIcon>*/}
+                {this.menu.map(el=>(
+                  <ListItem key={el.name} button>
                     <Link to={`/${baseNameForRouting}/${el.link}`}>
                       <ListItemText primary={el.name} />
                     </Link>
@@ -63,9 +84,8 @@ class Page404 extends React.Component{
               </List>
               <Divider />
               <List component="nav" aria-label="secondary">
-                {categoriesForFooterMenu.map(el=>(
-                  <ListItem key={el.id} button>
-                    {/*<ListItemIcon>{el.icon}</ListItemIcon>*/}
+                {this.subMenu.map(el=>(
+                  <ListItem key={el.name} button>
                     <Link to={`/${baseNameForRouting}/${el.link}`}>
                       <ListItemText primary={el.name} />
                     </Link>

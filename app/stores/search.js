@@ -86,7 +86,6 @@ class Search{
   // todo: описать код
   @action
   setTitle = (args) => {
-    // console.log(args)
     this.title = args;
   };
 
@@ -102,7 +101,6 @@ class Search{
       }else {
         const args = {
           text: this.request,
-          date: this.date.getTime()
         };
         this.searchResult = yield searchService.getSearchResult(apiRoot, args);
         this.events = this.searchResult.events.length > 0 ? this.searchResult.events : undefined;

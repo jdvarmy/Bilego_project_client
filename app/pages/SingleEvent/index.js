@@ -37,8 +37,6 @@ class SingleEvent extends Component{
       await getEventDataBySlug(apiRoot, {slug: match.params.eventSlug});
 
       setMeta(this.props.singleEventStore.event.seo_meta);
-
-      console.log(this.props.singleEventStore.event.seo_meta)
     }catch (e) {
       console.log('single event: ', e);
       setMeta(notFoundMeta); // todo: сделать для SSR серверной части

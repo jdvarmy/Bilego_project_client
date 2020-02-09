@@ -12,6 +12,8 @@ const Wrapper = styled.div`
   svg text {text-anchor: start;}
   svg #${p=>p.mask}-alpha {fill: white;}
   svg .title {font-size: 28px; font-weight: bold; text-transform: uppercase;}
+  
+  svg #${p=>p.mask}-base {fill: white; mask: url(#${p=>p.mask}-mask);}
 `;
 const Container = styled.figure`
   height: 300px;
@@ -43,7 +45,6 @@ const Figcaption = styled.figcaption`
   left: 0;
   top: 0;
   width: 42%;
-  // border-radius: 12px;
   color: #252830;
   height: calc(100% - 30px);
   margin: 30px;

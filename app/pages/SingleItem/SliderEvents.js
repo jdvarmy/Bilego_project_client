@@ -35,6 +35,12 @@ const Image = styled.div`
   background-position: center;
   background-repeat: no-repeat;
 `;
+const ImageItem = styled.div`
+  background-image: url('${p=>(p.img)}');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
 const Canvas = styled.canvas`
   display: block;
   width: 100%;
@@ -82,7 +88,7 @@ export default class SliderEvents extends React.Component{
           </React.Fragment>
         }
         <div className="bilego-item-data">
-          <img src={item.img} alt={item.title}/>
+          <ImageItem className="img" img={item.img} />
           <div>
             <Typography variant="caption" component="span">{category}</Typography>
             <Typography variant="h2" component="h2">{item.title}</Typography>

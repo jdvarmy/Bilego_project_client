@@ -40,12 +40,6 @@ body{
   h1, h2, h3, h4, h5, h6{
     color: $black;
   }
-  .bilego-recommend{
-    svg #art-base {fill: white; mask: url(#art-mask);}
-    svg #weekends-base {fill: white; mask: url(#weekends-mask);}
-    svg #bilego-base {fill: white; mask: url(#bilego-mask);}
-    svg #theatre-base {fill: white; mask: url(#theatre-mask);}
-  }
 
   .bilego-drawer > div{
     width: $rightBodyPanel;
@@ -502,7 +496,8 @@ body{
     width: 90%;
     padding-top: 80px;
     display: flex;
-    img{
+    .img{
+      overflow: hidden;
       border: none;
       border-radius: 50%;
       width: 170px;
@@ -551,7 +546,7 @@ body{
     .bilego-drawer{
       width: 100%;
       > div {
-        width: 100%;
+        width: 100%!important;
         position: relative;
       }
     }
@@ -570,7 +565,7 @@ body{
       display: none;
     }
     .bilego-menu-wrapper{
-      width: 100%;
+      width: 100%!important;
     }
 
   }

@@ -18,7 +18,7 @@ const GridWrap = styled(Grid)`
 @observer
 class Selections extends Component{
   render() {
-    const {baseNameForRouting, selections} = this.props.globalStore;
+    const {selections} = this.props.globalStore;
 
     return (
       <GridWrap container spacing={4}>
@@ -27,26 +27,13 @@ class Selections extends Component{
             Подборки Bilego
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper>
-            <Selection {...selections.weekends}/>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper>
-            <Selection {...selections.bilego}/>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper>
-            <Selection {...selections.art}/>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper>
-            <Selection {...selections.theatre}/>
-          </Paper>
-        </Grid>
+        {selections.map((el, k)=>(
+          <Grid key={k} item xs={12} sm={6}>
+            <Paper>
+              <Selection {...el}/>
+            </Paper>
+          </Grid>
+        ))}
       </GridWrap>
     );
   }
