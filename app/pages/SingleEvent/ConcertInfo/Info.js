@@ -44,15 +44,17 @@ export default function ConcertInfo(props){
     <Wrap>
       <Grid container spacing={4} alignItems="center">
         <Grid item xs={3}>
-          <Grid container spacing={4} alignItems="center">
-            <SGrid item xs={12}>
-              <Box component="span" m={1}>
-                <SIconButton aria-label="age" className="bilego-button">
-                  {props.age}+
-                </SIconButton>
-              </Box>
-            </SGrid>
-          </Grid>
+          {props.age &&
+            <Grid container spacing={4} alignItems="center">
+              <SGrid item xs={12}>
+                <Box component="span" m={1}>
+                  <SIconButton aria-label="age" className="bilego-button">
+                    {props.age}+
+                  </SIconButton>
+                </Box>
+              </SGrid>
+            </Grid>
+          }
         </Grid>
         <Grid item xs={5}>
           <Grid container spacing={4}>
