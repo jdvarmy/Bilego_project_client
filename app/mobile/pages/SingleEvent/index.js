@@ -232,7 +232,7 @@ class SingleEvent extends React.Component{
               </Grid>
             </Content>
             <ScrollTop {...this.props}>
-              <SFab variant="extended" aria-label="tickets" href={event && event.ticket_link}>
+              <SFab variant="extended" aria-label="tickets" href={event && event.ticket_link} style={{minWidth: '175px'}}>
                 {BilegoIconTicket} Купить билеты
               </SFab>
             </ScrollTop>

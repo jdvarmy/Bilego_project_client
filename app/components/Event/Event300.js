@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import style from '../../theme/style';
 import { TicketsModalButton } from '../TicketsModal';
 
-import E300 from './images/E300.jpg';
+import E200 from './images/E200.jpg';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -92,7 +92,7 @@ export default function Event300(props) {
           </Content>
         </React.Fragment>
         :
-        <Image className="event-300-hover" img={E300} />
+        <Image className="event-300-hover" img={E200} />
       }
     </Wrapper>
   );
