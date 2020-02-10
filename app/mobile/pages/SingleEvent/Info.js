@@ -8,6 +8,9 @@ import Shared from '../../../components/Shared';
 
 const SGrid = styled(Grid)`
   text-align: center;
+  span.MuiBox-root{
+    margin: 8px;
+  }
 `;
 const Title = styled(Typography)`
   flex-grow: 1;
@@ -66,6 +69,7 @@ export default function ConcertInfo(props){
             </Box>
           </SGrid>
           <SGrid item xs={6}>
+            <div style={{margin: '8px'}} />
             <SBox component="div" m={1}>
               <Shared type="vk" />
               <Shared type="facebook" />
