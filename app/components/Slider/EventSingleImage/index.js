@@ -31,7 +31,7 @@ export default class EventSingleDoubleEffects extends React.Component {
   };
 
   render() {
-    const {image, title1, title2, sub_title} = this.props;
+    const {image, title1, title2, sub_title, title_color} = this.props;
 
     return (
       <rs-module-wrap id="rev_slider_13_1_wrapper" data-alias="double-exposure-effect" data-source="gallery"
@@ -69,7 +69,7 @@ export default class EventSingleDoubleEffects extends React.Component {
                     <rs-layer
                       id="slider-13-slide-45-layer-5"
                       data-type="text"
-                      data-color="#2d3032"
+                      data-color={title_color ? title_color : '#2d3032'}
                       data-rsp_ch="on"
                       data-xy="x:l,l,c,c;xo:0,73px,0,0;y:t,b,b,b;yo:0,230px,270px,250px;"
                       data-text="w:normal;s:100,100,70,50;l:80,80,60,40;ls:-7px,-7px,-5px,-3px;fw:700;a:inherit,inherit,center,center;"
@@ -100,7 +100,7 @@ export default class EventSingleDoubleEffects extends React.Component {
                     <rs-layer
                       id="slider-13-slide-45-layer-6"
                       data-type="text"
-                      data-color="#2d3032"
+                      data-color={title_color ? title_color : '#2d3032'}
                       data-rsp_ch="on"
                       data-xy="x:l,l,c,c;xo:0,72px,0,0;y:t,b,b,b;yo:0,190px,230px,210px;"
                       data-text="w:normal;l:20;fw:700;a:inherit,inherit,center,center;"

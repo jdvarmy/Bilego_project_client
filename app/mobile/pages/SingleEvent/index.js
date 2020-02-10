@@ -64,9 +64,18 @@ const Title = styled.div`
 `;
 const SubTitle = styled(Typography)`
   position: absolute;
-  bottom: 10px;
+  bottom: 22px;
   left: 16px;
   color: ${style.$white};
+`;
+const Age = styled(SubTitle)`
+  left: inherit;
+  right: 16px;
+  border: 1px solid ${style.$white};
+  border-radius: 100%;
+  height: 35px;
+  width: 35px;
+  padding: 5px 3px;
 `;
 const SFab = styled(Fab)`
   width: calc(100% - 40px)!important;
@@ -175,6 +184,7 @@ class SingleEvent extends React.Component{
                       <Typography component="h2" variant="h4">{sliderData && sliderData.title2}</Typography>
                     </Title>
                     <SubTitle component="h3" variant="subtitle2">{sliderData && sliderData.sub_title}</SubTitle>
+                    {event && event.age && <Age>{event.age}+</Age>}
                   </span>
                 </Header>
               </Grid>
