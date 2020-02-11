@@ -22,6 +22,8 @@ class Search{
   @observable searchEvents = [];
   @observable pagination = {current: 1, pageSize: this.defaultPageSize, showButton: true};
 
+  @observable seoPage = [];
+
   cache = {};
   searchCache = {
     remove: (resource) => {
@@ -48,6 +50,7 @@ class Search{
     this.events = undefined;
     this.items = undefined;
     this.cache = {};
+    this.seoPage = [];
 
     this.changeSearchStatus(-1);
     this.setRequest('');
@@ -86,7 +89,8 @@ class Search{
   // todo: описать код
   @action
   setTitle = (args) => {
-    this.title = args;
+    if(args)
+      this.title = args;
   };
 
   @action
@@ -115,7 +119,7 @@ class Search{
   }).bind(this);
 
   @action
-  getSearchPageResult = flow( function* getSearchPageResult(apiRoot, all=false){
+  getSearchPageResult = flow( function* getSearchPageResult(apiRoot, all=false, helps){
     this.isLoading = true;
     try {
       let args = this.parseString();
@@ -127,8 +131,13 @@ class Search{
         args.page = this.pagination.current;
       }
 
+      // helps for meta page search
+      if(helps)
+        args.helps = helps;
+
       const response = yield searchService.getSearchPageResult(apiRoot, args);
       this.searchEvents = response.events.length > 0 ? response.events : [];
+      this.seoPage = response.seo_meta ? response.seo_meta : [];
     } catch (e) {
       console.log(e);
     } finally {

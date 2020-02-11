@@ -58,18 +58,28 @@ class Search extends Component{
     this.props.calendarStore.setDaysFilter('');
   }
 
-  componentDidMount() {
-    const {searchStore:{setSearchString, getSearchPageResult, setTitle}, location, globalStore:{apiRoot, CITY}} = this.props;
+  componentDidMount = async () => {
+    const {
+      searchStore:{setSearchString, getSearchPageResult, setTitle, parseString},
+      location,
+      globalStore:{apiRoot, CITY, selections, setMeta}
+    } = this.props;
 
-    setSearchString(location.search.substr(1));
-    getSearchPageResult(apiRoot, true);
+    try {
+      setSearchString(location.search.substr(1));
+      const helps = parseString().mask
+        ? selections.filter(el => el.id === parseString().mask)[0].meta
+        : false;
 
-    if(CITY === 0){
-      setTitle('Мероприятия в Москве')
-    }else if(CITY === 1){
-      setTitle('Мероприятия в Санкт-Петербурге')
+      await getSearchPageResult(apiRoot, true, helps);
+      setMeta(this.props.searchStore.seoPage);
+
+      // setTitle(this.props.searchStore.seoPage.title_page)
+    }catch (e) {
+      console.log('single event: ', e);
     }
-  }
+  };
+
   componentDidUpdate(prevProps, prevState, snapshot) {
     const {searchStore:{setSearchString, getSearchPageResult, clear}, globalStore:{apiRoot}} = this.props;
 
