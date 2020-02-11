@@ -10,7 +10,7 @@ import { Typography } from '@material-ui/core';
 import { style } from '../../../theme';
 import { BilegoIconFacebook, BilegoIconVk } from '../../../theme/bilegoIcons';
 
-import lama from './images/screen-2.jpg';
+import lama from '../Header/images/screen-2.jpg';
 import logo from './images/Bilego-logo-slogan_white-pink.png';
 
 const Wrapper = styled(Grid)`

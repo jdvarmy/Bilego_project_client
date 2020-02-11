@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import style from '../../theme/style';
 
-import I220 from './images/I220.jpg';
+import I220 from '../Event/images/E200.jpg';
 
 const Wrapper = styled.div`
   overflow: hidden;

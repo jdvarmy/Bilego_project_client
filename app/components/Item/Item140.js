@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import style from '../../theme/style';
 
-import I140 from './images/I140.jpg';
+import I140 from '../Event/images/E200.jpg';
 
 const Wrapper = styled.div`
   padding: 36px 0 32px;
