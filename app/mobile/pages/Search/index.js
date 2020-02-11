@@ -74,7 +74,7 @@ class Search extends Component{
       await getSearchPageResult(apiRoot, true, helps);
       setMeta(this.props.searchStore.seoPage);
 
-      // setTitle(this.props.searchStore.seoPage.title_page)
+      setTitle(this.props.searchStore.seoPage.title_page)
     }catch (e) {
       console.log('single event: ', e);
     }

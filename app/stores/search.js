@@ -11,7 +11,7 @@ class Search{
   @observable date = new Date();
   @observable dateDayFlag = null;
 
-  @observable title = 'Поиск';
+  @observable title;
 
   @observable searchResult = undefined; // events, items
   @observable events = undefined;
@@ -58,7 +58,9 @@ class Search{
 
   @action
   setStartDataSearchPage = (data) => {
-    this.searchEvents = data.events.length > 0 ? data.events : [];
+    this.searchEvents = data.events.length > 0 ? data.events : undefined;
+    this.seoPage = data.seo_meta ? data.seo_meta : [];
+    this.setTitle(data.seo_meta && data.seo_meta.title_page ? data.seo_meta.title_page : '');
   };
 
   @action
@@ -86,7 +88,6 @@ class Search{
     this.focus = flag;
   };
 
-  // todo: описать код
   @action
   setTitle = (args) => {
     if(args)

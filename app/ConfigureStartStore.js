@@ -396,6 +396,7 @@ export default class ConfigureStartStore {
           resp = yield searchService.getSearchPageResult(this.apiRoot, args);
           this.setMeta(resp.seo_meta);
           this.searchFirstData = resp;
+          searchStore.setTitle(resp.seo_meta.title_page);
           break;
 
         case 'Offer':
