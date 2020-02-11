@@ -50,6 +50,11 @@ const SFab = styled(Fab)`
 @inject('globalStore', 'pageStore')
 @observer
 class FrontPage extends React.Component{
+  constructor(props){
+    super(props);
+    this.props.globalStore.setMobileMenuCityColor(style.$white);
+  };
+
   @observable selectionsCount = 2;
   @action loadMore = () => {
     this.selectionsCount += 2;

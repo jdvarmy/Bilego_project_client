@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import { observable, action } from 'mobx';
 import { withRouter } from 'react-router-dom';
@@ -126,8 +126,31 @@ const SearchSSwipeableDrawer = styled(SSwipeableDrawer)`
     background-image: url('${lamaSearch}');
     ::before{
       content: '';
-      background: linear-gradient(to bottom,rgba(40,49,56,0.5) 0%,rgba(40,49,56,0.3) 100%)!important;
+      background: linear-gradient(to bottom,rgba(40,49,56,0.7) 0%,rgba(40,49,56,0.91) 100%)!important;
       z-index: -1;
+    }
+  }
+  &.bilego-city-mobile-drawer{
+    .MuiPaper-root{
+      padding-bottom: 50px;
+      border-radius: 0 0 16px 16px;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.1), 
+                0 0 12px rgba(255, 255, 255, 0.1), 
+                inset 0 0 4px rgba(255, 255, 255, 0.1), 
+                0 0 8px rgba(0, 0, 0, 0.15);
+      .MuiTypography-root a{
+        color: ${style.$white}!important;
+      }
+      ::after{
+        content: '';
+        position: absolute;
+        bottom: 12px;
+        left: calc( 100% - 70% );
+        height: 4px;
+        width: 40%;
+        background: ${style.$grey};
+        border-radius: 10px;
+      }
     }
   }
 `;
@@ -171,13 +194,22 @@ const Scroll = styled(Scrollbars)`
       margin-left: 15px;
     }
 `;
+const CityIconButton = styled(IconButton)`
+  position: absolute!important;
+  right: 0;
+  top: 55px;
+  color: ${p=> p.textcolor}!important;
+  font-size: 1em!important;
+  margin-right: 0!important;
+`;
 
 @withRouter
-@inject('globalStore', 'searchStore')
+@inject('globalStore', 'searchStore', 'pageStore', 'sliderStore')
 @observer
 class Header extends React.Component{
   @observable openMenu = false;
   @observable openSearch = false;
+  @observable openCities = false;
 
   @action
   toggleMenu = () => {
@@ -187,6 +219,10 @@ class Header extends React.Component{
   toggleSearch = () => {
     this.openSearch = !this.openSearch;
     this.props.searchStore.clear();
+  };
+  @action
+  toggleCity = () => {
+    this.openCities = !this.openCities;
   };
 
   handleClick = link => {
@@ -251,10 +287,32 @@ class Header extends React.Component{
         break;
     }
   };
-  handleDrawerToggle = () => {};
+  handlerClick = id => {
+    if(this.props.globalStore.CITY !== id)
+      this.changeCity(id);
+
+    this.toggleCity();
+  };
+  changeCity = async id => {
+    const {globalStore:{setCity}, searchStore, pageStore, sliderStore} = this.props;
+    setCity(id);
+
+    searchStore.clear();
+    pageStore.clear();
+    sliderStore.clear();
+
+    const {baseNameForRouting} = this.props.globalStore;
+    this.props.history.push(`/${baseNameForRouting}`);
+
+    const {pageStore: {getFrontPageData}, globalStore: {categoryConcertsForFrontPage, apiRoot, setMeta}} = this.props;
+
+    getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
+    sliderStore.getMainSlides(apiRoot);
+    setMeta(this.props.pageStore.seoPage);
+  };
 
   render() {
-    const { classes, globalStore:{ baseNameForRouting }, searchStore:{events, items, isLoading, search} } = this.props;
+    const { classes, globalStore:{ baseNameForRouting, mobileMenuCityColor, cities, CITY }, searchStore:{events, items, isLoading, search} } = this.props;
 
     return (
       <div className={classes.root}>
@@ -269,6 +327,10 @@ class Header extends React.Component{
             <IconButton onClick={this.toggleSearch} className={`${classes.menuButton}`} aria-label="search">
               {BilegoIconSearch}
             </IconButton>
+
+            <CityIconButton onClick={this.toggleCity} className={`${classes.menuButton}`} aria-label="city" textcolor={mobileMenuCityColor}>
+              {cities[CITY].cityRus}
+            </CityIconButton>
           </Toolbar>
         </AppBar>
         <SSwipeableDrawer
@@ -298,6 +360,7 @@ class Header extends React.Component{
               </NavLink>
             </MenuItem>
             ))}
+            <Divider light={true} />
             {this.subMenu.map((el, k)=>(
             <MenuItem className="bilego-mobile-menu-item"
                       key={k}
@@ -335,7 +398,6 @@ class Header extends React.Component{
                   size="large"
                 />
               </Subscribe>
-
               <Results className={search === 1 && `show`}>
                 <Scroll>
                   <Spin spinning={isLoading} indicator={<Spinner leftPadding={0} position="absolute"/>}>
@@ -371,6 +433,35 @@ class Header extends React.Component{
               </Results>
             </Grid>
           </Grid>
+        </SearchSSwipeableDrawer>
+        <SearchSSwipeableDrawer
+          anchor="top"
+          classes={{paper: classes.drawerPaper}}
+          className={`${classes.drawer} bilego-city-mobile-drawer`}
+          open={this.openCities}
+          onClose={this.toggleCity}
+          onOpen={this.toggleCity}>
+          <Grid container spacing={2}>
+            <SGrid item xs={9}>
+              {vk}
+              {facebook}
+            </SGrid>
+            <SGrid item xs={3}>
+              <SIconButton className="bilego-button" onClick={this.toggleCity} aria-label="cancel">
+                {BilegoIconClose}
+              </SIconButton>
+            </SGrid>
+          </Grid>
+          <MenuList className="bilego-mobile-menu-list">
+            {cities.map(el=>(
+              <MenuItem key={el.id} >
+                <Typography variant="h5" component="h5" key={el.baseName}>
+                  <Link to={`/${el.baseName}`} onClick={() => this.handlerClick(el.id)}>{el.cityRus}</Link>
+                </Typography>
+              </MenuItem>
+            ))}
+            <Divider light={true} />
+          </MenuList>
         </SearchSSwipeableDrawer>
       </div>
     )

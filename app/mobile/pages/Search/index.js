@@ -22,7 +22,7 @@ const Content = styled.div`
   overflow: hidden;
   z-index: 1;
   position: relative;
-  padding-top: 56px;
+  padding-top: 75px;
 `;
 const DateContainer = styled.div`
   height: ${style.$heightMenu}px;
@@ -47,6 +47,11 @@ class Search extends Component{
   @observable count = 18;
   @action loadMore = () => {
     this.count += 18;
+  };
+
+  constructor(props){
+    super(props);
+    this.props.globalStore.setMobileMenuCityColor(style.$black);
   };
 
   componentWillUnmount() {

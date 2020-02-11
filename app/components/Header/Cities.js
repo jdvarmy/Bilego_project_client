@@ -89,8 +89,11 @@ class Cities extends React.Component{
   };
 
   renderPageContent = () => {
-    const {pageStore:{getFrontPageData}, globalStore:{categoryConcertsForFrontPage, apiRoot}} = this.props;
+    const {pageStore:{getFrontPageData}, globalStore:{categoryConcertsForFrontPage, apiRoot, setMeta}} = this.props;
     getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
+
+    // todo: не работает мета при переключении города
+    setMeta(this.props.pageStore.seoPage);
   };
   renderRevolutionSlider = () => {
     this.props.sliderStore.getMainSlides(this.props.globalStore.apiRoot);

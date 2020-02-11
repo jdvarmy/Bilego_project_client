@@ -17,7 +17,7 @@ const Content = styled.div`
   overflow: hidden;
   z-index: 1;
   position: relative;
-  padding-top: 56px;
+  padding-top: 75px;
   margin: auto 16px;
   h2{
     text-align: center;
@@ -32,6 +32,11 @@ const Title = styled(Typography)`
 
 @inject('globalStore')
 class Page404 extends React.Component{
+  constructor(props){
+    super(props);
+    this.props.globalStore.setMobileMenuCityColor(style.$black);
+  };
+
   componentDidMount = () => {
     const { meta404, setMeta } = this.props.globalStore;
 

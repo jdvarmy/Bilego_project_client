@@ -1,7 +1,7 @@
 import React from 'react';
 import { renderRoutes } from 'react-router-config';
 import { Switch, Route } from 'react-router-dom';
-import { inject } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import routes from './routes';
 import Header from './components/Header';
@@ -22,6 +22,7 @@ const F = styled(Footer)`
 `;
 
 @inject('globalStore')
+@observer
 export default class Mobile extends React.Component{
   render() {
     const {globalStore:{baseNameForRouting, ssrSide}} = this.props;

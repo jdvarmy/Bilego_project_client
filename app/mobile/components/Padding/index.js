@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import style from '../../../theme/style';
 
-import lama from '../Footer/images/screen-2.jpg';
+import lama from '../Header/images/screen-2.jpg';
 
 const Wrapper = styled.div`
   height: 56px;

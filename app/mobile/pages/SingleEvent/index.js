@@ -134,6 +134,11 @@ function ScrollTop(props) {
 @inject('singleEventStore', 'globalStore')
 @observer
 class SingleEvent extends React.Component{
+  constructor(props){
+    super(props);
+    this.props.globalStore.setMobileMenuCityColor(style.$white);
+  };
+
   componentDidMount = async () => {
     try {
       const {match, singleEventStore: {getEventDataBySlug}, globalStore: {apiRoot, setMeta}} = this.props;

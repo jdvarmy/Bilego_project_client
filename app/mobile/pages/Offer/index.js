@@ -12,7 +12,7 @@ const Content = styled.div`
   overflow: hidden;
   z-index: 1;
   position: relative;
-  padding-top: 56px;
+  padding-top: 75px;
   margin: auto 16px;
   h5, h6{
     text-align: center;
@@ -34,6 +34,11 @@ const Title = styled(Typography)`
 @inject('servicePagesStore', 'globalStore')
 @observer
 class Offer extends React.Component{
+  constructor(props){
+    super(props);
+    this.props.globalStore.setMobileMenuCityColor(style.$black);
+  };
+
   componentDidMount = async () => {
     const { servicePagesStore:{getMetaPageByName}, globalStore:{apiRoot, setMeta}} = this.props;
 

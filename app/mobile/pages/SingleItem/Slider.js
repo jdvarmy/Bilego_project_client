@@ -25,8 +25,7 @@ const Wrapper = styled.div`
   .bilego-item-subtitle{
     position: absolute;
     top: 65px;
-    right: 16px;
-    text-align: right;
+    left: 16px;
   }
 `;
 const Gradient = styled.div`

@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import style from '../../../theme/style';
 import Padding from '../../components/Padding';
 import IconButton from '@material-ui/core/IconButton';
-import TextField from '@material-ui/core/TextField';
 import Fab from '@material-ui/core/Fab';
 import Snackbar from '@material-ui/core/Snackbar';
 import Slide from '@material-ui/core/Slide';
@@ -22,7 +21,7 @@ const Content = styled.div`
   overflow: hidden;
   z-index: 1;
   position: relative;
-  padding-top: 56px;
+  padding-top: 75px;
   margin: auto 16px;
   form{
     h4{
@@ -81,6 +80,11 @@ const SSnackbar = styled(Snackbar)`
 @inject('servicePagesStore', 'globalStore')
 @observer
 class Contacts extends React.Component{
+  constructor(props){
+    super(props);
+    this.props.globalStore.setMobileMenuCityColor(style.$black);
+  };
+
   componentDidMount = async () => {
     const { servicePagesStore:{getMetaPageByName}, globalStore:{apiRoot, setMeta}} = this.props;
 

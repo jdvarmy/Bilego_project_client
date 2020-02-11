@@ -1,4 +1,5 @@
 import React from 'react';
+import { inject } from 'mobx-react';
 import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
@@ -16,7 +17,7 @@ const Content = styled.div`
   overflow: hidden;
   z-index: 1;
   position: relative;
-  padding-top: 56px;
+  padding-top: 75px;
 `;
 const Title = styled(Typography)`
   text-align: center;
@@ -28,10 +29,12 @@ const Canvas = styled.canvas`
   height: 100%;
 `;
 
+inject('globalStore')
 class Advertising extends React.Component{
   constructor(props) {
     super(props);
     this.canvas = React.createRef();
+    this.props.globalStore.setMobileMenuCityColor(style.$black);
   }
 
   componentDidMount() {

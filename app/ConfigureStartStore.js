@@ -50,6 +50,10 @@ export default class ConfigureStartStore {
   @action setMobile = val => {
     this.mobile = val
   };
+  @observable mobileMenuCityColor = '#ffffff';
+  @action setMobileMenuCityColor = val => {
+    this.mobileMenuCityColor = val
+  };
 
   meta404 = {
     id: 0,

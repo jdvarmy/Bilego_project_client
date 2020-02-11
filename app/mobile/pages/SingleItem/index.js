@@ -34,6 +34,11 @@ const SGrid = styled(Grid)`
 @inject('singleItemStore', 'globalStore')
 @observer
 class SingleItem extends Component {
+  constructor(props){
+    super(props);
+    this.props.globalStore.setMobileMenuCityColor(style.$white);
+  };
+
   componentDidMount = async () => {
     try {
       const {singleItemStore:{getItemDataBySlug}, match, globalStore:{apiRoot, setMeta}} = this.props;
