@@ -39,6 +39,7 @@
     "d3-ease": "^1.0.6",
     "date-fns": "^2.8.1",
     "express": "^4.17.1",
+    "express-https-redirect": "^1.0.0",
     "global": "^4.4.0",
     "history": "^4.7.2",
     "lodash": "^4.17.15",
