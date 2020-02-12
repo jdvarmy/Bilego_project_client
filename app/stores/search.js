@@ -51,6 +51,7 @@ class Search{
     this.items = undefined;
     this.cache = {};
     this.seoPage = [];
+    // this.title = undefined;
 
     this.changeSearchStatus(-1);
     this.setRequest('');
