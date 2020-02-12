@@ -80,32 +80,45 @@ class Search extends Component{
     }
   };
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const {searchStore:{setSearchString, getSearchPageResult, clear}, globalStore:{apiRoot}} = this.props;
+  componentDidUpdate = async (prevProps) => {
+    const {
+      searchStore:{setSearchString, getSearchPageResult, clear, setTitle, parseString},
+      globalStore:{apiRoot, selections, setMeta}
+    } = this.props;
 
-    if(prevProps.location.search.substr(1) !== this.props.location.search.substr(1)) {
-      clear();
-      setSearchString(this.props.location.search.substr(1));
-      getSearchPageResult(apiRoot, true);
+    try {
+      if(prevProps.location.search.substr(1) !== this.props.location.search.substr(1)) {
+        clear();
+        setSearchString(this.props.location.search.substr(1));
+        const helps = parseString().mask
+          ? selections.filter(el => el.id === parseString().mask)[0].meta
+          : false;
+
+        await getSearchPageResult(apiRoot, true, helps);
+        setMeta(this.props.searchStore.seoPage);
+
+        setTitle(this.props.searchStore.seoPage.title_page)
+      }
+    }catch (e) {
+      console.log('single event: ', e);
     }
-  }
+  };
 
   render(){
     const {searchStore:{isLoading, searchEvents, title}, globalStore:{baseNameForRouting}} = this.props;
+
     const content = <React.Fragment>
       <Grid item xs={12}>
-        {searchEvents.length > 0
-          ?
-          searchEvents.slice(0, this.count).map(event => (
+        {Array.isArray(searchEvents) && searchEvents.length > 0
+          ? searchEvents.slice(0, this.count).map(event => (
             <EventDef key={event.id} {...event} baseNameForRouting={baseNameForRouting}/>
           ))
-          :
-          <NoContent />
+          : <NoContent />
         }
       </Grid>
       <Grid item xs={12}>
         <NoSsr>
-          {searchEvents.length > this.count &&
+          {Array.isArray(searchEvents) && searchEvents.length > this.count &&
           <SFab onClick={this.loadMore} variant="extended" aria-label="load">
             {BilegoIconLoading} Показать ещё
           </SFab>
@@ -131,7 +144,7 @@ class Search extends Component{
                 <DatePickerLine flickity mini/>
               </DateContainer>
             </Grid>
-            {isLoading && searchEvents.length <= 0
+            {isLoading && Array.isArray(searchEvents) && searchEvents.length <= 0
               ? <LoadingForEvents />
               : content
             }

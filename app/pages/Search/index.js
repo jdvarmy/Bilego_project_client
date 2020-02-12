@@ -13,6 +13,7 @@ import style from '../../theme/style';
 import DatePickerLine from '../../components/DatePickerLine';
 import PopularOnWeek from '../FrontPage/PopularOnWeek';
 import { LoadingForEvents } from '../../components/LoadingsTemplate';
+import BlockHeaderText from "../../components/BlockHeaderText";
 
 const Wrap = styled.div`
   padding: 20px;
@@ -38,23 +39,53 @@ const DateContainer = styled.div`
 @inject('searchStore', 'globalStore')
 @observer
 class Search extends Component{
-  componentDidMount() {
-    const {searchStore:{setSearchString, getSearchPageResult}, location, globalStore:{apiRoot}} = this.props;
+  componentDidMount = async () => {
+    const {
+      searchStore:{setSearchString, getSearchPageResult, setTitle, parseString},
+      location,
+      globalStore:{apiRoot, CITY, selections, setMeta}
+    } = this.props;
 
-    setSearchString(location.search.substr(1));
-    getSearchPageResult(apiRoot);
-  }
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const {searchStore:{setSearchString, getSearchPageResult}, globalStore:{apiRoot}} = this.props;
+    try {
+      setSearchString(location.search.substr(1));
+      const helps = parseString().mask
+        ? selections.filter(el => el.id === parseString().mask)[0].meta
+        : false;
 
-    if(prevProps.location.search.substr(1) !== this.props.location.search.substr(1)) {
-      setSearchString(this.props.location.search.substr(1));
-      getSearchPageResult(apiRoot);
+      await getSearchPageResult(apiRoot, true, helps);
+      setMeta(this.props.searchStore.seoPage);
+
+      setTitle(this.props.searchStore.seoPage.title_page)
+    }catch (e) {
+      console.log('single event: ', e);
     }
-  }
+  };
+  componentDidUpdate = async (prevProps, prevState, snapshot) => {
+    const {
+      searchStore:{setSearchString, getSearchPageResult, clear, setTitle, parseString},
+      globalStore:{apiRoot, selections, setMeta}
+    } = this.props;
+
+    try {
+      if(prevProps.location.search.substr(1) !== this.props.location.search.substr(1)) {
+        clear();
+        setSearchString(this.props.location.search.substr(1));
+        const helps = parseString().mask
+          ? selections.filter(el => el.id === parseString().mask)[0].meta
+          : false;
+
+        await getSearchPageResult(apiRoot, true, helps);
+        setMeta(this.props.searchStore.seoPage);
+
+        setTitle(this.props.searchStore.seoPage.title_page)
+      }
+    }catch (e) {
+      console.log('single event: ', e);
+    }
+  };
 
   render(){
-    const {searchStore:{isLoading, searchEvents}, globalStore:{baseNameForRouting}} = this.props;
+    const {searchStore:{isLoading, searchEvents, title}, globalStore:{baseNameForRouting}} = this.props;
 
     const content = searchEvents.length > 0
         ?
@@ -77,6 +108,7 @@ class Search extends Component{
           <DateContainer align='middle' type='flex' justify='center'>
             <DatePickerLine/>
           </DateContainer>
+          <Grid item xs={12}><BlockHeaderText>{title}</BlockHeaderText></Grid>
           <Grid item xs={12}>
             <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
               <Grid container spacing={4}>
