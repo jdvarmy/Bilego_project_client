@@ -21,14 +21,29 @@ const SliderEvent = styled.div`
   .slick-slide > div{
     height: 100%;
   }
-  h2{
+  .date{
     position: absolute;
-    bottom: 5px;
-    left: 16px;
+    top: 10px;
+    right: 16px;
     color: ${style.$white};
-    display: block;
-    width: 75%;
-    text-align: left;
+    height: 25px;
+    padding: 0 15px;
+    font-size: 0.875rem;
+  }
+`;
+const Text = styled.div`
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+  color: ${style.$white};
+  display: block;
+  width: 75%;
+  text-align: left;
+  h2{
+    color: ${style.$white};
+  }
+  .location{
+    color: ${style.$red};
   }
 `;
 const ControlPanel = styled.div``;
@@ -106,14 +121,16 @@ class Slider extends Component{
                 <React.Fragment key={slide.id}>
                   <Gradient/>
                   <Image img={slide.image_src}/>
-                  <Link to={`/${baseNameForRouting}/event/${slide.name}`} className="bilego-slider-title">
-                    <Typography variant="h2" component="h2">{slide.image_title}</Typography>
-                  </Link>
-                  <Typography className="bilego-slider-subtitle-date" variant="subtitle2" component="span">
+                  <Text>
+                    <Typography className="location" variant="subtitle1" component="div">
+                      {slide.location}
+                    </Typography>
+                    <Link to={`/${baseNameForRouting}/event/${slide.name}`} className="bilego-slider-title">
+                      <Typography variant="h2" component="h2">{slide.image_title}</Typography>
+                    </Link>
+                  </Text>
+                  <Typography className="date" variant="subtitle2" component="div">
                     {slide.date}
-                  </Typography>
-                  <Typography className="bilego-slider-subtitle-location" variant="subtitle2" component="span">
-                    {slide.location}
                   </Typography>
                 </React.Fragment>
               ))}
