@@ -6,12 +6,13 @@ import { withRouter } from 'react-router-dom';
 import NoSsr from '@material-ui/core/NoSsr';
 
 import style from '../../theme/style';
-import Slider from '../../components/Slider';
+import MainSlider from '../../components/Slider/MainSlider';
 import EventsSoon from './EventsSoon';
 import EventsHot from './EventsHot';
 import Concerts from './Concerts';
 import Selections from './Selections';
 import Items from './Items';
+import Slider from './Slider';
 import DatePickerLine from '../../components/DatePickerLine';
 
 const DateContainer = styled.div`
@@ -49,10 +50,10 @@ class FrontPage extends Component {
     return (
       <React.Fragment>
         <div>
-          <NoSsr>
-            {/* todo: посмотерть такой слайдер: https://www.google.com/recaptcha/intro/v3.html*/}
+          {/*<NoSsr>*/}
+          {/*  <MainSlider />*/}
             <Slider />
-          </NoSsr>
+          {/*</NoSsr>*/}
         </div>
         <DateContainer align='middle' type='flex' justify='center'>
           <DatePickerLine/>

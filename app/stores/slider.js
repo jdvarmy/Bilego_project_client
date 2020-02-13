@@ -17,6 +17,9 @@ class Slider{
   };
   @action
   clear = () => {
+    // if(this.revapi){
+    //   this.revapi.revkill();
+    // }
     this.slides = [];
   };
 
@@ -24,6 +27,7 @@ class Slider{
   getMainSlides = flow( function* getMainSlides(apiRoot){
     this.isLoading = true;
     try{
+      this.clear();
       this.slides = yield sliderService.getSlides(apiRoot);
     }catch(e){
       console.log(e);

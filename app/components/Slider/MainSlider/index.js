@@ -1,15 +1,22 @@
 import React, { Fragment } from 'react';
+import { inject, observer } from 'mobx-react';
+import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import SvgIcon from '@material-ui/core/SvgIcon/SvgIcon';
 
 let sliderLayer = 1;
 
-export default class MainSlider extends React.Component {
-  componentDidMount() {
-    const slider = document.getElementById('rev_slider_18_1');
+@withRouter
+@inject('sliderStore', 'globalStore')
+@observer
+class MainSlider extends React.Component {
+  componentDidMount = async () => {
+    const {globalStore: {apiRoot}, sliderStore:{getMainSlides, setRevapi}} = this.props;
+    await getMainSlides(apiRoot);
 
+    const slider = document.getElementById('rev_slider_18_1');
     if (window.$(slider).revolution !== undefined) {
-      window.$(slider).show().revolution({
+      const sliderApi = window.$(slider).show().revolution({
         jsFileLocation:"scripts/",
         sliderLayout:"auto",
         visibilityLevels:"1240,1024,778,480",
@@ -33,13 +40,25 @@ export default class MainSlider extends React.Component {
           allowHTML5AutoPlayOnAndroid:true
         },
       });
+
+      setRevapi(sliderApi);
     }
-  }
+
+    console.log('slider')
+  };
+
+  componentDidUpdate = async (prevProps) => {
+    if(prevProps.location.key !== this.props.location.key){
+      const slider = document.getElementById('rev_slider_18_1');
+
+    }
+  };
 
   renderPosts = () => {
-    const slides = this.props.slides;
+    const slides = this.props.sliderStore.slides;
+    console.log(slides)
 
-    return slides.map((slide, k) => (
+    return slides.length > 0 ? slides.map((slide, k) => (
       <Slide id={slide.id} key={slide.id} title={slide.title}>
         {slide.youtybe_id
           ? <SliderVideo src={slide.image_src} youid={slide.youtybe_id} mlVideoSrc={slide.ml_video_src}/>
@@ -106,6 +125,7 @@ export default class MainSlider extends React.Component {
         <SliderLayer id={slide.id} link={`/${this.props.baseNameForRouting}/event/${slide.name}`}/>
       </Slide>
     ))
+      : null
   };
 
   render() {
@@ -163,76 +183,6 @@ function SliderVideo(props){
   );
 }
 
-function SliderZone(props){
-  const {id, title, title1, title2} = props;
-
-  return (
-    <rs-zone id={`rrzm_${id}`} class="rev_row_zone_middle" style={{zIndex: 11}}>
-      <rs-row
-        id={`slider-7-slide-${id}-layer-${sliderLayer++}`}
-        data-type="row"
-        data-xy="y:m;yo:-426px;"
-        data-text="l:22;a:inherit;"
-        data-dim="w:1240;"
-        data-cbreak="3"
-        data-basealign="slide"
-        data-rsp_bd="off"
-        data-frame_0="tp:600;"
-        data-frame_1="tp:600;sR:10;"
-        data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
-        style={{zIndex: 1, fontFamily: 'Roboto'}}
-      >
-        <rs-column
-          id={`slider-7-slide-${id}-layer-${sliderLayer++}`}
-          data-type="column"
-          data-xy="xo:100px;yo:100px;"
-          data-text="l:22;a:right,right,right,left;"
-          data-rsp_bd="off"
-          data-column="w:50%;"
-          data-padding="l:0,0,0,30;"
-          data-frame_0="tp:600;"
-          data-frame_1="tp:600;"
-          data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
-          style={{zIndex: 2, fontFamily: 'Roboto', width: '100%'}}
-        >
-          <rs-layer
-            id={`slider-7-slide-${id}-layer-${sliderLayer++}`}
-            data-type="text"
-            data-text="w:normal;s:100,80,60,50;l:80,65,50,40;ls:-7px,-6px,-4px,-3px;a:right,right,right,left;"
-            data-dim="w:100%;"
-            data-rsp_o="off"
-            data-rsp_bd="off"
-            data-margin="t:0,30,30,30;b:70;"
-            data-frame_0="o:1;tp:600;blu:10px;"
-            data-frame_0_chars="x:50px;o:0;blu:10px;"
-            data-frame_1="tp:600;e:Power4.easeOut;st:300;sp:1000;sR:290;"
-            data-frame_1_chars="dir:middletoedge;d:3;"
-            data-frame_999="o:0;tp:600;e:Power4.easeOut;st:w;sp:100;sR:7490;"
-            style={{zIndex: 4, fontFamily: 'Roboto', display: 'inline-block'}}
-          >
-            {title}
-            {title1 && <br/>}
-            {title1}
-            {title2 && <br/>}
-            {title2}
-          </rs-layer>
-        </rs-column>
-        <rs-column
-          id={`slider-7-slide-${id}-layer-${sliderLayer++}`}
-          data-type="column"
-          data-xy="xo:100px;yo:100px;"
-          data-text="l:22;a:inherit;"
-          data-rsp_bd="off"
-          data-column="w:50%;"
-          data-frame_0="tp:600;"
-          data-frame_1="tp:600;"
-          data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
-          style={{zIndex: 5, fontFamily: 'Roboto', width: '100%'}}
-        />
-      </rs-row>
-    </rs-zone>
-  );
-}
 function SliderGroup(props){
   const {id, slideNumber, slidesCnt} = props;
   return (
@@ -349,3 +299,5 @@ function SliderLayer(props){
     </rs-layer>
   );
 }
+
+export default MainSlider;
