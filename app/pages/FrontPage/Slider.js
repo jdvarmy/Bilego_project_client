@@ -7,8 +7,10 @@ import { Carousel } from 'antd';
 import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import { style }from '../../theme';
+import { ArrowNext, ArrowBack } from "../../theme/bilegoIcons";
 
 const SliderEvent = styled.div`
+  position: relative;
   text-align: center;
   overflow: hidden;
   height: 440px;
@@ -46,7 +48,6 @@ const Text = styled.div`
     color: ${style.$red};
   }
 `;
-const ControlPanel = styled.div``;
 const Image = styled.div`
   background-image: url('${p=>(p.img)}');
   background-size: cover;
@@ -54,8 +55,53 @@ const Image = styled.div`
   background-repeat: no-repeat;
   height: 100%;
 `;
-const Left = styled.div``;
-const Right = styled.div``;
+const ControlPanel = styled.div`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20%;
+  height: 70px;
+  background: ${style.$white};
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+`;
+const Button = styled.div`
+  width: 50px;
+  height: 50px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  cursor: pointer;
+  ::after{
+    content: '';
+    width: 100%;
+    height: 100%;
+    border: 2px solid ${style.$greydark};
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 100%;
+    transition: color 0.2s;
+  }
+  svg{
+    font-size: 1.3em;
+    color: ${style.$greydark};
+    transition: color 0.2s;
+  }
+  :hover{
+    ::after{
+      border: 2px solid ${style.$red};
+      border-radius: 100%;
+    }
+    svg{
+      color: ${style.$red};
+    }
+  }
+`;
+
 const Numbers = styled.div``;
 const Gradient = styled.div`
   background: radial-gradient(circle at right, transparent 40%, ${style.$greydark});
@@ -112,10 +158,11 @@ class Slider extends Component{
           <React.Fragment>
             <Carousel
               effect="fade"
-              // autoplay
+              autoplay
               lazyLoad
               infinite
               dotPosition="right"
+              ref={slider => (this.slider = slider)}
             >
               {shuffleSlides.map((slide) => (
                 <React.Fragment key={slide.id}>
@@ -135,9 +182,9 @@ class Slider extends Component{
                 </React.Fragment>
               ))}
             </Carousel>
-            <ControlPanel>
-              <Left />
-              <Right />
+            <ControlPanel className="hello">
+              <Button onClick={() => this.slider.prev()} className="left">{ArrowBack}</Button>
+              <Button onClick={() => this.slider.next()} className="right">{ArrowNext}</Button>
               <Numbers>
 
               </Numbers>

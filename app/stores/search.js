@@ -140,8 +140,6 @@ class Search{
       const response = yield searchService.getSearchPageResult(apiRoot, args);
       this.searchEvents = response.events.length > 0 ? response.events : [];
       this.seoPage = response.seo_meta ? response.seo_meta : [];
-
-      console.log(response.seo_meta)
     } catch (e) {
       console.log(e);
     } finally {
