@@ -36,8 +36,8 @@ app.use(express.static('./build'));
 
 app.set('trust proxy', 'loopback');
 
-// const httpsRedirect = require('express-https-redirect'); //todo: установить на проме express-https-redirect
-// app.use('/', httpsRedirect());
+const httpsRedirect = require('express-https-redirect'); //todo: установить на проме express-https-redirect
+app.use('/', httpsRedirect());
 
 app.get(/\/mos|\/spb/, async (req, res) => {
   const url = req.originalUrl || req.url;
