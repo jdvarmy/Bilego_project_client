@@ -24,15 +24,16 @@ import logo from './images/Bilego-logo_white-pink.png';
 
 import style from '../../../theme/style';
 import {
-  BilegoIconClose, BilegoIconFacebook,
+  BilegoIconClose,
+  BilegoIconFacebook,
   BilegoIconMenuDotted,
-  BilegoIconSearch, BilegoIconVk
+  BilegoIconSearch,
+  BilegoIconVk,
+  BilegoIconInstagram
 } from '../../../theme/bilegoIcons';
 import { Input, Spin } from 'antd';
 
 import { Scrollbars } from 'react-custom-scrollbars';
-import SearchResult from '../../../components/Search/SearchResult';
-import Drawer from '@material-ui/core/Drawer';
 import Spinner from '../../../components/Spinner';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -80,18 +81,23 @@ const StyledIconButton = styled(IconButton)`
   }
 `;
 const vk = (
-  // eslint-disable-next-line jsx-a11y/href-no-hash
-  <a href="#">
+  <a href="https://vk.com/bilego">
     <StyledIconButton aria-label="vk" className="bilego-button">
       {BilegoIconVk}
     </StyledIconButton>
   </a>
 );
 const facebook = (
-  // eslint-disable-next-line jsx-a11y/href-no-hash
-  <a href="#">
+  <a href="https://www.facebook.com/bilegoru/">
     <StyledIconButton aria-label="facebook" className="bilego-button">
       {BilegoIconFacebook}
+    </StyledIconButton>
+  </a>
+);
+const instagram = (
+  <a href="https://www.instagram.com/bilegoru/">
+    <StyledIconButton aria-label="facebook" className="bilego-button">
+      {BilegoIconInstagram}
     </StyledIconButton>
   </a>
 );
@@ -343,6 +349,7 @@ class Header extends React.Component{
             <SGrid item xs={9}>
               {vk}
               {facebook}
+              {instagram}
             </SGrid>
             <SGrid item xs={3}>
               <SIconButton className="bilego-button" onClick={this.toggleMenu} aria-label="cancel">

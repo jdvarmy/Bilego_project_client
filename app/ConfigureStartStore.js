@@ -206,48 +206,42 @@ export default class ConfigureStartStore {
         image: imgWeekends,
         title: ['Чем', 'заняться в', 'выходные'],
         mask: 'weekends',
-        link: `/${this.baseNameForRouting}/search/?mask=weekends`,
-        meta: {title: 'Чем заняться в выходные', description: ''}
+        link: `/${this.baseNameForRouting}/search/?mask=weekends`
       },
       {
         id: 'for_kids',
         image: imgForKids,
         title: ['Bilego', 'для', 'Детей'],
         mask: 'forKids',
-        link: `/${this.baseNameForRouting}/search/?mask=for_kids`,
-        meta: {title: 'Bilego для детей', description: ''}
+        link: `/${this.baseNameForRouting}/search/?mask=for_kids`
       },
       {
         id: 'on_air',
         image: onAir,
         title: ['На', 'открытом', 'воздухе'],
         mask: 'onAir',
-        link: `/${this.baseNameForRouting}/search/?mask=on_air`,
-        meta: {title: 'На открытом воздухе', description: ''}
+        link: `/${this.baseNameForRouting}/search/?mask=on_air`
       },
       {
         id: 'with_brain',
         image: withBrain,
         title: ['Отдых', 'с умом'],
         mask: 'withBrain',
-        link: `/${this.baseNameForRouting}/search/?mask=with_brain`,
-        meta: {title: 'Отдых с умом', description: ''}
+        link: `/${this.baseNameForRouting}/search/?mask=with_brain`
       },
       {
         id: 'study_new',
         image: studyNew,
         title: ['Научись', 'новому'],
         mask: 'studyNew',
-        link: `/${this.baseNameForRouting}/search/?mask=study_new`,
-        meta: {title: 'Научись новому', description: ''}
+        link: `/${this.baseNameForRouting}/search/?mask=study_new`
       },
       {
         id: 'game',
         image: game,
         title: ['Game', 'space'],
         mask: 'game',
-        link: `/${this.baseNameForRouting}/search/?mask=game`,
-        meta: {title: 'Game space', description: ''}
+        link: `/${this.baseNameForRouting}/search/?mask=game`
       },
     ]
   };
@@ -386,12 +380,9 @@ export default class ConfigureStartStore {
           break;
         case 'Search':
           searchStore.setSearchString(this.history.location.search.substr(1));
-          let args = searchStore.parseString(), helps = false;
+          let args = searchStore.parseString();
           args.size = searchStore.pagination.pageSize;
           args.page = searchStore.pagination.current;
-
-          if(args.mask)
-            args.helps = this.selections.filter((el) => args.mask === el.id)[0].meta;
 
           resp = yield searchService.getSearchPageResult(this.apiRoot, args);
           this.setMeta(resp.seo_meta);

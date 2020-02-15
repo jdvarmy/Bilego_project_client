@@ -48,11 +48,8 @@ class Search extends Component{
 
     try {
       setSearchString(location.search.substr(1));
-      const helps = parseString().mask
-        ? selections.filter(el => el.id === parseString().mask)[0].meta
-        : false;
 
-      await getSearchPageResult(apiRoot, true, helps);
+      await getSearchPageResult(apiRoot, true);
       setMeta(this.props.searchStore.seoPage);
 
       setTitle(this.props.searchStore.seoPage.title_page)
@@ -70,11 +67,8 @@ class Search extends Component{
       if(prevProps.location.search.substr(1) !== this.props.location.search.substr(1)) {
         clear();
         setSearchString(this.props.location.search.substr(1));
-        const helps = parseString().mask
-          ? selections.filter(el => el.id === parseString().mask)[0].meta
-          : false;
 
-        await getSearchPageResult(apiRoot, true, helps);
+        await getSearchPageResult(apiRoot, true);
         setMeta(this.props.searchStore.seoPage);
 
         setTitle(this.props.searchStore.seoPage.title_page)
@@ -87,7 +81,7 @@ class Search extends Component{
   render(){
     const {searchStore:{isLoading, searchEvents, title}, globalStore:{baseNameForRouting}} = this.props;
 
-    const content = searchEvents.length > 0
+    const content = searchEvents && searchEvents.length > 0
         ?
         searchEvents.map(event=>(
           <Grid key={event.id} item xs={4}>
@@ -112,7 +106,7 @@ class Search extends Component{
           <Grid item xs={12}>
             <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
               <Grid container spacing={4}>
-                {isLoading && searchEvents.length <= 0
+                {isLoading && searchEvents && searchEvents.length <= 0
                   ? <LoadingForEvents />
                   : content
                 }

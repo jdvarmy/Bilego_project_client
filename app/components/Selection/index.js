@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import style from '../../theme/style';
@@ -70,7 +71,7 @@ export default function Selection(props){
             <rect id={`${mask}-base`} x="0" y="0" width="100%" height="100%"/>
           </svg>
         </Figcaption>
-        <a href={link} />
+        <Link to={link} />
       </Container>
     </Wrapper>
   );

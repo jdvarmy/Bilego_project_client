@@ -121,7 +121,7 @@ class Search{
   }).bind(this);
 
   @action
-  getSearchPageResult = flow( function* getSearchPageResult(apiRoot, all=false, helps){
+  getSearchPageResult = flow( function* getSearchPageResult(apiRoot, all=false){
     this.isLoading = true;
     try {
       let args = this.parseString();
@@ -132,10 +132,6 @@ class Search{
         args.size = this.pagination.pageSize;
         args.page = this.pagination.current;
       }
-
-      // helps for meta page search
-      if(helps)
-        args.helps = helps;
 
       const response = yield searchService.getSearchPageResult(apiRoot, args);
       this.searchEvents = response.events.length > 0 ? response.events : [];

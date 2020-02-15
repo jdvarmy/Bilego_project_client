@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import { Typography } from '@material-ui/core';
 import { style } from '../../../theme';
-import { BilegoIconFacebook, BilegoIconVk } from '../../../theme/bilegoIcons';
+import { BilegoIconFacebook, BilegoIconVk, BilegoIconInstagram } from '../../../theme/bilegoIcons';
 
 import lama from '../Header/images/screen-2.jpg';
 import logo from './images/Bilego-logo-slogan_white-pink.png';
@@ -110,18 +110,23 @@ const Copy = styled.div`
 `;
 
 const vk = (
-  // eslint-disable-next-line jsx-a11y/href-no-hash
-  <a href="#">
+  <a href="https://vk.com/bilego">
     <StyledIconButton aria-label="vk" className="bilego-button">
       {BilegoIconVk}
     </StyledIconButton>
   </a>
 );
 const facebook = (
-  // eslint-disable-next-line jsx-a11y/href-no-hash
-  <a href="#">
+  <a href="https://www.facebook.com/bilegoru/">
     <StyledIconButton aria-label="facebook" className="bilego-button">
       {BilegoIconFacebook}
+    </StyledIconButton>
+  </a>
+);
+const instagram = (
+  <a href="https://www.instagram.com/bilegoru/">
+    <StyledIconButton aria-label="facebook" className="bilego-button">
+      {BilegoIconInstagram}
     </StyledIconButton>
   </a>
 );
@@ -157,6 +162,7 @@ class Footer extends Component{
             <span>
               {vk}
               {facebook}
+              {instagram}
             </span>
           </Social>
           <Copy>

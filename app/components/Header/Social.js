@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 
 import style from '../../theme/style';
-import { BilegoIconFacebook, BilegoIconVk } from '../../theme/bilegoIcons';
+import { BilegoIconFacebook, BilegoIconVk, BilegoIconInstagram } from '../../theme/bilegoIcons';
 
 const Wrapper = styled.div`
   height: ${style.$heightMenu}px;
@@ -26,18 +26,23 @@ const StyledIconButton = styled(IconButton)`
 `;
 
 const vk = (
-  // eslint-disable-next-line jsx-a11y/href-no-hash
-  <a href="#">
+  <a href="https://vk.com/bilego">
     <StyledIconButton aria-label="vk" className="bilego-button">
       {BilegoIconVk}
     </StyledIconButton>
   </a>
 );
 const facebook = (
-  // eslint-disable-next-line jsx-a11y/href-no-hash
-  <a href="#">
+  <a href="https://www.facebook.com/bilegoru/">
     <StyledIconButton aria-label="facebook" className="bilego-button">
       {BilegoIconFacebook}
+    </StyledIconButton>
+  </a>
+);
+const instagram = (
+  <a href="https://www.instagram.com/bilegoru/">
+    <StyledIconButton aria-label="facebook" className="bilego-button">
+      {BilegoIconInstagram}
     </StyledIconButton>
   </a>
 );
@@ -47,6 +52,7 @@ export default function Social() {
     <Wrapper>
       {vk}
       {facebook}
+      {instagram}
     </Wrapper>
   );
 }
