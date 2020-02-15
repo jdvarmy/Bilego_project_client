@@ -244,10 +244,10 @@ export default class ConfigureStartStore {
       {
         id: 'game',
         image: game,
-        title: ['Игровое', 'пространство'],
+        title: ['Game', 'space'],
         mask: 'game',
         link: `/${this.baseNameForRouting}/search/?mask=game`,
-        meta: {title: 'Игровое пространство', description: ''}
+        meta: {title: 'Game space', description: ''}
       },
     ]
   };

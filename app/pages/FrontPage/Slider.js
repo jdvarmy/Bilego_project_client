@@ -59,7 +59,7 @@ const ControlPanel = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 20%;
+  width: 175px;
   height: 70px;
   background: ${style.$white};
   display: flex;

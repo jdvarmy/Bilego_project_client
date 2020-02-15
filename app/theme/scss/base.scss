@@ -523,6 +523,22 @@ body{
     }
   }
 
+  .bilego-dark{
+    background-color: $second;
+    .MuiTypography-h3 a{
+      color: $white;
+    }
+    .MuiPaper-root {
+      background-color: $second;
+      h2 a {
+        color: $white;
+      }
+      .bilego-date-location, .bilego-date-location a{
+        color: $grey;
+      }
+    }
+  }
+
   // mobile
   .bilego-item-slider-event-title-mobile{
     position: absolute;

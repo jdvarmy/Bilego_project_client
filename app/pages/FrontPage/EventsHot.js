@@ -38,7 +38,7 @@ class EventsSoon extends Component{
     const events = eventsHot && eventsHot.length>0 ? eventsHot : [{id:0},{id:1},{id:2}];
 
     return (
-      <GridWrap container spacing={4}>
+      <GridWrap container spacing={4} className="bilego-dark">
         <Grid item xs={12}>
           <STypography component="h3" variant="h3">
             <Link to={`/${baseNameForRouting}/search?cat=pop`}>

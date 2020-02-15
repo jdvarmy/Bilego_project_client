@@ -14,6 +14,7 @@ import Selections from './Selections';
 import Items from './Items';
 import Slider from './Slider';
 import DatePickerLine from '../../components/DatePickerLine';
+import Divider from '@material-ui/core/Divider';
 
 const DateContainer = styled.div`
   height: ${style.$heightMenu}px;
@@ -63,6 +64,7 @@ class FrontPage extends Component {
           <EventsHot/>
           <Concerts/>
           <Selections/>
+          <Divider />
           <Items/>
         </Container>
       </React.Fragment>

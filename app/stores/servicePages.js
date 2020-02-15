@@ -23,9 +23,9 @@ class servicePages{
     {name: 'vk', link: '#', icon: IconVk},
     {name: 'Facebook', link: '#', icon: IconFacebook},
     {name: 'Instagram', link: '#', icon: IconInstagram},
-    {name: 'Twitter', link: '#', icon: IconTwitter},
-    {name: 'Skype', link: '#', icon: IconSkype},
-    {name: 'Youtube', link: '#', icon: IconYoutube},
+    // {name: 'Twitter', link: '#', icon: IconTwitter},
+    // {name: 'Skype', link: '#', icon: IconSkype},
+    // {name: 'Youtube', link: '#', icon: IconYoutube},
   ];
 
   contacts = [

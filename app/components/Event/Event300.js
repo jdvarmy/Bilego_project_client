@@ -88,7 +88,7 @@ export default function Event300(props) {
             </SWrap>
             <Title><Link to={`/${baseNameForRouting}/event/${name}`}>{title}</Link></Title>
             {/* eslint-disable-next-line camelcase */}
-            <Span>{day} {month} / <Link to={`/${baseNameForRouting}/item/${item_name}`}>{item_title}</Link></Span>
+            <Span className="bilego-date-location">{day} {month} / <Link to={`/${baseNameForRouting}/item/${item_name}`}>{item_title}</Link></Span>
           </Content>
         </React.Fragment>
         :

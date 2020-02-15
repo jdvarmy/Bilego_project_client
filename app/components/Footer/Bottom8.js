@@ -41,7 +41,7 @@ export default function Bottom8(props) {
         </AntMenu.Item>
         {categoriesForFooterMenu.map(el=>(
           <AntMenu.Item key={el.id}>
-            <Link to={el.link}>
+            <Link to={`/${baseNameForRouting}${el.link}`}>
               <span className="">{el.name}</span>
             </Link>
           </AntMenu.Item>
