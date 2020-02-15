@@ -110,21 +110,21 @@ const Copy = styled.div`
 `;
 
 const vk = (
-  <a href="https://vk.com/bilego">
+  <a href="https://vk.com/bilego" target="_blank">
     <StyledIconButton aria-label="vk" className="bilego-button">
       {BilegoIconVk}
     </StyledIconButton>
   </a>
 );
 const facebook = (
-  <a href="https://www.facebook.com/bilegoru/">
+  <a href="https://www.facebook.com/bilegoru/" target="_blank">
     <StyledIconButton aria-label="facebook" className="bilego-button">
       {BilegoIconFacebook}
     </StyledIconButton>
   </a>
 );
 const instagram = (
-  <a href="https://www.instagram.com/bilegoru/">
+  <a href="https://www.instagram.com/bilegoru/" target="_blank">
     <StyledIconButton aria-label="facebook" className="bilego-button">
       {BilegoIconInstagram}
     </StyledIconButton>
