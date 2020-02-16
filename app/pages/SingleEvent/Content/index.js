@@ -30,6 +30,9 @@ const SBox = styled(Box)`
   & div:last-child{
     color: ${style.$greydark};
   }
+  border: none!important;
+  position: relative!important;
+  border-radius: 0!important;
 `;
 const ItemBg = styled.div`
   background-image: url('${p=>(p.img)}');

@@ -4,7 +4,6 @@ import { action, observable } from 'mobx';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import styled from 'styled-components';
 
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import { MapDefaultPin } from '../../components/MapPins';
 import Typography from '@material-ui/core/Typography';
@@ -37,7 +36,7 @@ class Address extends Component {
     const {REACT_APP_MAPBOX_TOKEN, mapStyle} = this.props.mapStore;
 
     return (
-      <Box>
+      <React.Fragment>
         <Grid style={{padding: '20px'}} container spacing={4}>
           <Grid item xs={12}>
             <Typography component="h3" variant="h2">Карта</Typography>
@@ -54,7 +53,7 @@ class Address extends Component {
           </Marker>
         </ReactMapGL>
         <Padding />
-      </Box>
+      </React.Fragment>
     );
   }
 }

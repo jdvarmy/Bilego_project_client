@@ -16,6 +16,9 @@ const Sform = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  legend{
+    display: none!important;
+  }
 `;
 
 @inject('pageStore', 'globalStore')
@@ -63,7 +66,7 @@ class ItemsSearch extends Component{
         <STextFieldCat
           id="bilego-select-category"
           select
-          label="Места"
+          label="Тип места"
           value={itemFilters.category ? itemFilters.category : 'Все площадки'}
           onChange={this.setCategory}
           margin="normal"
