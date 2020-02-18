@@ -33,6 +33,7 @@ const DateContainer = styled.div`
 const Title = styled(Typography)`
   text-align: center;
   margin-top: 25px!important;
+  min-height: 41px; 
 `;
 const SFab = styled(Fab)`
   width: calc(100% - 40px)!important;
@@ -56,6 +57,7 @@ class Search extends Component{
 
   componentWillUnmount() {
     this.props.calendarStore.setDaysFilter('');
+    this.props.searchStore.clear();
   }
 
   componentDidMount = async () => {
@@ -103,7 +105,7 @@ class Search extends Component{
 
     const content = <React.Fragment>
       <Grid item xs={12}>
-        {Array.isArray(searchEvents) && searchEvents.length > 0
+        {searchEvents && searchEvents.length > 0
           ? searchEvents.slice(0, this.count).map(event => (
             <EventDef key={event.id} {...event} baseNameForRouting={baseNameForRouting}/>
           ))
@@ -112,7 +114,7 @@ class Search extends Component{
       </Grid>
       <Grid item xs={12}>
         <NoSsr>
-          {Array.isArray(searchEvents) && searchEvents.length > this.count &&
+          {searchEvents && searchEvents.length > this.count &&
           <SFab onClick={this.loadMore} variant="extended" aria-label="load">
             {BilegoIconLoading} Показать ещё
           </SFab>
@@ -138,7 +140,7 @@ class Search extends Component{
                 <DatePickerLine flickity mini/>
               </DateContainer>
             </Grid>
-            {isLoading && Array.isArray(searchEvents) && searchEvents.length <= 0
+            {isLoading && searchEvents && searchEvents.length <= 0
               ? <LoadingForEvents />
               : content
             }

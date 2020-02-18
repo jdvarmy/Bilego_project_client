@@ -13,7 +13,7 @@ import style from '../../theme/style';
 import DatePickerLine from '../../components/DatePickerLine';
 import PopularOnWeek from '../FrontPage/PopularOnWeek';
 import { LoadingForEvents } from '../../components/LoadingsTemplate';
-import BlockHeaderText from "../../components/BlockHeaderText";
+import BlockHeaderText from '../../components/BlockHeaderText';
 
 const Wrap = styled.div`
   padding: 20px;
@@ -77,6 +77,9 @@ class Search extends Component{
       console.log('single event: ', e);
     }
   };
+  componentWillUnmount() {
+    this.props.searchStore.clear();
+  }
 
   render(){
     const {searchStore:{isLoading, searchEvents, title}, globalStore:{baseNameForRouting}} = this.props;

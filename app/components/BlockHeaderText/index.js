@@ -6,6 +6,7 @@ import { style } from '../../theme';
 
 const Title = styled(Typography)`
   color: ${style.$black};
+  min-height: 72px;
 `;
 
 export default function BlockHeaderText(props) {

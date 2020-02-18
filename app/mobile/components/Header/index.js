@@ -178,6 +178,9 @@ const Subscribe = styled.div`
     letter-spacing: 0.05em;
     color: ${style.$black};
     background: rgba(255,255,255,0.5);
+    ::placeholder {
+      color: ${style.$greydark};
+    }
   }
 `;
 const Results = styled.div`
