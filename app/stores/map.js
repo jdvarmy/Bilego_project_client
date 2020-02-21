@@ -25,6 +25,13 @@ class Map{
     transitionEasing: easeCubic
   };
 
+  @observable openPop = false;
+
+  @action
+  setOpenPop = (flag) => {
+    this.openPop = flag;
+  };
+
   @action
   setViewport = (viewport) => {
     this.viewport = viewport;
