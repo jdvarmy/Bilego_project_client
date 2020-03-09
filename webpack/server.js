@@ -122,6 +122,12 @@ app.get(/\/mos|\/spb/, async (req, res) => {
   const muicss = sheetsMui.toString();
   const styleTags = sheetStyled.getStyleTags();
 
+  if (process.env.NODE_ENV !== "production") {
+    console.log('production')
+  } else {
+    console.log('development')
+  }
+
   fs.readFile(indexFile, 'utf8', (err, data) => {
     if (err) {
       console.log('Something went wrong:', err);
