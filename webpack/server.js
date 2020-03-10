@@ -37,7 +37,7 @@ app.use(express.static('./build'));
 app.set('trust proxy', 'loopback');
 
 const httpsRedirect = require('express-https-redirect');
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV === "production") {
   app.use('/', httpsRedirect());
 }
 
