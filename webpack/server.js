@@ -36,8 +36,10 @@ app.use(express.static('./build'));
 
 app.set('trust proxy', 'loopback');
 
-const httpsRedirect = require('express-https-redirect'); //todo: установить на проме express-https-redirect
-app.use('/', httpsRedirect());
+const httpsRedirect = require('express-https-redirect');
+if (process.env.NODE_ENV !== "production") {
+  app.use('/', httpsRedirect());
+}
 
 app.get(/\/mos|\/spb/, async (req, res) => {
   const url = req.originalUrl || req.url;
@@ -122,12 +124,6 @@ app.get(/\/mos|\/spb/, async (req, res) => {
   const muicss = sheetsMui.toString();
   const styleTags = sheetStyled.getStyleTags();
 
-  if (process.env.NODE_ENV !== "production") {
-    console.log('production')
-  } else {
-    console.log('development')
-  }
-
   fs.readFile(indexFile, 'utf8', (err, data) => {
     if (err) {
       console.log('Something went wrong:', err);
@@ -141,6 +137,15 @@ app.get(/\/mos|\/spb/, async (req, res) => {
       .replace('<title></title>', helmet.title.toString())
       .replace('<meta name="description" content=""/>', helmet.meta.toString())
       .replace('<script>__INITIAL_DATA__</script>', `<script>window.__INITIAL_DATA__ = ${JSON.stringify(store.toJson())};</script>`);
+
+    // add google and yandex scripts on prod
+    if (process.env.NODE_ENV === "production") {
+      data = data.replace('__GOOGLE__', `<script async src="https://www.googletagmanager.com/gtag/js?id=UA-135925487-3"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-135925487-3');</script>`)
+        .replace('__YANDEX__', `<script type="text/javascript" >(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");ym(57548869, "init", {clickmap:true,trackLinks:true,accurateTrackBounce:true});</script><noscript><div><img src="https://mc.yandex.ru/watch/57548869" style="position:absolute; left:-9999px;" alt="" /></div></noscript>`)
+    } else {
+      data = data.replace('__GOOGLE__', '')
+        .replace('__YANDEX__', '')
+    }
 
     return res.send(data);
   });

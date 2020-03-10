@@ -12,8 +12,8 @@
     "prod:build": "npm run generate:sitemap && cross-env NODE_ENV=production webpack --config config/webpack/server/webpack.prod.server.js",
     "dev:start": "npm run build:clean && cross-env NODE_ENV=development webpack -w --config config/webpack/server/webpack.dev.server.js",
     "start": "nodemon ./build/server.js",
-    "wp:dev": "npm run build:clean && webpack -w --config webpack/config.develop.js",
-    "wp:prod": "npm run build:clean && webpack --config webpack/config.production.js --progress"
+    "wp:dev": "npm run build:clean && cross-env NODE_ENV=development webpack -w --config webpack/config.develop.js",
+    "wp:prod": "npm run build:clean && cross-env NODE_ENV=production webpack --config webpack/config.production.js --progress"
   },
   "dependencies": {
     "@babel/core": "^7.7.7",
