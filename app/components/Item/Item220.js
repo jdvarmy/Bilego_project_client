@@ -4,14 +4,12 @@ import styled from 'styled-components';
 
 import style from '../../theme/style';
 
-import I220 from '../Event/images/E200.jpg';
-
 const Wrapper = styled.div`
   overflow: hidden;
   position: relative;
   height: 350px;
   .item-220-hover{
-    background-image: url('${p => (p.image)}');
+    background-image: url('${p => (p.img ? p.img : '')}');
     transition: all .5s ease 0s;
     background-size: cover;
     background-position: center;
@@ -40,7 +38,7 @@ const Article = styled.article`
   border-radius: 12px;
 `;
 const Img = styled.div`
-  background-image: url('${p => (p.image)}');
+  background-image: url('${p => (p.img ? p.img : '')}');
   visibility: hidden;
   background-size: cover;
   background-position: center;
@@ -71,9 +69,9 @@ export default function Item220(props) {
 
   return (
     // eslint-disable-next-line react/jsx-filename-extension
-    <Wrapper image={img !== undefined ? img : I220}>
+    <Wrapper img={img}>
       <Article>
-        <Img image={img !== undefined ? img : I220} />
+        <Img img={img} />
         {name !== undefined
         &&
         <React.Fragment>

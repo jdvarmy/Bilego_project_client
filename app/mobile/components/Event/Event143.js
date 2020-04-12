@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import style from '../../../theme/style';
-import E143 from '../../../components/Event/images/E200.jpg';
-import { TicketsModalButton } from '../../../components/TicketsModal';
 import Typography from '@material-ui/core/Typography';
 
 const Wrapper = styled.div`
@@ -19,7 +17,7 @@ const Wrapper = styled.div`
   }
 `;
 const Image = styled.div`
-  background-image: url('${p => (p.img)}');
+  background-image: url('${p => (p.img ? p.img : '')}');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

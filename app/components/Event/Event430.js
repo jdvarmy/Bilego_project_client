@@ -7,8 +7,6 @@ import style from '../../theme/style';
 import { TicketsModalButton } from '../TicketsModal';
 import { BilegoIconMenuDotted } from '../../theme/bilegoIcons';
 
-import E200 from './images/E200.jpg';
-
 const Div = styled.div`
   z-index: 2;
   position: absolute!important;
@@ -41,7 +39,7 @@ const Info = styled.div`
   }
 `;
 const Image = styled.div`
-  background-image: url('${p => (p.img)}');
+  background-image: url('${p => (p.img ? p.img : '')}');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -101,7 +99,7 @@ export default function Event430(props){
           {BilegoIconMenuDotted}
         </SIconButton>
       </Info>
-      <Image className="event-430-hover" img={img !== undefined ? img : E200} />
+      <Image className="event-430-hover" img={img} />
       {name !== undefined &&
         <React.Fragment>
           <Link to={`/${baseNameForRouting}/event/${name}`}>

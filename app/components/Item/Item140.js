@@ -4,8 +4,6 @@ import styled from 'styled-components';
 
 import style from '../../theme/style';
 
-import I140 from '../Event/images/E200.jpg';
-
 const Wrapper = styled.div`
   padding: 36px 0 32px;
   display: flex;
@@ -52,7 +50,7 @@ const Image = styled.div`
   height: 70px;
   border: 1px solid ${style.$grey};
   border-radius: 50%;
-  background-image: url('${p => (p.image)}');
+  background-image: url('${p => (p.img ? p.img : '')}');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -83,7 +81,7 @@ export default function Item140(props) {
       </Content>
       <div>
         <Link to={`/${baseNameForRouting}/item/${name}`}>
-          <Image image={img !== undefined ? img : I140} />
+          <Image img={img} />
         </Link>
       </div>
     </Wrapper>

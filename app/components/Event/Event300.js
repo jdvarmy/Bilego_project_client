@@ -5,8 +5,6 @@ import styled from 'styled-components';
 import style from '../../theme/style';
 import { TicketsModalButton } from '../TicketsModal';
 
-import E200 from './images/E200.jpg';
-
 const Wrapper = styled.div`
   width: 100%;
   overflow: hidden;
@@ -20,7 +18,7 @@ const Wrapper = styled.div`
   }
 `;
 const Image = styled.div`
-  background-image: url('${p => (p.img)}');
+  background-image: url('${p => (p.img ? p.img : '')}');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -92,7 +90,7 @@ export default function Event300(props) {
           </Content>
         </React.Fragment>
         :
-        <Image className="event-300-hover" img={E200} />
+        <Image className="event-300-hover" />
       }
     </Wrapper>
   );
