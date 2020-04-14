@@ -7,11 +7,14 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import { NoSsr } from '@material-ui/core';
 import Gallery from './Gallery';
 import AddressWidthMap from './AddressWidthMap';
 import PopularOnWeek from '../../FrontPage/PopularOnWeek';
 import style from '../../../theme/style';
 import { LoadingContent } from '../../../components/LoadingsTemplate';
+import Yamusic from './Yamusic';
+import YouTubeWrapper from './YouTube';
 
 const Wrap = styled.div`
   padding: 20px;
@@ -62,7 +65,12 @@ class Content extends Component{
             <Grid item xs={4}>
               <Divider />
               <Padding />
-              {/* todo: Ya music and videos */}
+              {
+                event.yamusic &&
+                <NoSsr>
+                  <Yamusic artist={event.yamusic}/>
+                </NoSsr>
+              }
             </Grid>
             <Grid item xs={8}>
               <Divider />
@@ -94,6 +102,19 @@ class Content extends Component{
                   </Grid>
                 </Grid>
               </div>
+            </Grid>
+          </Grid>
+          <Grid container spacing={4}>
+            <Grid item xs={12}>
+              <NoSsr>
+                {
+                  event.youtube &&
+                  <>
+                    <Padding />
+                    <YouTubeWrapper video={event.youtube}/>
+                  </>
+                }
+              </NoSsr>
             </Grid>
           </Grid>
           <Grid container spacing={4}>

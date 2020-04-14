@@ -59,6 +59,7 @@
     "react-material-ui-form-validator": "^2.0.10",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
+    "react-youtube": "^7.11.1",
     "styled-components": "^4.4.1",
     "superagent": "^3.8.1",
     "superagent-promise": "^1.1.0",

@@ -5,9 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Shared from '../../../components/Shared';
-import Fab from "@material-ui/core/Fab";
-import {BilegoIconLoading, BilegoIconVk} from "../../../theme/bilegoIcons";
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from '@material-ui/core/IconButton';
 
 const Wrap = styled.div`
   padding: auto 20px;
