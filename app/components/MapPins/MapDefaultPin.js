@@ -7,6 +7,9 @@ import { BilegoIconMapPin } from '../../theme/bilegoIcons';
 const StyledFab = styled(Fab)`
   box-shadow: none!important;
   background-color: transparent!important;
+  svg{
+    font-size: 2rem;
+  }
 `;
 
 export default function MapDefaultPin(props){

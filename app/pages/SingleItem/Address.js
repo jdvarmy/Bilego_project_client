@@ -48,7 +48,7 @@ class Address extends Component {
           mapboxApiAccessToken={REACT_APP_MAPBOX_TOKEN}
           onViewportChange={this.setViewport}
         >
-          <Marker latitude={this.props.item.meta.map.latitude*1} longitude={this.props.item.meta.map.longitude*1}>
+          <Marker latitude={this.props.item.meta.map.latitude*1} longitude={this.props.item.meta.map.longitude*1} offsetLeft={-28} offsetTop={-34}>
             <MapDefaultPin />
           </Marker>
         </ReactMapGL>
