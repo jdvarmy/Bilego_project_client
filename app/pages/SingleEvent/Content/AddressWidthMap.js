@@ -9,8 +9,14 @@ import Box from '@material-ui/core/Box';
 import { MapDefaultPin } from '../../../components/MapPins';
 import { easeCubic } from 'd3-ease';
 
+import css from '../../../theme/style';
+
 const SPopup = styled(Popup)`
   text-align: center;
+  color: ${css.$black};
+  div{
+    color: ${css.$black};
+  }
 `;
 
 @inject('mapStore', 'singleEventStore', 'globalStore')
