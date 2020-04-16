@@ -95,7 +95,7 @@ app.get(/\/mos|\/spb/, async (req, res) => {
   const sheetsMui = new ServerStyleSheets();
   const sheetStyled = new ServerStyleSheet();
 
-  const appContent = ReactDOMServer.renderToString(
+  const appContent = ReactDOMServer.renderToNodeStream(
     sheetsMui.collect(
       <Loadable.Capture report={moduleName => modules.push(moduleName)}>
         <StyleSheetManager sheet={sheetStyled.instance}>
