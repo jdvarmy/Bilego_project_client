@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import Grid from '@material-ui/core/Grid';
-import {Event143} from "../Event";
 
 const Image = styled.div`
   background: linear-gradient( to right,

@@ -95,7 +95,7 @@ app.get(/\/mos|\/spb/, async (req, res) => {
   const sheetsMui = new ServerStyleSheets();
   const sheetStyled = new ServerStyleSheet();
 
-  const appContent = ReactDOMServer.renderToNodeStream(
+  const appContent = ReactDOMServer.renderToString(
     sheetsMui.collect(
       <Loadable.Capture report={moduleName => modules.push(moduleName)}>
         <StyleSheetManager sheet={sheetStyled.instance}>
@@ -114,7 +114,7 @@ app.get(/\/mos|\/spb/, async (req, res) => {
 
   // const bundles = getBundles(stats, modules);
   // console.log(modules)
-  // console.log(bundles)
+  // console.log(appContent)
 
   if (context.url) {
     res.redirect(301, context.url);
@@ -132,7 +132,6 @@ app.get(/\/mos|\/spb/, async (req, res) => {
     data = data.replace('__STYLES__', styleTags)
       .replace('__MUISTYLES__', muicss)
       .replace('__LINKS__', helmet.link.toString())
-      .replace('<div id=app></div>', `<div id=app>${appContent}</div>`)
       .replace('<div id="app"></div>', `<div id="app">${appContent}</div>`)
       .replace('<title></title>', helmet.title.toString())
       .replace('<meta name="description" content=""/>', helmet.meta.toString())
@@ -141,7 +140,7 @@ app.get(/\/mos|\/spb/, async (req, res) => {
     // add google and yandex scripts on prod
     if (process.env.NODE_ENV === "production") {
       data = data.replace('__GOOGLE__', `<script async src="https://www.googletagmanager.com/gtag/js?id=UA-135925487-3"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'UA-135925487-3');</script>`)
-        .replace('__YANDEX__', `<script type="text/javascript" >(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");ym(57548869, "init", {clickmap:true,trackLinks:true,accurateTrackBounce:true});</script><noscript><div><img src="https://mc.yandex.ru/watch/57548869" style="position:absolute; left:-9999px;" alt="" /></div></noscript>`)
+        .replace('__YANDEX__', `<script async type="text/javascript" >(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");ym(57548869, "init", {clickmap:true,trackLinks:true,accurateTrackBounce:true});</script><noscript><div><img src="https://mc.yandex.ru/watch/57548869" style="position:absolute; left:-9999px;" alt="" /></div></noscript>`)
     } else {
       data = data.replace('__GOOGLE__', '')
         .replace('__YANDEX__', '')

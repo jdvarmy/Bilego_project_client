@@ -105,7 +105,9 @@ class Search extends Component{
           <DateContainer align='middle' type='flex' justify='center'>
             <DatePickerLine/>
           </DateContainer>
-          <Grid item xs={12}><BlockHeaderText>{title}</BlockHeaderText></Grid>
+          <Grid item xs={12}>
+            <BlockHeaderText>{title}</BlockHeaderText>
+          </Grid>
           <Grid item xs={12}>
             <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
               <Grid container spacing={4}>

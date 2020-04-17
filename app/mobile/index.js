@@ -14,10 +14,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   min-height: 100%;
 `;
-const H = styled.div`
+const Content = styled.div`
   flex: 1 0 auto;
 `;
-const F = styled(Footer)`
+const FooterWrap = styled(Footer)`
   flex: 0 0 auto;
 `;
 
@@ -31,7 +31,7 @@ export default class Mobile extends React.Component{
     return (
       <Wrapper>
         <Header />
-        <H>
+        <Content>
         {ssrSide === 'server' && renderRoutes(routs)}
         {ssrSide === 'client' &&
           <Switch>
@@ -39,8 +39,8 @@ export default class Mobile extends React.Component{
               <Route {...props} />
             ))}
           </Switch>}
-        </H>
-        <F />
+        </Content>
+        <FooterWrap />
       </Wrapper>
     )
   }

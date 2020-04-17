@@ -41,9 +41,6 @@ const Text = styled.div`
   display: block;
   width: 75%;
   text-align: left;
-  h2{
-    color: ${style.$white};
-  }
   .location{
     color: ${style.$red};
   }
@@ -101,8 +98,14 @@ const Button = styled.div`
     }
   }
 `;
-
 const Numbers = styled.div``;
+const BilegoTypography = styled.div`
+  line-height: 65px;
+  letter-spacing: -6px;
+  font-weight: 700;
+  font-size: 82px;
+  color: ${style.$white};
+`;
 const Gradient = styled.div`
   background: radial-gradient(circle at right, transparent 40%, ${style.$greydark});
   background-size: cover;
@@ -173,7 +176,7 @@ class Slider extends Component{
                       {slide.location}
                     </Typography>
                     <Link to={`/${baseNameForRouting}/event/${slide.name}`} className="bilego-slider-title">
-                      <Typography variant="h2" component="h2">{slide.image_title}</Typography>
+                      <BilegoTypography variant="h2" component="h2">{slide.image_title}</BilegoTypography>
                     </Link>
                   </Text>
                   <Typography className="date" variant="subtitle2" component="div">

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import style from '../../../theme/style';
-import { TicketsModalButton } from '../../../components/TicketsModal';
 
 const Div = styled.div`
   z-index: 2;

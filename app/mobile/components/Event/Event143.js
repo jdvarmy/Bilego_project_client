@@ -80,7 +80,7 @@ export default function Event143(props) {
           </Content>
         </React.Fragment>
         :
-        <Image className="event-143-hover" img={E143} />
+        <Image className="event-143-hover" />
       }
     </Wrapper>
   );

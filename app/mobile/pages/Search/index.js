@@ -15,7 +15,7 @@ import PopularOnWeek from './../../components/PopularOnWeek';
 import { BilegoIconLoading } from '../../../theme/bilegoIcons';
 import NoContent from '../../../components/NoContent';
 import Padding from '../../components/Padding';
-import { LoadingForEvents } from '../../components/LoadingsTemplate';
+import { LoadingForEvents, LoadingTitle } from '../../components/LoadingsTemplate';
 
 const Content = styled.div`
   background-color: ${style.$white};
@@ -132,7 +132,10 @@ class Search extends Component{
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Title component="h1" variant="h4">
-                {title}
+                {isLoading && searchEvents && searchEvents.length <= 0
+                  ? <LoadingTitle />
+                  : title
+                }
               </Title>
             </Grid>
             <Grid item xs={12}>
