@@ -73,7 +73,7 @@ app.get(/\/mos|\/spb/, async (req, res) => {
 
   const routs = routes(store.baseNameForRouting);
 
-  const pageData = await store.getPageData(routs);
+  const pageData = await store.getPageData(routs); // todo TTFB долгий запрос
   if(store.frontPageFirstData)
     stores.pageStore.setStartDataFrontPage(pageData);
   else if(store.eventsFirstData)

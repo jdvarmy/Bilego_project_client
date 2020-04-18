@@ -109,14 +109,14 @@ class Search extends Component{
             <BlockHeaderText>{title}</BlockHeaderText>
           </Grid>
           <Grid item xs={12}>
-            <Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>
+            {/*<Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>*/}
               <Grid container spacing={4}>
                 {isLoading && searchEvents && searchEvents.length <= 0
                   ? <LoadingForEvents />
                   : content
                 }
               </Grid>
-            </Spin>
+            {/*</Spin>*/}
           </Grid>
           <Grid container spacing={4}>
             <Grid item xs={12}>
