@@ -1,30 +1,47 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { action, observable } from 'mobx';
-import ReactMapGL, { Marker } from 'react-map-gl';
+import ReactMapGL, { FlyToInterpolator, Marker, Popup } from 'react-map-gl';
 import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
 import { MapDefaultPin } from '../../components/MapPins';
 import Typography from '@material-ui/core/Typography';
+import { easeCubic } from 'd3-ease';
+
+import css from '../../theme/style';
 
 const Padding = styled.div`
   padding-top:48px;
+`;
+const SPopup = styled(Popup)`
+  text-align: center;
+  color: ${css.$black};
+  div{
+    color: ${css.$black};
+  }
 `;
 
 @inject('mapStore')
 @observer
 class Address extends Component {
-  @observable viewport = {};
+  @observable viewport = {
+    width: '100%',
+    height: 308,
+    pitch: 45,
+    zoom: 16,
+    bearing: 17.6,
+    transitionDuration: 1800,
+    transitionInterpolator: new FlyToInterpolator(),
+    transitionEasing: easeCubic
+  };
 
   componentDidMount() {
     const {item} = this.props;
     this.setViewport({
-      width: '100%',
-      height: 308,
+      ...this.viewport,
       latitude: item.meta.map.latitude !== undefined && item.meta.map.latitude*1,
-      longitude: item.meta.map.longitude !== undefined && item.meta.map.longitude*1,
-      zoom: 16
+      longitude: item.meta.map.longitude !== undefined && item.meta.map.longitude*1
     })
   }
 
@@ -33,7 +50,7 @@ class Address extends Component {
   };
 
   render() {
-    const {REACT_APP_MAPBOX_TOKEN, mapStyle} = this.props.mapStore;
+    const {mapStore:{ REACT_APP_MAPBOX_TOKEN, mapStyle }, item} = this.props;
 
     return (
       <React.Fragment>
@@ -48,9 +65,19 @@ class Address extends Component {
           mapboxApiAccessToken={REACT_APP_MAPBOX_TOKEN}
           onViewportChange={this.setViewport}
         >
-          <Marker latitude={this.props.item.meta.map.latitude*1} longitude={this.props.item.meta.map.longitude*1} offsetLeft={-28} offsetTop={-34}>
+          <Marker latitude={item.meta.map.latitude*1} longitude={item.meta.map.longitude*1} offsetLeft={-28} offsetTop={-34}>
             <MapDefaultPin />
           </Marker>
+          <SPopup
+            latitude={item.meta.map.latitude*1}
+            longitude={item.meta.map.longitude*1}
+            closeButton={false}
+            closeOnClick={false}
+            offsetTop={-29}
+            anchor="bottom" >
+            <h4>{item.title}</h4>
+            <div>{item.address}</div>
+          </SPopup>
         </ReactMapGL>
         <Padding />
       </React.Fragment>

@@ -14,7 +14,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import styled from 'styled-components';
 
 import { style, theme } from './theme';
-import routes from './routes';
+import routes from './routes/server';
 import * as stores from './stores';
 import ConfigureStartStore from './ConfigureStartStore';
 
@@ -82,8 +82,6 @@ export const ClientBilegoGateUi = () => {
     stores.searchStore.setStartDataSearchPage(store.searchFirstData);
 
   // console.log(store.req)
-
-  const routs = routes(store.baseNameForRouting);
   const path = window.location.pathname;
 
   Loadable.preloadReady().then(() => {

@@ -32,8 +32,8 @@ export default class Mobile extends React.Component{
       <Wrapper>
         <Header />
         <Content>
-        {ssrSide === 'server' && renderRoutes(routs)}
-        {ssrSide === 'client' &&
+          {ssrSide === 'server' && renderRoutes(routs)}
+          {ssrSide === 'client' &&
           <Switch>
             {routs.map(props => (
               <Route {...props} />

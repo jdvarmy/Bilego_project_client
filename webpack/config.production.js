@@ -84,7 +84,7 @@ const clientConf = options => ({
   output: {
     path: path.resolve('build'),
     filename: '[name].[hash].js',
-    chunkFilename: '[name].[hash].bilego.js',
+    chunkFilename: '[name].bilego.js',
     publicPath: '/'
   },
   devtool: 'cheap-module-source-map',

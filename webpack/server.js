@@ -24,7 +24,7 @@ import { theme } from '../app/theme';
 import * as stores from '../app/stores';
 import { ServerBilegoGateUi } from '../app';
 import ConfigureStartStore from '../app/ConfigureStartStore';
-import routes from '../app/routes';
+import routes from '../app/routes/server';
 
 // import { getBundles } from 'react-loadable/webpack'
 // import stats from '../build/dist/react-loadable.json';
