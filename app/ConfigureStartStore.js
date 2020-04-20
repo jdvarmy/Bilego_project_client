@@ -3,12 +3,6 @@ import { matchPath } from 'react-router-dom';
 import { globalService, pageService, eventService, itemService, searchService, servicePagesService } from './services';
 import { cities, searchStore } from './stores';
 
-import imgWeekends from './pages/FrontPage/images/weekends.jpg';
-import imgForKids from './pages/FrontPage/images/forKids.jpg';
-import game from './pages/FrontPage/images/game.jpg';
-import onAir from './pages/FrontPage/images/onAir.jpg';
-import studyNew from './pages/FrontPage/images/studyNew.jpg';
-import withBrain from './pages/FrontPage/images/withBrain.jpg';
 import { BilegoIconHandshake } from './theme/bilegoIcons';
 
 configure({
@@ -198,53 +192,6 @@ export default class ConfigureStartStore {
       meta: this.postMeta
     }
   }
-  @computed
-  get selections(){
-    return [
-      {
-        id: 'weekends',
-        image: imgWeekends,
-        title: ['Чем', 'заняться в', 'выходные'],
-        mask: 'weekends',
-        link: `/${this.baseNameForRouting}/search/?mask=weekends`
-      },
-      {
-        id: 'for_kids',
-        image: imgForKids,
-        title: ['Bilego', 'для', 'Детей'],
-        mask: 'forKids',
-        link: `/${this.baseNameForRouting}/search/?mask=for_kids`
-      },
-      {
-        id: 'on_air',
-        image: onAir,
-        title: ['На', 'открытом', 'воздухе'],
-        mask: 'onAir',
-        link: `/${this.baseNameForRouting}/search/?mask=on_air`
-      },
-      {
-        id: 'with_brain',
-        image: withBrain,
-        title: ['Отдых', 'с умом'],
-        mask: 'withBrain',
-        link: `/${this.baseNameForRouting}/search/?mask=with_brain`
-      },
-      {
-        id: 'study_new',
-        image: studyNew,
-        title: ['Научись', 'новому'],
-        mask: 'studyNew',
-        link: `/${this.baseNameForRouting}/search/?mask=study_new`
-      },
-      {
-        id: 'game',
-        image: game,
-        title: ['Game', 'space'],
-        mask: 'game',
-        link: `/${this.baseNameForRouting}/search/?mask=game`
-      },
-    ]
-  };
 
   constructor(initialState, history) {
     this.setData(initialState);

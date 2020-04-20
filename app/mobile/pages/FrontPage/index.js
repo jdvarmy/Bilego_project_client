@@ -49,7 +49,7 @@ const SFab = styled(Fab)`
 
 @inject('globalStore', 'pageStore')
 @observer
-class FrontPage extends React.Component{
+class FrontPage extends React.PureComponent{
   constructor(props){
     super(props);
     this.props.globalStore.setMobileMenuCityColor(style.$white);
@@ -72,7 +72,7 @@ class FrontPage extends React.Component{
   };
 
   render() {
-    const { globalStore:{ baseNameForRouting, ssrSide, selections }, pageStore } = this.props;
+    const { globalStore:{ baseNameForRouting, ssrSide }, pageStore:{ eventsSoon, eventsHot, eventsConcerts, eventCategoriesSelections, isLoading} } = this.props;
 
     const content =
       <Grid container spacing={2}>
@@ -87,19 +87,19 @@ class FrontPage extends React.Component{
               id: 1,
               name: 'Ближайшие события',
               link: '/search?cat=all',
-              carts: pageStore.eventsSoon
+              carts: eventsSoon
             },
             {
               id: 2,
               name: 'Популярные события',
               link: '/search?cat=pop',
-              carts: pageStore.eventsHot
+              carts: eventsHot
             },
             {
               id: 3,
               name: 'Концерты',
               link: '/search?cat=concerts',
-              carts: pageStore.eventsConcerts
+              carts: eventsConcerts
             }
           ].map(el=>{
             return(
@@ -144,35 +144,39 @@ class FrontPage extends React.Component{
             )
           })}
         </Grid>
-        <Grid item xs={12}>
-          <GridWrap container spacing={3}>
-            <Grid item xs={12}>
-              <SBlockHeaderText component="h5" variant="h5">Подборки Bilego</SBlockHeaderText>
-            </Grid>
-            {Object.keys(selections).slice(0, this.selectionsCount).map(key=>{
-              return (
-                <Grid key={selections[key].mask} item xs={12}>
-                  <Event190 {...selections[key]}/>
-                </Grid>
-              )
-            })}
-          </GridWrap>
+        {eventCategoriesSelections &&
           <Grid item xs={12}>
-            {Object.keys(selections).length > this.selectionsCount &&
-            <SFab onClick={this.loadMore} variant="extended" aria-label="load">
-              {BilegoIconLoading} Показать ещё
-            </SFab>
-            }
-            <div style={{height: '2em'}} />
+            <GridWrap container spacing={3}>
+              <Grid item xs={12}>
+                <SBlockHeaderText component="h5" variant="h5">Подборки Bilego</SBlockHeaderText>
+              </Grid>
+              {eventCategoriesSelections.slice(0, this.selectionsCount)
+                .map(selection => {
+                  return (
+                    <Grid key={selection.id} item xs={12}>
+                      <Event190 {...selection}
+                                link={`/${baseNameForRouting}/search/?selection=${selection.slug}`}/>
+                    </Grid>
+                  )
+                })}
+            </GridWrap>
+            <Grid item xs={12}>
+              {eventCategoriesSelections.length > this.selectionsCount &&
+              <SFab onClick={this.loadMore} variant="extended" aria-label="load">
+                {BilegoIconLoading} Показать ещё
+              </SFab>
+              }
+              <div style={{ height: '2em' }}/>
+            </Grid>
           </Grid>
-        </Grid>
+        }
       </Grid>;
 
     return (
       <React.Fragment>
         <Slider />
         <Content>
-          {pageStore.isLoading && (pageStore.eventsSoon.length <= 0 && pageStore.eventsHot.length <= 0 && pageStore.eventsConcerts.length <= 0)
+          {isLoading && (eventsSoon.length <= 0 && eventsHot.length <= 0 && eventsConcerts.length <= 0)
             ? <LoadingFrontPage />
             : content}
         </Content>

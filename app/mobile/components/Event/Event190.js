@@ -57,7 +57,7 @@ export default function Event190(props) {
         <Hover />
       </Link>
       <Content>
-        <Title><Link to={link}>{title.join(' ')}</Link></Title>
+        <Title><Link to={link}>{title}</Link></Title>
       </Content>
     </Wrapper>
   );

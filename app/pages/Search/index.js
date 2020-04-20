@@ -5,8 +5,6 @@ import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-import { Spin } from 'antd';
-import Spinner from '../../components/Spinner';
 import NoContent from '../../components/NoContent';
 import { Event300 } from '../../components/Event';
 import style from '../../theme/style';
@@ -36,14 +34,14 @@ const DateContainer = styled.div`
 `;
 
 @withRouter
-@inject('searchStore', 'globalStore')
+@inject('searchStore', 'globalStore', 'calendarStore')
 @observer
 class Search extends Component{
   componentDidMount = async () => {
     const {
       searchStore:{setSearchString, getSearchPageResult, setTitle, parseString},
       location,
-      globalStore:{apiRoot, CITY, selections, setMeta}
+      globalStore:{apiRoot, setMeta}
     } = this.props;
 
     try {
@@ -59,8 +57,8 @@ class Search extends Component{
   };
   componentDidUpdate = async (prevProps, prevState, snapshot) => {
     const {
-      searchStore:{setSearchString, getSearchPageResult, clear, setTitle, parseString},
-      globalStore:{apiRoot, selections, setMeta}
+      searchStore:{setSearchString, getSearchPageResult, clear, setTitle},
+      globalStore:{apiRoot, setMeta}
     } = this.props;
 
     try {
@@ -78,6 +76,7 @@ class Search extends Component{
     }
   };
   componentWillUnmount() {
+    this.props.calendarStore.setDaysFilter('');
     this.props.searchStore.clear();
   }
 
@@ -109,14 +108,12 @@ class Search extends Component{
             <BlockHeaderText>{title}</BlockHeaderText>
           </Grid>
           <Grid item xs={12}>
-            {/*<Spin spinning={isLoading} indicator={<Spinner leftPadding={27/2}/>}>*/}
-              <Grid container spacing={4}>
-                {isLoading && searchEvents && searchEvents.length <= 0
-                  ? <LoadingForEvents />
-                  : content
-                }
-              </Grid>
-            {/*</Spin>*/}
+            <Grid container spacing={4}>
+              {isLoading && searchEvents && searchEvents.length <= 0
+                ? <LoadingForEvents />
+                : content
+              }
+            </Grid>
           </Grid>
           <Grid container spacing={4}>
             <Grid item xs={12}>

@@ -16,4 +16,7 @@ export default {
     requests.get(apiRoot+'/items', {page, size, ...filterParams}),
   getItemsCategoryList: (apiRoot, filterParams) =>
     requests.get(apiRoot+'/items/category/list', {...filterParams}),
+
+  getEventCategoriesSelectionsList: (apiRoot) =>
+    requests.get(apiRoot+'/events/category/selections'),
 }

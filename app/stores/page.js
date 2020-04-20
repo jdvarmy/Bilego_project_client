@@ -37,6 +37,8 @@ class Page{
   @observable itemsByCategory = []; // not use
   @observable itemsCategoryList = [];
 
+  @observable eventCategoriesSelections = [];
+
   @observable seoPage = [];
 
   @action
@@ -57,6 +59,7 @@ class Page{
   getFrontPageData = flow( function* getFrontPageData(apiRoot, params){
     this.isLoading = true;
     try{
+      this.getEventCategoriesSelectionsList(apiRoot);
       const resp = yield pageService.getFrontPageData(apiRoot, params);
       this.eventsSoon = resp.events_soon;
       this.eventsHot = resp.events_hot;
@@ -111,6 +114,8 @@ class Page{
     this.events = [];
     this.itemsByCategory = [];
     this.items = [];
+
+    this.eventCategoriesSelections = [];
 
     this.eventsSoon = [];
     this.eventsHot = [];
@@ -250,6 +255,19 @@ class Page{
       this.itemsCategoryList = yield pageService.getItemsCategoryList(apiRoot);
     }catch(e){
       console.log(e);
+    }
+  }).bind(this);
+
+  @action
+  getEventCategoriesSelectionsList = flow( function* getEventCategoriesSelectionsList(apiRoot){
+    this.isLoading = true;
+    try{
+      const response = yield pageService.getEventCategoriesSelectionsList(apiRoot);
+      this.eventCategoriesSelections = response;
+    }catch(e){
+      console.log(e);
+    }finally {
+      this.isLoading = false;
     }
   }).bind(this);
 

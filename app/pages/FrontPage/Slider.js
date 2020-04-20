@@ -162,7 +162,7 @@ class Slider extends Component{
             <Carousel
               effect="fade"
               autoplay
-              lazyLoad
+              // lazyLoad //todo? неправильно работает lazy. посылаем много запросов и грузить одни и теже картинки много раз
               infinite
               dotPosition="right"
               ref={slider => (this.slider = slider)}

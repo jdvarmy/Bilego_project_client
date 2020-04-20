@@ -52,6 +52,7 @@ class Search{
     this.cache = {};
     this.seoPage = [];
     this.title = undefined;
+    this.searchEvents = [];
 
     this.changeSearchStatus(-1);
     this.setRequest('');
@@ -150,7 +151,7 @@ class Search{
       start: params.get('start'),
       end: params.get('end'),
       s: params.get('s'),
-      mask: params.get('mask'),
+      selection: params.get('selection'),
       cat: params.get('cat'),
     };
   }

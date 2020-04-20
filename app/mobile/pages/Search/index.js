@@ -40,7 +40,6 @@ const SFab = styled(Fab)`
   margin: 20px!important;
 `;
 
-// todo: сделать сео для страницы
 @withRouter
 @inject('searchStore', 'globalStore', 'calendarStore')
 @observer
@@ -62,9 +61,9 @@ class Search extends Component{
 
   componentDidMount = async () => {
     const {
-      searchStore:{setSearchString, getSearchPageResult, setTitle, parseString},
+      searchStore:{setSearchString, getSearchPageResult, setTitle},
       location,
-      globalStore:{apiRoot, CITY, selections, setMeta}
+      globalStore:{apiRoot, setMeta}
     } = this.props;
 
     try {
@@ -81,8 +80,8 @@ class Search extends Component{
 
   componentDidUpdate = async (prevProps) => {
     const {
-      searchStore:{setSearchString, getSearchPageResult, clear, setTitle, parseString},
-      globalStore:{apiRoot, selections, setMeta}
+      searchStore:{setSearchString, getSearchPageResult, clear, setTitle},
+      globalStore:{apiRoot, setMeta}
     } = this.props;
 
     try {

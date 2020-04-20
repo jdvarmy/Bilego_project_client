@@ -3,10 +3,7 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
 
-import NoSsr from '@material-ui/core/NoSsr';
-
 import style from '../../theme/style';
-import MainSlider from '../../components/Slider/MainSlider';
 import EventsSoon from './EventsSoon';
 import EventsHot from './EventsHot';
 import Concerts from './Concerts';
@@ -51,10 +48,7 @@ class FrontPage extends Component {
     return (
       <React.Fragment>
         <div>
-          {/*<NoSsr>*/}
-          {/*  <MainSlider />*/}
-            <Slider />
-          {/*</NoSsr>*/}
+          <Slider />
         </div>
         <DateContainer align='middle' type='flex' justify='center'>
           <DatePickerLine/>
