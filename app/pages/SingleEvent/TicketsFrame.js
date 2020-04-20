@@ -3,8 +3,10 @@ import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  width: 100%;
-  height: 645px;
+  ${p => (
+    p.event &&
+    `width: 100%; height: 645px;`
+  )}
   & > div{
     width: 100%;
     height: 645px;
@@ -25,7 +27,7 @@ class TicketsFrame extends Component{
     const {event} = this.props.singleEventStore;
 
     return (
-      <Wrapper>
+      <Wrapper event={event && event.ticket_link}>
         {event && event.ticket_link && <div dangerouslySetInnerHTML={this.iframe(event.ticket_link)}/>}
       </Wrapper>
     )

@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import NoSsr from '@material-ui/core/NoSsr';
+import Typography from '@material-ui/core/Typography';
 import style from '../../theme/style';
 import { Spin } from 'antd';
 import Spinner from '../../components/Spinner';
@@ -23,9 +24,15 @@ const TicketsFrameWrap = styled.div`
   rgba(237,237,237,0) 62%
   );
 `;
+const WrapNoEvent = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 // https://ui8.net/products/stellar-ui-kit
-// todo: если вордпресс не нашел событие, то 404
 
 @withRouter
 @inject('singleEventStore', 'globalStore')
@@ -63,7 +70,7 @@ class SingleEvent extends Component{
   }
 
   render(){
-    const {singleEventStore:{isLoading}} = this.props;
+    const {singleEventStore:{isLoading, event}} = this.props;
 
     return(
       <React.Fragment>
@@ -77,6 +84,14 @@ class SingleEvent extends Component{
           <TicketsFrameWrap>
             <NoSsr>
               <TicketsFrame />
+            {
+              !isLoading && event === undefined &&
+              <WrapNoEvent>
+                <Typography variant="h5" component="div">Мы и правда искали это событие, но найти не смогли</Typography>
+                <p/>
+                <Typography variant="subtitle2" component="span">Попробуйте поискать другие интересные события на нашем сайте</Typography>
+              </WrapNoEvent>
+            }
             </NoSsr>
           </TicketsFrameWrap>
           <Content />

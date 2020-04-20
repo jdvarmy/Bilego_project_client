@@ -20,9 +20,9 @@ class servicePages{
   @observable seoPage = undefined;
 
   social = [
-    {name: 'vk', link: '#', icon: IconVk},
-    {name: 'Facebook', link: '#', icon: IconFacebook},
-    {name: 'Instagram', link: '#', icon: IconInstagram},
+    {name: 'vk', link: 'https://vk.com/bilego', icon: IconVk},
+    {name: 'Facebook', link: 'https://www.facebook.com/bilegoru/', icon: IconFacebook},
+    {name: 'Instagram', link: 'https://www.instagram.com/bilegoru/', icon: IconInstagram},
     // {name: 'Twitter', link: '#', icon: IconTwitter},
     // {name: 'Skype', link: '#', icon: IconSkype},
     // {name: 'Youtube', link: '#', icon: IconYoutube},
