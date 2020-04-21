@@ -26,6 +26,7 @@ class SingleItem{
     this.isLoading = true;
     try{
       const response = yield itemService.getItemDataBySlug(apiRoot, params);
+      console.log(response)
       this.item = response;
     }catch(e){
       console.log(e);

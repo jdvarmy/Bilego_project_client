@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import ReactMapGL, { FlyToInterpolator, Marker, Popup } from 'react-map-gl';
 import { inject, observer } from 'mobx-react';
 
+import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { MapDefaultPin } from '../../../components/MapPins';
 import { easeCubic } from 'd3-ease';
@@ -16,6 +17,31 @@ const SPopup = styled(Popup)`
   color: ${css.$black};
   div{
     color: ${css.$black};
+  }
+`;
+const Dot = styled.span`
+  display: inline-block;
+  margin: 0 5px 1px 15px;
+  vertical-align: middle;
+  border-radius: 50%;
+  background-color: ${css.$red};
+  width: 8px;
+  height: 8px;
+`;
+const Wrap = styled.div`
+  margin-top: ${css.sizes.base};
+  .MuiTypography-body2{
+    color: ${css.$second}!important;
+  }
+  .MuiTypography-caption{
+    color: ${css.$greydark};
+  }
+  .MuiTypography-subtitle1{
+    margin-bottom: ${css.sizes.xs}!important;
+    color: ${css.$red}!important;
+  }
+  .MuiTypography-subtitle2{
+    margin-bottom: ${css.sizes.xs}!important;
   }
 `;
 
@@ -71,6 +97,16 @@ class AddressWidthMap extends Component {
             <div>{event.item.address}</div>
           </SPopup>
         </ReactMapGL>
+        <Wrap>
+          <Typography component="span" variant="caption">{event.item.categories && event.item.categories[0] && event.item.categories[0].name}</Typography>
+          <Link to={`/${baseNameForRouting}/item/${event.item_name}`}><Typography component="p" variant="subtitle1">{event.item_title}</Typography></Link>
+          <Typography component="p" variant="subtitle2">{event.item.address} {
+            event.item.meta.telephoneAdditional && event.item.meta.telephoneAdditional.length > 0 &&
+            event.item.meta.telephoneAdditional.map( m => <React.Fragment key={m.number}><Dot/>{m.number}</React.Fragment>)
+          }</Typography>
+          {event.item.meta.telephone && <Typography component="p" variant="body2">{event.item.meta.telephone}</Typography>}
+          {event.item.meta.web && <Typography component="p" variant="body2">{event.item.meta.web}</Typography>}
+        </Wrap>
       </Box>
     );
   }
