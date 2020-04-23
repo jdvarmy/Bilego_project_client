@@ -44,9 +44,6 @@ const Span = styled.span`
   overflow: hidden;
   a{
     color: ${style.$greydark};
-    :hover{
-      // text-decoration: line-through;
-    }
   }
 `;
 const SWrap = styled.div`
@@ -67,7 +64,6 @@ const SWrap = styled.div`
 `;
 
 export default function Event300(props) {
-  // eslint-disable-next-line react/prop-types,camelcase,max-len
   const { title, day, month, img, name, ticket_link, item_title, item_name, baseNameForRouting } = props;
 
   return (
@@ -81,11 +77,9 @@ export default function Event300(props) {
           </Link>
           <Content>
             <SWrap>
-              {/* eslint-disable-next-line camelcase */}
               <TicketsModalButton href={ticket_link} />
             </SWrap>
             <Title><Link to={`/${baseNameForRouting}/event/${name}`}>{title}</Link></Title>
-            {/* eslint-disable-next-line camelcase */}
             <Span className="bilego-date-location">{day} {month} / <Link to={`/${baseNameForRouting}/item/${item_name}`}>{item_title}</Link></Span>
           </Content>
         </React.Fragment>

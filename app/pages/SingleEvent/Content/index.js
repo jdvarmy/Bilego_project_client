@@ -1,56 +1,39 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import { NoSsr } from '@material-ui/core';
+import { Tooltip } from 'antd';
+import NoSsr from '@material-ui/core/NoSsr';
 import Gallery from './Gallery';
 import AddressWidthMap from './AddressWidthMap';
 import PopularOnWeek from '../../FrontPage/PopularOnWeek';
-import style from '../../../theme/style';
+import css from '../../../theme/style';
 import { LoadingContent } from '../../../components/LoadingsTemplate';
 import Yamusic from './Yamusic';
 import YouTubeWrapper from './YouTube';
+import BlockHeaderTextH3 from '../../../components/BlockHeaderTextH3';
+import Padding from '../../../components/Padding';
 
 const Wrap = styled.div`
   padding: 20px;
   overflow: hidden;
 `;
-const Padding = styled.div`
-  padding-top:48px;
-`;
-const SBox = styled(Box)`
-  & div:first-child a{
-    color: ${style.$black};
-    :hover{
-      color: ${style.$red};
-    }
+const WrapIcons = styled.div`
+  object{
+    width: ${css.sizes.xxl};
+    height: ${css.sizes.xxl};
+    margin-right: ${css.sizes.md};
   }
-  & div:last-child{
-    color: ${style.$greydark};
-  }
-  border: none!important;
-  position: relative!important;
-  border-radius: 0!important;
-`;
-const ItemBg = styled.div`
-  background-image: url('${p=>(p.img)}');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 178px;
-  transition: transform .5s ease 0s;
 `;
 
 @inject('singleEventStore', 'globalStore')
 @observer
 class Content extends Component{
   render() {
-    const {singleEventStore:{isLoading, event}, globalStore:{baseNameForRouting}} = this.props;
+    const {singleEventStore:{isLoading, event}} = this.props;
 
     return(
       isLoading && event === undefined
@@ -82,52 +65,52 @@ class Content extends Component{
               <Typography className="bilego-event-content" component="div" variant="body1">
                 <span dangerouslySetInnerHTML={{ __html: event.content }} />
               </Typography>
-              <div>
-                <Typography component="div" variant="h4">
-                  Место
-                </Typography>
-                <Grid container spacing={4}>
-                  <Grid item xs={6}>
-                    <ItemBg img={event.item.img_for_event} />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <SBox>
-                      <Typography variant="h6" component="div">
-                        <Link to={`/${baseNameForRouting}/item/${event.item.name}`}>{event.item.title}</Link>
-                      </Typography>
-                      <Typography variant="subtitle1" component="div">
-                        {event.item.address}
-                      </Typography>
-                    </SBox>
-                  </Grid>
-                </Grid>
-              </div>
-            </Grid>
-          </Grid>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <NoSsr>
-                {
-                  event.youtube &&
-                  <>
-                    <Padding />
-                    <YouTubeWrapper video={event.youtube}/>
-                  </>
+              <div style={{marginTop: '1em'}}/>
+              <WrapIcons>
+                {event.categories && event.categories.length > 0 && event.categories.map(
+                  el => <Tooltip placement="top" key={el.id} title={el.name}>
+                    <object type="image/svg+xml" data={el.icon_image} />
+                  </Tooltip>
+                )
                 }
-              </NoSsr>
+                {event.genre && event.genre.length > 0 && event.genre.map(
+                  el => <Tooltip placement="top" key={el.id} title={el.name}>
+                    <object type="image/svg+xml" data={el.icon_image} />
+                  </Tooltip>
+                )
+                }
+              </WrapIcons>
             </Grid>
           </Grid>
+          {
+            event.youtube &&
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <Padding />
+                <BlockHeaderTextH3>
+                  Видео
+                </BlockHeaderTextH3>
+              </Grid>
+              <Grid item xs={12}>
+                <NoSsr>
+                  <YouTubeWrapper video={event.youtube}/>
+                </NoSsr>
+              </Grid>
+            </Grid>
+          }
           <Grid container spacing={4}>
             <Grid item xs={12}>
               <Padding />
+              <BlockHeaderTextH3>
+                Адрес
+              </BlockHeaderTextH3>
+            </Grid>
+            <Grid item xs={12}>
               <AddressWidthMap />
             </Grid>
           </Grid>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <PopularOnWeek />
-            </Grid>
-          </Grid>
+          <Padding />
+          <PopularOnWeek />
         </Wrap>
     )
   }

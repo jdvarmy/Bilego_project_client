@@ -64,7 +64,7 @@ export default function Selection(props){
               <mask id={`${slug}-mask`} x="0" y="0" width="100%" height="100%">
                 <rect id={`${slug}-alpha`} x="0" y="0" width="100%" height="100%"/>
                 {title.split(' ').map((el,k)=>(
-                  <text key={el} className="title" dx="10%" dy={`${2+k}.5em`}>{el}</text>
+                  <text key={el} className="title" dx="10%" dy={`${2+k}.5em`}>{el.replace(/_/g, ' ')}</text>
                 ))}
               </mask>
             </defs>

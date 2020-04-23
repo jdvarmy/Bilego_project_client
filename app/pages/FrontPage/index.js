@@ -12,6 +12,7 @@ import Items from './Items';
 import Slider from './Slider';
 import DatePickerLine from '../../components/DatePickerLine';
 import Divider from '@material-ui/core/Divider';
+import Padding from '../../components/Padding';
 
 const DateContainer = styled.div`
   height: ${style.$heightMenu}px;
@@ -50,6 +51,7 @@ class FrontPage extends Component {
         <div>
           <Slider />
         </div>
+        <Padding />
         <DateContainer align='middle' type='flex' justify='center'>
           <DatePickerLine/>
         </DateContainer>

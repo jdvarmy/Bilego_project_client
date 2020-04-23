@@ -10,20 +10,19 @@ import { Event300 } from '../../components/Event';
 import style from '../../theme/style';
 import DatePickerLine from '../../components/DatePickerLine';
 import PopularOnWeek from '../FrontPage/PopularOnWeek';
-import { LoadingForEvents } from '../../components/LoadingsTemplate';
+import { LoadingForEventsSearch } from '../../components/LoadingsTemplate';
 import BlockHeaderText from '../../components/BlockHeaderText';
 
-const Wrap = styled.div`
-  padding: 20px;
-  overflow: hidden;
-`;
+import css from '../../theme/style';
+
 const GridWrap = styled(Grid)`
+  padding: ${css.sizes.lg};
   .MuiPaper-elevation1{
     box-shadow: none;
   }
 `;
 const CardWrap = styled(Card)`
-  margin-bottom: 30px;
+  margin-bottom: ${css.sizes.xl};
 `;
 const DateContainer = styled.div`
   height: ${style.$heightMenu}px;
@@ -84,44 +83,42 @@ class Search extends Component{
     const {searchStore:{isLoading, searchEvents, title}, globalStore:{baseNameForRouting}} = this.props;
 
     const content = searchEvents && searchEvents.length > 0
-        ?
-        searchEvents.map(event=>(
+        ? searchEvents.map(event=>(
           <Grid key={event.id} item xs={4}>
             <CardWrap>
               <Event300 {...event} baseNameForRouting={baseNameForRouting}/>
             </CardWrap>
           </Grid>
         ))
-        :
-        !isLoading &&
+        : !isLoading &&
         <Grid item xs={12}>
           <NoContent/>
         </Grid>;
 
     return(
-      <Wrap>
-        <GridWrap container spacing={4}>
+      <GridWrap container spacing={4}>
+        <Grid item xs={12}>
           <DateContainer align='middle' type='flex' justify='center'>
             <DatePickerLine/>
           </DateContainer>
-          <Grid item xs={12}>
-            <BlockHeaderText>{title}</BlockHeaderText>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container spacing={4}>
-              {isLoading && searchEvents && searchEvents.length <= 0
-                ? <LoadingForEvents />
-                : content
-              }
-            </Grid>
-          </Grid>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <PopularOnWeek />
-            </Grid>
-          </Grid>
-        </GridWrap>
-      </Wrap>
+        </Grid>
+          {isLoading && searchEvents && searchEvents.length <= 0
+            ? <LoadingForEventsSearch />
+            : <React.Fragment>
+              <Grid item xs={12}>
+                <BlockHeaderText>{title}</BlockHeaderText>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid container spacing={4}>
+                  {content}
+                </Grid>
+              </Grid>
+            </React.Fragment>
+          }
+        <Grid item xs={12}>
+          <PopularOnWeek />
+        </Grid>
+      </GridWrap>
     );
   }
 }

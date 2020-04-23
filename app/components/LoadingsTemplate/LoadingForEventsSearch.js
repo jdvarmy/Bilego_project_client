@@ -3,7 +3,6 @@ import styled, { keyframes } from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
-
 import css from '../../theme/style';
 
 const Image = styled.div`
@@ -26,38 +25,38 @@ const Image = styled.div`
   height: 220px;
   width: 100%;
 `;
-const Image430 = styled(Image)`
-  height: 430px;
-`;
-const Image200 = styled(Image)`
-  height: 200px;
+const Image220 = styled(Image)`
+  margin-bottom: ${css.sizes.lg};
 `;
 const Title = styled(Image)`
   height: ${css.sizes.xxxl};
   width: 42%;
   border-radius: ${css.sizes.lg};
 `;
+const TitleArt = styled(Image)`
+  height: 22px;
+  margin-bottom: ${css.sizes.md};
+  border-radius: ${css.sizes.lg};
+`;
+const SubTitle = styled(Image)`
+  border-radius: ${css.sizes.lg};
+  width: 200px;
+  height: ${css.sizes.xd};
+`;
 
-export default function LoadingForEventsWith430and200(){
+export default function LoadingForEventsWith300(){
   return(
     <React.Fragment>
-      <Grid item xs={12}><Title /></Grid>
-      <Grid item xs={4}>
-        <Card>
-          <Image430 />
-        </Card>
+      <Grid item xs={12}>
+        <Title />
       </Grid>
-      <Grid item xs={8}>
-        <Grid container spacing={4}>
-          {[1,2,3,4].map((el, k) => (
-            <Grid key={k} item xs={6}>
-              <Card>
-                <Image200 />
-              </Card>
-            </Grid>
-          ))}
+      {[1,2,3,4,5,6].map((el, k) => (
+        <Grid key={k} item xs={4}>
+          <Image220 />
+          <TitleArt />
+          <SubTitle />
         </Grid>
-      </Grid>
+      ))}
       <Grid item xs={12} />
     </React.Fragment>
   )

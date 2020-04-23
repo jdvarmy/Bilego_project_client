@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   height: calc(100% - 48px);
   > div{
+    min-height: 512px;
     height: 100%;
   }
   #app{

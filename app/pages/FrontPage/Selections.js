@@ -5,12 +5,13 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Selection from '../../components/Selection';
-import Typography from '@material-ui/core/Typography';
-
+import BlockHeaderTextH3 from '../../components/BlockHeaderTextH3';
 import { LoadingSelections } from '../../components/LoadingsTemplate';
 
+import css from '../../theme/style';
+
 const GridWrap = styled(Grid)`
-  padding: 24px;
+  padding: ${css.sizes.lg};
   .MuiPaper-elevation1{
     box-shadow: none;
   }
@@ -23,31 +24,24 @@ class Selections extends React.Component{
     const {globalStore:{ baseNameForRouting }, pageStore:{ eventCategoriesSelections, isLoading }} = this.props;
 
     return (
-      isLoading
-        ? <GridWrap container spacing={4}>
+      <GridWrap container spacing={4}>
+        {isLoading && eventCategoriesSelections.length <= 0
+        ? <LoadingSelections />
+        : <React.Fragment>
           <Grid item xs={12}>
-            <Typography component="h3" variant="h3">
+            <BlockHeaderTextH3>
               Подборки Bilego
-            </Typography>
+            </BlockHeaderTextH3>
           </Grid>
-          <LoadingSelections />
-        </GridWrap>
-        : eventCategoriesSelections
-          ? <GridWrap container spacing={4}>
-            <Grid item xs={12}>
-              <Typography component="h3" variant="h3">
-                Подборки Bilego
-              </Typography>
+          {eventCategoriesSelections.map( selection => (
+            <Grid key={selection.id} item xs={12} sm={6}>
+              <Paper>
+                <Selection {...selection} link={`/${baseNameForRouting}/search/?selection=${selection.slug}`} />
+              </Paper>
             </Grid>
-            {eventCategoriesSelections.map( selection => (
-              <Grid key={selection.id} item xs={12} sm={6}>
-                <Paper>
-                  <Selection {...selection} link={`/${baseNameForRouting}/search/?selection=${selection.slug}`} />
-                </Paper>
-              </Grid>
-            ))}
-          </GridWrap>
-          : ''
+          ))}
+          </React.Fragment>}
+      </GridWrap>
     );
   }
 }

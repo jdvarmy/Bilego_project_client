@@ -6,29 +6,19 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import { Item220 } from '../../components/Item';
-import BlockHeaderText from '../../components/BlockHeaderText';
 import { BilegoIconRightArrow } from '../../theme/bilegoIcons';
-import style from '../../theme/style';
-import Typography from '@material-ui/core/Typography';
+import BlockHeaderTextH3 from '../../components/BlockHeaderTextH3';
+
+import css from '../../theme/style';
 
 const GridWrap = styled(Grid)`
-  padding: 24px;
+  padding: ${css.sizes.lg};
   .MuiPaper-elevation1{
     box-shadow: none;
   }
 `;
 const CardWrap = styled(Card)`
-  margin-bottom: 30px;
-`;
-const STypography = styled(Typography)`
-  svg{
-    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  }
-  :hover{
-    svg{
-      transform: translate(15px, 0);
-    }
-  }
+  margin-bottom: ${css.sizes.xl};
 `;
 
 @inject('pageStore', 'globalStore')
@@ -40,12 +30,13 @@ class Items extends Component{
 
     return (
       <GridWrap container spacing={4}>
+        <Grid item xs={12} />
         <Grid item xs={12}>
-          <STypography component="h3" variant="h3">
+          <BlockHeaderTextH3>
             <Link to={baseNameForRouting + '/items'}>
               Концертные площадки {cityLabel} {BilegoIconRightArrow}
             </Link>
-          </STypography>
+          </BlockHeaderTextH3>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>

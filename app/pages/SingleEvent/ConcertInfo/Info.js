@@ -20,11 +20,12 @@ const SGrid = styled(Grid)`
 const Title = styled(Typography)`
   flex-grow: 1;
   text-transform: uppercase;
+  font-weight: 100!important;
 `;
 const Caption = styled(Typography)`
   flex-grow: 1;
   text-transform: lowercase;
-  font-weight: 100;
+  font-weight: 400;
 `;
 const SBox = styled(Typography)`
   display: flex;

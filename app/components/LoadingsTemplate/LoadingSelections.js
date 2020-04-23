@@ -3,6 +3,7 @@ import styled, { keyframes } from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import css from '../../theme/style';
 
 const CardWrap = styled(Card)`
   margin-bottom: 16px;
@@ -23,15 +24,23 @@ const Image = styled.div`
         to{background-position-x:-200%;}
       `} 2s linear infinite;
   display: block;
-  border-radius: 12px;
+  border-radius: ${css.sizes.xd};
   margin-bottom: 0px;
   height: 300px;
   width: 100%;
+`;
+const Title = styled(Image)`
+  height: ${css.sizes.xxxl};
+  width: 42%;
+  border-radius: ${css.sizes.lg};
 `;
 
 export default function LoadingForEvents(){
   return(
     <React.Fragment>
+      <Grid item xs={12}>
+        <Title />
+      </Grid>
       {[1,2,3,4].map((el, k) => (
         <Grid key={k} item xs={6}>
           <CardWrap>

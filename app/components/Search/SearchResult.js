@@ -9,15 +9,19 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import Typography from '@material-ui/core/Typography';
 import Spinner from '../Spinner';
-import BlockHeaderTextOld from '../BlockHeaderTextOld';
+import BlockHeaderTextH3 from '../BlockHeaderTextH3';
 import Event from './Event';
 import Item from './Item';
-import style from '../../theme/style';
+import css from '../../theme/style';
 
 const Wrapper = styled.div`
-  height: ${style.$heightMenu}px;
+  height: ${css.$heightMenu}px;
   display: flex;
   align-items: center;
+  .MuiTypography-h3{
+    margin: ${css.sizes.md};
+    color: ${css.$grey};
+  }
 `;
 const SList = styled.div`
   position: relative;
@@ -28,14 +32,10 @@ const SList = styled.div`
   }
 `;
 const Scroll = styled(Scrollbars)`
-    height: 100%;
-    h4{
-      margin-left: 15px;
-    }
-`;
-const SBlockHeaderText = styled(BlockHeaderTextOld)`
-    margin: 16px;
-    color: ${style.$grey};
+  height: 100%;
+  h4{
+    margin-left: 15px;
+  }
 `;
 
 @inject('searchStore', 'globalStore')
@@ -48,7 +48,7 @@ class SearchResult extends Component {
     return(
       <Fragment>
         <Wrapper>
-          <SBlockHeaderText>Поиск</SBlockHeaderText>
+          <BlockHeaderTextH3>Поиск</BlockHeaderTextH3>
         </Wrapper>
         <Divider />
         <SList>

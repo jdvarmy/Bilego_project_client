@@ -37,10 +37,12 @@ export default {
     borderRadius: `${borderRadius}px`,
     base: `${baseSize}px`,
     xs: `${baseSize / 2}px`,
+    xd: `${baseSize * 3 / 2}px`,
     md: `${baseSize * 2}px`,
     lg: `${baseSize * 3}px`,
     xl: `${baseSize * 4}px`,
     xxl: `${baseSize * 5}px`,
+    xxxl: `${baseSize * 6}px`,
     borderWidth: `${borderWidth}px`,
   },
 };

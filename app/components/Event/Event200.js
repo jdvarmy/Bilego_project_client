@@ -82,7 +82,6 @@ const Footer = styled(Div)`
 `;
 
 export default function Event200(props) {
-  // eslint-disable-next-line react/prop-types,camelcase
   const { title, day, month, img, name, ticket_link, baseNameForRouting } = props;
 
   return (
