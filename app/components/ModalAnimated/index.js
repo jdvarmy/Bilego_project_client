@@ -64,7 +64,7 @@ export default function ModalAnimated(props) {
       )}
       text-align: center;
       padding: 16px 24px;
-      & div{
+      div{
         margin: 0;
         font-weight: 500;
         font-size: 20px;

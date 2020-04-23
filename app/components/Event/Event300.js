@@ -47,7 +47,7 @@ const Span = styled.span`
   }
 `;
 const SWrap = styled.div`
-  & .MuiFab-extended{
+  .MuiFab-extended{
     position: absolute!important;
     top: -65px;
     left: 40px;

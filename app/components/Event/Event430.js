@@ -28,7 +28,7 @@ const Info = styled.div`
     height: 100%;
     position: absolute;
     background: transparent;
-  & div{
+  div{
     z-index: 2;
     position: absolute;
     background: transparent;
@@ -71,11 +71,8 @@ const Title = styled.div`
 `;
 const Footer = styled(Div)`
   bottom: 25px;
-  & a{
+  a{
     font-weight: 600;
-    &:hover{
-      // text-decoration: line-through;
-    }
   }
 `;
 const SIconButton = styled(IconButton)`

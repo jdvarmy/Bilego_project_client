@@ -13,7 +13,7 @@ const Container = styled.div`
   position: relative;
   justify-content: flex-end;
   align-items: center;
-  & svg{
+  svg{
     vertical-align: middle;
   }
 `;
@@ -36,7 +36,7 @@ const StyledInput = styled(Input)`
   color: ${style.$second};
   background: none;
   transition: all ${style.$transition} ${style.$transitionanimation};
-  & input{
+  input{
     border: none;
     width: 100%;
     padding: 0px 70px 0 40px;
@@ -45,7 +45,7 @@ const StyledInput = styled(Input)`
   .ant-input-suffix, .ant-input-prefix{
     position: absolute;
     color: ${style.$second};
-    & svg:hover{
+    svg:hover{
       fill: ${style.$red};
     }
   }
@@ -65,7 +65,7 @@ const Placeholder = styled('span')`
   justify-content: center;
   padding: 0px 70px 0 40px;
   z-index: -1;
-  & span{
+  span{
     white-space: nowrap;
     display: inline-block;
     will-change: transform;
@@ -85,7 +85,7 @@ const Placeholder = styled('span')`
   }
 `;
 const SIconButton = styled(IconButton)`
-  & svg{
+  svg{
     font-size: 0.9rem!important;
   }
 `;

@@ -51,10 +51,10 @@ const Date = styled.div`
   align-items: center;
   flex-direction: column;
   background: ${style.$white};
-  & div:first-child{
+  div:first-child{
     font-size: 1.8em;
   }
-  & div:last-child{
+  div:last-child{
     text-transform: uppercase;
     color: ${style.$greydark};
     margin-top: -8px;
@@ -104,7 +104,7 @@ const LineEventImage = styled.div`
   overflow: hidden;
   border-radius: 100%;
   position: relative;
-  & a > div:first-child{
+  a > div:first-child{
     height: 100%;
     background-image: url('${p=>(p.img)}');
     background-size: cover;
@@ -112,7 +112,7 @@ const LineEventImage = styled.div`
     background-repeat: no-repeat;
     transition: transform .5s ease 0s;
   }
-  & a > div:last-child{
+  a > div:last-child{
     background-color: ${style.$redtr};
     width: 80px;
     height: 100%;

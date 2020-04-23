@@ -13,7 +13,7 @@ import DatePickerLine from '../DatePickerLine';
 const StyledDrawer = styled(Drawer)`
   width: ${style.$rightBodyPanel};
   flex-shrink: 0;
-  & .MuiPaper-root{
+  .MuiPaper-root{
     overflow: hidden;
     width: ${style.$rightBodyPanel};
   }

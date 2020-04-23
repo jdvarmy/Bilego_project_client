@@ -35,7 +35,7 @@ const Modal = styled.div`
 `;
 const StyledIcon = styled.div`
   display: flex;
-  & svg{
+  svg{
     font-size: 1.25rem!important;
     margin-right: 7px;
   }

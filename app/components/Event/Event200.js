@@ -26,7 +26,7 @@ const Info = styled.div`
     height: 100%;
     position: absolute;
     background: transparent;
-  & div{
+  div{
     z-index: 2;
     position: absolute;
     background: transparent;

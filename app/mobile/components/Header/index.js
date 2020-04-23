@@ -63,7 +63,7 @@ const styles = createStyles(theme => ({
 }));
 
 const SIconButton = styled(IconButton)`
-  & svg{
+  svg{
     font-size: 0.9rem!important;
     color: ${style.$white};
   }
