@@ -20,7 +20,7 @@ export default {
   $shadowblack: 'drop-shadow(0 30px 20px rgba(16,23,37,0.27))',
   $red: '#f6255a',
   $redtr: 'rgba(246, 37, 90, 0.6)',
-  $shadowred: 'drop-shadow(0 14px 32px rgba(251,29,88,0.36))',
+  $shadowred: 'drop-shadow(0 14px 32px rgba(251,29,88,0.23))',
 
   $border: '2px solid #525667',
 

@@ -10,12 +10,14 @@ import NoSsr from '@material-ui/core/NoSsr';
 import Gallery from './Gallery';
 import AddressWidthMap from './AddressWidthMap';
 import PopularOnWeek from '../../FrontPage/PopularOnWeek';
-import css from '../../../theme/style';
 import { LoadingContent } from '../../../components/LoadingsTemplate';
 import Yamusic from './Yamusic';
 import YouTubeWrapper from './YouTube';
 import BlockHeaderTextH3 from '../../../components/BlockHeaderTextH3';
 import Padding from '../../../components/Padding';
+import Artist from '../Artist';
+
+import css from '../../../theme/style';
 
 const Wrap = styled.div`
   padding: 20px;
@@ -82,6 +84,7 @@ class Content extends Component{
               </WrapIcons>
             </Grid>
           </Grid>
+          <Artist />
           {
             event.youtube &&
             <Grid container spacing={4}>

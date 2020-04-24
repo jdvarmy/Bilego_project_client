@@ -43,6 +43,9 @@ const Wrap = styled.div`
   .MuiTypography-subtitle2{
     margin-bottom: ${css.sizes.xs}!important;
   }
+  p{
+    color: ${css.$black}!important;
+  }
 `;
 
 @inject('mapStore', 'singleEventStore', 'globalStore')
