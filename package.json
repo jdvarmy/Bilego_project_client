@@ -9,8 +9,6 @@
   "scripts": {
     "generate:sitemap": "node config/sitemap/sitemap.js",
     "build:clean": "rimraf ./build",
-    "prod:build": "npm run generate:sitemap && cross-env NODE_ENV=production webpack --config config/webpack/server/webpack.prod.server.js",
-    "dev:start": "npm run build:clean && cross-env NODE_ENV=development webpack -w --config config/webpack/server/webpack.dev.server.js",
     "start": "nodemon ./build/server.js",
     "wp:dev": "npm run build:clean && cross-env NODE_ENV=development webpack -w --config webpack/config.develop.js",
     "wp:prod": "npm run build:clean && cross-env NODE_ENV=production webpack --config webpack/config.production.js --progress"
@@ -29,6 +27,7 @@
     "@material-ui/core": "^4.7.0",
     "@material-ui/pickers": "^3.2.8",
     "@material-ui/styles": "^4.7.1",
+    "@types/youtube": "0.0.38",
     "antd": "^3.26.3",
     "autoprefixer": "^9.4.4",
     "babel-loader": "^8.0.6",
@@ -40,6 +39,7 @@
     "date-fns": "^2.8.1",
     "express": "^4.17.1",
     "express-https-redirect": "^1.0.0",
+    "flickity": "^2.2.1",
     "global": "^4.4.0",
     "history": "^4.7.2",
     "lodash": "^4.17.15",
@@ -51,7 +51,7 @@
     "react": "^16.12.0",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.12.0",
-    "react-flickity-component": "^3.4.0",
+    "react-flickity-component": "^3.5.0",
     "react-helmet": "^5.2.0",
     "react-immutable-proptypes": "^2.1.0",
     "react-loadable": "^5.5.0",
