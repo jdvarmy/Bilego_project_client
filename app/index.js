@@ -9,6 +9,8 @@ import Loadable from 'react-loadable';
 import { renderRoutes } from 'react-router-config';
 import { Router, useLocation } from 'react-router-dom';
 
+import { CookiesProvider, ServerCookiesManager } from './cookie';
+
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import styled from 'styled-components';
@@ -92,21 +94,23 @@ export const ClientBilegoGateUi = () => {
         <MobxProvider {...stores} globalStore={store}>
           <SiteMeta/>
           <Router history={history} path={path}>
-            <ScrollToTop/>
-            {!store.mobile
-            ? <Fragment>
-                <Root>
-                  <Main className="bilego-main">
-                    <Header />
-                    <BilegoFrontUi />
-                    <RightPanel />
-                  </Main>
-                </Root>
-                <Footer />
-              </Fragment>
-            :
-              <Mobile/>
-            }
+            <CookiesProvider>
+              <ScrollToTop/>
+              {!store.mobile
+              ? <Fragment>
+                  <Root>
+                    <Main className="bilego-main">
+                      <Header />
+                      <BilegoFrontUi />
+                      <RightPanel />
+                    </Main>
+                  </Root>
+                  <Footer />
+                </Fragment>
+              :
+                <Mobile/>
+              }
+            </CookiesProvider>
           </Router>
         </MobxProvider>
       </MuiThemeProvider>,
@@ -119,11 +123,11 @@ export const ClientBilegoGateUi = () => {
 };
 
 export const ServerBilegoGateUi = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const routs = routes(props.serverBaseRout);
-
+  const { serverBaseRout, req, res } = props,
+    routs = routes(serverBaseRout),
+    cookieManager = new ServerCookiesManager(req, res);
   return (
-    <Fragment>
+    <CookiesProvider manager={cookieManager}>
       <SiteMeta />
       {!props.mobile
       ? <Fragment>
@@ -139,6 +143,6 @@ export const ServerBilegoGateUi = (props) => {
       :
         <Mobile/>
       }
-    </Fragment>
+    </CookiesProvider>
   );
 };

@@ -2,13 +2,15 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import routes from './routes/client';
+import { withCookies } from './cookie';
 
 @inject('globalStore')
 @observer
 class BilegoFrontUi extends React.Component{
   render(){
-    const {globalStore:{baseNameForRouting}} = this.props;
-    const routs = routes(baseNameForRouting);
+    const { globalStore:{ baseNameForRouting }, setCookie } = this.props,
+      routs = routes(baseNameForRouting);
+    setCookie('_bilego_start_city', baseNameForRouting);
 
     return(
       <Switch>
@@ -20,4 +22,4 @@ class BilegoFrontUi extends React.Component{
   }
 }
 
-export default BilegoFrontUi;
+export default withCookies(BilegoFrontUi);

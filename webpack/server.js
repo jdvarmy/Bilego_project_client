@@ -15,6 +15,7 @@ import { Provider as MobxProvider } from 'mobx-react';
 import MobileDetect from 'mobile-detect';
 
 import { parse as parseUrl } from 'url';
+import cookieParser from 'cookie-parser';
 
 import { MuiThemeProvider, ServerStyleSheets } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -32,7 +33,9 @@ import routes from '../app/routes/server';
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-app.use(express.static('./build'));
+app
+  .use(cookieParser())
+  .use(express.static('./build'));
 
 app.set('trust proxy', 'loopback');
 
@@ -103,7 +106,7 @@ app.get(/\/mos|\/spb/, async (req, res) => {
             <MobxProvider {...stores} globalStore={store}>
               <CssBaseline />
               <StaticRouter context={context} location={location}>
-                <ServerBilegoGateUi serverBaseRout={store.baseNameForRouting} mobile={store.mobile}/>
+                <ServerBilegoGateUi req={req} res={res} serverBaseRout={store.baseNameForRouting} mobile={store.mobile}/>
               </StaticRouter>
             </MobxProvider>
           </MuiThemeProvider>
@@ -151,6 +154,11 @@ app.get(/\/mos|\/spb/, async (req, res) => {
 });
 
 app.get('*', async (req, res) => {
+  if(req.cookies){
+    const { _bilego_start_city } = req.cookies;
+    if(_bilego_start_city)
+      return res.redirect(302, '/' + _bilego_start_city);
+  }
   const url = req.originalUrl || req.url;
   const history = createMemoryHistory({initialEntries: [url]});
   const initialState = {};
@@ -160,9 +168,6 @@ app.get('*', async (req, res) => {
     req.connection.remoteAddress ||
     req.socket.remoteAddress ||
     req.connection.socket.remoteAddress;
-
-  // console.log(ip);
-  // console.log(req.headers['x-real-ip']);
 
   const store = new ConfigureStartStore(initialState, history);
   await store.getData({ip});
