@@ -51,7 +51,6 @@ class SingleEvent{
     this.isLoading = true;
     try{
       const response = yield eventService.getEventDataBySlug(apiRoot, params);
-      console.log(response)
       this.event = response;
       this.id = response.id;
       this.sliderData = response.slider;
