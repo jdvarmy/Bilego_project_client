@@ -44,7 +44,7 @@ const StyledIconButton = styled(IconButton)`
 `;
 
 const vk = (
-  <a href="https://vk.com/bilego" target="_blank">
+  <a href="https://vk.com/bilegoru" target="_blank">
     <StyledIconButton aria-label="vk" className="bilego-button">
       {BilegoIconVk}
     </StyledIconButton>
