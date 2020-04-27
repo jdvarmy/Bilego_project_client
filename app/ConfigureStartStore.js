@@ -127,7 +127,15 @@ export default class ConfigureStartStore {
         name: 'Детям',
         link: 'events/forkids',
         icon: BilegoIconHandshake,
-      }
+      },
+      // {
+      //   id: this.cities[this.CITY].category.free,
+      //   cat: 'Free',
+      //   page: 'category',
+      //   name: 'Бесплатно',
+      //   link: 'events/free',
+      //   icon: BilegoIconHandshake,
+      // }
     ];
 
     return [];

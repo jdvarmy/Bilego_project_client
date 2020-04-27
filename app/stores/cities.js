@@ -15,7 +15,8 @@ export default [
       festivals: 42,
       lectures: 38,
       exhibitions: 17,
-      children: 18
+      children: 18,
+      free: 16
     }
   },
   { // 1 - Санкт-Петербург
@@ -34,7 +35,8 @@ export default [
       festivals: 42,
       lectures: 38,
       exhibitions: 17,
-      children: 18
+      children: 18,
+      free: 16
     }
   }
 ];

@@ -43,7 +43,7 @@ class Marker extends React.Component{
             offsetTop={-29}
             anchor="bottom" >
             <h4><Link to={`/${baseNameForRouting}/item/${i_name}`}>{i_title}</Link></h4>
-            <h5>Активных событий: {marker.events.length}</h5>
+            <h5>Событий на площадке: {marker.events.length}</h5>
           </SPopup>
         }
       </>

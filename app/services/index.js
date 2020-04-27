@@ -6,3 +6,4 @@ export { default as rightPanelService } from './rightPanel';
 export { default as eventService } from './event';
 export { default as itemService } from './item';
 export { default as servicePagesService } from './servicePages';
+export { default as xmlmapService } from './xmlmap';
