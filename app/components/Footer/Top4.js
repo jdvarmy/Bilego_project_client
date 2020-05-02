@@ -9,7 +9,7 @@ import { BilegoIconFacebook, BilegoIconVk, BilegoIconInstagram } from '../../the
 import LogoImg from './Bilego-logo-slogan_white-pink.png';
 
 const Logo = styled.div`
-  margin: 40px 0 50px;
+  margin: ${style.sizes.xxl} 0 ${style.sizes.xxxl};
 `;
 const Subscribe = styled.div`
   & > div{
@@ -18,7 +18,7 @@ const Subscribe = styled.div`
   }
 `;
 const Social = styled.div`
-  margin-top: 50px;
+  margin-top: ${style.sizes.xxxl};
   & > div{
     color: ${style.$white};
     margin-bottom: 8px;

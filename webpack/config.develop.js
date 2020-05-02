@@ -58,6 +58,7 @@ const serverConf = {
       { from: 'public/css', to: 'css' },
       { from: 'public/scripts', to: 'scripts' },
       { from: 'public/images', to: 'images' },
+      { from: 'public/files', to: 'files' },
     ])
   ],
   resolve: {

@@ -330,6 +330,7 @@ export default class ConfigureStartStore {
           break;
         case 'SingleItem':
           resp = yield itemService.getItemDataBySlug(this.apiRoot, {slug: match.match.params.itemSlug});
+          // console.log(resp)
           this.setMeta(resp.seo_meta);
           this.singleItemFirstData = resp;
           break;
