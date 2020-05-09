@@ -72,7 +72,7 @@ class FrontPage extends React.PureComponent{
   };
 
   render() {
-    const { globalStore:{ baseNameForRouting, ssrSide }, pageStore:{ eventsSoon, eventsHot, eventsConcerts, eventCategoriesSelections, isLoading} } = this.props;
+    const { globalStore:{ baseNameForRouting, ssrSide }, pageStore:{ eventsSoon, eventsPopular, eventsConcerts, eventCategoriesSelections, isLoading} } = this.props;
 
     const content =
       <Grid container spacing={2}>
@@ -93,7 +93,7 @@ class FrontPage extends React.PureComponent{
               id: 2,
               name: 'Популярные события',
               link: '/search?cat=pop',
-              carts: eventsHot
+              carts: eventsPopular
             },
             {
               id: 3,
@@ -176,7 +176,7 @@ class FrontPage extends React.PureComponent{
       <React.Fragment>
         <Slider />
         <Content>
-          {isLoading && (eventsSoon.length <= 0 && eventsHot.length <= 0 && eventsConcerts.length <= 0)
+          {isLoading && (eventsSoon.length <= 0 && eventsPopular.length <= 0 && eventsConcerts.length <= 0)
             ? <LoadingFrontPage />
             : content}
         </Content>

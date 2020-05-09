@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import { NoSsr } from '@material-ui/core';
 import { style } from '../../theme';
-import SMenu from './SMenu';
+import Menu from './Menu';
 import Search from '../Search';
 
 const Wrapper = styled(Grid)`
@@ -22,7 +22,7 @@ export default function BottomMenu() {
   return (
     <Wrapper alignItems="center" container justify="center" spacing={0}>
       <LeftCol item xs={8}>
-        <SMenu />
+        <Menu />
       </LeftCol>
       <RightCol item xs={4}>
         <NoSsr>

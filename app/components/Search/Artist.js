@@ -8,6 +8,7 @@ const Wrap = styled.div`
   margin-bottom: 20px;
   a{
     display: flex;
+    align-items: center;
     & > div:last-child{
       width: calc(100% - 145px);
       padding-left: 20px;
@@ -55,29 +56,19 @@ const Image = styled.div`
     transition: transform .5s ease 0s;
   }
 `;
-const Text = styled.div`
-  span{
-    display: block;
-    color: grey;
-    font-size: 0.8em;
-  }
-`;
 
 export default function Item(props){
-  const {baseNameForRouting, name, image, title, address} = props;
+  const {baseNameForRouting, name, image, title} = props;
 
   return(
     <Wrap className="item-search">
-      <NavLink to={`/${baseNameForRouting}/item/${name}`} exact>
+      <NavLink to={`/${baseNameForRouting}/artist/${name}`} exact>
         <Image className="item-search-hover" img={image}>
           <div className="item-search-image">
           </div>
           <div className="item-search-backgr"/>
         </Image>
-        <Text>
-          {title}
-          <span>{address}</span>
-        </Text>
+        <div>{title}</div>
       </NavLink>
     </Wrap>
   )

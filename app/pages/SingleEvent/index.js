@@ -39,11 +39,10 @@ const WrapNoEvent = styled.div`
 @observer
 class SingleEvent extends Component{
   componentDidMount = async () => {
-    const {match, singleEventStore: {getEventDataBySlug, notFoundMeta}, globalStore: {apiRoot, setMeta}} = this.props;
+    const {match, singleEventStore: {getEventDataBySlug, notFoundMeta}, globalStore: {baseNameForRouting, setMeta}} = this.props;
     try {
-      await getEventDataBySlug(apiRoot, {slug: match.params.eventSlug});
-
-      setMeta(this.props.singleEventStore.event.seo_meta);
+      await getEventDataBySlug({city: baseNameForRouting, slug: match.params.eventSlug});
+      setMeta(this.props.singleEventStore.event.seo);
     }catch (e) {
       console.log('single event: ', e);
       setMeta(notFoundMeta); // todo: сделать для SSR серверной части
@@ -51,13 +50,13 @@ class SingleEvent extends Component{
   };
 
   componentDidUpdate = async (prevProps) => {
-    const {singleEventStore: {getEventDataBySlug, notFoundMeta, clear}, globalStore: {apiRoot, setMeta}} = this.props;
+    const {singleEventStore: {getEventDataBySlug, notFoundMeta, clear}, globalStore: {baseNameForRouting, setMeta}} = this.props;
 
     try {
       if (prevProps.match.params.eventSlug !== this.props.match.params.eventSlug) {
         clear();
-        await getEventDataBySlug(apiRoot, {slug: this.props.match.params.eventSlug});
-        setMeta(this.props.singleEventStore.event.seo_meta);
+        await getEventDataBySlug({city: baseNameForRouting, slug: this.props.match.params.eventSlug});
+        setMeta(this.props.singleEventStore.event.seo);
       }
     }catch (e) {
       console.log('single event: ', e);

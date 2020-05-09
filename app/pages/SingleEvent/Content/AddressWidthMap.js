@@ -66,8 +66,8 @@ class AddressWidthMap extends Component {
     const {singleEventStore:{event}} = this.props;
     this.setViewport({
       ...this.viewport,
-      latitude: event.item.map.latitude && event.item.map.latitude*1,
-      longitude: event.item.map.longitude && event.item.map.longitude*1
+      latitude: event.item.latitude && event.item.latitude*1,
+      longitude: event.item.longitude && event.item.longitude*1
     })
   }
 
@@ -86,17 +86,17 @@ class AddressWidthMap extends Component {
           mapboxApiAccessToken={REACT_APP_MAPBOX_TOKEN}
           onViewportChange={this.setViewport}
         >
-          <Marker latitude={event.item.map.latitude*1} longitude={event.item.map.longitude*1} offsetLeft={-28} offsetTop={-34}>
+          <Marker latitude={event.item.latitude*1} longitude={event.item.longitude*1} offsetLeft={-28} offsetTop={-34}>
             <MapDefaultPin />
           </Marker>
           <SPopup
-            latitude={event.item.map.latitude*1}
-            longitude={event.item.map.longitude*1}
+            latitude={event.item.latitude*1}
+            longitude={event.item.longitude*1}
             closeButton={false}
             closeOnClick={false}
             offsetTop={-29}
             anchor="bottom" >
-            <h4><Link to={`/${baseNameForRouting}/item/${event.item_name}`}>{event.item_title}</Link></h4>
+            <h4><Link to={`/${baseNameForRouting}/item/${event.item.name}`}>{event.item.title}</Link></h4>
             <div>{event.item.address}</div>
           </SPopup>
         </ReactMapGL>
@@ -104,11 +104,11 @@ class AddressWidthMap extends Component {
           <Typography component="span" variant="caption">{event.item.categories && event.item.categories[0] && event.item.categories[0].name}</Typography>
           <Link to={`/${baseNameForRouting}/item/${event.item_name}`}><Typography component="p" variant="subtitle1">{event.item_title}</Typography></Link>
           <Typography component="p" variant="subtitle2">{event.item.address} {
-            event.item.meta.telephoneAdditional && event.item.meta.telephoneAdditional.length > 0 &&
-            event.item.meta.telephoneAdditional.map( m => <React.Fragment key={m.number}><Dot/>{m.number}</React.Fragment>)
+            event.item.metro && event.item.metro.length > 0 &&
+            event.item.metro.map( m => <React.Fragment key={m.number}><Dot/>{m.number}</React.Fragment>)
           }</Typography>
-          {event.item.meta.telephone && <Typography component="p" variant="body2">{event.item.meta.telephone}</Typography>}
-          {event.item.meta.web && <Typography component="p" variant="body2">{event.item.meta.web}</Typography>}
+          {event.item.telephone && <Typography component="p" variant="body2">{event.item.telephone}</Typography>}
+          {event.item.web && <Typography component="p" variant="body2">{event.item.web}</Typography>}
         </Wrap>
       </Box>
     );

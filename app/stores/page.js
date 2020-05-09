@@ -12,7 +12,7 @@ class Page{
 
   @observable name = '';
 
-  @observable categoryEvent = '';
+  @observable categoryEventSlug = '';
   @observable categoryEventId = 0;
   @observable pageType = ''; // category, front, page
 
@@ -24,7 +24,8 @@ class Page{
 
   // front page
   @observable eventsSoon = [];
-  @observable eventsHot = [];
+  @observable eventsPopular = [];
+  @observable eventsExpect = [];
   @observable eventsConcerts = [];
   @observable itemsFrontPage = [];
 
@@ -50,22 +51,23 @@ class Page{
     this.pageType = type
   };
   @action
-  changeCategoryEvent = (id, category) => {
-    this.categoryEvent = category;
+  changeCategoryEvent = (id, categorySlug) => {
+    this.categoryEventSlug = categorySlug;
     this.categoryEventId = id;
   };
 
   @action
-  getFrontPageData = flow( function* getFrontPageData(apiRoot, params){
+  getFrontPageData = flow( function* getFrontPageData(params){
     this.isLoading = true;
     try{
-      this.getEventCategoriesSelectionsList(apiRoot);
-      const resp = yield pageService.getFrontPageData(apiRoot, params);
-      this.eventsSoon = resp.events_soon;
-      this.eventsHot = resp.events_hot;
-      this.eventsConcerts = resp.events_concerts;
-      this.itemsFrontPage = resp.items_front_page;
-      this.seoPage = resp.seo_meta;
+      const response = yield pageService.getFrontPageData(params);
+      this.eventsSoon = response.posts.soon;
+      this.eventsPopular = response.posts.popular;
+      this.eventsExpect = response.posts.expect;
+      this.eventsConcerts = response.posts.concerts;
+      this.itemsFrontPage = response.posts.items;
+      this.eventCategoriesSelections = response.posts.selections;
+      this.seoPage = response.seo;
     }catch(e){
       console.log(e);
     }finally {
@@ -75,10 +77,12 @@ class Page{
 
   @action
   setStartDataFrontPage = (data) => {
-    this.eventsSoon = data.events_soon;
-    this.eventsHot = data.events_hot;
-    this.eventsConcerts = data.events_concerts;
-    this.itemsFrontPage = data.items_front_page;
+    this.eventsSoon = data.posts.soon;
+    this.eventsPopular = data.posts.popular;
+    this.eventsExpect = data.posts.expect;
+    this.eventsConcerts = data.posts.concerts;
+    this.itemsFrontPage = data.items;
+    this.eventCategoriesSelections = data.posts.selections;
   };
   @action
   setStartDataEventsPage = (data) => {
@@ -95,11 +99,12 @@ class Page{
 
 
   @action
-  getPopularOnWeek = flow( function* getPopularOnWeek(apiRoot){
+  getPopularOnWeek = flow( function* getPopularOnWeek(params){
     this.isLoading = true;
     try{
       this.popularOnWeek = [];
-      this.popularOnWeek = yield pageService.getPopularOnWeek(apiRoot);
+      const response = yield pageService.getPopularOnWeek({category: 'ait-locations', name: 'popular', ...params});
+      this.popularOnWeek = response;
     }catch(e){
       console.log(e);
     }finally {
@@ -118,7 +123,8 @@ class Page{
     this.eventCategoriesSelections = [];
 
     this.eventsSoon = [];
-    this.eventsHot = [];
+    this.eventsPopular = [];
+    this.eventsExpect = [];
     this.eventsConcerts = [];
 
     this.itemFilters = [];
@@ -130,17 +136,9 @@ class Page{
     this.pagination.current = current ? current : this.pagination.current;
     this.pagination.pageSize = pageSize ? pageSize : this.pagination.pageSize;
   };
-  @action
-  setItemFilter = (apiRoot, filters) => {
-    this.itemFilters = { ...this.itemFilters, ...filters };
-    this.setPagination(1);
-    // this.clear();
-    this.getItemsSearch(apiRoot);
-  };
-
 
   @action
-  getEvents = flow( function* getEvents(apiRoot, params){
+  getEvents = flow( function* getEvents(params){
     if(this.isLoading) return;
 
     this.isLoading = true;
@@ -149,9 +147,9 @@ class Page{
         page: this.pagination.current,
         size: this.pagination.pageSize
       };
-      const response = yield pageService.getEvents(apiRoot, args, {...params});
+      const response = yield pageService.getEvents({...args, ...params});
       const posts = response.posts;
-      this.seoPage = response.seo_meta;
+      this.seoPage = response.seo;
       this.pagination.showButton = posts && posts.length === this.pagination.pageSize;
 
       if(this.pagination.current === 1)
@@ -168,7 +166,7 @@ class Page{
     }
   }).bind(this);
   @action
-  getEventsByCategory = flow( function* getEventsByCategory(apiRoot, params){
+  getEventsByCategory = flow( function* getEventsByCategory(params){
     if(this.isLoading) return;
 
     this.isLoading = true;
@@ -177,9 +175,9 @@ class Page{
         page: this.pagination.current,
         size: this.pagination.pageSize
       };
-      const response = yield pageService.getEventsByCategory(apiRoot, args, {categoryId: params.categoryId});
+      const response = yield pageService.getEventsByCategory({...args, ...params});
       const posts = response.posts;
-      this.seoPage = response.seo_meta;
+      this.seoPage = response.seo;
       this.pagination.showButton = posts && posts.length === this.pagination.pageSize;
 
       if(this.pagination.current === 1)
@@ -197,17 +195,16 @@ class Page{
   }).bind(this);
 
   @action
-  getItems = flow( function* getItems(apiRoot, params){
+  getItems = flow( function* getItems(params){
     this.isLoading = true;
     try{
       const args = {
         page: this.pagination.current,
         size: this.pagination.pageSize
       };
-
-      const response = yield pageService.getItems(apiRoot, args, {...this.itemFilters, ...params});
+      const response = yield pageService.getItems({...args, ...this.itemFilters, ...params});
       const posts = response.posts;
-      this.seoPage = response.seo_meta;
+      this.seoPage = response.seo;
       this.pagination.showButton = posts && posts.length === this.pagination.pageSize;
 
       if(this.pagination.current === 1)
@@ -225,7 +222,13 @@ class Page{
   }).bind(this);
 
   @action
-  getItemsSearch = flow( function* getItemsSearch(apiRoot, params){
+  setItemFilter = (params) => {
+    this.itemFilters = { ...this.itemFilters, ...params };
+    this.setPagination(1);
+    this.getItemsSearch();
+  };
+  @action
+  getItemsSearch = flow( function* getItemsSearch(){
     this.isLoading = true;
     try{
       const s = this.itemFilters.search ? this.itemFilters.search.toString() : '';
@@ -236,9 +239,9 @@ class Page{
       if(this.ItemsSearchCache.exist(key)){
         this.items = this.ItemsSearchCache.get(key);
       }else {
-        const resp = yield pageService.getItems(apiRoot, {page: 1, size: this.pagination.pageSize}, {...this.itemFilters, ...params});
-        this.items = resp.posts;
-        this.seoPage = resp.seo_meta;
+        const response = yield pageService.getItems({page: 1, size: this.pagination.pageSize, ...this.itemFilters});
+        this.items = response.posts;
+        this.seoPage = response.seo;
         this.pagination.showButton = this.items.length === this.pagination.pageSize;
         this.ItemsSearchCache.set(key, this.items)
       }
@@ -250,24 +253,11 @@ class Page{
   }).bind(this);
 
   @action
-  getItemsCategoryList = flow( function* getItemsCategoryList(apiRoot){
+  getItemsCategoryList = flow( function* getItemsCategoryList(params){
     try{
-      this.itemsCategoryList = yield pageService.getItemsCategoryList(apiRoot);
+      this.itemsCategoryList = yield pageService.getItemsCategoryList({term: 'ait-items', ...params});
     }catch(e){
       console.log(e);
-    }
-  }).bind(this);
-
-  @action
-  getEventCategoriesSelectionsList = flow( function* getEventCategoriesSelectionsList(apiRoot){
-    this.isLoading = true;
-    try{
-      const response = yield pageService.getEventCategoriesSelectionsList(apiRoot);
-      this.eventCategoriesSelections = response;
-    }catch(e){
-      console.log(e);
-    }finally {
-      this.isLoading = false;
     }
   }).bind(this);
 

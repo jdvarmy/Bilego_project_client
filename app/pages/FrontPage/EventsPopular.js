@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {inject, observer} from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -24,33 +24,32 @@ const CardWrap = styled(Card)`
 
 @inject('pageStore', 'globalStore')
 @observer
-class Concerts extends Component{
+class EventsPopular extends Component{
   render() {
-    const {pageStore:{eventsConcerts, isLoading}, globalStore:{baseNameForRouting}} = this.props;
-    const events = eventsConcerts && eventsConcerts.length>0 ? eventsConcerts : [{id:0},{id:1},{id:2}];
+    const {pageStore:{eventsPopular, isLoading}, globalStore:{baseNameForRouting}} = this.props;
+    const events = eventsPopular && eventsPopular.length>0 ? eventsPopular : [{id:0},{id:1},{id:2}];
 
     return (
       <GridWrap container spacing={4} className="bilego-dark">
-        {/*<Grid item xs={12} />*/}
-        {isLoading && eventsConcerts.length <= 0
+        {isLoading && eventsPopular.length <= 0
           ? <LoadingForEventsWith300 />
           : <React.Fragment>
             <Grid item xs={12}>
               <BlockHeaderTextH3>
-                <Link to={`/${baseNameForRouting}/events/concerts`}>
-                  Концерты {BilegoIconRightArrow}
+                <Link to={`/${baseNameForRouting}/search?cat=popular`}>
+                  Популярные события {BilegoIconRightArrow}
                 </Link>
               </BlockHeaderTextH3>
             </Grid>
             <Grid item xs={12}>
               <Grid container spacing={4}>
-              {events.slice(0, 6).map(event=>(
-                <Grid key={event.id} item xs={4}>
-                  <CardWrap>
-                    <Event300 {...event} baseNameForRouting={baseNameForRouting}/>
-                  </CardWrap>
-                </Grid>
-              ))}
+                {events.slice(0, 3).map(event=>(
+                  <Grid key={event.id} item xs={4}>
+                    <CardWrap>
+                      <Event300 {...event} baseNameForRouting={baseNameForRouting}/>
+                    </CardWrap>
+                  </Grid>
+                ))}
               </Grid>
             </Grid>
           </React.Fragment>
@@ -60,4 +59,4 @@ class Concerts extends Component{
   }
 }
 
-export default Concerts;
+export default EventsPopular;

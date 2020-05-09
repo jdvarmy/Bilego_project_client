@@ -40,8 +40,8 @@ class Address extends Component {
     const {item} = this.props;
     this.setViewport({
       ...this.viewport,
-      latitude: item.meta.map.latitude !== undefined && item.meta.map.latitude*1,
-      longitude: item.meta.map.longitude !== undefined && item.meta.map.longitude*1
+      latitude: item.latitude !== undefined && item.latitude*1,
+      longitude: item.longitude !== undefined && item.longitude*1
     })
   }
 
@@ -65,12 +65,12 @@ class Address extends Component {
           mapboxApiAccessToken={REACT_APP_MAPBOX_TOKEN}
           onViewportChange={this.setViewport}
         >
-          <Marker latitude={item.meta.map.latitude*1} longitude={item.meta.map.longitude*1} offsetLeft={-28} offsetTop={-34}>
+          <Marker latitude={item.latitude*1} longitude={item.longitude*1} offsetLeft={-28} offsetTop={-34}>
             <MapDefaultPin />
           </Marker>
           <SPopup
-            latitude={item.meta.map.latitude*1}
-            longitude={item.meta.map.longitude*1}
+            latitude={item.latitude*1}
+            longitude={item.longitude*1}
             closeButton={false}
             closeOnClick={false}
             offsetTop={-29}

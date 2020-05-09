@@ -21,10 +21,10 @@ const Wrap = styled.div`
 class SingleItem extends Component{
   componentDidMount = async () => {
     try {
-      const {singleItemStore:{getItemDataBySlug}, match, globalStore:{apiRoot, setMeta}} = this.props;
-      await getItemDataBySlug(apiRoot, {slug: match.params.itemSlug});
+      const {singleItemStore:{getItemDataBySlug}, match, globalStore:{baseNameForRouting, setMeta}} = this.props;
+      await getItemDataBySlug({city: baseNameForRouting, slug: match.params.itemSlug});
 
-      setMeta(this.props.singleItemStore.item.seo_meta);
+      setMeta(this.props.singleItemStore.item.seo);
     }catch (e) {
       console.log('single item: ', e);
     }
@@ -32,12 +32,12 @@ class SingleItem extends Component{
 
   componentDidUpdate = async (prevProps, prevState, snapshot) => {
     try {
-      const {singleItemStore: {getItemDataBySlug, clear}, globalStore: {apiRoot, setMeta}} = this.props;
+      const {singleItemStore: {getItemDataBySlug, clear}, globalStore: {baseNameForRouting, setMeta}} = this.props;
 
       if (prevProps.match.params.itemSlug !== this.props.match.params.itemSlug) {
         clear();
-        await getItemDataBySlug(apiRoot, {slug: this.props.match.params.itemSlug});
-        setMeta(this.props.singleItemStore.item.seo_meta);
+        await getItemDataBySlug({city: baseNameForRouting, slug: match.params.eventSlug});
+        setMeta(this.props.singleItemStore.item.seo);
       }
     }catch (e) {
       console.log('single item: ', e);

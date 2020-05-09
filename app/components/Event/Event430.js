@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import ruLocale from 'date-fns/locale/ru';
+import format from 'date-fns/format';
+
 import IconButton from '@material-ui/core/IconButton';
 import style from '../../theme/style';
 import { TicketsModalButton } from '../TicketsModal';
@@ -85,13 +88,17 @@ const SIconButton = styled(IconButton)`
 `;
 
 export default function Event430(props){
-  // eslint-disable-next-line react/prop-types,camelcase
-  const {title, day, month, img, name, ticket_link, item_title, item_name, baseNameForRouting} = props;
+  const {title, date_time, images, name, ticket_link, item_title, item_name, baseNameForRouting} = props;
+  const img = images && images.medium
+    ? images.medium
+    : images && images.medium_large
+      ? images.medium_large
+      : undefined;
 
   return (
     <Wrapper>
       <Info>
-        <div>{day} {month}</div>
+        <div>{date_time && format(new Date(date_time), 'd MMMM', { locale: ruLocale })}</div>
         <SIconButton aria-label="menu" className="bilego-button">
           {BilegoIconMenuDotted}
         </SIconButton>
@@ -104,11 +111,9 @@ export default function Event430(props){
           </Link>
           <Content>
             <Title><Link to={`/${baseNameForRouting}/event/${name}`}>{title}</Link></Title>
-            {/* eslint-disable-next-line camelcase */}
             { ticket_link !== undefined && <TicketsModalButton href={ticket_link} /> }
           </Content>
           <Footer>
-            {/* eslint-disable-next-line camelcase */}
             <Link to={`/${baseNameForRouting}/item/${item_name}`}>{item_title}</Link>
           </Footer>
         </React.Fragment>

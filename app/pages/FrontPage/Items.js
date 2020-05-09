@@ -40,7 +40,7 @@ class Items extends Component{
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={4}>
-            {items.map(item=>(
+            {items.slice(0, 4).map(item=>(
               <Grid key={item.id} item xs={3}>
                 <CardWrap>
                   <Item220 {...item} baseNameForRouting={baseNameForRouting}/>

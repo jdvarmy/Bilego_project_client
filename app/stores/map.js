@@ -43,8 +43,8 @@ class Map{
 
     let coords = [];
     markers.map(el=>{
-      const c = el.events[0].i_map;
-      coords.push([c.lng*1, c.lat*1]);
+      const c = el.events[0].item;
+      coords.push([c.longitude*1, c.latitude*1]);
     });
 
     let {latitude, longitude, zoom} =

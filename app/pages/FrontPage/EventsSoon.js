@@ -45,6 +45,7 @@ class EventsSoon extends Component{
 
     return (
       <GridWrap container spacing={4}>
+        <Grid item xs={12} />
         {isLoading && eventsSoon.length <= 0
           ? <LoadingForEventsWith430and200 />
           : <React.Fragment>

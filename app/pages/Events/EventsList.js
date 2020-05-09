@@ -21,28 +21,22 @@ const SFab = styled(Fab)`
   transition: opacity .2s ease 0s;
 `;
 
-// todo: доделать NO CONTENT
-
 @withRouter
 @inject('pageStore', 'globalStore')
 @observer
 class EventsList extends Component{
   componentDidMount = async () => {
-    const {pageStore:{categoryEventId, getEventsByCategory}, globalStore:{apiRoot, setMeta}} = this.props;
+    const {pageStore:{categoryEventId, getEventsByCategory, changeCategoryEvent, changePageType, changePageName}, globalStore:{categoriesForMenu, baseNameForRouting, setMeta}} = this.props;
 
-    if(categoryEventId === 0){
-      const {pageStore:{changeCategoryEvent, changePageType, changePageName}, globalStore:{categoriesForMenu}} = this.props;
+    categoriesForMenu.map(el => {
+      if(this.props.history.location.pathname.indexOf(el.link) + 1){
+        changePageName(el.name);
+        changeCategoryEvent(el.id, el.slug);
+        changePageType(el.page);
+      }
+    });
 
-      categoriesForMenu.map(el => {
-        if(this.props.history.location.pathname.indexOf(el.link) + 1){
-          changePageName(el.name);
-          changeCategoryEvent(el.id, el.cat);
-          changePageType(el.page);
-        }
-      });
-    }
-
-    await getEventsByCategory(apiRoot, {categoryId: this.props.pageStore.categoryEventId});
+    await getEventsByCategory({city: baseNameForRouting, category: this.props.pageStore.categoryEventSlug});
     setMeta(this.props.pageStore.seoPage);
   };
 
@@ -51,10 +45,10 @@ class EventsList extends Component{
   }
 
   loadMore = () => {
-    const {pageStore:{pagination, setPagination, categoryEventId, getEventsByCategory}, globalStore:{apiRoot}} = this.props;
+    const {pageStore:{pagination, setPagination, getEventsByCategory}, globalStore:{baseNameForRouting}} = this.props;
 
     setPagination(pagination.current + 1);
-    getEventsByCategory(apiRoot, {categoryId: this.props.pageStore.categoryEventId});
+    getEventsByCategory({city: baseNameForRouting, category: this.props.pageStore.categoryEventSlug});
   };
 
   render() {

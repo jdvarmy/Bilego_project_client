@@ -17,18 +17,16 @@ class Slider{
   };
   @action
   clear = () => {
-    // if(this.revapi){
-    //   this.revapi.revkill();
-    // }
     this.slides = [];
   };
 
   @action
-  getMainSlides = flow( function* getMainSlides(apiRoot){
+  getMainSlides = flow( function* getMainSlides(params){
     this.isLoading = true;
     try{
       this.clear();
-      this.slides = yield sliderService.getSlides(apiRoot);
+      const response = yield sliderService.getSlides(params);
+      this.slides = response;
     }catch(e){
       console.log(e);
     }finally {

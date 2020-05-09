@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import ruLocale from 'date-fns/locale/ru';
+import format from 'date-fns/format';
+
 import style from '../../theme/style';
 import { TicketsModalButton } from '../TicketsModal';
 
@@ -82,14 +85,19 @@ const Footer = styled(Div)`
 `;
 
 export default function Event200(props) {
-  const { title, day, month, img, name, ticket_link, baseNameForRouting } = props;
+  const { title, date_time, images, name, ticket_link, baseNameForRouting } = props;
+  const img = images && images.medium
+    ? images.medium
+    : images && images.medium_large
+      ? images.medium_large
+      : undefined;
 
   return (
     <Wrapper>
       {img !== undefined
         ? <React.Fragment>
           <Info>
-            <div>{day} {month}</div>
+            <div>{format(new Date(date_time), 'd MMMM', { locale: ruLocale })}</div>
           </Info>
           <Image className="event-200-hover" img={img} />
           <Link to={`/${baseNameForRouting}/event/${name}`}>
@@ -99,7 +107,6 @@ export default function Event200(props) {
             <Title><Link to={`/${baseNameForRouting}/event/${name}`}>{title}</Link></Title>
           </Content>
           <Footer>
-            {/* eslint-disable-next-line camelcase */}
             <TicketsModalButton href={ticket_link} />
           </Footer>
         </React.Fragment>

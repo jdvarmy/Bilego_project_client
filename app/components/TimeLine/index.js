@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
+import ruLocale from 'date-fns/locale/ru';
+import format from 'date-fns/format';
+
 import Fab from '@material-ui/core/Fab';
 import NoSsr from '@material-ui/core/NoSsr';
 import style from '../../theme/style';
@@ -140,36 +143,20 @@ const LineEventContent = styled.div`
   }
 `;
 
-
-  // 'e_id'
-  // 'e_title'
-  // 'e_name'
-  // 'e_date'
-  // 'e_format_date'
-  // 'e_img'
-  //
-  // 'i_id'
-  // 'i_title'
-  // 'i_name'
-  // 'i_map'
-// todo: add address
-
-
 @inject('rightPanelStore', 'globalStore')
 @observer
 class TimeLine extends Component {
   componentDidMount() {
-    const {rightPanelStore:{getDataTimeLine, clear}, globalStore:{apiRoot}} = this.props;
-
+    const {rightPanelStore:{getDataTimeLine, clear}, globalStore:{baseNameForRouting}} = this.props;
     clear();
-    getDataTimeLine(apiRoot);
+    getDataTimeLine({city: baseNameForRouting});
   }
 
   loadMore = () => {
-    const {rightPanelStore:{pagination, setPagination, getDataTimeLine}, globalStore:{apiRoot}} = this.props;
+    const {rightPanelStore:{pagination, setPagination, getDataTimeLine}, globalStore:{baseNameForRouting}} = this.props;
 
     setPagination(pagination.current + 1);
-    getDataTimeLine(apiRoot);
+    getDataTimeLine({city: baseNameForRouting});
   };
 
   render() {
@@ -180,28 +167,34 @@ class TimeLine extends Component {
         <Wrapper>
           <Container className="bilego-timeline">
             {events.map(event => {
+              let day = '', month = '';
+              if(window && event.events[0] && event.events[0].date_time){
+                day = format( new window.Date(event.events[0].date_time), 'd', { locale: ruLocale } )
+                month = format( new window.Date(event.events[0].date_time), 'MMM', { locale: ruLocale } )
+              }
+
               return (
                 <LineContainer key={event.date}>
                   <LineHeaderDate>
                     <Date>
-                      <div>{event.events[0].e_format_date.d}</div>
-                      <div>{event.events[0].e_format_date.M}</div>
+                      <div>{day}</div>
+                      <div>{month.slice(0, 3)}</div>
                     </Date>
                   </LineHeaderDate>
                   {event.events.map(e=>(
-                    <LineEvent className="bilego-line-event" key={e.e_id}>
+                    <LineEvent className="bilego-line-event" key={e.id}>
                       <span className="line-event-dot"/>
-                      <LineEventImage img={e.e_img}>
-                        <Link to={`/${baseNameForRouting}/event/${e.e_name}`}>
+                      <LineEventImage img={e.images && e.images.thumbnail ? e.images.thumbnail : ''}>
+                        <Link to={`/${baseNameForRouting}/event/${e.name}`}>
                           <div className="event-image"/>
                           <div className="event-image-overlay"/>
                         </Link>
                       </LineEventImage>
                       <LineEventContent>
-                        <Link to={`/${baseNameForRouting}/event/${e.e_name}`}>
-                          {e.e_title}
+                        <Link to={`/${baseNameForRouting}/event/${e.name}`}>
+                          {e.title}
                         </Link>
-                        <div>{e.i_title}</div>
+                        <div>{e.item.title}</div>
                       </LineEventContent>
                     </LineEvent>
                   ))}

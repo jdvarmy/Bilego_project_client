@@ -2,6 +2,7 @@ import _superagent from 'superagent';
 import superagentPromise from 'superagent-promise';
 
 const http = superagentPromise(_superagent, global.Promise);
+const URL = 'https://api.bilego.ru/api/';
 
 const handleErrors = error => {
   // console.log(error)
@@ -9,7 +10,8 @@ const handleErrors = error => {
 };
 
 const handleCatch = (url, err) => {
-  console.log(url, err)
+  console.log(url)
+  console.log(err)
 };
 
 const responseBody = res => res.body || res.text;
@@ -18,6 +20,8 @@ const tokenPlugin = request => {
   // todo: включить на проме, блокирует запросы с разных адресов
   // request.set('X-Requested-With', 'XMLHttpRequest');
   // request.set('X-NX-Origin', 'SG');
+
+  request.set('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOm51bGwsImF1ZCI6ImFwaS5iaWxlZ28ucnUiLCJpYXQiOjE1ODgzNTE3NzV9.8Tc-_GfltC7j-m6rzTCO7ebIrTGoJcJyywowuGJyE1I');
 };
 
 export default {
@@ -31,7 +35,7 @@ export default {
       .catch(err => handleCatch(url, err)),
   post: (url, query = {}, body = {}) =>
     http
-      .post(`${url}`, body)
+      .post(`${URL}${url}`, body)
       .query(query)
       .use(tokenPlugin)
       .end(handleErrors)

@@ -64,11 +64,14 @@ const Content = styled.div`
 `;
 
 export default function Item220(props) {
-  // eslint-disable-next-line react/prop-types
-  const { title, address, name, img, baseNameForRouting } = props;
+  const { title, address, name, images, baseNameForRouting } = props;
+  const img = images && images.medium
+    ? images.medium
+    : images && images.medium_large
+      ? images.medium_large
+      : undefined;
 
   return (
-    // eslint-disable-next-line react/jsx-filename-extension
     <Wrapper img={img}>
       <Article>
         <Img img={img} />

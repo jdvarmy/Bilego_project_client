@@ -135,8 +135,8 @@ const Gradient = styled.div`
 @observer
 class Slider extends Component{
   componentDidMount() {
-    const {globalStore: {apiRoot}, sliderStore:{getMainSlides}} = this.props;
-    getMainSlides(apiRoot);
+    const {globalStore: {baseNameForRouting}, sliderStore:{getMainSlides}} = this.props;
+    getMainSlides({city: baseNameForRouting});
   }
 
   @action
@@ -162,7 +162,6 @@ class Slider extends Component{
             <Carousel
               effect="fade"
               autoplay
-              // lazyLoad //todo? неправильно работает lazy. посылаем много запросов и грузить одни и теже картинки много раз
               infinite
               dotPosition="right"
               ref={slider => (this.slider = slider)}

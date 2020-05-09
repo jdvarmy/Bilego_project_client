@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import ruLocale from 'date-fns/locale/ru';
+import format from 'date-fns/format';
+
 import style from '../../theme/style';
 
 const Wrap = styled.div`
@@ -52,6 +55,9 @@ const Wrap = styled.div`
           justify-content: center;
           color: ${style.$white};
         }
+        > div:first-child{
+          font-size: 1.8em;
+        }
       }
     }
 
@@ -79,17 +85,17 @@ const Image = styled.div`
 const Text = styled.div``;
 
 export default function Event(props){
-  const {baseNameForRouting, name, img, day, month, title} = props;
+  const {baseNameForRouting, name, image, title, date_time} = props;
 
   return(
     <Wrap className="event-search">
       <Link to={`/${baseNameForRouting}/event/${name}`}>
-        <Image className="event-search-hover" img={img}>
+        <Image className="event-search-hover" img={image}>
           <div className="event-search-image"/>
           <div className="event-search-backgr"/>
           <div className="event-search-date">
-            <div>{day}</div>
-            <div>{month}</div>
+            <div>{format(new Date(date_time), 'd', { locale: ruLocale }).slice(0, 3)}</div>
+            <div>{format(new Date(date_time), 'MMM', { locale: ruLocale }).slice(0, 3)}</div>
           </div>
         </Image>
         <Text>

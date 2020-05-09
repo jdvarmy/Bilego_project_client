@@ -1,6 +1,6 @@
 const
   baseSize = 8,
-  borderRadius = 2,
+  borderRadius = 4,
   borderWidth = 1;
 
 export default {
@@ -39,10 +39,11 @@ export default {
     xs: `${baseSize / 2}px`,
     xd: `${baseSize * 3 / 2}px`,
     md: `${baseSize * 2}px`,
-    lg: `${baseSize * 3}px`,
-    xl: `${baseSize * 4}px`,
+    lg: `${baseSize * 3}px`, // 24
+    xl: `${baseSize * 4}px`, // 32
     xxl: `${baseSize * 5}px`,
     xxxl: `${baseSize * 6}px`,
+    xxxxl: `${baseSize * 7}px`,
     borderWidth: `${borderWidth}px`,
   },
 };

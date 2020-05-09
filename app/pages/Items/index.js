@@ -35,10 +35,10 @@ const SFab = styled(Fab)`
 @observer
 class Items extends Component{
   componentDidMount = async () => {
-    const {pageStore:{changePageType, getItems}, globalStore:{apiRoot, setMeta}} = this.props;
+    const {pageStore:{changePageType, getItems}, globalStore:{baseNameForRouting, setMeta}} = this.props;
 
     changePageType('page');
-    await getItems(apiRoot);
+    await getItems({city: baseNameForRouting});
     setMeta(this.props.pageStore.seoPage);
   };
 
@@ -47,10 +47,10 @@ class Items extends Component{
   }
 
   loadMore = () => {
-    const {pageStore:{pagination, setPagination, getItems}, globalStore:{apiRoot}} = this.props;
+    const {pageStore:{pagination, setPagination, getItems}, globalStore:{baseNameForRouting}} = this.props;
 
     setPagination(pagination.current + 1);
-    getItems(apiRoot);
+    getItems({city: baseNameForRouting});
   };
 
   render(){

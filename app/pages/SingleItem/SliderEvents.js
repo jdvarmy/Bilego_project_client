@@ -59,21 +59,32 @@ export default class SliderEvents extends React.Component{
 
   render() {
     const {item, baseNameForRouting} = this.props;
-
     const category = item.categories && item.categories.length > 0 && item.categories[0].name;
 
     // https://codepen.io/keithclark/pen/ZjrwpW
     // https://codepen.io/alexzaworski/pen/mEkvAG
+
+    const img = item.images && item.images.large
+      ? item.images.large
+      : item.images && item.images.default
+        ? item.images.default
+        : undefined;
 
     return (
       <Wrapper>
         {item.events.length > 0
           ? <Carousel effect="fade" autoplay>
             {item.events.map(event => {
+              const event_img = event.images && event.images.large
+                ? event.images.large
+                : event.images && event.images.default
+                  ? event.images.default
+                  : undefined;
+
               return (
                 <div key={event.id}>
                   <Gradient/>
-                  <Image alt={event.title} img={event.origin_img}/>
+                  <Image alt={event.title} img={event_img}/>
                   <Link to={`/${baseNameForRouting}/event/${event.name}`} className="bilego-item-slider-event-title">
                     <Typography variant="subtitle2" component="div">
                       {event.title}
@@ -88,8 +99,8 @@ export default class SliderEvents extends React.Component{
           </React.Fragment>
         }
         <div className="bilego-item-data">
-          <ImageItem className="img" img={item.img} />
-          <div>
+          <ImageItem className="img" img={img} />
+          <div className="grow">
             <Typography variant="caption" component="span">{category}</Typography>
             <Typography variant="h2" component="h2">{item.title}</Typography>
             <Typography variant="h6" component="h6">{item.address}</Typography>

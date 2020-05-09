@@ -27,7 +27,7 @@ class Marker extends React.Component{
 
   render(){
     const { marker, coords, globalStore:{ baseNameForRouting } } = this.props;
-    const { i_title, i_name } = marker.events[0];
+    const { item } = marker.events[0];
 
     return (
       <>
@@ -42,7 +42,7 @@ class Marker extends React.Component{
             closeOnClick={false}
             offsetTop={-29}
             anchor="bottom" >
-            <h4><Link to={`/${baseNameForRouting}/item/${i_name}`}>{i_title}</Link></h4>
+            <h4><Link to={`/${baseNameForRouting}/item/${item.name}`}>{item.title}</Link></h4>
             <h5>Событий на площадке: {marker.events.length}</h5>
           </SPopup>
         }

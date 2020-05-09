@@ -45,7 +45,7 @@ const Figcaption = styled.figcaption`
   position: absolute;
   left: 0;
   top: 0;
-  width: 42%;
+  width: 32%;
   color: #252830;
   height: calc(100% - 45px);
   margin: 30px;
@@ -58,7 +58,7 @@ export default function Selection(props){
     <Wrapper className="bilego-recommend" mask={slug}>
       <Container>
         <Media className="media" image={image}/>
-        <Figcaption>
+        <Figcaption className="figcaption-selection">
           <svg viewBox="0 0 200 200" version="1.1" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <mask id={`${slug}-mask`} x="0" y="0" width="100%" height="100%">

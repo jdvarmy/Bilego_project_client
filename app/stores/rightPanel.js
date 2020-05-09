@@ -1,6 +1,8 @@
 import { observable, action, configure, flow } from 'mobx';
 import { rightPanelService } from '../services';
 
+import format from 'date-fns/format';
+
 configure({
   enforceActions: 'always'
 });
@@ -29,10 +31,10 @@ class RightPanel{
   };
 
   @action
-  getDataTimeLine = flow( function* getDataTimeLine(apiRoot, params){
+  getDataTimeLine = flow( function* getDataTimeLine(params){
     this.isLoading = true;
     try{
-      const response = yield rightPanelService.getDataTimeLine(apiRoot, {page: this.pagination.current, size: this.pagination.pageSize, ...params});
+      const response = yield rightPanelService.getDataTimeLine({page: this.pagination.current, size: this.pagination.pageSize, ...params});
       this.pagination.showButton = response.length === this.pagination.pageSize;
 
       this.temporaryResponseEvents = [
@@ -51,8 +53,8 @@ class RightPanel{
 
   getTimeLine = () => {
     const temp = this.temporaryResponseEvents.reduce((obj, item) => {
-      obj[item.e_date] = obj[item.e_date] || [];
-      obj[item.e_date].push(item);
+      obj[item.date] = obj[item.date] || [];
+      obj[item.date].push(item);
       return obj;
     }, {});
 
@@ -62,8 +64,8 @@ class RightPanel{
   };
   getMarkers = () => {
     const temp = this.temporaryResponseEvents.reduce((obj, item) => {
-      obj[item.i_id] = obj[item.i_id] || [];
-      obj[item.i_id].push(item);
+      obj[item.item_id] = obj[item.item_id] || [];
+      obj[item.item_id].push(item);
       return obj;
     }, {});
 

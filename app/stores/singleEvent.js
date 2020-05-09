@@ -47,10 +47,10 @@ class SingleEvent{
   };
 
   @action
-  getEventDataBySlug = flow( function* getEventDataBySlug(apiRoot, params){
+  getEventDataBySlug = flow( function* getEventDataBySlug(params){
     this.isLoading = true;
     try{
-      const response = yield eventService.getEventDataBySlug(apiRoot, params);
+      const response = yield eventService.getEventDataBySlug(params);
       this.event = response;
       this.id = response.id;
       this.sliderData = response.slider;

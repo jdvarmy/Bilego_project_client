@@ -24,21 +24,21 @@ const CardWrap = styled(Card)`
 
 @inject('pageStore', 'globalStore')
 @observer
-class EventsSoon extends Component{
+class EventsExpect extends Component{
   render() {
-    const {pageStore:{eventsHot, isLoading}, globalStore:{baseNameForRouting}} = this.props;
-    const events = eventsHot && eventsHot.length>0 ? eventsHot : [{id:0},{id:1},{id:2}];
+    const {pageStore:{eventsExpect, isLoading}, globalStore:{baseNameForRouting}} = this.props;
+    const events = eventsExpect && eventsExpect.length>0 ? eventsExpect : [{id:0},{id:1},{id:2}];
 
     return (
-      <GridWrap container spacing={4} className="bilego-dark">
-        {isLoading && eventsHot.length <= 0
+      <GridWrap container spacing={4}>
+        {isLoading && eventsExpect.length <= 0
           ? <LoadingForEventsWith300 />
           :
           <React.Fragment>
           <Grid item xs={12}>
             <BlockHeaderTextH3>
-              <Link to={`/${baseNameForRouting}/search?cat=pop`}>
-                Популярные события {BilegoIconRightArrow}
+              <Link to={`/${baseNameForRouting}/search?cat=expect`}>
+                Самые ожидаемые события {BilegoIconRightArrow}
               </Link>
             </BlockHeaderTextH3>
           </Grid>
@@ -60,4 +60,4 @@ class EventsSoon extends Component{
   }
 }
 
-export default EventsSoon;
+export default EventsExpect;

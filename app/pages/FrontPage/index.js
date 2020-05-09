@@ -5,7 +5,8 @@ import { withRouter } from 'react-router-dom';
 
 import style from '../../theme/style';
 import EventsSoon from './EventsSoon';
-import EventsHot from './EventsHot';
+import EventsPopular from './EventsPopular';
+import EventsExpect from './EventsExpect';
 import Concerts from './Concerts';
 import Selections from './Selections';
 import Items from './Items';
@@ -32,9 +33,9 @@ const Container = styled.div`
 class FrontPage extends Component {
   componentDidMount = async () => {
     try {
-      const {pageStore: {getFrontPageData}, globalStore: {categoryConcertsForFrontPage, apiRoot, setMeta}} = this.props;
+      const {pageStore: {getFrontPageData}, globalStore: {setMeta, baseNameForRouting}} = this.props;
 
-      await getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
+      await getFrontPageData({city: baseNameForRouting});
       setMeta(this.props.pageStore.seoPage);
     }catch (e) {
       console.log('front page: ', e);
@@ -55,9 +56,11 @@ class FrontPage extends Component {
         <DateContainer align='middle' type='flex' justify='center'>
           <DatePickerLine/>
         </DateContainer>
+        <Padding />
         <Container>
+          <EventsPopular/>
           <EventsSoon/>
-          <EventsHot/>
+          <EventsExpect/>
           <Concerts/>
           <Selections/>
           <Divider />

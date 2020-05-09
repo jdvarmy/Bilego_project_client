@@ -114,7 +114,7 @@ class Search extends Component{
 
   onInputChange = e => {
     const {target:{value}} = e,
-      {searchStore:{changeSearchStatus, setRequest, getSearchResult}, globalStore:{apiRoot}} = this.props;
+      {searchStore:{changeSearchStatus, setRequest, getSearchResult}, globalStore:{baseNameForRouting}} = this.props;
     switch (true) {
       case value.length === 0:
         changeSearchStatus(-1);
@@ -128,7 +128,7 @@ class Search extends Component{
         changeSearchStatus(1);
         setRequest(value);
         this.time = setTimeout(function(){
-          getSearchResult(apiRoot);
+          getSearchResult({city: baseNameForRouting});
         }, 100);
         break;
       default:

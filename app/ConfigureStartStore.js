@@ -95,6 +95,7 @@ export default class ConfigureStartStore {
       {
         id: this.cities[this.CITY].category.concerts,
         cat: 'Concerts',
+        slug: 'concerts',
         page: 'page',
         name: 'Концерты',
         link: 'events/concerts',
@@ -102,6 +103,7 @@ export default class ConfigureStartStore {
       }, {
         id: this.cities[this.CITY].category.festivals,
         cat: 'Festivals',
+        slug: 'festivals',
         page: 'page',
         name: 'Фестивали',
         link: 'events/festivals',
@@ -109,6 +111,7 @@ export default class ConfigureStartStore {
       }, {
         id: this.cities[this.CITY].category.lectures,
         cat: 'Lectures',
+        slug: 'lectures',
         page: 'category',
         name: 'Лекции',
         link: 'events/lectures',
@@ -116,6 +119,7 @@ export default class ConfigureStartStore {
       }, {
         id: this.cities[this.CITY].category.exhibitions,
         cat: 'Exhibitions',
+        slug: 'exhibitions',
         page: 'category',
         name: 'Выставки',
         link: 'events/exhibitions',
@@ -123,6 +127,7 @@ export default class ConfigureStartStore {
       }, {
         id: this.cities[this.CITY].category.children,
         cat: 'Children',
+        slug: 'children',
         page: 'category',
         name: 'Детям',
         link: 'events/forkids',
@@ -299,51 +304,50 @@ export default class ConfigureStartStore {
       switch (match.component.key) {
         case 'FrontPage':
         case 'FrontPageCity':
-          resp = yield pageService.getFrontPageData(this.apiRoot, {categoryId: this.categoryConcertsForFrontPage, itemOrderby: 'rand'});
-          this.setMeta(resp.seo_meta);
+          resp = yield pageService.getFrontPageData({city: this.baseNameForRouting});
+          this.setMeta(resp.seo);
           this.frontPageFirstData = resp;
           break;
 
         case 'Events':
-          resp = yield pageService.getEvents(this.apiRoot, {page: 1, size: 21});
-          this.setMeta(resp.seo_meta);
+          resp = yield pageService.getEvents({city: this.baseNameForRouting, page: 1, size: 21});
+          this.setMeta(resp.seo);
           this.eventsFirstData = resp;
           break;
         case 'Concerts':
         case 'Festivals':
         case 'EventCategory':
           const category = matchCategories(this.categoriesForMenu, match)[0];
-          resp = yield pageService.getEventsByCategory(this.apiRoot, {page: 1, size: 21}, {categoryId: category.id});
-          this.setMeta(resp.seo_meta);
+          resp = yield pageService.getEventsByCategory({city: this.baseNameForRouting, page: 1, size: 21, category: category.slug});
+          this.setMeta(resp.seo);
           this.eventCategoryFirstData = resp;
           this.pageName = category.name;
           break;
         case 'Items':
-          resp = yield pageService.getItems(this.apiRoot, {page: 1, size: 21});
-          this.setMeta(resp.seo_meta);
+          resp = yield pageService.getItems({city: this.baseNameForRouting, page: 1, size: 21});
+          this.setMeta(resp.seo);
           this.itemsFirstData = resp;
           break;
         case 'SingleEvent':
-          resp = yield eventService.getEventDataBySlug(this.apiRoot, {slug: match.match.params.eventSlug});
-          this.setMeta(resp.seo_meta);
+          resp = yield eventService.getEventDataBySlug({city: this.baseNameForRouting, slug: match.match.params.eventSlug});
+          this.setMeta(resp.seo);
           this.singleEventFirstData = resp;
           break;
         case 'SingleItem':
-          resp = yield itemService.getItemDataBySlug(this.apiRoot, {slug: match.match.params.itemSlug});
-          // console.log(resp)
-          this.setMeta(resp.seo_meta);
+          resp = yield itemService.getItemDataBySlug({city: this.baseNameForRouting, slug: match.match.params.itemSlug});
+          this.setMeta(resp.seo);
           this.singleItemFirstData = resp;
           break;
         case 'Search':
-          searchStore.setSearchString(this.history.location.search.substr(1));
-          let args = searchStore.parseString();
-          args.size = searchStore.pagination.pageSize;
-          args.page = searchStore.pagination.current;
-
-          resp = yield searchService.getSearchPageResult(this.apiRoot, args);
-          this.setMeta(resp.seo_meta);
-          this.searchFirstData = resp;
-          searchStore.setTitle(resp.seo_meta.title_page);
+          // searchStore.setSearchString(this.history.location.search.substr(1));
+          // let args = searchStore.parseString();
+          // args.size = searchStore.pagination.pageSize;
+          // args.page = searchStore.pagination.current;
+          //
+          // resp = yield searchService.getSearchPageResult(this.apiRoot, args);
+          // this.setMeta(resp.seo_meta);
+          // this.searchFirstData = resp;
+          // searchStore.setTitle(resp.seo_meta.title_page);
           break;
 
         case 'Offer':

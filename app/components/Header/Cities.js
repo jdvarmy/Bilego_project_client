@@ -25,7 +25,7 @@ const StyledButton = styled(Button)`
 `;
 const Modal = styled.div`
   width: 400px;
-  padding: 16px 0px;
+  padding: ${style.sizes.md} 0px;
   h5{
     padding: 15px 28px;
     a{

@@ -33,10 +33,10 @@ const SFab = styled(Fab)`
 @observer
 class Events extends Component{
   componentDidMount = async () => {
-    const {pageStore:{changePageType, getEvents}, globalStore:{apiRoot, setMeta}} = this.props;
+    const {pageStore:{changePageType, getEvents}, globalStore:{baseNameForRouting, setMeta}} = this.props;
 
     changePageType('page');
-    await getEvents(apiRoot);
+    await getEvents({city: baseNameForRouting});
     setMeta(this.props.pageStore.seoPage);
   };
 
@@ -45,10 +45,10 @@ class Events extends Component{
   }
 
   loadMore = () => {
-    const {pageStore:{pagination, setPagination, getEvents}, globalStore:{apiRoot}} = this.props;
+    const {pageStore:{pagination, setPagination, getEvents}, globalStore:{baseNameForRouting}} = this.props;
 
     setPagination(pagination.current + 1);
-    getEvents(apiRoot);
+    getEvents({city: baseNameForRouting});
   };
 
   render(){

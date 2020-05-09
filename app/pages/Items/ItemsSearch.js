@@ -16,33 +16,33 @@ const Sform = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  legend{
-    display: none!important;
-  }
+  // legend{
+  //   display: none!important;
+  // }
 `;
 
 @inject('pageStore', 'globalStore')
 @observer
 class ItemsSearch extends Component{
   componentDidMount() {
-    const {pageStore:{getItemsCategoryList}, globalStore:{apiRoot}} = this.props;
-    getItemsCategoryList(apiRoot);
+    const {pageStore:{getItemsCategoryList}, globalStore:{baseNameForRouting}} = this.props;
+    getItemsCategoryList({city: baseNameForRouting});
   }
 
   time;
 
   setCategory = event => {
-    const {pageStore:{setItemFilter}, globalStore:{apiRoot}} = this.props;
-    const value = 'Все площадки' === event.target.value ? '' : event.target.value;
+    const {pageStore:{setItemFilter}, globalStore:{baseNameForRouting}} = this.props;
+    const value = 'all' === event.target.value ? '' : event.target.value;
 
-    setItemFilter(apiRoot, {category: value});
+    setItemFilter({city: baseNameForRouting, category: value});
   };
-  setSearch = (event) => {
-    const {pageStore:{setItemFilter}, globalStore:{apiRoot}} = this.props;
+  setSearch = event => {
+    const {pageStore:{setItemFilter}, globalStore:{baseNameForRouting}} = this.props;
     const value = event.target.value;
 
     this.time = setTimeout(function(){
-      setItemFilter(apiRoot, {search: value});
+      setItemFilter({city: baseNameForRouting, search: value});
     }, 100);
   };
 
@@ -67,13 +67,13 @@ class ItemsSearch extends Component{
           id="bilego-select-category"
           select
           label="Тип места"
-          value={itemFilters.category ? itemFilters.category : 'Все площадки'}
+          value={itemFilters.category ? itemFilters.category : 'all'}
           onChange={this.setCategory}
           margin="normal"
           variant="outlined"
         >
-          {[{cat_ID: 0, name: 'Все площадки'}, ...itemsCategoryList].map((cat) =>(
-            <MenuItem key={cat.name} value={cat.name}>
+          {[{id: 0, name: 'Все площадки', slug: 'all'}, ...itemsCategoryList].map((cat) =>(
+            <MenuItem key={cat.name} value={cat.slug}>
               {cat.name}
             </MenuItem>
           ))}

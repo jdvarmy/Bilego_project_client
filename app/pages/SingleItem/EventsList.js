@@ -42,8 +42,8 @@ export default function EventsList(props){
             item.metro && item.metro.length > 0 &&
             item.metro.map( m => <React.Fragment key={m.number}><Dot/>{m.number}</React.Fragment>)
           }</Typography>
-          {item.meta.telephone && <Typography component="p" variant="body2">{item.meta.telephone}</Typography>}
-          {item.meta.web && <Typography component="p" variant="body2">{item.meta.web}</Typography>}
+          {item.telephone && <Typography component="p" variant="body2">{item.telephone}</Typography>}
+          {item.web && <Typography component="p" variant="body2">{item.web}</Typography>}
         </Wrap>
       </Grid>
       <Grid item xs={12}>

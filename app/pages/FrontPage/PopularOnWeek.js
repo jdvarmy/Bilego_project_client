@@ -23,8 +23,8 @@ const CardWrap = styled(Card)`
 @observer
 class PopularOnWeek extends Component{
   componentDidMount() {
-    const {pageStore:{getPopularOnWeek}, globalStore:{apiRoot}} = this.props;
-    getPopularOnWeek(apiRoot);
+    const {pageStore:{getPopularOnWeek}, globalStore:{baseNameForRouting}} = this.props;
+    getPopularOnWeek({city: baseNameForRouting});
   }
 
   render() {
@@ -33,7 +33,7 @@ class PopularOnWeek extends Component{
       <GridWrap container spacing={4}>
         <Grid item xs={12}>
           <BlockHeaderTextH3>
-            Популярно на этой неделе
+            Популярно на неделе
           </BlockHeaderTextH3>
         </Grid>
         <Grid item xs={12}>

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
@@ -21,16 +21,15 @@ const StyledMenu = styled(AntMenu)`
 @observer
 class Menu extends Component{
   handleClick = async e => {
-    const {cat, page, name} = e.item.props,
-      {pageStore:{changeCategoryEvent, changePageType, changePageName, clear}, globalStore:{apiRoot, setMeta}} = this.props;
+    const {slug, page, name} = e.item.props,
+      {pageStore:{changeCategoryEvent, changePageType, changePageName, clear, getEventsByCategory}, globalStore:{baseNameForRouting, setMeta}} = this.props;
 
     clear();
     changePageName(name);
     changePageType(page);
-    changeCategoryEvent(e.key, cat);
+    changeCategoryEvent(e.key, slug);
 
-    const {pageStore:{categoryEventId, getEventsByCategory}} = this.props;
-    await getEventsByCategory(apiRoot, {categoryId: categoryEventId});
+    await getEventsByCategory({city: baseNameForRouting, category: this.props.pageStore.categoryEventSlug});
     setMeta(this.props.pageStore.seoPage);
   };
 
@@ -38,17 +37,15 @@ class Menu extends Component{
     const {globalStore:{baseNameForRouting, categoriesForMenu}} = this.props;
 
     return (
-      <Fragment>
-        <StyledMenu onSelect={this.handleClick} mode="horizontal" className="bilego-menu">
-          {categoriesForMenu.map(el=>(
-            <AntMenu.Item key={el.id} cat={el.cat} page={el.page} name={el.name}>
-              <NavLink to={`/${baseNameForRouting}/${el.link}`} exact activeClassName="menu__item-select" className="menu__item">
-                <Typography component="h6" variant="h6" className="menu__item-name">{el.name}</Typography>
-              </NavLink>
-            </AntMenu.Item>
-          ))}
-        </StyledMenu>
-      </Fragment>
+      <StyledMenu onSelect={this.handleClick} mode="horizontal" className="bilego-menu">
+        {categoriesForMenu.map(el=>(
+          <AntMenu.Item key={el.id} slug={el.slug} page={el.page} name={el.name}>
+            <NavLink to={`/${baseNameForRouting}/${el.link}`} exact activeClassName="menu__item-select" className="menu__item">
+              <Typography component="h6" variant="h6" className="menu__item-name">{el.name}</Typography>
+            </NavLink>
+          </AntMenu.Item>
+        ))}
+      </StyledMenu>
     );
   }
 }

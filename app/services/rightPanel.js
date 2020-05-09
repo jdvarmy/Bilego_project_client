@@ -1,6 +1,6 @@
 import requests from './helpers/requests';
 
 export default {
-  getDataTimeLine: (apiRoot, filterParams) =>
-    requests.get(apiRoot+'/timeline', {...filterParams}),
+  getDataTimeLine: (filterParams, page = 1, size = 8) =>
+    requests.post('events/timeline', {}, {page, size, ...filterParams}),
 }

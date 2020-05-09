@@ -18,8 +18,7 @@ class Mapbox extends Component {
   }
 
   render() {
-    const {mapStore:{REACT_APP_MAPBOX_TOKEN, mapStyle, viewport, setViewport, autoFit, setOpenPop}, rightPanelStore} = this.props;
-
+    const {mapStore:{REACT_APP_MAPBOX_TOKEN, mapStyle, viewport, setViewport, autoFit}, rightPanelStore:{markers}} = this.props;
     return (
       <NoSsr>
         <ReactMapGL
@@ -27,10 +26,10 @@ class Mapbox extends Component {
           mapStyle={mapStyle}
           mapboxApiAccessToken={REACT_APP_MAPBOX_TOKEN}
           onViewportChange={setViewport}
-          onLoad={() => {autoFit(rightPanelStore.markers)}}
+          onLoad={() => {autoFit(markers)}}
         >
-          {rightPanelStore.markers.map((el, k)=>{
-            const coords = el.events[0].i_map;
+          {markers.map((el, k)=>{
+            const coords = {lat: el.events[0].item.latitude, lng: el.events[0].item.longitude};
             return(
               <Marker key={k} marker={el} coords={coords} />
             )

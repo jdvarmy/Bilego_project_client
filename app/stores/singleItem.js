@@ -22,10 +22,10 @@ class SingleItem{
   };
 
   @action
-  getItemDataBySlug = flow( function* getItemDataBySlug(apiRoot, params){
+  getItemDataBySlug = flow( function* getItemDataBySlug(params){
     this.isLoading = true;
     try{
-      const response = yield itemService.getItemDataBySlug(apiRoot, params);
+      const response = yield itemService.getItemDataBySlug(params);
       this.item = response;
     }catch(e){
       console.log(e);
