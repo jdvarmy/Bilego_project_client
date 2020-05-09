@@ -347,7 +347,7 @@ export default class ConfigureStartStore {
           resp = yield searchService.getSearchPageResult({city: this.baseNameForRouting, ...args});
           this.setMeta(resp.seo);
           this.searchFirstData = resp;
-          searchStore.setTitle(resp.seo.title_page);
+          // searchStore.setTitle(resp.seo.title_page);
           break;
 
         case 'Offer':

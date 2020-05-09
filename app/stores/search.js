@@ -62,9 +62,9 @@ class Search{
 
   @action
   setStartDataSearchPage = (data) => {
-    this.searchEvents = data.events.length > 0 ? data.events : undefined;
-    this.seoPage = data.seo_meta ? data.seo_meta : [];
-    this.setTitle(data.seo_meta && data.seo_meta.title_page ? data.seo_meta.title_page : '');
+    this.searchEvents = data.posts;
+    this.seoPage = data.seo;
+    this.setTitle(data.seo && data.seo.title_page ? data.seo.title_page : '');
   };
 
   @action
