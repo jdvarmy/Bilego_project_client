@@ -137,7 +137,6 @@ class Search{
       }
 
       const response = yield searchService.getSearchPageResult({...params, ...args});
-      console.log(response);
       this.searchEvents = response.posts.length > 0 ? response.posts : [];
       this.seoPage = response.seo ? response.seo : [];
     } catch (e) {

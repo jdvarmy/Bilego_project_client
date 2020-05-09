@@ -36,7 +36,7 @@ class SingleItem extends Component{
 
       if (prevProps.match.params.itemSlug !== this.props.match.params.itemSlug) {
         clear();
-        await getItemDataBySlug({city: baseNameForRouting, slug: match.params.eventSlug});
+        await getItemDataBySlug({city: baseNameForRouting, slug: this.props.match.params.itemSlug});
         setMeta(this.props.singleItemStore.item.seo);
       }
     }catch (e) {

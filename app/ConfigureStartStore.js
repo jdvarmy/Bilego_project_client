@@ -339,15 +339,15 @@ export default class ConfigureStartStore {
           this.singleItemFirstData = resp;
           break;
         case 'Search':
-          // searchStore.setSearchString(this.history.location.search.substr(1));
-          // let args = searchStore.parseString();
-          // args.size = searchStore.pagination.pageSize;
-          // args.page = searchStore.pagination.current;
-          //
-          // resp = yield searchService.getSearchPageResult(this.apiRoot, args);
-          // this.setMeta(resp.seo_meta);
-          // this.searchFirstData = resp;
-          // searchStore.setTitle(resp.seo_meta.title_page);
+          searchStore.setSearchString(this.history.location.search.substr(1));
+          let args = searchStore.parseString();
+          args.size = searchStore.pagination.pageSize;
+          args.page = searchStore.pagination.current;
+
+          resp = yield searchService.getSearchPageResult({city: this.baseNameForRouting, ...args});
+          this.setMeta(resp.seo);
+          this.searchFirstData = resp;
+          searchStore.setTitle(resp.seo.title_page);
           break;
 
         case 'Offer':
