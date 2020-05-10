@@ -347,19 +347,18 @@ export default class ConfigureStartStore {
           resp = yield searchService.getSearchPageResult({city: this.baseNameForRouting, ...args});
           this.setMeta(resp.seo);
           this.searchFirstData = resp;
-          // searchStore.setTitle(resp.seo.title_page);
+          searchStore.setTitle(resp.seo.title_page);
           break;
-
         case 'Offer':
-          resp = yield servicePagesService.getMetaPageByName(this.apiRoot,{slug: 'offer'});
+          resp = yield servicePagesService.getMetaPageByName({city: this.baseNameForRouting, slug: 'offer'});
           this.setMeta(resp);
           break;
         case 'Advertising':
-          resp = yield servicePagesService.getMetaPageByName(this.apiRoot,{slug: 'reklama'});
+          resp = yield servicePagesService.getMetaPageByName({city: this.baseNameForRouting, slug: 'reklama'});
           this.setMeta(resp);
           break;
         case 'Contacts':
-          resp = yield servicePagesService.getMetaPageByName(this.apiRoot,{slug: 'contacts'});
+          resp = yield servicePagesService.getMetaPageByName({city: this.baseNameForRouting, slug: 'contacts'});
           this.setMeta(resp);
           break;
         case 'Page404':

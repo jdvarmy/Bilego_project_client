@@ -42,9 +42,9 @@ const Padding = styled.div`
 @observer
 class Offer extends React.Component{
   componentDidMount = async () => {
-    const { servicePagesStore:{getMetaPageByName}, globalStore:{apiRoot, setMeta}} = this.props;
+    const { servicePagesStore:{getMetaPageByName}, globalStore:{baseNameForRouting, setMeta}} = this.props;
 
-    await getMetaPageByName(apiRoot, {slug:'offer'});
+    await getMetaPageByName({city: baseNameForRouting, slug:'offer'});
     setMeta(this.props.servicePagesStore.seoPage);
   };
 

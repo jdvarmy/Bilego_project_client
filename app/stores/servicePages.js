@@ -35,11 +35,11 @@ class servicePages{
   ];
 
   @action
-  getMetaPageByName = flow( function* getMetaPageByName(apiRoot, params){
+  getMetaPageByName = flow( function* getMetaPageByName(params){
     this.isLoading = true;
     try{
-      const resp = yield servicePagesService.getMetaPageByName(apiRoot, params);
-      this.seoPage = resp;
+      const response = yield servicePagesService.getMetaPageByName(params);
+      this.seoPage = response;
     }catch(e){
       console.log(e);
     }finally {
@@ -51,7 +51,8 @@ class servicePages{
   sendContactForm = flow( function* sendContactForm(params) {
     this.isLoading = true;
     try {
-      return yield servicePagesService.sendContactForm(params);
+      const response = yield servicePagesService.sendContactForm(params);
+      return response;
     } catch (e) {
       console.log(e);
     } finally {

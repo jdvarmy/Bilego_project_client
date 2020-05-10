@@ -52,7 +52,7 @@ export default {
 
     return req
       .query(query)
-      .use(tokenPlugin)
+      // .use(tokenPlugin)
       .end(handleErrors)
       .then(responseBody)
       .catch(err => handleCatch(url, err));

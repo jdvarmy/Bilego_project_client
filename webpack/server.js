@@ -172,53 +172,48 @@ app.get('/sitemap.xml', function(req, res) {
     const smStream = new SitemapStream({ hostname: 'https://bilego.ru/' });
     const pipeline = smStream.pipe(createGzip());
 
-  let countReq = 0, xmlData = [];
-  const response = () => {
-    if(--countReq === 0){
-      smStream.write({ url: '/spb/', changefreq: 'daily' });
+    let xmlData = [];
+    const response = () => {
+      smStream.write({ url: '/spb', changefreq: 'daily' });
       smStream.write({ url: '/spb/offer', changefreq: 'monthly' });
-      smStream.write({ url: '/spb/advertising', changefreq: 'monthly' });
+      // smStream.write({ url: '/spb/advertising', changefreq: 'monthly' });
       smStream.write({ url: '/spb/contacts', changefreq: 'monthly' });
       smStream.write({ url: '/spb/events', changefreq: 'daily' });
       smStream.write({ url: '/spb/items', changefreq: 'daily' });
-      smStream.write({ url: '/mos/', changefreq: 'daily' });
+      smStream.write({ url: '/mos', changefreq: 'daily' });
       smStream.write({ url: '/mos/offer', changefreq: 'monthly' });
-      smStream.write({ url: '/mos/advertising', changefreq: 'monthly' });
+      // smStream.write({ url: '/mos/advertising', changefreq: 'monthly' });
       smStream.write({ url: '/mos/contacts', changefreq: 'monthly' });
       smStream.write({ url: '/mos/events', changefreq: 'daily' });
       smStream.write({ url: '/mos/items', changefreq: 'daily' });
 
-      xmlData.map( city => {
-        Object.keys(city).map(key => {
-          city[key].event_categories.map(i => {
+      Object.keys(xmlData).map(city => {
+        Object.keys(xmlData[city]).map(key => {
+          xmlData[city][key].event_categories.map(i => {
             smStream.write({ url: `/${key}/events/${i}`, changefreq: 'daily' });
           });
-          city[key].events.map(i => {
+          xmlData[city][key].events.map(i => {
             smStream.write({ url: `/${key}/event/${i}`, changefreq: 'weekly' });
           });
-          city[key].items.map(i => {
+          xmlData[city][key].items.map(i => {
             smStream.write({ url: `/${key}/item/${i}`, changefreq: 'weekly' });
           })
-        });
+        })
       });
       smStream.end();
 
       streamToPromise(pipeline).then(sm => sitemap = sm);
       pipeline.pipe(res).on('error', (e) => {throw e})
-    }
-  };
+    };
 
-  cities.map( city => {
     try {
-      countReq++;
-      xmlmapService.getXmlMapData(city.apiRoot).then((resolve, reject) => {
+      xmlmapService.getXmlMapData().then((resolve, reject) => {
         xmlData.push(resolve);
         response();
       });
     } catch (e) {
       console.log(e)
     }
-  });
 
   } catch (e) {
     console.error(e);

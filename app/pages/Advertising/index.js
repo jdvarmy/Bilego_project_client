@@ -6,8 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import style from '../../theme/style';
 
-const GridWrap = styled(Grid)`
-`;
 const Content = styled.div`
   position: relative;
   background-color: ${style.$white};
@@ -23,16 +21,13 @@ const Padding = styled.div`
   padding-top:48px;
 `;
 
-// todo: сделать
-
-
 @inject('servicePagesStore', 'globalStore')
 @observer
 class Advertising extends React.Component{
   componentDidMount = async () => {
-    const { servicePagesStore:{getMetaPageByName}, globalStore:{apiRoot, setMeta}} = this.props;
+    const { servicePagesStore:{getMetaPageByName}, globalStore:{baseNameForRouting, setMeta}} = this.props;
 
-    await getMetaPageByName(apiRoot, {slug:'reklama'});
+    await getMetaPageByName({city: baseNameForRouting, slug:'reklama'});
     setMeta(this.props.servicePagesStore.seoPage);
   };
 
