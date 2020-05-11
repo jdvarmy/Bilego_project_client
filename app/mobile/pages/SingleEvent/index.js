@@ -141,23 +141,23 @@ class SingleEvent extends React.Component{
 
   componentDidMount = async () => {
     try {
-      const {match, singleEventStore: {getEventDataBySlug}, globalStore: {apiRoot, setMeta}} = this.props;
-      await getEventDataBySlug(apiRoot, {slug: match.params.eventSlug});
+      const {match, singleEventStore: {getEventDataBySlug}, globalStore: {baseNameForRouting, setMeta}} = this.props;
+      await getEventDataBySlug({city: baseNameForRouting, slug: match.params.eventSlug});
 
-      setMeta(this.props.singleEventStore.event.seo_meta);
+      setMeta(this.props.singleEventStore.event.seo);
     }catch (e) {
       console.log('single event: ', e);
     }
   };
 
   componentDidUpdate = async (prevProps, prevState, snapshot) => {
-    const {singleEventStore: {getEventDataBySlug, notFoundMeta, clear}, globalStore: {apiRoot, setMeta}} = this.props;
+    const {singleEventStore: {getEventDataBySlug, notFoundMeta, clear}, globalStore: {baseNameForRouting, setMeta}} = this.props;
 
     try {
       if (prevProps.match.params.eventSlug !== this.props.match.params.eventSlug) {
         clear();
-        await getEventDataBySlug(apiRoot, {slug: this.props.match.params.eventSlug});
-        setMeta(this.props.singleEventStore.event.seo_meta);
+        await getEventDataBySlug({city: baseNameForRouting, slug: this.props.match.params.eventSlug});
+        setMeta(this.props.singleEventStore.event.seo);
       }
     }catch (e) {
       console.log('single event: ', e);
@@ -214,7 +214,7 @@ class SingleEvent extends React.Component{
                           </Grid>
                           <Grid item xs={3}>
                             <Link to={`/${baseNameForRouting}/item/${event.item.name}`}>
-                              <ItemImage img={event.item.img}><div /></ItemImage>
+                              <ItemImage img={event.item.images.thumbnail}><div /></ItemImage>
                             </Link>
                           </Grid>
                         </Grid>

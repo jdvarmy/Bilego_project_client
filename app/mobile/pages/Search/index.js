@@ -60,16 +60,12 @@ class Search extends Component{
   }
 
   componentDidMount = async () => {
-    const {
-      searchStore:{setSearchString, getSearchPageResult, setTitle},
-      location,
-      globalStore:{apiRoot, setMeta}
-    } = this.props;
+    const {searchStore:{setSearchString, getSearchPageResult, setTitle}, location, globalStore:{baseNameForRouting, setMeta}} = this.props;
 
     try {
       setSearchString(location.search.substr(1));
 
-      await getSearchPageResult(apiRoot, true);
+      await getSearchPageResult({city: baseNameForRouting}, true);
       setMeta(this.props.searchStore.seoPage);
 
       setTitle(this.props.searchStore.seoPage.title_page)
@@ -79,17 +75,14 @@ class Search extends Component{
   };
 
   componentDidUpdate = async (prevProps) => {
-    const {
-      searchStore:{setSearchString, getSearchPageResult, clear, setTitle},
-      globalStore:{apiRoot, setMeta}
-    } = this.props;
+    const {searchStore:{setSearchString, getSearchPageResult, clear, setTitle}, globalStore:{baseNameForRouting, setMeta}} = this.props;
 
     try {
       if(prevProps.location.search.substr(1) !== this.props.location.search.substr(1)) {
         clear();
         setSearchString(this.props.location.search.substr(1));
 
-        await getSearchPageResult(apiRoot, true);
+        await getSearchPageResult({city: baseNameForRouting}, true);
         setMeta(this.props.searchStore.seoPage);
 
         setTitle(this.props.searchStore.seoPage.title_page)

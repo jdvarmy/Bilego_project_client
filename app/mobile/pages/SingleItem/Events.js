@@ -45,7 +45,7 @@ class Events extends Component{
     const {singleItemStore:{item}, globalStore:{baseNameForRouting}} = this.props;
 
     return (
-      item.events
+      item.events && item.events.length > 0
       ?
       <Grid container spacing={2}>
         <Grid item xs={12}>

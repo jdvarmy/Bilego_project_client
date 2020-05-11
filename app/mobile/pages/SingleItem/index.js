@@ -41,10 +41,10 @@ class SingleItem extends Component {
 
   componentDidMount = async () => {
     try {
-      const {singleItemStore:{getItemDataBySlug}, match, globalStore:{apiRoot, setMeta}} = this.props;
-      await getItemDataBySlug(apiRoot, {slug: match.params.itemSlug});
+      const {singleItemStore:{getItemDataBySlug}, match, globalStore:{baseNameForRouting, setMeta}} = this.props;
+      await getItemDataBySlug({city: baseNameForRouting, slug: match.params.itemSlug});
 
-      setMeta(this.props.singleItemStore.item.seo_meta);
+      setMeta(this.props.singleItemStore.item.seo);
     }catch (e) {
       console.log('single item: ', e);
     }
@@ -52,11 +52,11 @@ class SingleItem extends Component {
 
   componentDidUpdate = async (prevProps) => {
     try {
-      const {singleItemStore: {getItemDataBySlug}, globalStore: {apiRoot, setMeta}} = this.props;
+      const {singleItemStore: {getItemDataBySlug}, globalStore: {baseNameForRouting, setMeta}} = this.props;
 
       if (prevProps.match.params.itemSlug !== this.props.match.params.itemSlug) {
-        await getItemDataBySlug(apiRoot, {slug: this.props.match.params.itemSlug});
-        setMeta(this.props.singleItemStore.item.seo_meta);
+        await getItemDataBySlug({city: baseNameForRouting, slug: this.props.match.params.itemSlug});
+        setMeta(this.props.singleItemStore.item.seo);
       }
     }catch (e) {
       console.log('single item: ', e);
@@ -84,7 +84,7 @@ class SingleItem extends Component {
             <Content>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  {item && <Events/>}
+                  {item.events && item.events.length > 0 && <Events/>}
                 </Grid>
                 <Grid item xs={12}>
                   <GridWrap container spacing={2}>

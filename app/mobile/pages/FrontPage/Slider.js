@@ -1,10 +1,13 @@
 import React from 'react';
-import { Carousel } from 'antd';
 import { Link } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 import Typography from '@material-ui/core/Typography';
+import { Carousel } from 'antd';
 import styled from 'styled-components';
 import style from '../../../theme/style';
-import { inject, observer } from 'mobx-react';
+
+import ruLocale from 'date-fns/locale/ru';
+import format from 'date-fns/format';
 
 const Wrapper = styled.div`
   height: 375px;
@@ -46,8 +49,8 @@ const Image = styled.div`
 @observer
 class Slider extends React.Component{
   componentDidMount() {
-    const { globalStore:{ apiRoot }, sliderStore:{ getMainSlides }}  = this.props;
-    getMainSlides(apiRoot);
+    const { globalStore:{ baseNameForRouting }, sliderStore:{ getMainSlides }}  = this.props;
+    getMainSlides({city: baseNameForRouting});
   }
 
   render(){
@@ -68,7 +71,7 @@ class Slider extends React.Component{
                   </Typography>
                 </Link>
                 <Typography className="bilego-item-slider-event-subtitle-mobile first" variant="subtitle2" component="span">
-                  {slide.date}
+                  {format(new Date(slide.date_time), 'EEEEEE, d MMMM в HH:mm', { locale: ruLocale })}
                 </Typography>
                 <Typography className="bilego-item-slider-event-subtitle-mobile second" variant="subtitle2" component="span">
                   {slide.location}

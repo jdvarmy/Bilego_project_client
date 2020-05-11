@@ -49,11 +49,10 @@ const Image = styled.div`
 `;
 const Title = styled.div`
   position: absolute;
-  top: 0;
+  bottom: 0;
   right: 0;
   left: 16px;
   width: calc(100% - 16px);
-  height: 100%;
   display: flex;
   img{
     position: absolute;
@@ -77,28 +76,35 @@ const Title = styled.div`
 export default function Slider(props){
   const {item, baseNameForRouting} = props;
   const category = item.categories && item.categories.length > 0 && item.categories[0].name;
+  console.log(item.events)
 
   return (
     <Wrapper>
       {item && item.events.length > 0 &&
         <Carousel effect="fade" autoplay>
           {item.events.map(event => {
+            const img = event.images && event.images.medium
+              ? event.images.medium
+              : event.images && event.images.medium_large
+                ? event.images.medium_large
+                : event.images.default;
+
             return (
               <div key={event.id}>
                 <Gradient/>
-                <Image alt={event.title} img={event.origin_img}/>
-                <Typography variant="subtitle2" component="div" className="bilego-item-subtitle">
-                  <Link to={`/${baseNameForRouting}/event/${event.name}`}>
+                <Image alt={event.title} img={img}/>
+                <Link to={`/${baseNameForRouting}/event/${event.name}`}>
+                  <Typography variant="subtitle2" component="div" className="bilego-item-subtitle">
                     {event.title}
-                  </Link>
-                </Typography>
+                  </Typography>
+                </Link>
               </div>
             )
           })}
         </Carousel>
       }
       <Title>
-        <img src={item.img} alt={item.title}/>
+        <img src={item.images.thumbnail} alt={item.title}/>
         <div>
           <Typography variant="caption" component="span">{category}</Typography>
           <Typography variant="h6" component="h2">{item.title}</Typography>

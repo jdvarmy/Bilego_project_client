@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import ruLocale from 'date-fns/locale/ru';
+import format from 'date-fns/format';
+
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
@@ -30,6 +33,7 @@ const SBox = styled(Typography)`
 `;
 
 export default function ConcertInfo(props){
+  const {date_time} = props;
   return(
     <Grid container spacing={2}>
       <Grid item xs={7}>
@@ -37,20 +41,20 @@ export default function ConcertInfo(props){
           <SGrid item xs={6}>
             <Box component="span" m={1}>
               <Caption component="div" variant="caption">
-                {props.day_of_week}
+                {format(new Date(date_time), 'EEEE', { locale: ruLocale })}
               </Caption>
               <Title component="div" variant="h3">
-                {props.day}
+                {format(new Date(date_time), 'd', { locale: ruLocale })}
               </Title>
             </Box>
           </SGrid>
           <SGrid item xs={6}>
             <Box component="span" m={1}>
               <Caption component="div" variant="caption">
-                {props.month}
+                {format(new Date(date_time), 'MMMM', { locale: ruLocale })}
               </Caption>
               <Title component="div" variant="h3">
-                {props.month_short}
+                {format(new Date(date_time), 'MMM', { locale: ruLocale }).slice(0, 3)}
               </Title>
             </Box>
           </SGrid>
@@ -64,7 +68,7 @@ export default function ConcertInfo(props){
                 Начало в
               </Caption>
               <Typography component="span" variant="h5">
-                {props.time}
+                {format(new Date(date_time), 'HH:mm', { locale: ruLocale })}
               </Typography>
             </Box>
           </SGrid>

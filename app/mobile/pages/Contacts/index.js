@@ -86,9 +86,9 @@ class Contacts extends React.Component{
   };
 
   componentDidMount = async () => {
-    const { servicePagesStore:{getMetaPageByName}, globalStore:{apiRoot, setMeta}} = this.props;
+    const { servicePagesStore:{getMetaPageByName}, globalStore:{baseNameForRouting, setMeta}} = this.props;
 
-    await getMetaPageByName(apiRoot, {slug:'contacts'});
+    await getMetaPageByName({city: baseNameForRouting, slug:'contacts'});
     setMeta(this.props.servicePagesStore.seoPage);
   };
 

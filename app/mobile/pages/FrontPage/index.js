@@ -62,9 +62,9 @@ class FrontPage extends React.PureComponent{
 
   componentDidMount = async () => {
     try {
-      const {pageStore: {getFrontPageData}, globalStore: {categoryConcertsForFrontPage, apiRoot, setMeta}} = this.props;
+      const {pageStore: {getFrontPageData}, globalStore: {baseNameForRouting, setMeta}} = this.props;
 
-      await getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
+      await getFrontPageData({city: baseNameForRouting});
       setMeta(this.props.pageStore.seoPage);
     }catch (e) {
       console.log('front page: ', e);
@@ -86,13 +86,13 @@ class FrontPage extends React.PureComponent{
             {
               id: 1,
               name: 'Ближайшие события',
-              link: '/search?cat=all',
+              link: '/search',
               carts: eventsSoon
             },
             {
               id: 2,
               name: 'Популярные события',
-              link: '/search?cat=pop',
+              link: '/search?cat=popular',
               carts: eventsPopular
             },
             {
@@ -154,8 +154,7 @@ class FrontPage extends React.PureComponent{
                 .map(selection => {
                   return (
                     <Grid key={selection.id} item xs={12}>
-                      <Event190 {...selection}
-                                link={`/${baseNameForRouting}/search/?selection=${selection.slug}`}/>
+                      <Event190 {...selection} link={`/${baseNameForRouting}/search/?selection=${selection.slug}`}/>
                     </Grid>
                   )
                 })}

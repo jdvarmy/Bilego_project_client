@@ -19,8 +19,8 @@ const SBlockHeaderText = styled(Typography)`
 @observer
 class PopularOnWeek extends Component{
   componentDidMount() {
-    const {pageStore:{getPopularOnWeek}, globalStore:{apiRoot}} = this.props;
-    getPopularOnWeek(apiRoot);
+    const {pageStore:{getPopularOnWeek}, globalStore:{baseNameForRouting}} = this.props;
+    getPopularOnWeek({city: baseNameForRouting});
   }
 
   render() {

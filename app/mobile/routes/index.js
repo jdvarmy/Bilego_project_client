@@ -1,4 +1,4 @@
-import { FrontPage, Offer, Advertising, Events, Contacts, SingleEvent, SingleItem, Page404, Search } from '../pages';
+import { FrontPage, Offer, Advertising, Contacts, SingleEvent, SingleItem, Page404, Search } from '../pages';
 
 export default function (baseRouter) {
   return(

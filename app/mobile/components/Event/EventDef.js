@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import ruLocale from 'date-fns/locale/ru';
+import format from 'date-fns/format';
+
 import style from '../../../theme/style';
 import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
@@ -63,7 +66,12 @@ const SWrap = styled.div`
 `;
 
 export default function EventDef(props) {
-  const { title, day, month, img, name, ticket_link, item_title, item_name, baseNameForRouting } = props;
+  const { title, date_time, images, name, ticket_link, item, baseNameForRouting } = props;
+  const img = images && images.medium
+    ? images.medium
+    : images && images.medium_large
+      ? images.medium_large
+      : undefined;
 
   return (
     <Wrapper>
@@ -79,7 +87,12 @@ export default function EventDef(props) {
         <Typography component="h2" variant="subtitle1">
           <Link to={`/${baseNameForRouting}/event/${name}`}>{title}</Link>
         </Typography>
-        <Span>{day} {month} / <Link to={`/${baseNameForRouting}/item/${item_name}`}>{item_title}</Link></Span>
+        <Span>
+          {format(new Date(date_time), 'd MMMM', { locale: ruLocale })} / {item && item.name
+            ? <Link to={`/${baseNameForRouting}/item/${item.name}`}>{item.title}</Link>
+            : <Link to={`/${baseNameForRouting}/event/${name}`}>Купить билеты</Link>
+          }
+        </Span>
       </Content>
     </Wrapper>
   );

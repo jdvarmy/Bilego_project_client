@@ -275,7 +275,7 @@ class Header extends React.Component{
 
   onInputSearchChange = e => {
     const {target:{value}} = e,
-      {searchStore:{changeSearchStatus, setRequest, getSearchResult}, globalStore:{apiRoot}} = this.props;
+      {searchStore:{changeSearchStatus, setRequest, getSearchResult}, globalStore:{baseNameForRouting}} = this.props;
     switch (true) {
       case value.length === 0:
         changeSearchStatus(-1);
@@ -289,7 +289,7 @@ class Header extends React.Component{
         changeSearchStatus(1);
         setRequest(value);
         this.time = setTimeout(function(){
-          getSearchResult(apiRoot);
+          getSearchResult({city: baseNameForRouting});
         }, 100);
         break;
       default:
@@ -313,10 +313,10 @@ class Header extends React.Component{
     const {baseNameForRouting} = this.props.globalStore;
     this.props.history.push(`/${baseNameForRouting}`);
 
-    const {pageStore: {getFrontPageData}, globalStore: {categoryConcertsForFrontPage, apiRoot, setMeta}} = this.props;
+    const {pageStore: {getFrontPageData}, globalStore: {setMeta}} = this.props;
 
-    getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
-    sliderStore.getMainSlides(apiRoot);
+    getFrontPageData({city: baseNameForRouting});
+    sliderStore.getMainSlides({city: baseNameForRouting});
     setMeta(this.props.pageStore.seoPage);
   };
 
