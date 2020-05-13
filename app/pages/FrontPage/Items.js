@@ -33,7 +33,7 @@ class Items extends Component{
         <Grid item xs={12} />
         <Grid item xs={12}>
           <BlockHeaderTextH3>
-            <Link to={baseNameForRouting + '/items'}>
+            <Link to={`/${baseNameForRouting}/items`}>
               Концертные площадки {cityLabel} {BilegoIconRightArrow}
             </Link>
           </BlockHeaderTextH3>

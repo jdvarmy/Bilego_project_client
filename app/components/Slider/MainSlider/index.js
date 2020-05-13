@@ -56,7 +56,6 @@ class MainSlider extends React.Component {
 
   renderPosts = () => {
     const slides = this.props.sliderStore.slides;
-    console.log(slides)
 
     return slides.length > 0 ? slides.map((slide, k) => (
       <Slide id={slide.id} key={slide.id} title={slide.title}>

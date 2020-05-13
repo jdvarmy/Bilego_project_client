@@ -76,7 +76,6 @@ const Title = styled.div`
 export default function Slider(props){
   const {item, baseNameForRouting} = props;
   const category = item.categories && item.categories.length > 0 && item.categories[0].name;
-  console.log(item.events)
 
   return (
     <Wrapper>
