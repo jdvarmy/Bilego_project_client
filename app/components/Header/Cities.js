@@ -88,20 +88,19 @@ class Cities extends React.Component{
     this.renderTimeLine();
   };
 
-  renderPageContent = () => {
-    const {pageStore:{getFrontPageData}, globalStore:{categoryConcertsForFrontPage, apiRoot, setMeta}} = this.props;
-    getFrontPageData(apiRoot, {categoryId: categoryConcertsForFrontPage, itemOrderby: 'rand'});
+  renderPageContent = async () => {
+    const {pageStore:{getFrontPageData}, globalStore:{baseNameForRouting, setMeta}} = this.props;
+    await getFrontPageData({city: baseNameForRouting});
 
-    // todo: не работает мета при переключении города
     setMeta(this.props.pageStore.seoPage);
   };
   renderRevolutionSlider = () => {
-    this.props.sliderStore.getMainSlides(this.props.globalStore.apiRoot);
+    this.props.sliderStore.getMainSlides({city: this.props.globalStore.baseNameForRouting});
   };
   renderTimeLine = async () =>{
     const {rightPanelStore:{getDataTimeLine}} = this.props;
     this.props.rightPanelStore.clear();
-    await getDataTimeLine(this.props.globalStore.apiRoot);
+    await getDataTimeLine({city: this.props.globalStore.baseNameForRouting});
     const {rightPanelStore:{markers}, mapStore:{autoFit}} = this.props;
     autoFit(markers);
   };

@@ -12,8 +12,8 @@ import MainSlider from './MainSlider';
 @observer
 class Slider extends Component{
   componentDidMount() {
-    const {globalStore: {apiRoot}, sliderStore:{getMainSlides}} = this.props;
-    getMainSlides(apiRoot);
+    const {globalStore: {baseNameForRouting}, sliderStore:{getMainSlides}} = this.props;
+    getMainSlides({city: baseNameForRouting});
 
     console.log('slider')
   }

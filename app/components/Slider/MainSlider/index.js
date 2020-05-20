@@ -11,8 +11,8 @@ let sliderLayer = 1;
 @observer
 class MainSlider extends React.Component {
   componentDidMount = async () => {
-    const {globalStore: {apiRoot}, sliderStore:{getMainSlides, setRevapi}} = this.props;
-    await getMainSlides(apiRoot);
+    const {globalStore: {baseNameForRouting}, sliderStore:{getMainSlides, setRevapi}} = this.props;
+    await getMainSlides({city: baseNameForRouting});
 
     const slider = document.getElementById('rev_slider_18_1');
     if (window.$(slider).revolution !== undefined) {
