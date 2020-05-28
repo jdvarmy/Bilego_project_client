@@ -20,15 +20,15 @@ const Wrapper = styled.div`
   border-radius: 12px;
   position: relative;
   height: 200px;
-  &:hover .event-200-hover{
+  :hover .event-200-hover{
     transform: scale(1.10, 1.10);
   }
 `;
 const Info = styled.div`
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background: transparent;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: transparent;
   div{
     z-index: 2;
     position: absolute;
@@ -95,7 +95,7 @@ export default function Event200(props) {
   return (
     <Wrapper>
       {img !== undefined
-        ? <React.Fragment>
+        && <React.Fragment>
           <Info>
             <div>{format(new Date(date_time), 'd MMMM', { locale: ruLocale })}</div>
           </Info>
@@ -110,7 +110,6 @@ export default function Event200(props) {
             <TicketsModalButton href={ticket_link} />
           </Footer>
         </React.Fragment>
-        : <Image className="event-200-hover" />
       }
     </Wrapper>
   );
