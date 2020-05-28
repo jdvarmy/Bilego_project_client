@@ -71,10 +71,10 @@ class EventsSoon extends Component{
                 </Grid>
                 <Grid item xs={6}>
                   <CardWrap>
-                    <Event200 {...this.eventsArray[3]} baseNameForRouting={baseNameForRouting}/>
+                    <Event200 {...this.eventsArray[2]} baseNameForRouting={baseNameForRouting}/>
                   </CardWrap>
                   <CardWrap>
-                    <Event200 {...this.eventsArray[4]} baseNameForRouting={baseNameForRouting}/>
+                    <Event200 {...this.eventsArray[3]} baseNameForRouting={baseNameForRouting}/>
                   </CardWrap>
                 </Grid>
               </Grid>
