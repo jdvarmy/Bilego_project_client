@@ -15,15 +15,6 @@ const Div = styled.div`
   color: white!important;
   left: 20px;
 `;
-const Wrapper = styled.div`
-  overflow: hidden;
-  border-radius: 12px;
-  position: relative;
-  height: 200px;
-  :hover .event-200-hover{
-    transform: scale(1.10, 1.10);
-  }
-`;
 const Info = styled.div`
   width: 100%;
   height: 100%;
@@ -81,6 +72,15 @@ const Footer = styled(Div)`
     svg{
       font-size: 1rem;
     }
+  }
+`;
+const Wrapper = styled.div`
+  overflow: hidden;
+  border-radius: 12px;
+  position: relative;
+  height: 200px;
+  :hover .event-200-hover{
+    transform: scale(1.10, 1.10);
   }
 `;
 

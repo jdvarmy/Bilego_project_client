@@ -19,7 +19,7 @@ const GridWrap = styled(Grid)`
   }
 `;
 const CardWrap = styled(Card)`
-  margin-bottom: ${css.sizes.xl};
+  margin-bottom: 30px;
 `;
 
 @inject('pageStore', 'globalStore')
