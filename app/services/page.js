@@ -16,4 +16,6 @@ export default {
 
   getPopularOnWeek: (filterParams) =>
     requests.post('events/category/term', {}, filterParams),
+  getPreviouslyWatched: (filterParams) =>
+    requests.post('events', {}, filterParams),
 }

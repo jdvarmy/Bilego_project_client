@@ -30,6 +30,7 @@ class Page{
   @observable itemsFrontPage = [];
 
   @observable popularOnWeek = [];
+  @observable previouslyWatched = [];
 
   // another page
   @observable events = [];
@@ -105,6 +106,19 @@ class Page{
       this.popularOnWeek = [];
       const response = yield pageService.getPopularOnWeek({category: 'ait-locations', name: 'popular', ...params});
       this.popularOnWeek = response;
+    }catch(e){
+      console.log(e);
+    }finally {
+      this.isLoading = false;
+    }
+  }).bind(this);
+  @action
+  getPreviouslyWatched = flow( function* getPreviouslyWatched(params){
+    this.isLoading = true;
+    try{
+      this.previouslyWatched = [];
+      const response = yield pageService.getPreviouslyWatched(params);
+      this.previouslyWatched = response.posts;
     }catch(e){
       console.log(e);
     }finally {

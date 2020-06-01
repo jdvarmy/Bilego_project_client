@@ -10,6 +10,7 @@ import NoSsr from '@material-ui/core/NoSsr';
 import Gallery from './Gallery';
 import AddressWidthMap from './AddressWidthMap';
 import PopularOnWeek from '../../FrontPage/PopularOnWeek';
+import PreviouslyWatched from '../../FrontPage/PreviouslyWatched';
 import { LoadingContent } from '../../../components/LoadingsTemplate';
 import Yamusic from './Yamusic';
 import YouTubeWrapper from './YouTube';
@@ -114,6 +115,7 @@ class Content extends Component{
           </Grid>
           <Padding />
           <PopularOnWeek />
+          <PreviouslyWatched />
         </Wrap>
     )
   }
