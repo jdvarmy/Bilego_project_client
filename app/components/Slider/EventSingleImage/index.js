@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class EventSingleDoubleEffects extends React.Component {
+export default class EventSingleImage extends React.Component {
   componentDidMount = () => {
     const slider = document.getElementById('rev_slider_13_1');
 
