@@ -25,10 +25,16 @@ const Dot = styled.span`
   vertical-align: middle;
   border-radius: 50%;
   background-color: ${css.$red};
-  width: 8px;
-  height: 8px;
+  width: ${css.sizes.base};
+  height: ${css.sizes.base};
 `;
-const Wrap = styled.div`
+const StyledBox = styled(Box)`
+  .item-wrapper{
+    display: flex;
+    align-items: center;
+  }
+`;
+const ItemWrapper = styled.div`
   margin-top: ${css.sizes.base};
   display: flex;
   align-items: center;
@@ -102,7 +108,7 @@ class AddressWidthMap extends Component {
         : undefined;
 
     return (
-      <Box>
+      <StyledBox>
         <ReactMapGL
           {...this.viewport}
           mapStyle={mapStyle}
@@ -123,7 +129,7 @@ class AddressWidthMap extends Component {
             <div>{event.item.address}</div>
           </SPopup>
         </ReactMapGL>
-        <Wrap>
+        <ItemWrapper className="item-wrapper">
           <Image img={itemImage}>
             <div className="event-image"/>
           </Image>
@@ -137,8 +143,8 @@ class AddressWidthMap extends Component {
             {event.item.telephone && <Typography component="p" variant="body2">{event.item.telephone}</Typography>}
             {event.item.web && <Typography component="p" variant="body2">{event.item.web}</Typography>}
           </div>
-        </Wrap>
-      </Box>
+        </ItemWrapper>
+      </StyledBox>
     );
   }
 }
