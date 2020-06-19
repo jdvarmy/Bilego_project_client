@@ -30,6 +30,8 @@ const Dot = styled.span`
 `;
 const Wrap = styled.div`
   margin-top: ${css.sizes.base};
+  display: flex;
+  align-items: center;
   .MuiTypography-body2{
     color: ${css.$second}!important;
   }
@@ -45,6 +47,22 @@ const Wrap = styled.div`
   }
   p{
     color: ${css.$black}!important;
+  }
+`;
+const Image = styled.div`
+  height: 80px;
+  width: 80px;
+  overflow: hidden;
+  border-radius: 100%;
+  position: relative;
+  border: 1px solid ${css.$grey};
+  margin-right: ${css.sizes.md};
+  div{
+    height: 100%;
+    background-image: url('${p=>(p.img)}');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
   }
 `;
 
@@ -77,6 +95,11 @@ class AddressWidthMap extends Component {
 
   render() {
     const {mapStore:{REACT_APP_MAPBOX_TOKEN, mapStyle}, singleEventStore:{event}, globalStore:{baseNameForRouting}} = this.props;
+    const itemImage = event.item.images && event.item.images.thumbnail
+      ? event.item.images.thumbnail
+      : event.item.images && event.item.images.medium
+        ? event.item.images.medium
+        : undefined;
 
     return (
       <Box>
@@ -101,14 +124,19 @@ class AddressWidthMap extends Component {
           </SPopup>
         </ReactMapGL>
         <Wrap>
-          <Typography component="span" variant="caption">{event.item.categories && event.item.categories[0] && event.item.categories[0].name}</Typography>
-          <Link to={`/${baseNameForRouting}/item/${event.item_name}`}><Typography component="p" variant="subtitle1">{event.item_title}</Typography></Link>
-          <Typography component="p" variant="subtitle2">{event.item.address} {
-            event.item.metro && event.item.metro.length > 0 &&
-            event.item.metro.map( m => <React.Fragment key={m.number}><Dot/>{m.number}</React.Fragment>)
-          }</Typography>
-          {event.item.telephone && <Typography component="p" variant="body2">{event.item.telephone}</Typography>}
-          {event.item.web && <Typography component="p" variant="body2">{event.item.web}</Typography>}
+          <Image img={itemImage}>
+            <div className="event-image"/>
+          </Image>
+          <div>
+            <Typography component="span" variant="caption">{event.item.categories && event.item.categories[0] && event.item.categories[0].name}</Typography>
+            <Link to={`/${baseNameForRouting}/item/${event.item_name}`}><Typography component="p" variant="subtitle1">{event.item_title}</Typography></Link>
+            <Typography component="p" variant="subtitle2">{event.item.address} {
+              event.item.metro && event.item.metro.length > 0 &&
+              event.item.metro.map( m => <React.Fragment key={m.number}><Dot/>{m.number}</React.Fragment>)
+            }</Typography>
+            {event.item.telephone && <Typography component="p" variant="body2">{event.item.telephone}</Typography>}
+            {event.item.web && <Typography component="p" variant="body2">{event.item.web}</Typography>}
+          </div>
         </Wrap>
       </Box>
     );

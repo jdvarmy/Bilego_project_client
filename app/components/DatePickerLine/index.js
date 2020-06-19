@@ -25,6 +25,7 @@ import isBefore from 'date-fns/isBefore';
 import isSameDay from 'date-fns/isSameDay';
 import style from '../../theme/style';
 import { ArrowDown, BilegoIconCalendar } from '../../theme/bilegoIcons';
+import FilterLine from '../FilterLine';
 
 const SBox = styled(Box)`
   width: 224px;
@@ -202,7 +203,7 @@ class DatePickerLine extends Component{
         <div style={{paddingLeft: '20px'}} />
         {this.props.flickity
           ? <Flickity options={{prevNextButtons: false, pageDots: false, contain: true, freeScroll: true}}>{Buttons}</Flickity>
-          : Buttons //todo: Warning: Cannot update during an existing state transition (such as within `render`). Render methods should be a pure function of props and state.
+          : <>{Buttons.map(el=>el)}<FilterLine /></>
         }
         <div style={{paddingLeft: '20px'}} />
         <Popover
