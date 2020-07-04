@@ -314,6 +314,7 @@ export default class ConfigureStartStore {
           this.setMeta(resp.seo);
           this.eventsFirstData = resp;
           break;
+
         case 'Concerts':
         case 'Festivals':
         case 'EventCategory':
@@ -323,21 +324,25 @@ export default class ConfigureStartStore {
           this.eventCategoryFirstData = resp;
           this.pageName = category.name;
           break;
+
         case 'Items':
           resp = yield pageService.getItems({city: this.baseNameForRouting, page: 1, size: 21});
           this.setMeta(resp.seo);
           this.itemsFirstData = resp;
           break;
+
         case 'SingleEvent':
           resp = yield eventService.getEventDataBySlug({city: this.baseNameForRouting, slug: match.match.params.eventSlug});
           this.setMeta(resp.seo);
           this.singleEventFirstData = resp;
           break;
+
         case 'SingleItem':
           resp = yield itemService.getItemDataBySlug({city: this.baseNameForRouting, slug: match.match.params.itemSlug});
           this.setMeta(resp.seo);
           this.singleItemFirstData = resp;
           break;
+
         case 'Search':
           searchStore.setSearchString(this.history.location.search.substr(1));
           let args = searchStore.parseString();
@@ -349,18 +354,22 @@ export default class ConfigureStartStore {
           this.searchFirstData = resp;
           searchStore.setTitle(resp.seo.title_page);
           break;
+
         case 'Offer':
           resp = yield servicePagesService.getMetaPageByName({city: this.baseNameForRouting, slug: 'offer'});
           this.setMeta(resp);
           break;
+
         case 'Advertising':
           resp = yield servicePagesService.getMetaPageByName({city: this.baseNameForRouting, slug: 'reklama'});
           this.setMeta(resp);
           break;
+
         case 'Contacts':
           resp = yield servicePagesService.getMetaPageByName({city: this.baseNameForRouting, slug: 'contacts'});
           this.setMeta(resp);
           break;
+
         case 'Page404':
           this.setMeta(this.meta404);
           break;

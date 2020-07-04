@@ -8,7 +8,6 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Typography from '@material-ui/core/Typography';
 import { style } from '../../theme';
 
@@ -60,7 +59,6 @@ class Page404 extends React.Component{
             <List component="nav" aria-label="main">
               {categoriesForMenu.map(el=>(
                 <ListItem key={el.id} button>
-                  {/*<ListItemIcon>{el.icon}</ListItemIcon>*/}
                   <Link to={`/${baseNameForRouting}/${el.link}`}>
                     <ListItemText primary={el.name} />
                   </Link>
@@ -71,7 +69,6 @@ class Page404 extends React.Component{
             <List component="nav" aria-label="secondary">
               {categoriesForFooterMenu.map(el=>(
                 <ListItem key={el.id} button>
-                  {/*<ListItemIcon>{el.icon}</ListItemIcon>*/}
                   <Link to={`/${baseNameForRouting}/${el.link}`}>
                     <ListItemText primary={el.name} />
                   </Link>

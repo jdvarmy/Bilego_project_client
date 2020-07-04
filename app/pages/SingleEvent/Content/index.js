@@ -72,13 +72,12 @@ class Content extends Component{
               <WrapIcons>
                 {event.categories && event.categories.length > 0 && event.categories.map(
                   el => <Tooltip placement="top" key={el.id} title={el.name}>
-                    <object type="image/svg+xml" data={el.icon_image} />
+                    <object type="image/svg+xml" data={el.options.icon} />
                   </Tooltip>
-                )
-                }
+                )}
                 {event.genre && event.genre.length > 0 && event.genre.map(
                   el => <Tooltip placement="top" key={el.id} title={el.name}>
-                    <object type="image/svg+xml" data={el.icon_image} />
+                    <object type="image/svg+xml" data={el.options.image} />
                   </Tooltip>
                 )
                 }

@@ -22,6 +22,11 @@ class Page{
     category: '',
   };
 
+  @observable lineFilters = {
+    genre: null,
+    item: null
+  };
+
   // front page
   @observable eventsSoon = [];
   @observable eventsPopular = [];
@@ -69,6 +74,7 @@ class Page{
       this.itemsFrontPage = response.posts.items;
       this.eventCategoriesSelections = response.posts.selections;
       this.seoPage = response.seo;
+      this.lineFilters = response.filter;
     }catch(e){
       console.log(e);
     }finally {
@@ -84,6 +90,7 @@ class Page{
     this.eventsConcerts = data.posts.concerts;
     this.itemsFrontPage = data.items;
     this.eventCategoriesSelections = data.posts.selections;
+    this.lineFilters = data.filter;
   };
   @action
   setStartDataEventsPage = (data) => {

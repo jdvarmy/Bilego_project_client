@@ -25,7 +25,7 @@ import isBefore from 'date-fns/isBefore';
 import isSameDay from 'date-fns/isSameDay';
 import style from '../../theme/style';
 import { ArrowDown, BilegoIconCalendar } from '../../theme/bilegoIcons';
-import FilterLine from '../FilterLine';
+import { FilterLine } from '../FilterLine';
 
 const SBox = styled(Box)`
   width: 224px;

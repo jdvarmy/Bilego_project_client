@@ -1,4 +1,5 @@
 import '@babel/polyfill';
+import 'mobx-react/batchingForReactDom';
 
 import React, { Fragment, useEffect } from 'react';
 import { hydrate } from 'react-dom';

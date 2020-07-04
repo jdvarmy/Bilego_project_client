@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import styled from 'styled-components';
 
-import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import { StyledTextField } from '../../components/StyledTextField';
 
-const STextField = styled(TextField)`
+const STextField = styled(StyledTextField)`
   width: 387px;
 `;
-const STextFieldCat = styled(TextField)`
+const STextFieldCat = styled(StyledTextField)`
   width: 200px;
 `;
 const Sform = styled.form`
@@ -16,9 +16,6 @@ const Sform = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // legend{
-  //   display: none!important;
-  // }
 `;
 
 @inject('pageStore', 'globalStore')
