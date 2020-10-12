@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { inject, observer } from 'mobx-react';
 import { action, observable } from 'mobx';
 import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Flickity from 'react-flickity-component';
 import DateFnsUtils from '@date-io/date-fns';
 import ruLocale from 'date-fns/locale/ru';
@@ -24,12 +25,21 @@ import format from 'date-fns/format';
 import isBefore from 'date-fns/isBefore';
 import isSameDay from 'date-fns/isSameDay';
 import style from '../../theme/style';
-import { ArrowDown, BilegoIconCalendar } from '../../theme/bilegoIcons';
-import { FilterLine } from '../FilterLine';
+import {
+  ArrowDown,
+  BilegoIconGenre,
+  BilegoIconItem,
+  BilegoIconTheCalendar
+} from '../../theme/bilegoIcons';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import css from '../../theme/style';
 
 const SBox = styled(Box)`
   width: 224px;
-  padding: 16px;
+  padding: ${css.sizes.md};
 `;
 const WrapFab = styled.div`
   ${p=>(
@@ -38,25 +48,31 @@ const WrapFab = styled.div`
   .MuiFab-extended{
     color: ${style.$greydark};
     background-color: ${style.$white};
+    .MuiSvgIcon-root{
+      font-size: 1.5rem;
+    }
   }
-  &.selected button{
+  .selected button{
     color: ${style.$white};
     background-color: ${style.$red};
   }
   ${p=>(
     p.mini && `
-      &:first-child{
+      :first-child{
         margin: 0 6px 0 25px;
       }
-      &:last-child{
+      :last-child{
         margin: 0 25px 0 6px;
       }
     `
   )}
 `;
+const SListItemText = styled(ListItemText)`
+  white-space: nowrap;
+`;
 
 @withRouter
-@inject('calendarStore', 'searchStore', 'globalStore')
+@inject('calendarStore', 'searchStore', 'globalStore', 'pageStore')
 @observer
 class DatePickerLine extends Component{
   handlerClick = () => {
@@ -111,16 +127,13 @@ class DatePickerLine extends Component{
     setSearchString(getSearchString);
   };
 
-  handlerClickOpen = e => {
-      this.show(e);
-  };
-
-  @observable open = false;
-  @observable anchorEl = null;
-  @action show = (e) => {
-    this.open = !this.open;
+  @action handlerClickOpen = (e, element) => {
+    this.open = element;
     this.anchorEl = e.currentTarget;
   };
+
+  @observable open = '';
+  @observable anchorEl = null;
 
   changeDate = DateIOType => {
     const {calendarStore:{setDate}} = this.props;
@@ -169,7 +182,7 @@ class DatePickerLine extends Component{
   render() {
     const id = this.open ? 'simple-popover' : undefined,
       flag = this.props.history.location.pathname.indexOf('search') +1;
-    const {calendarStore:{start, end, months, days, selectedDate, daysFilter}} = this.props,
+    const {calendarStore:{start, end, months, days, selectedDate, daysFilter}, mini, pageStore:{lineFilters}, globalStore:{baseNameForRouting}} = this.props,
       sd = start ? start.getDate() : null,
       ed = end ? end.getDate() : null,
       sm = start && start.getMonth(),
@@ -181,19 +194,19 @@ class DatePickerLine extends Component{
     else if(sd && ed)
       buffy = <Fab onClick={this.handlerClick} variant="extended" aria-label="Calendar">Выбрать {`${sd} ${months[sm]} - ${ed} ${months[em]}`}</Fab>;
     else
-      buffy = <Fab onClick={this.handlerClickOpen} variant="extended" aria-label="Calendar">Отмена</Fab>;
+      buffy = <Fab onClick={(e) => {this.handlerClickOpen(e, '')}} variant="extended" aria-label="Calendar">Отмена</Fab>;
 
     const Buttons = [
-      <WrapFab mini={this.props.mini} className="bilego-wr-fab" key={1}>
-        <Fab onClick={this.handlerClickOpen} variant="extended" aria-label="Calendar">{BilegoIconCalendar} Календарь {ArrowDown}</Fab>
+      <WrapFab mini={mini} className="bilego-wr-fab" key={1}>
+        <Fab onClick={e => {this.handlerClickOpen(e, 'calendar')}} variant="extended" aria-label="Calendar">{BilegoIconTheCalendar} Календарь {ArrowDown}</Fab>
       </WrapFab>,
-      <WrapFab mini={this.props.mini} className={`bilego-wr-fab ${daysFilter==='today' && flag && 'selected'}`} key={2}>
+      <WrapFab mini={mini} className={`bilego-wr-fab ${daysFilter==='today' && flag && 'selected'}`} key={2}>
         <Fab onClick={()=>{this.handlerClickByDay('today')}} variant="extended" aria-label="today">Сегодня</Fab>
       </WrapFab>,
-      <WrapFab mini={this.props.mini} className={`bilego-wr-fab ${daysFilter==='tomorrow' && flag && 'selected'}`} key={3}>
+      <WrapFab mini={mini} className={`bilego-wr-fab ${daysFilter==='tomorrow' && flag && 'selected'}`} key={3}>
         <Fab onClick={()=>{this.handlerClickByDay('tomorrow')}} variant="extended" aria-label="tomorrow">Завтра</Fab>
       </WrapFab>,
-      <WrapFab mini={this.props.mini} className={`bilego-wr-fab ${daysFilter==='weekend' && flag && 'selected'}`} key={4}>
+      <WrapFab mini={mini} className={`bilego-wr-fab ${daysFilter==='weekend' && flag && 'selected'}`} key={4}>
         <Fab onClick={()=>{this.handlerClickByDay('weekend')}} variant="extended" aria-label="weekend">Выходные</Fab>
       </WrapFab>
     ];
@@ -203,16 +216,20 @@ class DatePickerLine extends Component{
         <div style={{paddingLeft: '20px'}} />
         {this.props.flickity
           ? <Flickity options={{prevNextButtons: false, pageDots: false, contain: true, freeScroll: true}}>{Buttons}</Flickity>
-          : <>{Buttons.map(el=>el)}<FilterLine /></>
+          : <>
+              {Buttons.map(el=>el)}
+              <WrapFab mini={mini} className="bilego-wr-fab">
+                <Fab onClick={e => {this.handlerClickOpen(e, 'genre')}} variant="extended" aria-label="Genre">{BilegoIconGenre} Жанр {ArrowDown}</Fab>
+              </WrapFab>
+            </>
         }
         <div style={{paddingLeft: '20px'}} />
         <Popover
-          id={id}
-          open={this.open}
+          open={this.open === 'calendar'}
           anchorEl={this.anchorEl}
-          onClose={this.handlerClickOpen}
-          anchorOrigin={{vertical: 'bottom', horizontal: 'center',}}
-          transformOrigin={{vertical: 'top', horizontal: 'center',}}
+          onClose={(e) => {this.handlerClickOpen(e, '')}}
+          anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+          transformOrigin={{vertical: 'top', horizontal: 'center'}}
           className="bilego-calendar"
         >
           <Grid container>
@@ -253,6 +270,30 @@ class DatePickerLine extends Component{
           <Box>
             {buffy}
           </Box>
+        </Popover>
+        <Popover
+          open={this.open === 'genre'}
+          anchorEl={this.anchorEl}
+          onClose={(e) => {this.handlerClickOpen(e, '')}}
+          anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
+          transformOrigin={{vertical: 'top', horizontal: 'center'}}
+        >
+          <Grid container>
+            <Box className="genre">
+              <Grid item xs={12}>
+                <List component="nav" aria-label="genre">
+                  {lineFilters.genre && lineFilters.genre.map( genre =>
+                    <ListItem key={genre.slug} button>
+                      <ListItemIcon>
+                        <img src={genre.image} width={css.sizes.lg} height={css.sizes.lg}/>
+                      </ListItemIcon>
+                      <Link to={`/${baseNameForRouting}/genre/${genre.slug}`} style={{color: css.$second}}><SListItemText primary={genre.name} /></Link>
+                    </ListItem>
+                  )}
+                </List>
+              </Grid>
+            </Box>
+          </Grid>
         </Popover>
       </Fragment>
     )

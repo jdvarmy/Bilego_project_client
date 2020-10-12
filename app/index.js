@@ -17,7 +17,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import styled from 'styled-components';
 
 import { style, theme } from './theme';
-import routes from './routes/server';
+import routes from './routes';
 import * as stores from './stores';
 import ConfigureStartStore from './ConfigureStartStore';
 

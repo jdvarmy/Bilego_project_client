@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import routes from './routes/client';
+import routes from './routes';
 import { withCookies } from './cookie';
 
 @inject('globalStore')

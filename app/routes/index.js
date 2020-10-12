@@ -1,4 +1,4 @@
-import { FrontPage, Offer, Items, Advertising, Events, EventCategory, Concerts, Festivals, Contacts, SingleEvent, SingleItem, Page404, Search } from '../pages';
+import { FrontPage, Offer, Items, Advertising, Events, EventCategory, Concerts, Festivals, Contacts, SingleEvent, SingleItem, Page404, Search, Genres } from '../pages';
 
 export default function (baseRouter) {
   return(
@@ -79,6 +79,12 @@ export default function (baseRouter) {
         path: `/${baseRouter}/item/:itemSlug`,
         key: 'SingleItem',
         component: SingleItem,
+        exact: true,
+      },
+      {
+        path: `/${baseRouter}/genre/:gSlug`,
+        key: 'Genres',
+        component: Genres,
         exact: true,
       },
       {

@@ -11,3 +11,4 @@ export { default as SingleEvent } from './SingleEvent';
 export { default as SingleItem } from './SingleItem';
 export { default as Page404 } from './Page404';
 export { default as Search } from './Search';
+export { default as Genres } from './Genres';

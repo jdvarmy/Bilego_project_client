@@ -12,15 +12,16 @@ import Selections from './Selections';
 import Items from './Items';
 import Slider from './Slider';
 import DatePickerLine from '../../components/DatePickerLine';
+import { FilterLine } from '../../components/FilterLine';
 import Divider from '@material-ui/core/Divider';
 import Padding from '../../components/Padding';
 
+import css from '../../theme/style';
+
 const DateContainer = styled.div`
-  height: ${style.$heightMenu}px;
-  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  padding-left: ${css.sizes.lg};
+  padding-right: ${css.sizes.lg};
 `;
 const Container = styled.div`
   flex-grow: 1;
@@ -53,8 +54,11 @@ class FrontPage extends Component {
           <Slider />
         </div>
         <Padding />
+        {/*<DateContainer align='middle' type='flex' justify='center'>*/}
+        {/*  <DatePickerLine/>*/}
+        {/*</DateContainer>*/}
         <DateContainer align='middle' type='flex' justify='center'>
-          <DatePickerLine/>
+          <FilterLine/>
         </DateContainer>
         <Padding />
         <Container>
