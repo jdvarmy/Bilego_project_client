@@ -35,11 +35,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import css from '../../theme/style';
 
 const SBox = styled(Box)`
   width: 224px;
-  padding: ${css.sizes.md};
+  padding: ${style.sizes.md};
 `;
 const WrapFab = styled.div`
   ${p=>(
@@ -285,9 +284,9 @@ class DatePickerLine extends Component{
                   {lineFilters.genre && lineFilters.genre.map( genre =>
                     <ListItem key={genre.slug} button>
                       <ListItemIcon>
-                        <img src={genre.image} width={css.sizes.lg} height={css.sizes.lg}/>
+                        <img src={genre.image} width={style.sizes.lg} height={style.sizes.lg}/>
                       </ListItemIcon>
-                      <Link to={`/${baseNameForRouting}/genre/${genre.slug}`} style={{color: css.$second}}><SListItemText primary={genre.name} /></Link>
+                      <Link to={`/${baseNameForRouting}/genre/${genre.slug}`} style={{color: style.$second}}><SListItemText primary={genre.name} /></Link>
                     </ListItem>
                   )}
                 </List>
