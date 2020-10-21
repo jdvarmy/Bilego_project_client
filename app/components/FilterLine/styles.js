@@ -1,5 +1,7 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import style from '../../theme/style';
+import withStyles from '@material-ui/core/styles/withStyles';
+import TextField from '@material-ui/core/TextField/TextField';
 
 export const useStyles = makeStyles({
   dayWrapper: {
@@ -63,3 +65,9 @@ export const useStyles = makeStyles({
     justifyContent: "center"
   }
 });
+
+export const CssTextField = withStyles({
+  root: {
+    '& .MuiInput-underline:after': {borderBottomColor: style.$red}
+  }
+})(TextField);

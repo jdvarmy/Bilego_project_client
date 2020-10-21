@@ -14,7 +14,7 @@ const SliderEvent = styled.div`
   text-align: center;
   overflow: hidden;
   height: 440px;
-  background-color: ${style.$greydark};
+  background-color: ${style.$grey};
   .ant-carousel{
     .slick-slide{
       height: 440px;
@@ -117,19 +117,6 @@ const Gradient = styled.div`
   top: 0;
 `;
 
-// id: 3263
-// ticket_link: "https://webapp.bilego.ru/?a7128442f9c084eaa71261ccce1ece1e&city=spb"
-// title: "Гражданская оборона — 12 лет без Егора Летова"
-// image_src: "https://spb.bilego.ru/wp-content/uploads/2020/02/grazhdanskaya-oborona.jpg"
-// youtybe_id: ""
-// ml_video_src: ""
-// name: "grazhdanskaja-oborona-bez-egora-letova"
-// image_title: "Гражданская оборона"
-// image_title1: ""
-// image_title2: ""
-// date: "Ср, 19 февраля в 17:00"
-// location: "Клуб Сердце"
-
 @withRouter
 @inject('sliderStore', 'globalStore')
 @observer
@@ -184,7 +171,7 @@ class Slider extends Component{
                 </React.Fragment>
               ))}
             </Carousel>
-            <ControlPanel className="hello">
+            <ControlPanel>
               <Button onClick={() => this.slider.prev()} className="left">{ArrowBack}</Button>
               <Button onClick={() => this.slider.next()} className="right">{ArrowNext}</Button>
               <Numbers>

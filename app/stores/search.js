@@ -18,6 +18,9 @@ class Search{
   @observable items = undefined;
   @observable artists = undefined;
 
+  @observable reqItems = [];
+  @observable reqGenre = [];
+
   defaultPageSize = 21;
   @observable searchString = '';
   @observable searchEvents = [];
@@ -51,6 +54,8 @@ class Search{
     this.events = undefined;
     this.items = undefined;
     this.artists = undefined;
+    this.reqItems = [];
+    this.reqGenre = [];
     this.cache = {};
     this.seoPage = [];
     this.title = undefined;

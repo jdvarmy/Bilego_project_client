@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
@@ -15,7 +15,31 @@ import isBefore from 'date-fns/isBefore';
 import isSameDay from 'date-fns/isSameDay';
 
 import clsx from 'clsx';
-import { useStyles } from './styles.js';
+import { useStyles, CssTextField } from './styles.js';
+
+
+import InputBase from "@material-ui/core/InputBase";
+import {
+  BilegoIconSearch,
+  BilegoIconGenre,
+
+  BilegoIconItem,
+} from '../../theme/bilegoIcons';
+import TextField from "@material-ui/core/TextField";
+import FormControl from "@material-ui/core/FormControl";
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import SvgIcon from '@material-ui/core/SvgIcon/SvgIcon';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+
+const InputAp = <InputAdornment position="start">
+  {BilegoIconSearch}
+</InputAdornment>;
 
 export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globalStore', 'searchStore')(observer(
   props => {
@@ -24,15 +48,34 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
       pageStore: {lineFilters},
       calendarStore:{start, end, months, days, selectedDate, daysFilter, setDate, clear, setStart, setEnd, setDaysFilter},
       globalStore:{baseNameForRouting},
-      searchStore: {setSearchString}
+      searchStore: {setSearchString, reqItems, reqGenre}
     } = props;
+
+    useEffect(() => {
+      clear();
+      return () => {
+        clear();
+      }
+    }, []);
+    const [state, setState] = useState({
+      genre: '',
+      item: '',
+      listGenre: lineFilters.genre.slice().sort(() => Math.random() - 0.5),
+      listItem: lineFilters.item.slice().sort(() => Math.random() - 0.5)
+    });
+    const updateText = (e, flag) => {
+      e.persist();
+      setState( prev => ({
+        ...prev,
+        [flag]: e.target.value
+      }))
+    };
 
     const classes = useStyles();
 
     const changeDate = DateIOType => {
       setDate(DateIOType);
     };
-
     const handlerClickByButton = flag => {
       clear();
 
@@ -76,7 +119,6 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
       history.push(`/${baseNameForRouting}/search?${getSearchString}`);
       setSearchString(getSearchString);
     };
-
     const handlerClick = () => {
       const {calendarStore:{getSearchString}} = props;
       history.push(`/${baseNameForRouting}/search?${getSearchString}`);
@@ -121,6 +163,8 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
         </div>
       );
     };
+
+    console.log(lineFilters.genre)
 
     return <>
       <Grid container spacing={2}>
@@ -168,11 +212,71 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={3}>
-          <Typography className="pb1 center" variant="h6" component="h6">Жанры</Typography>
-        </Grid>
-        <Grid item xs={3}>
-          <Typography className="pb1 center" variant="h6" component="h6">Площадки</Typography>
+        <Grid item xs={6}>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Typography className="pb1 center" variant="h6" component="h6">Жанры</Typography>
+              <Grid container>
+                <Grid item xs={12}>
+
+
+                  <FormControl>
+                    <CssTextField
+                      label="Название жанра"
+                      InputProps={{startAdornment: (InputAp)}}
+                      onChange={e => {updateText(e, 'genre')}}
+                      value={state.genre}
+                    />
+                    <div>{ !state.genre &&
+                      <List>
+                        {
+                          state.listGenre.map(({id, image, name, slug}) => (
+                            <ListItem key={id} role={undefined} dense button>
+                              <ListItemIcon>
+
+                              </ListItemIcon>
+                              <ListItemText id={id} primary={name} />
+                              {/*<ListItemText  primary={`Line item ${value + 1}`} />*/}
+                            </ListItem>
+                          ))
+                        }
+                      </List>
+                    }
+                    </div>
+                    <div>check results</div>
+                  </FormControl>
+
+
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography className="pb1 center" variant="h6" component="h6">Площадки</Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+
+
+                  <FormControl>
+                    <CssTextField
+                      label="Название площадки"
+                      InputProps={{startAdornment: (InputAp)}}
+                      onChange={e => {updateText(e, 'item')}}
+                      value={state.item}
+                    />
+                    <div>search results</div>
+                    <div>check results</div>
+                  </FormControl>
+
+
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              buttons
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
      </>

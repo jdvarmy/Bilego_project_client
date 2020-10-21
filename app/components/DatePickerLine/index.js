@@ -27,14 +27,8 @@ import isSameDay from 'date-fns/isSameDay';
 import style from '../../theme/style';
 import {
   ArrowDown,
-  BilegoIconGenre,
-  BilegoIconItem,
   BilegoIconTheCalendar
 } from '../../theme/bilegoIcons';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 
 const SBox = styled(Box)`
   width: 224px;
@@ -66,12 +60,9 @@ const WrapFab = styled.div`
     `
   )}
 `;
-const SListItemText = styled(ListItemText)`
-  white-space: nowrap;
-`;
 
 @withRouter
-@inject('calendarStore', 'searchStore', 'globalStore', 'pageStore')
+@inject('calendarStore', 'searchStore', 'globalStore')
 @observer
 class DatePickerLine extends Component{
   handlerClick = () => {
@@ -181,7 +172,7 @@ class DatePickerLine extends Component{
   render() {
     const id = this.open ? 'simple-popover' : undefined,
       flag = this.props.history.location.pathname.indexOf('search') +1;
-    const {calendarStore:{start, end, months, days, selectedDate, daysFilter}, mini, pageStore:{lineFilters}, globalStore:{baseNameForRouting}} = this.props,
+    const {calendarStore:{start, end, months, days, selectedDate, daysFilter}, mini, globalStore:{baseNameForRouting}} = this.props,
       sd = start ? start.getDate() : null,
       ed = end ? end.getDate() : null,
       sm = start && start.getMonth(),
@@ -215,12 +206,7 @@ class DatePickerLine extends Component{
         <div style={{paddingLeft: '20px'}} />
         {this.props.flickity
           ? <Flickity options={{prevNextButtons: false, pageDots: false, contain: true, freeScroll: true}}>{Buttons}</Flickity>
-          : <>
-              {Buttons.map(el=>el)}
-              <WrapFab mini={mini} className="bilego-wr-fab">
-                <Fab onClick={e => {this.handlerClickOpen(e, 'genre')}} variant="extended" aria-label="Genre">{BilegoIconGenre} Жанр {ArrowDown}</Fab>
-              </WrapFab>
-            </>
+          : Buttons.map(el=>el)
         }
         <div style={{paddingLeft: '20px'}} />
         <Popover
@@ -269,30 +255,6 @@ class DatePickerLine extends Component{
           <Box>
             {buffy}
           </Box>
-        </Popover>
-        <Popover
-          open={this.open === 'genre'}
-          anchorEl={this.anchorEl}
-          onClose={(e) => {this.handlerClickOpen(e, '')}}
-          anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
-          transformOrigin={{vertical: 'top', horizontal: 'center'}}
-        >
-          <Grid container>
-            <Box className="genre">
-              <Grid item xs={12}>
-                <List component="nav" aria-label="genre">
-                  {lineFilters.genre && lineFilters.genre.map( genre =>
-                    <ListItem key={genre.slug} button>
-                      <ListItemIcon>
-                        <img src={genre.image} width={style.sizes.lg} height={style.sizes.lg}/>
-                      </ListItemIcon>
-                      <Link to={`/${baseNameForRouting}/genre/${genre.slug}`} style={{color: style.$second}}><SListItemText primary={genre.name} /></Link>
-                    </ListItem>
-                  )}
-                </List>
-              </Grid>
-            </Box>
-          </Grid>
         </Popover>
       </Fragment>
     )

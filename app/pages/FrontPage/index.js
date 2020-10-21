@@ -48,10 +48,11 @@ class FrontPage extends Component {
   }
 
   render() {
+    console.log('front page')
     return (
       <React.Fragment>
         <div>
-          <Slider />
+          {/*<Slider />*/}
         </div>
         <Padding />
         {/*<DateContainer align='middle' type='flex' justify='center'>*/}
