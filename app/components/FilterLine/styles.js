@@ -63,6 +63,10 @@ export const useStyles = makeStyles({
     maxWidth: "390px",
     display: "flex",
     justifyContent: "center"
+  },
+  height: {
+    overflow: 'hidden',
+    height: '224px'
   }
 });
 

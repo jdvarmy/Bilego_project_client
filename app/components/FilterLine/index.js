@@ -16,6 +16,7 @@ import isSameDay from 'date-fns/isSameDay';
 
 import clsx from 'clsx';
 import { useStyles, CssTextField } from './styles.js';
+import css from '../../theme/style';
 
 
 import InputBase from "@material-ui/core/InputBase";
@@ -53,6 +54,11 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
 
     useEffect(() => {
       clear();
+      setState(prev => ({
+        ...prev,
+        listGenre: lineFilters.genre.slice().sort(() => Math.random() - 0.5),
+        listItem: lineFilters.item.slice().sort(() => Math.random() - 0.5),
+      }))
       return () => {
         clear();
       }
@@ -60,8 +66,8 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
     const [state, setState] = useState({
       genre: '',
       item: '',
-      listGenre: lineFilters.genre.slice().sort(() => Math.random() - 0.5),
-      listItem: lineFilters.item.slice().sort(() => Math.random() - 0.5)
+      listGenre: [],
+      listItem: []
     });
     const updateText = (e, flag) => {
       e.persist();
@@ -164,7 +170,7 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
       );
     };
 
-    console.log(lineFilters.genre)
+    console.log(lineFilters.item)
 
     return <>
       <Grid container spacing={2}>
@@ -218,8 +224,6 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
               <Typography className="pb1 center" variant="h6" component="h6">Жанры</Typography>
               <Grid container>
                 <Grid item xs={12}>
-
-
                   <FormControl>
                     <CssTextField
                       label="Название жанра"
@@ -227,16 +231,15 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
                       onChange={e => {updateText(e, 'genre')}}
                       value={state.genre}
                     />
-                    <div>{ !state.genre &&
+                    <div className={classes.height}>{ !state.genre &&
                       <List>
                         {
                           state.listGenre.map(({id, image, name, slug}) => (
                             <ListItem key={id} role={undefined} dense button>
                               <ListItemIcon>
-
+                                <img src={image} alt={slug} width={css.sizes.lg} height={css.sizes.lg} />
                               </ListItemIcon>
                               <ListItemText id={id} primary={name} />
-                              {/*<ListItemText  primary={`Line item ${value + 1}`} />*/}
                             </ListItem>
                           ))
                         }
@@ -245,8 +248,6 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
                     </div>
                     <div>check results</div>
                   </FormControl>
-
-
                 </Grid>
               </Grid>
             </Grid>
@@ -254,8 +255,6 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
               <Typography className="pb1 center" variant="h6" component="h6">Площадки</Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-
-
                   <FormControl>
                     <CssTextField
                       label="Название площадки"
@@ -263,7 +262,18 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
                       onChange={e => {updateText(e, 'item')}}
                       value={state.item}
                     />
-                    <div>search results</div>
+                    <div className={classes.height}>{ !state.item &&
+                    <List>
+                      {
+                        state.listItem.map(({ID, post_name, post_title}) => (
+                          <ListItem key={ID} role={undefined} dense button>
+                            <ListItemText id={ID} primary={post_title} />
+                          </ListItem>
+                        ))
+                      }
+                    </List>
+                    }
+                    </div>
                     <div>check results</div>
                   </FormControl>
 
