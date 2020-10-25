@@ -11,6 +11,8 @@ import { Event300 } from '../../components/Event';
 import { BilegoIconLoading } from '../../theme/bilegoIcons';
 import NoContent from '../../components/NoContent';
 import { LoadingForEvents } from '../../components/LoadingsTemplate';
+import css from "../../theme/style";
+import {FilterLine} from "../../components/FilterLine";
 
 const Wrap = styled.div`
   padding: 20px;
@@ -27,6 +29,11 @@ const CardWrap = styled(Card)`
 const SFab = styled(Fab)`
   margin: 50px auto!important;
   transition: opacity .2s ease 0s;
+`;
+const DateContainer = styled.div`
+  display: flex;
+  padding-left: ${css.sizes.lg};
+  padding-right: ${css.sizes.lg};
 `;
 
 @inject('pageStore', 'globalStore')
@@ -75,7 +82,7 @@ class Events extends Component{
         <NoSsr>
           {showButton &&
           <SFab disabled={isLoading} onClick={this.loadMore} variant="extended" aria-label="load" style={{opacity: `${p=>p.loading ? 0 : 1}`}}>
-            {BilegoIconLoading} load more
+            {BilegoIconLoading} Загрузить еще
           </SFab>}
         </NoSsr>
       </Grid>
@@ -84,6 +91,9 @@ class Events extends Component{
     return(
       <Wrap>
         <GridWrap container spacing={4}>
+          <DateContainer align='middle' type='flex' justify='center'>
+            <FilterLine/>
+          </DateContainer>
           <Grid item xs={12}><BlockHeaderText>События</BlockHeaderText></Grid>
           <Grid item xs={12}>
             {isLoading && events.length <= 0

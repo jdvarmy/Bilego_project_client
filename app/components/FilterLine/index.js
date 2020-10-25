@@ -19,7 +19,6 @@ import { useStyles, CssTextField } from './styles.js';
 import css from '../../theme/style';
 
 import {
-  BilegoIconSearch,
   BilegoIconGenre,
   BilegoIconItem,
 } from '../../theme/bilegoIcons';
@@ -29,8 +28,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Chip from "@material-ui/core/Chip";
-import Avatar from "@material-ui/core/Avatar";
+import Chip from '@material-ui/core/Chip';
+import Avatar from '@material-ui/core/Avatar';
 
 export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globalStore', 'searchStore')(observer(
   props => {

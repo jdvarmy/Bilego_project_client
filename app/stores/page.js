@@ -74,7 +74,7 @@ class Page{
       this.itemsFrontPage = response.posts.items;
       this.eventCategoriesSelections = response.posts.selections;
       this.seoPage = response.seo;
-      // this.lineFilters = response.filter;
+      this.lineFilters = response.filter;
     }catch(e){
       console.log(e);
     }finally {
