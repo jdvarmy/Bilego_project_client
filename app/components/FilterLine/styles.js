@@ -60,14 +60,17 @@ export const useStyles = makeStyles({
     maxWidth: "390px"
   },
   maxWidth: {
-    maxWidth: "390px",
     display: "flex",
     justifyContent: "center"
   },
-  height: {
-    overflow: 'hidden',
-    height: '224px'
-  }
+  chipWrap: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    '& > *': {
+      margin: style.sizes.xs,
+    },
+  },
 });
 
 export const CssTextField = withStyles({

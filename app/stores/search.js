@@ -20,6 +20,52 @@ class Search{
 
   @observable reqItems = [];
   @observable reqGenre = [];
+  @action addReqItem = (item) => {
+    if(this.reqItems.length === 0){
+      this.reqItems.push(item)
+    }else{
+      let flag = false;
+      this.reqItems.map(el => {
+        if(el.id === item.id) flag = true
+      });
+      if(!flag) this.reqItems.push(item)
+    }
+  };
+  @action addReqGenre = (genre) => {
+    if(this.reqGenre.length === 0){
+      this.reqGenre.push(genre)
+    }else{
+      let flag = false;
+      this.reqGenre.map(el => {
+        if(el.id === genre.id) flag = true
+      });
+      if(!flag) this.reqGenre.push(genre)
+    }
+  };
+  @action removeReq = (type, id) => {
+    if(type === 'genre') {
+      if (this.reqGenre.length > 0) {
+        let index = -1;
+        this.reqGenre.map((el, i) => {
+          if(el.id === id) index = i;
+        });
+        if(index !== -1){
+          this.reqGenre.splice(index, 1)
+        }
+      }
+    }
+    if(type === 'item') {
+      if (this.reqItems.length > 0) {
+        let index = -1;
+        this.reqItems.map((el, i) => {
+          if(el.id === id) index = i;
+        });
+        if(index !== -1){
+          this.reqItems.splice(index, 1)
+        }
+      }
+    }
+  };
 
   defaultPageSize = 21;
   @observable searchString = '';

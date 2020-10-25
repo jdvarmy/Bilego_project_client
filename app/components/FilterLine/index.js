@@ -18,29 +18,19 @@ import clsx from 'clsx';
 import { useStyles, CssTextField } from './styles.js';
 import css from '../../theme/style';
 
-
-import InputBase from "@material-ui/core/InputBase";
 import {
   BilegoIconSearch,
   BilegoIconGenre,
-
   BilegoIconItem,
 } from '../../theme/bilegoIcons';
-import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
+import FormControl from '@material-ui/core/FormControl';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import SvgIcon from '@material-ui/core/SvgIcon/SvgIcon';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-
-const InputAp = <InputAdornment position="start">
-  {BilegoIconSearch}
-</InputAdornment>;
+import Chip from "@material-ui/core/Chip";
+import Avatar from "@material-ui/core/Avatar";
 
 export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globalStore', 'searchStore')(observer(
   props => {
@@ -49,16 +39,16 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
       pageStore: {lineFilters},
       calendarStore:{start, end, months, days, selectedDate, daysFilter, setDate, clear, setStart, setEnd, setDaysFilter},
       globalStore:{baseNameForRouting},
-      searchStore: {setSearchString, reqItems, reqGenre}
+      searchStore: {setSearchString, addReqItem, addReqGenre, reqItems, reqGenre, removeReq}
     } = props;
 
     useEffect(() => {
       clear();
       setState(prev => ({
         ...prev,
-        listGenre: lineFilters.genre.slice().sort(() => Math.random() - 0.5),
-        listItem: lineFilters.item.slice().sort(() => Math.random() - 0.5),
-      }))
+        listGenre: lineFilters.genre.slice().sort(() => Math.random() - 0.5).filter((e, i) => i < 6),
+        listItem: lineFilters.item.slice().sort(() => Math.random() - 0.5).filter((e, i) => i < 6),
+      }));
       return () => {
         clear();
       }
@@ -78,6 +68,7 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
     };
 
     const classes = useStyles();
+    const GENRE = 'genre', ITEM = 'item';
 
     const changeDate = DateIOType => {
       setDate(DateIOType);
@@ -125,11 +116,42 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
       history.push(`/${baseNameForRouting}/search?${getSearchString}`);
       setSearchString(getSearchString);
     };
+    const handlerListClick = (flag, data) => {
+      switch (flag) {
+        case GENRE:
+          addReqGenre(data);
+          break;
+        case ITEM:
+          addReqItem(data);
+          break;
+      }
+    };
+    const deleteChip = (flag, id) => {
+        removeReq(flag, id)
+    };
+    const deleteChipDate = () => {clear()};
+
     const handlerClick = () => {
       const {calendarStore:{getSearchString}} = props;
+      console.log(reqItems, reqGenre)
+      return;
       history.push(`/${baseNameForRouting}/search?${getSearchString}`);
       setSearchString(getSearchString);
     };
+
+    const listGenreRender = ({id, image, name, slug}) => (
+      <ListItem key={id} role={undefined} dense button>
+        <ListItemIcon>
+          <img src={image} alt={slug} width={css.sizes.lg} height={css.sizes.lg} />
+        </ListItemIcon>
+        <ListItemText id={id} primary={name} onClick={() => handlerListClick(GENRE, {id, slug, name, image})} />
+      </ListItem>
+    );
+    const listItemRender = ({id, image, name, slug}) => (
+      <ListItem key={id} role={undefined} dense button>
+        <ListItemText id={id} primary={name} onClick={() => handlerListClick(ITEM, {id, slug, name, image})} />
+      </ListItem>
+    );
 
     const renderWrappedDay = (date, selectedDate, dayInCurrentMonth) => {
       let dayIsBetween, isFirstDay, isLastDay, isBeforeDay, isToday;
@@ -170,121 +192,133 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
       );
     };
 
-    console.log(lineFilters.item)
-
     return <>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <Typography className="pb1 center" variant="h6" component="h6">Календарь</Typography>
+        <Grid item xs={12}>
           <Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Typography variant="subtitle1" component="h6">Сегодня {`${days[new Date().getDay()]}, ${new Date().getDate()} ${months[new Date().getMonth()]}`}</Typography>
-              <Box className="bilego-buttons-filters">
-                <Fab onClick={() => {handlerClickByButton('today')}} variant="extended" aria-label="today">Сегодня</Fab>
-                <Fab onClick={() => {handlerClickByButton('tomorrow')}} variant="extended" aria-label="tomorrow">Завтра</Fab>
-                <Fab onClick={() => {handlerClickByButton('weekend')}} variant="extended" aria-label="weekend">Выходные</Fab>
-                <Fab onClick={() => {handlerClickByButton('thisMonth')}} variant="extended" aria-label="month">Этот месяц</Fab>
-                <Fab onClick={() => {handlerClickByButton('month')}} variant="extended" aria-label="month">Месяц</Fab>
-              </Box>
+            <Grid item xs={6}>
+              <Typography className="pb1 center" variant="h6" component="h6">Календарь</Typography>
             </Grid>
-            <Grid item xs={8}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ruLocale}>
-                <div className={classes.calendarWrap}>
-                  <Calendar
-                    disablePast
-                    date={selectedDate}
-                    onChange={changeDate}
-                    renderDay={renderWrappedDay}
-                  />
-                </div>
-              </MuiPickersUtilsProvider>
-              <Box className={classes.maxWidth}>
-                <Fab onClick={handlerClick} variant="extended" aria-label="Calendar" disabled={!start}>
-                  {
-                    !start
-                    ? `Выберите даты`
-                    : start && !end
-                      ? `Выбрать с ${start.getDate()} ${months[start.getMonth()]}`
-                      : start && end
-                        ? start.getMonth() === end.getMonth() && start.getDate() === end.getDate()
-                          ? `Выбрать за ${start.getDate()} ${months[start.getMonth()]}`
-                          : start.getMonth() === end.getMonth()
-                            ? `Выбрать с ${start.getDate()} по ${end.getDate()} ${months[start.getMonth()]}`
-                            : `С ${start.getDate()} ${months[start.getMonth()]} по ${end.getDate()} ${months[end.getMonth()]}`
-                        : `Выберите даты`
-                  }
-                </Fab>
-              </Box>
+            <Grid item xs={3}>
+              <Typography className="pb1 center" variant="h6" component="h6">Жанры</Typography>
+            </Grid>
+            <Grid item xs={3}>
+              <Typography className="pb1 center" variant="h6" component="h6">Площадки</Typography>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
-              <Typography className="pb1 center" variant="h6" component="h6">Жанры</Typography>
-              <Grid container>
-                <Grid item xs={12}>
-                  <FormControl>
-                    <CssTextField
-                      label="Название жанра"
-                      InputProps={{startAdornment: (InputAp)}}
-                      onChange={e => {updateText(e, 'genre')}}
-                      value={state.genre}
-                    />
-                    <div className={classes.height}>{ !state.genre &&
-                      <List>
-                        {
-                          state.listGenre.map(({id, image, name, slug}) => (
-                            <ListItem key={id} role={undefined} dense button>
-                              <ListItemIcon>
-                                <img src={image} alt={slug} width={css.sizes.lg} height={css.sizes.lg} />
-                              </ListItemIcon>
-                              <ListItemText id={id} primary={name} />
-                            </ListItem>
-                          ))
-                        }
-                      </List>
-                    }
+              <Grid container spacing={2}>
+                <Grid item xs={4}>
+                  <Typography variant="subtitle1" component="h6">Сегодня {`${days[new Date().getDay()]}, ${new Date().getDate()} ${months[new Date().getMonth()]}`}</Typography>
+                  <Box>
+                    <List>{[{name: 'Сегодня', label: 'today'},
+                        {name: 'Завтра', label: 'tomorrow'},
+                        {name: 'Выходные', label: 'weekend'},
+                        {name: 'Этот месяц', label: 'thisMonth'},
+                        {name: 'Месяц', label: 'month'},
+                      ].map(({name, label}) => (
+                        <ListItem key={label} role={undefined} dense button>
+                          <ListItemText id={label} primary={name} onClick={() => {handlerClickByButton(label)}}/>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Box>
+                </Grid>
+                <Grid item xs={8}>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ruLocale}>
+                    <div className={classes.calendarWrap}>
+                      <Calendar
+                        disablePast
+                        date={selectedDate}
+                        onChange={changeDate}
+                        renderDay={renderWrappedDay}
+                      />
                     </div>
-                    <div>check results</div>
-                  </FormControl>
+                  </MuiPickersUtilsProvider>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <Typography className="pb1 center" variant="h6" component="h6">Площадки</Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <FormControl>
-                    <CssTextField
-                      label="Название площадки"
-                      InputProps={{startAdornment: (InputAp)}}
-                      onChange={e => {updateText(e, 'item')}}
-                      value={state.item}
-                    />
-                    <div className={classes.height}>{ !state.item &&
-                    <List>
-                      {
-                        state.listItem.map(({ID, post_name, post_title}) => (
-                          <ListItem key={ID} role={undefined} dense button>
-                            <ListItemText id={ID} primary={post_title} />
-                          </ListItem>
-                        ))
-                      }
-                    </List>
+            <Grid item xs={3}>
+              <FormControl>
+                <CssTextField
+                  label="Название жанра"
+                  InputProps={{startAdornment: (
+                      <InputAdornment position="start">
+                        {BilegoIconGenre}
+                      </InputAdornment>
+                    )}}
+                  onChange={e => {updateText(e, GENRE)}}
+                  value={state.genre}
+                />
+                <div>
+                  <List>
+                    { state.genre.length <= 1
+                    ? state.listGenre.map(listGenreRender)
+                    : lineFilters.genre.slice()
+                        .filter(el => el.name.toLowerCase().indexOf(state.genre.toLowerCase().trim()) !== -1)
+                        .filter((e, i) => i < 6)
+                        .map(listGenreRender)
                     }
-                    </div>
-                    <div>check results</div>
-                  </FormControl>
-
-
-                </Grid>
-              </Grid>
+                  </List>
+                </div>
+              </FormControl>
+            </Grid>
+            <Grid item xs={3}>
+              <FormControl>
+                <CssTextField
+                  label="Название площадки"
+                  InputProps={{startAdornment: (
+                      <InputAdornment position="start">
+                        {BilegoIconItem}
+                      </InputAdornment>
+                    )}}
+                  onChange={e => {updateText(e, ITEM)}}
+                  value={state.item}
+                />
+                <div>
+                  <List>
+                    { state.item.length <= 1
+                      ? state.listItem.map(listItemRender)
+                      : lineFilters.item.slice()
+                        .filter(el => el.name.toLowerCase().indexOf(state.item.toLowerCase().trim()) !== -1)
+                        .filter((e, i) => i < 6)
+                        .map(listItemRender)
+                    }
+                  </List>
+                </div>
+              </FormControl>
             </Grid>
           </Grid>
+        </Grid>
+        <Grid item xs={12}>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              buttons
+            <Grid item xs={9}>
+              <Box className={classes.chipWrap}>
+                {!start
+                  ? ``
+                  : start && !end
+                    ? <Chip variant="outlined" label={`Выбрать события с ${start.getDate()} ${months[start.getMonth()]}`} onDelete={deleteChipDate} />
+                    : start && end
+                      ? start.getMonth() === end.getMonth() && start.getDate() === end.getDate()
+                        ? <Chip variant="outlined" label={`Выбрать события за ${start.getDate()} ${months[start.getMonth()]}`} onDelete={deleteChipDate} />
+                        : start.getMonth() === end.getMonth()
+                          ? <Chip variant="outlined" label={`Выбрать события с ${start.getDate()} по ${end.getDate()} ${months[start.getMonth()]}`} onDelete={deleteChipDate} />
+                          : <Chip variant="outlined" label={`С ${start.getDate()} ${months[start.getMonth()]} по ${end.getDate()} ${months[end.getMonth()]}`} onDelete={deleteChipDate} />
+                      : ``
+                }
+                {reqGenre.map(el => <Chip variant="outlined" key={el.id} label={el.name} onDelete={() => deleteChip(GENRE, el.id)} avatar={<Avatar alt={el.slug} src={el.image} />} />)}
+                {reqItems.map(el => <Chip variant="outlined" key={el.id} label={el.name} onDelete={() => deleteChip(ITEM, el.id)} avatar={<Avatar alt={el.slug} src={el.image} />} />)}
+              </Box>
+            </Grid>
+            <Grid item xs={3} container alignItems="flex-end">
+              <Box className={classes.maxWidth}>
+                <Fab onClick={handlerClick} variant="extended" aria-label="Calendar" disabled={!start && !reqGenre.length && !reqItems.length}>
+                  Показать события
+                </Fab>
+              </Box>
             </Grid>
           </Grid>
         </Grid>
