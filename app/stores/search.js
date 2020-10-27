@@ -65,6 +65,10 @@ class Search{
         }
       }
     }
+    if(type === 'all'){
+      this.reqGenre = [];
+      this.reqItems = [];
+    }
   };
 
   defaultPageSize = 21;
@@ -100,8 +104,6 @@ class Search{
     this.events = undefined;
     this.items = undefined;
     this.artists = undefined;
-    this.reqItems = [];
-    this.reqGenre = [];
     this.cache = {};
     this.seoPage = [];
     this.title = undefined;
@@ -188,8 +190,8 @@ class Search{
       }
 
       const response = yield searchService.getSearchPageResult({...params, ...args});
-      this.searchEvents = response.posts.length > 0 ? response.posts : [];
-      this.seoPage = response.seo ? response.seo : [];
+      this.searchEvents = response.posts || [];
+      this.seoPage = response.seo || [];
     } catch (e) {
       console.log(e);
     } finally {
@@ -206,6 +208,8 @@ class Search{
       s: params.get('s'),
       selection: params.get('selection'),
       cat: params.get('cat'),
+      genre: params.getAll('genre'),
+      item: params.getAll('item')
     };
   }
 }

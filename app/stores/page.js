@@ -23,8 +23,8 @@ class Page{
   };
 
   @observable lineFilters = {
-    genre: null,
-    item: null
+    genre: [],
+    item: []
   };
 
   // front page
@@ -74,7 +74,7 @@ class Page{
       this.itemsFrontPage = response.posts.items;
       this.eventCategoriesSelections = response.posts.selections;
       this.seoPage = response.seo;
-      this.lineFilters = response.filter;
+      // this.lineFilters = response.filter;
     }catch(e){
       console.log(e);
     }finally {
@@ -90,7 +90,7 @@ class Page{
     this.eventsConcerts = data.posts.concerts;
     this.itemsFrontPage = data.items;
     this.eventCategoriesSelections = data.posts.selections;
-    this.lineFilters = data.filter;
+    // this.lineFilters = data.filter;
   };
   @action
   setStartDataEventsPage = (data) => {
@@ -105,6 +105,15 @@ class Page{
     this.items = data.posts;
   };
 
+  @action
+  getFilters = flow( function* getFilters(params){
+    try{
+      const response = yield pageService.getFilters(params);
+      this.lineFilters = response;
+    }catch(e){
+      console.log(e);
+    }
+  }).bind(this);
 
   @action
   getPopularOnWeek = flow( function* getPopularOnWeek(params){

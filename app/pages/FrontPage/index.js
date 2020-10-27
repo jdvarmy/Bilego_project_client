@@ -52,12 +52,9 @@ class FrontPage extends Component {
     return (
       <React.Fragment>
         <div>
-          {/*<Slider />*/}
+          <Slider />
         </div>
         <Padding />
-        {/*<DateContainer align='middle' type='flex' justify='center'>*/}
-        {/*  <DatePickerLine/>*/}
-        {/*</DateContainer>*/}
         <DateContainer align='middle' type='flex' justify='center'>
           <FilterLine/>
         </DateContainer>

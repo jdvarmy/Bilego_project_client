@@ -61,7 +61,10 @@ export const useStyles = makeStyles({
   },
   maxWidth: {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
+    '& > *': {
+      margin: style.sizes.xs,
+    }
   },
   chipWrap: {
     display: 'flex',

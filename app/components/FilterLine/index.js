@@ -30,26 +30,40 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Chip from '@material-ui/core/Chip';
 import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 
 export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globalStore', 'searchStore')(observer(
   props => {
     const {
+      searchPage,
       history,
-      pageStore: {lineFilters},
+      pageStore: {lineFilters, getFilters},
       calendarStore:{start, end, months, days, selectedDate, daysFilter, setDate, clear, setStart, setEnd, setDaysFilter},
       globalStore:{baseNameForRouting},
       searchStore: {setSearchString, addReqItem, addReqGenre, reqItems, reqGenre, removeReq}
     } = props;
 
     useEffect(() => {
-      clear();
-      setState(prev => ({
-        ...prev,
-        listGenre: lineFilters.genre.slice().sort(() => Math.random() - 0.5).filter((e, i) => i < 6),
-        listItem: lineFilters.item.slice().sort(() => Math.random() - 0.5).filter((e, i) => i < 6),
-      }));
+      (async () => {
+        await getFilters({city: baseNameForRouting});
+        const {pageStore:{lineFilters}} = props;
+        setState(prev => ({
+          ...prev,
+          listGenre: lineFilters.genre && lineFilters.genre.slice().sort(() => Math.random() - 0.5).filter((e, i) => i < 6),
+          listItem: lineFilters.item && lineFilters.item.slice().sort(() => Math.random() - 0.5).filter((e, i) => i < 6),
+        }));
+      })();
+
       return () => {
-        clear();
+        setState(prev => ({
+          ...prev,
+          genre: '',
+          item: '',
+        }));
+        if(searchPage) {
+          removeReq('all');
+          deleteChipDate();
+        }
       }
     }, []);
     const [state, setState] = useState({
@@ -129,13 +143,34 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
         removeReq(flag, id)
     };
     const deleteChipDate = () => {clear()};
+    const deleteAllChips = () => {
+      clear();
+      setState(prev => ({
+        ...prev,
+        genre: '',
+        item: '',
+      }));
+      removeReq('all')
+    };
 
     const handlerClick = () => {
       const {calendarStore:{getSearchString}} = props;
-      console.log(reqItems, reqGenre)
-      return;
-      history.push(`/${baseNameForRouting}/search?${getSearchString}`);
-      setSearchString(getSearchString);
+      let searchString = '';
+      if(reqGenre.length > 0){
+        searchString += reqGenre.map(el => (`genre=${el.slug}`)).join('&')
+      }
+      if(reqItems.length > 0){
+        if(searchString !== '') searchString += '&';
+        searchString += reqItems.map(el => (`item=${el.slug}`)).join('&')
+      }
+      if(getSearchString && searchString){
+        searchString = getSearchString+'&'+searchString;
+      }else if(getSearchString && !searchString){
+        searchString = getSearchString
+      }
+
+      history.push(`/${baseNameForRouting}/search?${searchString}`);
+      setSearchString(searchString);
     };
 
     const listGenreRender = ({id, image, name, slug}) => (
@@ -256,7 +291,7 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
                   <List>
                     { state.genre.length <= 1
                     ? state.listGenre.map(listGenreRender)
-                    : lineFilters.genre.slice()
+                    : lineFilters.genre && lineFilters.genre.slice()
                         .filter(el => el.name.toLowerCase().indexOf(state.genre.toLowerCase().trim()) !== -1)
                         .filter((e, i) => i < 6)
                         .map(listGenreRender)
@@ -281,8 +316,9 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
                   <List>
                     { state.item.length <= 1
                       ? state.listItem.map(listItemRender)
-                      : lineFilters.item.slice()
-                        .filter(el => el.name.toLowerCase().indexOf(state.item.toLowerCase().trim()) !== -1)
+                      : lineFilters.item && lineFilters.item.slice()
+                        .filter(el => el.name.toLowerCase().indexOf(state.item.toLowerCase().trim()) !== -1
+                          || el.excerpt.toLowerCase().indexOf(state.item.toLowerCase().trim()) !== -1)
                         .filter((e, i) => i < 6)
                         .map(listItemRender)
                     }
@@ -317,6 +353,9 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
                 <Fab onClick={handlerClick} variant="extended" aria-label="Calendar" disabled={!start && !reqGenre.length && !reqItems.length}>
                   Показать события
                 </Fab>
+                <Button onClick={deleteAllChips} variant="text" size="small" aria-label="Clear" disabled={!start && !reqGenre.length && !reqItems.length}>
+                  Сбросить
+                </Button>
               </Box>
             </Grid>
           </Grid>

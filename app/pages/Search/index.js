@@ -7,11 +7,10 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import NoContent from '../../components/NoContent';
 import { Event300 } from '../../components/Event';
-import style from '../../theme/style';
-import DatePickerLine from '../../components/DatePickerLine';
 import PopularOnWeek from '../FrontPage/PopularOnWeek';
 import { LoadingForEventsSearch } from '../../components/LoadingsTemplate';
 import BlockHeaderText from '../../components/BlockHeaderText';
+import { FilterLine } from '../../components/FilterLine';
 
 import css from '../../theme/style';
 
@@ -24,13 +23,6 @@ const GridWrap = styled(Grid)`
 const CardWrap = styled(Card)`
   margin-bottom: ${css.sizes.xl};
 `;
-const DateContainer = styled.div`
-  height: ${style.$heightMenu}px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 @withRouter
 @inject('searchStore', 'globalStore', 'calendarStore')
@@ -38,7 +30,9 @@ const DateContainer = styled.div`
 class Search extends Component{
   componentDidMount = async () => {
     const {
-      searchStore:{setSearchString, getSearchPageResult, setTitle}, location, globalStore:{baseNameForRouting, setMeta}} = this.props;
+      searchStore:{setSearchString, getSearchPageResult, setTitle}, location,
+      globalStore:{baseNameForRouting, setMeta}
+    } = this.props;
     try {
       setSearchString(location.search.substr(1));
 
@@ -47,7 +41,7 @@ class Search extends Component{
 
       setTitle(this.props.searchStore.seoPage.title_page)
     }catch (e) {
-      console.log('single event: ', e);
+      console.log('search: ', e);
     }
   };
   componentDidUpdate = async (prevProps, prevState, snapshot) => {
@@ -64,7 +58,7 @@ class Search extends Component{
         setTitle(this.props.searchStore.seoPage.title_page)
       }
     }catch (e) {
-      console.log('single event: ', e);
+      console.log('search: ', e);
     }
   };
   componentWillUnmount() {
@@ -91,9 +85,7 @@ class Search extends Component{
     return(
       <GridWrap container spacing={4}>
         <Grid item xs={12}>
-          <DateContainer align='middle' type='flex' justify='center'>
-            <DatePickerLine/>
-          </DateContainer>
+          <FilterLine searchPage/>
         </Grid>
           {isLoading && searchEvents && searchEvents.length <= 0
             ? <LoadingForEventsSearch />

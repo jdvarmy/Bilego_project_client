@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import EventsList from '../EventsList';
 import BlockHeaderText from '../../../components/BlockHeaderText';
+import { FilterLine } from '../../../components/FilterLine';
 
 const Wrap = styled.div`
   padding: 20px;
@@ -22,6 +23,9 @@ class Festivals extends Component{
     return(
       <Wrap>
         <GridWrap container spacing={4}>
+          <Grid item xs={12}>
+            <FilterLine/>
+          </Grid>
           <Grid item xs={12}><BlockHeaderText>Фестивали</BlockHeaderText></Grid>
           <Grid item xs={12}>
             <EventsList/>

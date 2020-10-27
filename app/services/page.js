@@ -18,4 +18,7 @@ export default {
     requests.post('events/category/term', {}, filterParams),
   getPreviouslyWatched: (filterParams) =>
     requests.post('events', {}, filterParams),
+
+  getFilters: (filterParams) =>
+    requests.post('filters', {}, filterParams),
 }
