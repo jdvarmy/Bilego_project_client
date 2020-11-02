@@ -48,7 +48,6 @@ class FrontPage extends Component {
   }
 
   render() {
-    console.log('front page')
     return (
       <React.Fragment>
         <div>

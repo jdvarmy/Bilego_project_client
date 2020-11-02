@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 // https://habr.com/ru/post/432368/#mobile
 // https://habr.com/ru/post/325688/
@@ -122,7 +122,7 @@ const clientConf = options => ({
       }
     }),
     new MiniCssExtractPlugin({ filename: '[hash:16].css' }),
-    new UglifyJSPlugin()
+    // new UglifyJSPlugin(),
   ],
   optimization: {
     splitChunks: {
