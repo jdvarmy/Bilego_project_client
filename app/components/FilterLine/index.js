@@ -330,7 +330,7 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={2}>
-            <Grid item xs={9}>
+            <Grid item xs={8}>
               <Box className={classes.chipWrap}>
                 {!start
                   ? ``
@@ -348,7 +348,7 @@ export const FilterLine = withRouter(inject('pageStore', 'calendarStore', 'globa
                 {reqItems.map(el => <Chip variant="outlined" key={el.id} label={el.name} onDelete={() => deleteChip(ITEM, el.id)} avatar={<Avatar alt={el.slug} src={el.image} />} />)}
               </Box>
             </Grid>
-            <Grid item xs={3} container alignItems="flex-end">
+            <Grid item xs={4} container alignItems="flex-end">
               <Box className={classes.maxWidth}>
                 <Fab onClick={handlerClick} variant="extended" aria-label="Calendar" disabled={!start && !reqGenre.length && !reqItems.length}>
                   Показать события
