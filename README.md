@@ -1,4 +1,4 @@
-# Bilego
+# Bilego client (server side rendering)
 
 Сервер сайд приложение для продажи билетов на мероприятия
 
